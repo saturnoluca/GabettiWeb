@@ -36,7 +36,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setIdAppartamento(rs.getInt("idApparamento"));
                 bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
                 bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
-                bean.setSuperficie(rs.getString("superficie"));
+                bean.setSuperficie(rs.getFloat("superficie"));
                 bean.setLocali(rs.getString("locali"));
                 bean.setBagni(rs.getString("bagni"));
                 bean.setPiano(rs.getString("piano"));
@@ -80,7 +80,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                     bean.setIdAppartamento(rs.getInt("idApparamento"));
                     bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
                     bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
-                    bean.setSuperficie(rs.getString("superficie"));
+                    bean.setSuperficie(rs.getFloat("superficie"));
                     bean.setLocali(rs.getString("locali"));
                     bean.setBagni(rs.getString("bagni"));
                     bean.setPiano(rs.getString("piano"));
@@ -123,7 +123,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setIdAppartamento(rs.getInt("idApparamento"));
                 bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
                 bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
-                bean.setSuperficie(rs.getString("superficie"));
+                bean.setSuperficie(rs.getFloat("superficie"));
                 bean.setLocali(rs.getString("locali"));
                 bean.setBagni(rs.getString("bagni"));
                 bean.setPiano(rs.getString("piano"));
@@ -165,7 +165,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setIdAppartamento(rs.getInt("idApparamento"));
                 bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
                 bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
-                bean.setSuperficie(rs.getString("superficie"));
+                bean.setSuperficie(rs.getFloat("superficie"));
                 bean.setLocali(rs.getString("locali"));
                 bean.setBagni(rs.getString("bagni"));
                 bean.setPiano(rs.getString("piano"));
@@ -201,7 +201,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 ps = connection.prepareStatement(insertSql);
                 ps.setString(1, app.getNomeAppartamento());
                 ps.setString(2, app.getDescrizioneAppartamento());
-                ps.setString(3, app.getSuperficie());
+                ps.setFloat(3, app.getSuperficie());
                 ps.setString(4, app.getLocali());
                 ps.setString(5, app.getBagni());
                 ps.setString(6, app.getPiano());

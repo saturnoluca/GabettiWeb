@@ -8,7 +8,7 @@ public class AppartamentoBean implements Serializable {
     private String categoria;
     private String nomeAppartamento;
     private String descrizioneAppartamento;
-    private String superficie;
+    private float superficie;
     private String locali;
     private String bagni;
     private String piano;
@@ -27,7 +27,7 @@ public class AppartamentoBean implements Serializable {
 	}
 
 	public AppartamentoBean(int idAppartamento, String categoria, String nomeAppartamento,
-			String descrizioneAppartamento, String superficie, String locali, String bagni, String piano,
+			String descrizioneAppartamento, float superficie, String locali, String bagni, String piano,
 			String riscaldamento, String classeEnergetica, String tipoVendita, Float prezzo, Date data, int idAgente,
 			int visualizzazioni, int camereLetto, int postoAuto) {
 		super();
@@ -82,11 +82,11 @@ public class AppartamentoBean implements Serializable {
 		this.descrizioneAppartamento = descrizioneAppartamento;
 	}
 
-	public String getSuperficie() {
+	public float getSuperficie() {
 		return superficie;
 	}
 
-	public void setSuperficie(String superficie) {
+	public void setSuperficie(float superficie) {
 		this.superficie = superficie;
 	}
 
