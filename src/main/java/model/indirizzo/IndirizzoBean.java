@@ -8,18 +8,25 @@ public class IndirizzoBean implements Serializable {
     private String numeroCivico;
     private String cap;
     private String citta;
+    private String provincia;
     private int idAppartamento;
 
     public IndirizzoBean() {
     }
 
-    public IndirizzoBean(int idIndirizzo, String via, String numeroCivico, String cap, String citta, int idAppartamento) {
+    public IndirizzoBean(int idIndirizzo, String via, String numeroCivico, String cap, String citta, String provincia, int idAppartamento) {
         this.idIndirizzo = idIndirizzo;
         this.via = via;
         this.numeroCivico = numeroCivico;
         this.cap = cap;
         this.citta = citta;
+        this.provincia = provincia;
         this.idAppartamento = idAppartamento;
+    }
+
+    @Override
+    public String toString() {
+        return via + " " + numeroCivico + ", " + citta + ", " + cap + ", " + provincia;
     }
 
     public int getIdIndirizzo() {
@@ -60,6 +67,14 @@ public class IndirizzoBean implements Serializable {
 
     public void setCitta(String citta) {
         this.citta = citta;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
     }
 
     public int getIdAppartamento() {

@@ -1,11 +1,13 @@
 package model.utente;
 
+import UtilityClass.UtilityBlob;
 import model.DriverManagerConnectionPool;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -70,13 +72,45 @@ public class UtenteModelDM implements UtenteModel {
     }
 
     @Override
-    public Collection<ArrayList> doRetrieveAll() throws SQLException {
-        Connection connection=null;
-        return null;
+    public Collection<UtenteBean> doRetrieveAll() throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ArrayList<UtenteBean> array = new ArrayList<UtenteBean>();
+        String selectSql = "SELECT * FROM utente";
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                UtenteBean bean = new UtenteBean();
+                bean.setIdUtente(rs.getInt("idUtente"));
+                bean.setUsername(rs.getString("username"));
+                bean.setPassword(rs.getString("password"));
+                bean.setNome(rs.getString("nome"));
+                bean.setEmail(rs.getString("email"));
+                bean.setCognome(rs.getString("cognome"));
+                if (rs.getBlob("foto") != null) {
+                    String fotoPart = null;
+                    fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
+                    bean.setFotoString(fotoPart);
+                }
+                bean.setRuolo(rs.getString("ruolo"));
+                array.add(bean);
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
+        return array;
     }
 
     @Override
-    public Collection<ArrayList> doRetrieveByRole(String ruolo) throws SQLException {
+    public Collection<UtenteBean> doRetrieveByRole(String ruolo) throws SQLException {
         return null;
     }
 
@@ -88,5 +122,41 @@ public class UtenteModelDM implements UtenteModel {
     @Override
     public void doDelete(int idUtente) throws SQLException {
 
+    }
+
+    @Override
+    public UtenteBean doRetrieveUtenteByKeyAgente(int idUtente) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        UtenteBean bean = new UtenteBean();
+        String selectSql = "SELECT * FROM utente WHERE idUtente=?";
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setInt(1, idUtente);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bean.setIdUtente(rs.getInt("idUtente"));
+                bean.setUsername(rs.getString("username"));
+                bean.setPassword(rs.getString("password"));
+                bean.setNome(rs.getString("nome"));
+                bean.setCognome(rs.getString("cognome"));
+                if (rs.getBlob("foto") != null) {
+                    String fotoPart = null;
+                    fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
+                    bean.setFotoString(fotoPart);
+                }
+                bean.setRuolo(rs.getString("ruolo"));
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
+        return bean;
     }
 }

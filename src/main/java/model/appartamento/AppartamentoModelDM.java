@@ -1,5 +1,6 @@
 package model.appartamento;
 
+import UtilityClass.Ricerca;
 import model.DriverManagerConnectionPool;
 
 import java.sql.Connection;
@@ -162,7 +163,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 AppartamentoBean bean = new AppartamentoBean();
                 bean.setCamereLetto(rs.getInt("camereLetto"));
                 bean.setCategoria(rs.getString("categoria"));
-                bean.setIdAppartamento(rs.getInt("idApparamento"));
+                bean.setIdAppartamento(rs.getInt("idAppartamento"));
                 bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
                 bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
                 bean.setSuperficie(rs.getFloat("superficie"));
@@ -171,7 +172,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setPiano(rs.getString("piano"));
                 bean.setRiscaldamento(rs.getString("riscaldamento"));
                 bean.setClasseEnergetica(rs.getString("classeEnergetica"));
-                bean.setTipoVendita(rs.getString("tipo"));
+                bean.setTipoVendita(rs.getString("tipoVendita"));
                 bean.setPrezzo(rs.getFloat("prezzo"));
                 bean.setData(rs.getDate("data"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
@@ -227,4 +228,159 @@ public class AppartamentoModelDM implements AppartamentoModel {
             }
         }
     }
+
+    @Override
+    public ArrayList<AppartamentoBean> barraRicerca(Ricerca ricerca) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ArrayList<AppartamentoBean> array = new ArrayList<AppartamentoBean>();
+        String selectSql = "select appartamento.idAppartamento, appartamento.categoria, appartamento.nomeAppartamento, appartamento.descrizioneAppartamento, appartamento.superficie," +
+                "appartamento.locali, appartamento.bagni, appartamento.piano, appartamento.riscaldamento, appartamento.classeEnergetica, appartamento.tipoVendita, appartamento.prezzo, " +
+                "appartamento.data, appartamento.Agente_idAgente, appartamento.visualizzazioni, appartamento.camereLetto, appartamento.postoAuto from appartamento inner join indirizzo on appartamento.idAppartamento=indirizzo.Appartamento_idAppartamento";
+        String città = "";
+        String vendita = "";
+        String categoria = "";
+        String letti = "";
+        String bagni = "";
+        String minPrezzo = "";
+        String maxPrezzo = "";
+        String minSuperficie = "";
+        String maxSuperficie = "";
+        String minGarage = "";
+        if (ricerca.getCittà() != null) {
+            città = " AND indirizzo.città=" + "'" + ricerca.getCittà()+"'";
+            selectSql=selectSql+città;
+        }
+        if (ricerca.getVendita() != null){
+            vendita = " AND appartamento.tipoVendita=" +"'" + ricerca.getVendita()+"'";
+            selectSql=selectSql+vendita;
+        }
+        if (ricerca.getCategoria() != null){
+            categoria = " AND appartamento.categoria=" + ricerca.getCategoria();
+            selectSql=selectSql+categoria;
+        }
+        if (ricerca.getLetti() != -1){
+            letti = " AND appartamento.camereLetto=" + ricerca.getLetti();
+            selectSql=selectSql+letti;
+        }
+        if (ricerca.getBagni() != null){
+            bagni = " AND appartamento.bagni=" + ricerca.getBagni();
+            selectSql=selectSql+bagni;
+        }
+        if (ricerca.getMinPrezzo() != -1){
+            minPrezzo = " AND appartamento.prezzo>" + ricerca.getMinPrezzo();
+            selectSql=selectSql+minPrezzo;
+        }
+        if (ricerca.getMaxPrezzo() != -1){
+            maxPrezzo = " AND appartamento.prezzo<" + ricerca.getMaxPrezzo();
+            selectSql=selectSql+maxPrezzo;
+        }
+        if (ricerca.getMinSuperficie() != -1){
+            minSuperficie = " AND appartamento.superficie>" + ricerca.getMinSuperficie();
+            selectSql=selectSql+minSuperficie;
+        }
+        if (ricerca.getMaxSuperficie() != -1){
+            maxSuperficie = " AND appartamento.superficie<" + ricerca.getMaxSuperficie();
+            selectSql=selectSql+maxSuperficie;
+        }
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AppartamentoBean bean = new AppartamentoBean();
+                bean.setCamereLetto(rs.getInt("camereLetto"));
+                bean.setCategoria(rs.getString("categoria"));
+                bean.setIdAppartamento(rs.getInt("idAppartamento"));
+                bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
+                bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
+                bean.setSuperficie(rs.getFloat("superficie"));
+                bean.setLocali(rs.getString("locali"));
+                bean.setBagni(rs.getString("bagni"));
+                bean.setPiano(rs.getString("piano"));
+                bean.setRiscaldamento(rs.getString("riscaldamento"));
+                bean.setClasseEnergetica(rs.getString("classeEnergetica"));
+                bean.setTipoVendita(rs.getString("tipoVendita"));
+                bean.setPrezzo(rs.getFloat("prezzo"));
+                bean.setData(rs.getDate("data"));
+                bean.setIdAgente(rs.getInt("Agente_idAgente"));
+                bean.setPostoAuto(rs.getInt("postoAuto"));
+                array.add(bean);
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+        }
+        return array;
+    }
+
+    @Override
+    public void updateVisite(AppartamentoBean app) throws SQLException {
+        Connection connection=null;
+        PreparedStatement ps = null;
+        String updateSql= "UPDATE `mydb`.`appartamento` SET `visualizzazioni` = ? WHERE (`idAppartamento` = ?)";
+        try{
+            connection = dmcp.getConnection();
+            if(app instanceof AppartamentoBean){
+                ps= connection.prepareStatement(updateSql);
+                ps.setInt(1, app.getVisualizzazioni());
+                ps.setInt(2, app.getVisualizzazioni()+1);
+                connection.commit();
+            }
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+        }
+    }
+
+    @Override
+    public AppartamentoBean RetrieveById(int id) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT * FROM appartamento where idAppartamento = ?";
+        AppartamentoBean bean = new AppartamentoBean();
+        try{
+            connection= dmcp.getConnection();
+            ps=connection.prepareStatement(selectSql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            bean.setCamereLetto(rs.getInt("camereLetto"));
+            bean.setCategoria(rs.getString("categoria"));
+            bean.setIdAppartamento(rs.getInt("idAppartamento"));
+            bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
+            bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
+            bean.setSuperficie(rs.getFloat("superficie"));
+            bean.setLocali(rs.getString("locali"));
+            bean.setBagni(rs.getString("bagni"));
+            bean.setPiano(rs.getString("piano"));
+            bean.setRiscaldamento(rs.getString("riscaldamento"));
+            bean.setClasseEnergetica(rs.getString("classeEnergetica"));
+            bean.setTipoVendita(rs.getString("tipoVendita"));
+            bean.setPrezzo(rs.getFloat("prezzo"));
+            bean.setData(rs.getDate("data"));
+            bean.setIdAgente(rs.getInt("Agente_idAgente"));
+            bean.setPostoAuto(rs.getInt("postoAuto"));
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
+        return bean;
+    }
+
 }

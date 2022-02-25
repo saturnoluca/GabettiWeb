@@ -1,5 +1,7 @@
 package model.appartamento;
 
+import UtilityClass.Ricerca;
+
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,5 +17,11 @@ public interface AppartamentoModel<T> {
     public Collection<AppartamentoBean> OrderByVisite() throws SQLException;
 
     public void doSave(AppartamentoBean app) throws SQLException;
+
+    public ArrayList<AppartamentoBean> barraRicerca(Ricerca ricerca) throws SQLException;
+
+    public void updateVisite(AppartamentoBean app) throws SQLException;
+
+    public AppartamentoBean RetrieveById(int id) throws SQLException;
 
 }

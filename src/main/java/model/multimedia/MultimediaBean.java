@@ -2,6 +2,7 @@ package model.multimedia;
 
 import javax.servlet.http.Part;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -10,17 +11,23 @@ public class MultimediaBean implements Serializable {
     private ArrayList<Part> foto;
     private ArrayList<Part> video;
     private ArrayList<Part> planimetria;
+    private ArrayList<String> fotoString;
+    private ArrayList<String> videoString;
+    private ArrayList<String> planimetriaString;
     private int idAppartamento;
 
-    public MultimediaBean() {
-    }
-
-    public MultimediaBean(int idMultimedia, ArrayList<Part> foto, ArrayList<Part> video, ArrayList<Part> planimetria, int idAppartamento) {
+    public MultimediaBean(int idMultimedia, ArrayList<Part> foto, ArrayList<Part> video, ArrayList<Part> planimetria, ArrayList<String> fotoString, ArrayList<String> videoString, ArrayList<String> planimetriaString, int idAppartamento) {
         this.idMultimedia = idMultimedia;
         this.foto = foto;
         this.video = video;
         this.planimetria = planimetria;
+        this.fotoString = fotoString;
+        this.videoString = videoString;
+        this.planimetriaString = planimetriaString;
         this.idAppartamento = idAppartamento;
+    }
+
+    public MultimediaBean() {
     }
 
     public int getIdMultimedia() {
@@ -53,6 +60,30 @@ public class MultimediaBean implements Serializable {
 
     public void setPlanimetria(ArrayList<Part> planimetria) {
         this.planimetria = planimetria;
+    }
+
+    public ArrayList<String> getFotoString() {
+        return fotoString;
+    }
+
+    public void setFotoString(ArrayList<String> fotoString) {
+        this.fotoString = fotoString;
+    }
+
+    public ArrayList<String> getVideoString() {
+        return videoString;
+    }
+
+    public void setVideoString(ArrayList<String> videoString) {
+        this.videoString = videoString;
+    }
+
+    public ArrayList<String> getPlanimetriaString() {
+        return planimetriaString;
+    }
+
+    public void setPlanimetriaString(ArrayList<String> planimetriaString) {
+        this.planimetriaString = planimetriaString;
     }
 
     public int getIdAppartamento() {

@@ -2,7 +2,9 @@ package UtilityClass;
 
 import model.agente.AgenteBean;
 
-public class CompositeKeyAgenteCase {
+import java.io.Serializable;
+
+public class CompositeKeyAgenteCase implements Serializable {
     private AgenteBean bean;
     private int contaCase;
 
@@ -16,6 +18,14 @@ public class CompositeKeyAgenteCase {
 
     public AgenteBean getBean() {
         return bean;
+    }
+
+    @Override
+    public String toString() {
+        return "CompositeKeyAgenteCase{" +
+                "bean=" + bean +
+                ", contaCase=" + contaCase +
+                '}';
     }
 
     public void setBean(AgenteBean bean) {

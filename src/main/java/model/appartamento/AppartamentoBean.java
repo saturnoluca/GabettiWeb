@@ -185,5 +185,27 @@ public class AppartamentoBean implements Serializable {
 	public void setPostoAuto(int postoAuto) {
 		this.postoAuto = postoAuto;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "AppartamentoBean{" +
+				"idAppartamento=" + idAppartamento +
+				", categoria='" + categoria + '\'' +
+				", nomeAppartamento='" + nomeAppartamento + '\'' +
+				", descrizioneAppartamento='" + descrizioneAppartamento + '\'' +
+				", superficie=" + superficie +
+				", locali='" + locali + '\'' +
+				", bagni='" + bagni + '\'' +
+				", piano='" + piano + '\'' +
+				", riscaldamento='" + riscaldamento + '\'' +
+				", classeEnergetica='" + classeEnergetica + '\'' +
+				", tipoVendita='" + tipoVendita + '\'' +
+				", prezzo=" + prezzo +
+				", data=" + data +
+				", idAgente=" + idAgente +
+				", visualizzazioni=" + visualizzazioni +
+				", camereLetto=" + camereLetto +
+				", postoAuto=" + postoAuto +
+				'}';
+	}
 }

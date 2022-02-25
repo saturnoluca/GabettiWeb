@@ -52,8 +52,6 @@ public class Servlet extends HttpServlet {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        response.sendRedirect(request.getContextPath()+"/NewFile.jsp");
-        doGet(request, response);
     }
 
 }

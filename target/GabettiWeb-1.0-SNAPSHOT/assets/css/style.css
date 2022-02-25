@@ -1,0 +1,73 @@
+li:hover {
+  background-color: #b20135;
+}
+
+h1:hover {
+  color: #b20135;
+}
+
+.sfondo {
+  background-image: url(../../assets/img/cta-bg.jpg);
+  height: 700px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+}
+
+.wrap {
+  position: absolute;
+}
+
+.diagonalfooter {
+  width: 0;
+  height: 0;
+  border-top: 100px solid #fff;
+  border-right: 100vw solid transparent;
+}
+
+.diagonalagents {
+  border-top: 100px solid #f7f7f7;
+  border-right: 100vw solid transparent;
+}
+
+.diagonalrent {
+  height: 0;
+  width: 0;
+  border-top: 100px solid #fff;
+  border-right: 100vw solid transparent;
+}
+
+.diagonaltop {
+  width: 0;
+  height: 0;
+  border-top: 100px solid #fff;
+  border-right: 100vw solid transparent;
+}
+
+.diagonalbot {
+  height: 0;
+  width: 0;
+  border-bottom: 100px solid #fff;
+  border-left: 100vw solid transparent;
+}
+
+.compra {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  justify-content: center;
+}
+
+.headingcompra {
+  display: inline-block;
+}
+
+.diagonalfooteragente {
+  width: 0;
+  border-right: 100vw solid transparent;
+  border-top: 100px solid #f7f7f7;
+  height: 0;
+}
+

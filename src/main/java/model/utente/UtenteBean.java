@@ -13,11 +13,12 @@ public class UtenteBean implements Serializable {
     private String email;
     private Part foto;
     private String ruolo;
+    private String fotoString;
 
     public UtenteBean() {
     }
 
-    public UtenteBean(int idUtente, String username, String password, String nome, String cognome, String email, Part foto, String ruolo) {
+    public UtenteBean(int idUtente, String username, String password, String nome, String cognome, String email, Part foto, String ruolo, String fotoString) {
         this.idUtente = idUtente;
         this.username = username;
         this.password = password;
@@ -26,6 +27,7 @@ public class UtenteBean implements Serializable {
         this.email = email;
         this.foto = foto;
         this.ruolo = ruolo;
+        this.fotoString = fotoString;
     }
 
     public int getIdUtente() {
@@ -42,10 +44,6 @@ public class UtenteBean implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -90,5 +88,17 @@ public class UtenteBean implements Serializable {
 
     public void setRuolo(String ruolo) {
         this.ruolo = ruolo;
+    }
+
+    public String getFotoString() {
+        return fotoString;
+    }
+
+    public void setFotoString(String fotoString) {
+        this.fotoString = fotoString;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

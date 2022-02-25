@@ -54,8 +54,8 @@ public class AgenteModelDM implements AgenteModel {
 
     @Override
     public Collection<CompositeKeyAgenteCase> RetrieveAgenteCase() throws SQLException {
-        Connection connection=null;
-        PreparedStatement ps=null;
+        Connection connection = null;
+        PreparedStatement ps = null;
         String selectSql = "SELECT agente.*, (Select count(*) from appartamento where appartamento.Agente_idAgente=agente.idAgente) as contaCase FROM mydb.agente order by contaCase desc";
         ArrayList<CompositeKeyAgenteCase> array = new ArrayList<CompositeKeyAgenteCase>();
         try {
@@ -70,7 +70,7 @@ public class AgenteModelDM implements AgenteModel {
                 bean.setLinkFacebook(rs.getString("linkFacebook"));
                 bean.setLinkInstagram(rs.getString("linkInstagram"));
                 bean.setLinkTwitter(rs.getString("linkTwitter"));
-                bean.setLinkInternet(rs.getString("lnkInternet"));
+                bean.setLinkInternet(rs.getString("linkInternet"));
                 bean.setTelefonoFisso(rs.getString("telefonoFisso"));
                 bean.setTelefonoCellulare(rs.getString("telefonoCellulare"));
                 bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
@@ -89,6 +89,73 @@ public class AgenteModelDM implements AgenteModel {
                 dmcp.releaseConnection(connection);
             }
             return array;
+        }
+    }
+
+    @Override
+    public Collection<AgenteBean> RetrieveAgente() throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT * FROM agente";
+        ArrayList<AgenteBean> array = new ArrayList<AgenteBean>();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AgenteBean bean = new AgenteBean();
+                bean.setIdAgente(rs.getInt("idAgente"));
+                bean.setLinkFacebook(rs.getString("linkFacebook"));
+                bean.setLinkTwitter(rs.getString("linkTwitter"));
+                bean.setLinkInstagram(rs.getString("linkInstagram"));
+                bean.setLinkInternet(rs.getString("linkInternet"));
+                bean.setTelefonoFisso(rs.getString("telefonoFisso"));
+                bean.setTelefonoCellulare(rs.getString("telefonoFisso"));
+                bean.setIdUtente(rs.getInt("Utente_idUtente"));
+                array.add(bean);
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+            return array;
+        }
+    }
+
+    @Override
+    public AgenteBean RetrieveAgenteById(int id) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT * FROM agente WHERE idAgente=?";
+        AgenteBean bean = new AgenteBean();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bean.setIdAgente(rs.getInt("idAgente"));
+                bean.setLinkFacebook(rs.getString("linkFacebook"));
+                bean.setLinkTwitter(rs.getString("linkTwitter"));
+                bean.setLinkInstagram(rs.getString("linkInstagram"));
+                bean.setLinkInternet(rs.getString("linkInternet"));
+                bean.setTelefonoFisso(rs.getString("telefonoFisso"));
+                bean.setTelefonoCellulare(rs.getString("telefonoFisso"));
+                bean.setIdUtente(rs.getInt("Utente_idUtente"));
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+            return bean;
         }
     }
 }
