@@ -3,7 +3,8 @@
 <%@ page import="model.utente.UtenteBean" %>
 <%@ page import="model.indirizzo.IndirizzoBean" %>
 <%@ page import="model.multimedia.MultimediaBean" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="UtilityClass.CompositeKeyAgenteCase" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 25/02/2022
@@ -18,6 +19,7 @@
     UtenteBean utenteBean = (UtenteBean) request.getAttribute("utente");
     ArrayList<IndirizzoBean> arrayIndirizzo = (ArrayList<IndirizzoBean>) request.getAttribute("arrayIndirizzo");
     ArrayList<MultimediaBean> arrayMultimedia = (ArrayList<MultimediaBean>) request.getAttribute("arrayMultimedia");
+    CompositeKeyAgenteCase agenteCase = (CompositeKeyAgenteCase) request.getAttribute("agenteCase");
 %>
 
 <head>
