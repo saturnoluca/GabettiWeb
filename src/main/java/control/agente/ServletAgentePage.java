@@ -45,6 +45,7 @@ public class ServletAgentePage extends HttpServlet {
             arrayAppartamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllByAgente(id);
             arrayIndirizzo = (ArrayList<IndirizzoBean>) indirizzoModelDM.RetrieveAll();
             arrayMultimedia = multimediaModelDM.RetrieveAll((ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllAppartamento());
+            agenteCase=modelAgenti.RetrieveSingleAgenteCase(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,7 +54,9 @@ public class ServletAgentePage extends HttpServlet {
         request.setAttribute("arrayAppartamento", arrayAppartamento);
         request.setAttribute("arrayIndirizzo", arrayIndirizzo);
         request.setAttribute("arrayMultimedia", arrayMultimedia);
-
+        request.setAttribute("agenteCase", agenteCase);
+        RequestDispatcher rd = request.getRequestDispatcher("/agente.jsp");
+        rd.forward(request, response);
     }
 
 }
