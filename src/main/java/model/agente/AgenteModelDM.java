@@ -158,4 +158,40 @@ public class AgenteModelDM implements AgenteModel {
             return bean;
         }
     }
+
+    @Override
+    public CompositeKeyAgenteCase RetrieveSingleAgenteCase(int idAgente) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT agente.*, (Select count(*) from appartamento where appartamento.Agente_idAgente=agente.idAgente and agente.idAgente=1) as contaCase FROM mydb.agente order by contaCase desc";
+        CompositeKeyAgenteCase key = new CompositeKeyAgenteCase();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            AgenteBean bean = new AgenteBean();
+            int numCase;
+            bean.setIdAgente(rs.getInt("idAgente"));
+            bean.setLinkFacebook(rs.getString("linkFacebook"));
+            bean.setLinkInstagram(rs.getString("linkInstagram"));
+            bean.setLinkTwitter(rs.getString("linkTwitter"));
+            bean.setLinkInternet(rs.getString("linkInternet"));
+            bean.setTelefonoFisso(rs.getString("telefonoFisso"));
+            bean.setTelefonoCellulare(rs.getString("telefonoCellulare"));
+            bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
+            bean.setIdUtente(rs.getInt("Utente_idUtente"));
+            numCase = rs.getInt("contaCase");
+            key.setBean(bean);
+            key.setContaCase(numCase);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+            return key;
+        }
+    }
 }

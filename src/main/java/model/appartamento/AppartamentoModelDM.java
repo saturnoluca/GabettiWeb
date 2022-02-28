@@ -383,4 +383,89 @@ public class AppartamentoModelDM implements AppartamentoModel {
         return bean;
     }
 
+    @Override
+    public Collection<AppartamentoBean> RetrieveAllByAgente(int idAgente) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
+        String selectSql = "SELECT * FROM appartamento WHERE Agente_idAgente=?"; //restituisce la lista delle case di un agente
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setInt(1, idAgente);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AppartamentoBean bean = new AppartamentoBean();
+                bean.setCamereLetto(rs.getInt("camereLetto"));
+                bean.setCategoria(rs.getString("categoria"));
+                bean.setIdAppartamento(rs.getInt("idAppartamento"));
+                bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
+                bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
+                bean.setSuperficie(rs.getFloat("superficie"));
+                bean.setLocali(rs.getString("locali"));
+                bean.setBagni(rs.getString("bagni"));
+                bean.setPiano(rs.getString("piano"));
+                bean.setRiscaldamento(rs.getString("riscaldamento"));
+                bean.setClasseEnergetica(rs.getString("classeEnergetica"));
+                bean.setTipoVendita(rs.getString("tipoVendita"));
+                bean.setPrezzo(rs.getFloat("prezzo"));
+                bean.setData(rs.getDate("data"));
+                bean.setIdAgente(rs.getInt("Agente_idAgente"));
+                bean.setPostoAuto(rs.getInt("postoAuto"));
+                appartamento.add(bean);
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+        }
+        return appartamento;
+    }
+
+    @Override
+    public Collection<AppartamentoBean> RetrieveAllAppartamento() throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
+        String selectSql = "SELECT * FROM appartamento"; //restituisce la lista delle case
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AppartamentoBean bean = new AppartamentoBean();
+                bean.setCamereLetto(rs.getInt("camereLetto"));
+                bean.setCategoria(rs.getString("categoria"));
+                bean.setIdAppartamento(rs.getInt("idAppartamento"));
+                bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
+                bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
+                bean.setSuperficie(rs.getFloat("superficie"));
+                bean.setLocali(rs.getString("locali"));
+                bean.setBagni(rs.getString("bagni"));
+                bean.setPiano(rs.getString("piano"));
+                bean.setRiscaldamento(rs.getString("riscaldamento"));
+                bean.setClasseEnergetica(rs.getString("classeEnergetica"));
+                bean.setTipoVendita(rs.getString("tipoVendita"));
+                bean.setPrezzo(rs.getFloat("prezzo"));
+                bean.setData(rs.getDate("data"));
+                bean.setIdAgente(rs.getInt("Agente_idAgente"));
+                bean.setPostoAuto(rs.getInt("postoAuto"));
+                appartamento.add(bean);
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+        }
+        return appartamento;
+    }
+
 }

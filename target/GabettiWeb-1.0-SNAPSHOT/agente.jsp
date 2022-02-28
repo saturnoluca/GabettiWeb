@@ -1,5 +1,24 @@
-<!DOCTYPE html>
+<%@ page import="model.appartamento.AppartamentoBean" %>
+<%@ page import="model.agente.AgenteBean" %>
+<%@ page import="model.utente.UtenteBean" %>
+<%@ page import="model.indirizzo.IndirizzoBean" %>
+<%@ page import="model.multimedia.MultimediaBean" %>
+<%@ page import="java.util.ArrayList" %><%--
+  Created by IntelliJ IDEA.
+  User: Luca
+  Date: 25/02/2022
+  Time: 16:57
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<%
+    ArrayList<AppartamentoBean> arrayAppartamento = (ArrayList<AppartamentoBean>) request.getAttribute("arrayAppartamento");
+    AgenteBean agenteBean = (AgenteBean) request.getAttribute("agente");
+    UtenteBean utenteBean = (UtenteBean) request.getAttribute("utente");
+    ArrayList<IndirizzoBean> arrayIndirizzo = (ArrayList<IndirizzoBean>)  request.getAttribute("arrayIndirizzo");
+    ArrayList<MultimediaBean> arrayMultimedia = (ArrayList<MultimediaBean>) request.getAttribute("arrayMultimedia");
+%>
 
 <head>
     <meta charset="utf-8">

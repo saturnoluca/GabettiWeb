@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class IndirizzoModelDM implements IndirizzoModel {
     private DriverManagerConnectionPool dmcp = null;
@@ -75,5 +77,38 @@ public class IndirizzoModelDM implements IndirizzoModel {
             }
         }
         return bean;
+    }
+
+    @Override
+    public Collection<IndirizzoBean> RetrieveAll() throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql="SELECT * FROM indirizzo";
+        ArrayList<IndirizzoBean> array = new ArrayList<IndirizzoBean>();
+        try{
+            connection=dmcp.getConnection();
+            ps= connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                IndirizzoBean bean = new IndirizzoBean();
+                bean.setIdIndirizzo(rs.getInt("idIndirizzo"));
+                bean.setVia(rs.getString("via"));
+                bean.setNumeroCivico(rs.getString("numeroCivico"));
+                bean.setCap(rs.getString("cap"));
+                bean.setCitta(rs.getString("città"));
+                bean.setProvincia(rs.getString("provincia"));
+                bean.setIdAppartamento(rs.getInt("Appartamento_idAppartamento"));
+                array.add(bean);
+            }
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+        }
+        return array;
     }
 }

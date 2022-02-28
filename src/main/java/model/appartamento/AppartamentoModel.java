@@ -24,4 +24,7 @@ public interface AppartamentoModel<T> {
 
     public AppartamentoBean RetrieveById(int id) throws SQLException;
 
+    public Collection<AppartamentoBean> RetrieveAllByAgente(int idAgente) throws SQLException;
+
+    public Collection<AppartamentoBean> RetrieveAllAppartamento() throws SQLException;
 }

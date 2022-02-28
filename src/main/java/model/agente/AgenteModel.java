@@ -13,4 +13,6 @@ public interface AgenteModel<T> {
     public Collection<AgenteBean> RetrieveAgente() throws SQLException;
 
     public AgenteBean RetrieveAgenteById(int id) throws SQLException;
+
+    public CompositeKeyAgenteCase RetrieveSingleAgenteCase(int idAgente) throws SQLException;
 }

@@ -2,8 +2,8 @@ package model.multimedia;
 
 import model.DriverManagerConnectionPool;
 import UtilityClass.UtilityBlob;
+import model.appartamento.AppartamentoBean;
 
-import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class MultimediaModelDM implements MultimediaModel {
     private DriverManagerConnectionPool dmcp = null;
@@ -188,4 +187,20 @@ public class MultimediaModelDM implements MultimediaModel {
             return array;
         }
     }
+
+    @Override
+    public ArrayList<MultimediaBean> RetrieveAll(ArrayList arrayAppartamento) throws SQLException, IOException {
+        ArrayList<AppartamentoBean> arrayList = (ArrayList<AppartamentoBean>) arrayAppartamento;
+        ArrayList<MultimediaBean> arrayMultimedia = new ArrayList<MultimediaBean>();
+        MultimediaModel model = new MultimediaModelDM();
+        MultimediaBean multimediaBean = new MultimediaBean();
+        for(AppartamentoBean appartamentoBean : arrayList){
+            multimediaBean.setFotoString(model.doRetrieveFoto(appartamentoBean.getIdAppartamento()));
+            multimediaBean.setVideo(model.doRetrieveVideo(appartamentoBean.getIdAppartamento()));
+            multimediaBean.setPlanimetria(model.doRetrievePlanimetria(appartamentoBean.getIdAppartamento()));
+            arrayMultimedia.add(multimediaBean);
+        }
+        return arrayMultimedia;
+    }
+
 }
