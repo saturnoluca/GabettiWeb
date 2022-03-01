@@ -16,7 +16,6 @@ body{
 }
 
 .banner-image{
-    background-image: url(/src/main/webapp/images/banner.jpg);
     height: 300px;
     background-repeat: no-repeat;
     background-position: center 0%;
@@ -68,7 +67,7 @@ body{
 
 @media (min-width: 768px) and (max-width: 1023px){
     .banner .banner_wrap{
-        padding-bottom: 0 5rem 5rem;
+        padding: 0 50px 50px;
     }
 }
 

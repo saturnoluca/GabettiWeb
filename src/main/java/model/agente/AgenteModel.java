@@ -14,5 +14,4 @@ public interface AgenteModel<T> {
 
     public AgenteBean RetrieveAgenteById(int id) throws SQLException;
 
-    public CompositeKeyAgenteCase RetrieveSingleAgenteCase(int idAgente) throws SQLException;
 }

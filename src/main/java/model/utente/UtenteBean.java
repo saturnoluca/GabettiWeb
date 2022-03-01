@@ -86,6 +86,21 @@ public class UtenteBean implements Serializable {
         return ruolo;
     }
 
+    @Override
+    public String toString() {
+        return "UtenteBean{" +
+                "idUtente=" + idUtente +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", email='" + email + '\'' +
+                ", foto=" + foto +
+                ", ruolo='" + ruolo + '\'' +
+                ", fotoString='" + fotoString + '\'' +
+                '}';
+    }
+
     public void setRuolo(String ruolo) {
         this.ruolo = ruolo;
     }

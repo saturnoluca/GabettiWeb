@@ -37,7 +37,8 @@ public class ServletAgentePage extends HttpServlet {
         ArrayList<AppartamentoBean> arrayAppartamento = new ArrayList<AppartamentoBean>();
         ArrayList<IndirizzoBean> arrayIndirizzo = new ArrayList<IndirizzoBean>();
         ArrayList<MultimediaBean> arrayMultimedia = new ArrayList<MultimediaBean>();
-        CompositeKeyAgenteCase agenteCase = new CompositeKeyAgenteCase();
+        ArrayList<CompositeKeyAgenteCase> agenteCase = new ArrayList<CompositeKeyAgenteCase>();
+        ArrayList<AppartamentoBean> inEvidenza = new ArrayList<AppartamentoBean>();
 
         try {
             agenteBean = modelAgenti.RetrieveAgenteById(id);
@@ -45,16 +46,20 @@ public class ServletAgentePage extends HttpServlet {
             arrayAppartamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllByAgente(id);
             arrayIndirizzo = (ArrayList<IndirizzoBean>) indirizzoModelDM.RetrieveAll();
             arrayMultimedia = multimediaModelDM.RetrieveAll((ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllAppartamento());
-            agenteCase=modelAgenti.RetrieveSingleAgenteCase(id);
+            agenteCase = (ArrayList<CompositeKeyAgenteCase>) modelAgenti.RetrieveAgenteCase();
+            inEvidenza = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByVisite();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        //System.out.println(agenteCase);
         request.setAttribute("agente", agenteBean);
         request.setAttribute("utente", utenteBean);
         request.setAttribute("arrayAppartamento", arrayAppartamento);
         request.setAttribute("arrayIndirizzo", arrayIndirizzo);
         request.setAttribute("arrayMultimedia", arrayMultimedia);
         request.setAttribute("agenteCase", agenteCase);
+        request.setAttribute("inEvidenza", inEvidenza);
+        System.out.println(arrayAppartamento.get(0));
         RequestDispatcher rd = request.getRequestDispatcher("/agente.jsp");
         rd.forward(request, response);
     }
