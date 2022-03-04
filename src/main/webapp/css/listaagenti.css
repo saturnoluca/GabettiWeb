@@ -611,7 +611,3 @@ aside{
     color: #fff;
 
 }
-
-.list_pagination .list_pagination_button{
-    transition: .2s all linear;
-}
