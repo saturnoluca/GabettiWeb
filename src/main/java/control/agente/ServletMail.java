@@ -26,13 +26,13 @@ public class ServletMail extends HttpServlet {
         AgenteBean agente = new AgenteBean();
         UtenteBean utenteBean = new UtenteBean();
         request.setCharacterEncoding("UTF-8");
-        String nomeGuest = request.getParameter("nome");
-        String emailGuest = request.getParameter("email");
-        String telefonoGuest = request.getParameter("telefono");
-        String messaggioGuest = request.getParameter("messaggio");
+        String nomeGuest = request.getParameter("nomeGuest");
+        String emailGuest = request.getParameter("emailGuest");
+        String telefonoGuest = request.getParameter("telefonoGuest");
+        String messaggioGuest = request.getParameter("messaggioGuest");
         String contenuto="Nome Mittente: "+nomeGuest+"\nEmail Mittente: "+emailGuest+"\nTelefono Mittente: "+telefonoGuest+"\n\n"+messaggioGuest;
         try {
-            agente = modelAgente.RetrieveAgenteById(Integer.parseInt(request.getParameter("id")));
+            agente = modelAgente.RetrieveAgenteById(Integer.parseInt(request.getParameter("agenteid")));
             utenteBean = modelUtent.doRetrieveUtenteByKey(agente.getIdUtente());
         } catch (SQLException e) {
             e.printStackTrace();

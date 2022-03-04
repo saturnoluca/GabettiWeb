@@ -140,6 +140,7 @@ public class UtenteModelDM implements UtenteModel {
                 bean.setUsername(rs.getString("username"));
                 bean.setPassword(rs.getString("password"));
                 bean.setNome(rs.getString("nome"));
+                bean.setEmail(rs.getString("email"));
                 bean.setCognome(rs.getString("cognome"));
                 if (rs.getBlob("foto") != null) {
                     String fotoPart = null;

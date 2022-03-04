@@ -154,7 +154,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
-        String selectSql = "SELECT * FROM appartamento ORDER BY appartamento.visualizzazioni ASC "; //restituisce la lista delle case ordinata per visite in modo crescente
+        String selectSql = "SELECT * FROM appartamento ORDER BY appartamento.visualizzazioni DESC "; //restituisce la lista delle case ordinata per visite in modo crescente
         try {
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(selectSql);
