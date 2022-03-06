@@ -267,7 +267,7 @@
                         <div class="featured_card_priceLabel">
                             <div class="featured_card_price">
                                 <span class="status"><%=appBean.getTipoVendita()%></span>
-                                <p class="price">€<%=appBean.getPrezzo()%>></p>
+                                <p class="price">€<%=appBean.getPrezzo()%></p>
                             </div>
                         </div>
                     </div>
