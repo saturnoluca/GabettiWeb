@@ -53,7 +53,7 @@ public class IndexServlet extends HttpServlet {
         request.setAttribute("appartamenti", appartamenti);
         request.setAttribute("indirizzi", indirizzi);
         request.setAttribute("agenteCase", agenteCase);
-        RequestDispatcher rd = request.getRequestDispatcher("/FinalIndex.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
 
     }

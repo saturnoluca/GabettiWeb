@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Luca
-  Date: 22/02/2022
-  Time: 10:17
+  Date: 06/03/2022
+  Time: 15:13
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,7 +10,10 @@
          import="model.appartamento.AppartamentoBean, java.util.ArrayList" %>
 <%@ page import="model.agente.AgenteBean" %>
 <%@ page import="model.utente.UtenteBean" %>
-<html>
+<%@ page import="model.indirizzo.IndirizzoBean" %>
+<%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
+<html lang="it">
+
 <%
     ArrayList<AppartamentoBean> appartamenti = (ArrayList<AppartamentoBean>) request.getAttribute("appartamenti");
     if (appartamenti == null) {
@@ -29,864 +32,781 @@
         response.sendRedirect(response.encodeRedirectURL("IndexServlet"));
         return;
     }
-%>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Gabetti - Home</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="assets/fonts/line-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/material-icons.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.css">
-    <link rel="stylesheet" href="assets/css/Map-Clean.css">
-    <link rel="stylesheet" href="assets/css/MUSA_carousel-extended-1.css">
-    <link rel="stylesheet" href="assets/css/MUSA_carousel-extended.css">
-    <link rel="stylesheet" href="assets/css/Simple-Slider.css">
-    <link rel="stylesheet" href="assets/css/Slider-Range.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
 
-<body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="56"
-      style="width: 1904px;background: #f7f7f7;">
-<div style="display: block;top: 150px;z-index: 9999999;width: 115px;position: fixed;height: 50px;right: 0;background: #000;margin-right: 2px;">
-    <div class="d-inline-flex align-items-xl-center"
-         style="height: 50px;padding-top: 10px;padding-bottom: 10px;padding-right: 14px;padding-left: 14px;"><span
-            style="width: 24px;height: 24px;"><i class="material-icons"
-                                                 style="width: 24px;height: 24px;font-size: 24px;color: rgb(255,255,255);font-weight: bold;">compare_arrows</i></span><span
-            style="margin-right: 10px;margin-left: 10px;width: auto;height: auto;color: rgb(255,255,255);font-weight: bold;font-size: 20px;">(3/4)</span>
-    </div>
-</div>
-<nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav" style="padding-bottom: 0px;width: 1904px;">
-    <div class="container"><a class="navbar-brand" href="#page-top"
-                              style="width: 130px;height: 130px;background: url(assets/img/gabettinocera.png) no-repeat;background-size: contain;padding-top: 0px;padding-bottom: 0px;margin-right: 0px;"></a>
-        <button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler float-end"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i
-                class="fa fa-bars"></i></button>
-        <div class="collapse navbar-collapse" id="navbarResponsive" style="height: 100px;">
-            <ul class="navbar-nav d-xl-flex ms-auto align-items-xl-center" style="height: 100px;">
-                <li class="nav-item d-xl-flex"><a class="nav-link d-xl-flex align-items-xl-center" href="#features"
-                                                  style="height: 50px;padding: 0px;padding-right: 8px;padding-left: 8px;/*color: rgb(255,255,255);*/font-size: 15px;">Features</a>
+    ArrayList<IndirizzoBean> indirizzi = (ArrayList<IndirizzoBean>) request.getAttribute("indirizzi");
+    if (indirizzi == null) {
+        response.sendRedirect(response.encodeRedirectURL("IndexServlet"));
+        return;
+    }
+
+    ArrayList<CompositeKeyAgenteCase> agenteCase = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("agenteCase");
+%>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="icomoon/style.css">
+
+    <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/index.css">
+
+    <title>Gabetti Nocera | Homepage</title>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg py-3">
+    <div class="container">
+        <a href="#" class="navbar-brand">
+            <img src="images/gabetti.png" width="100" alt="" class="d-inline-block align-middle mr-2">
+        </a>
+
+        <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+
+        <div id="navbarSupportedContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="#" class="nav-link">Home<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item"><a class="nav-link d-xl-flex align-items-xl-center" href="#contact"
-                                        style="height: 50px;padding: 0px;padding-right: 8px;padding-left: 8px;/*color: rgb(255,255,255);*/font-size: 15px;">Contact</a>
-                </li>
+                <li class="nav-item"><a href="#" class="nav-link">Proprietà</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Agenti</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Valutatore</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Contattaci</a></li>
             </ul>
         </div>
     </div>
 </nav>
-<header class="masthead" style="background: url(assets/img/sfondo.png) top / auto no-repeat;">
-    <div class="container h-100">
-        <div class="row h-100">
-            <div class="col-lg-7 my-auto">
-                <div class="mx-auto header-content"
-                     style="height: 510px;padding: 30px;color: rgb(0,0,0);background: #ffffff;border-radius: 7px;">
-                    <h1 class="mb-5" style="margin: 0px;margin-bottom: 20px;">Ti chiamiamo noi!</h1>
-                    <form class="mx-auto" style="width: 400px;height: 350px;">
-                        <div class="row d-xl-flex justify-content-xl-center"
-                             style="width: 400px;height: 40px;margin-bottom: 15px;">
-                            <div class="col" style="height: 40px;"><input class="form-control" type="text"
-                                                                          placeholder="Il tuo nome" name="NameInput">
-                            </div>
-                            <div class="col" style="height: 40px;"><input class="form-control" type="text"
-                                                                          placeholder="Il tuo numero"></div>
-                        </div>
-                        <div class="row" style="width: 400px;height: 40px;margin-bottom: 15px;">
-                            <div class="col" style="height: 40px;"><input class="form-control" type="text"
-                                                                          placeholder="La tua e-mail"></div>
-                        </div>
-                        <div class="row" style="width: 400px;height: 80px;margin-bottom: 15px;">
-                            <div class="col" style="height: 80px;"><textarea class="form-control"
-                                                                             style="height: 80px;"></textarea></div>
-                        </div>
-                        <div class="row" style="margin-bottom: 10px;">
-                            <div class="col">
-                                <div style="margin-bottom: 0px;padding-bottom: 0px;"><span>Accetta le condizioni</span>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox"
-                                                                   id="formCheck-2"><label class="form-check-label"
-                                                                                           for="formCheck-2">I consent
-                                        to having this website store my submitted information so they can respond to my
-                                        inquiry.<br></label></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 10px;">
-                            <div class="col"><a
-                                    class="btn btn-outline-warning d-xl-flex justify-content-xl-center btn-xl"
-                                    role="button" href="#download" style="background: #b20135;border-radius: 0px;">Start
-                                Now for Free!</a></div>
-                        </div>
-                    </form>
+<header class="master">
+    <section class="homepage_sfondo" style="background-image: url(images/sfondo.jpg); background-size: cover;">
+        <div class="wrapper_homepage_sfondo">
+            <div class="wrapper_content">
+                <p class="sfondo_title">Compra o vendi</p>
+                <h3 class="sfondo_slogan">Vuoi acquistare una nuovo immobile o venderne uno esistente? Gabetti ti offre
+                    una soluzione fantastica!</h3>
+                <div class="sfondo_choice_button">
+                    <a href="" class="button_valutatore">Valuta un immobile</a>
+                    <a href="" class="button_cerca">Cerca un immobile</a>
                 </div>
             </div>
         </div>
-        <div class="row" style="height: 95px;">
-            <div class="col">
-                <form style="height: 95px;margin: 0px;margin-top: -50px;">
-                    <div class="row" style="height: 95px;">
-                        <div class="col-md-3" style="padding-right: 0px;padding-left: 0px;"><select class="form-select"
-                                                                                                    style="height: 95px;">
-                            <optgroup label="This is a group">
-                                <option value="12" selected="">This is item 1</option>
-                                <option value="13">This is item 2</option>
-                                <option value="14">This is item 3</option>
-                            </optgroup>
-                        </select></div>
-                        <div class="col-md-3" style="padding-right: 0px;padding-left: 0px;"><select class="form-select"
-                                                                                                    style="height: 95px;">
-                            <optgroup label="This is a group">
-                                <option value="12" selected="">This is item 1</option>
-                                <option value="13">This is item 2</option>
-                                <option value="14">This is item 3</option>
-                            </optgroup>
-                        </select></div>
-                        <div class="col-md-3" style="padding-right: 0px;padding-left: 0px;"><select class="form-select"
-                                                                                                    style="height: 95px;">
-                            <optgroup label="This is a group">
-                                <option value="12" selected="">This is item 1</option>
-                                <option value="13">This is item 2</option>
-                                <option value="14">This is item 3</option>
-                            </optgroup>
-                        </select></div>
-                        <div class="col-md-3"
-                             style="padding-right: 0px;padding-left: 0px;background: #93002b;width: 100px;">
-                            <div class="align-content-center">
-                                <button class="btn btn-lg" type="button"
-                                        style="border-radius: 0px;width: 100px;height: 95px;padding: 0px;"><i
-                                        class="fas fa-search-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="col" style="padding: 0px;background: #b20135;width: 230px;">
-                            <div style="width: 230px;">
-                                <button class="btn btn-lg" type="button"
-                                        style="height: 95px;width: 230px;border-radius: 0px;border-color: rgba(255,255,255,0);padding: 0px;padding-top: 0px;">
-                                    <i class="fa fa-search"></i><span>Cerca</span></button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</header>
-<section data-aos="fade-up" data-aos-once="true" id="features" class="features"
-         style="background: rgb(255,255,255);margin-top: 50px;width: 1904px;">
-    <div class="container">
-        <div class="text-center section-heading" style="margin-bottom: 40px;">
-            <h2 style="color: #b20135;">Proprietà</h2>
-            <p class="text-muted">Dai un'occhiata ad alcune delle nostre ultime proprietà.<br></p>
-            <hr>
-        </div>
-        <div class="row" style="height: 600px;">
-            <%for (int i = 0; i < appartamenti.size(); i++) {%>
-            <div class="col-md-4 col-xxl-4 offset-xxl-0"
-                 style="height: 580px;padding: 0px;padding-right: 0px;padding-left: 0px;">
-                <div style="width: 420px;height: 560px;padding-top: 0px;margin: 10px;margin-top: 10px;">
-                    <div class="d-xxl-flex align-items-xxl-end"
-                         style="background: url(assets/img/Risorsa1-100.jpg) no-repeat;background-size: contain;height: 237px;">
-                        <div style="padding-top: 0px;width: 420px;">
-                            <div class="d-inline-block" style="width: 220px;height: 70px;font-size: 45px;"><img
-                                    style="height: 60px;margin-left: 10px;margin-top: 0px;padding-bottom: 0px;margin-bottom: 5px;border-radius: 50px;"
-                                    src="assets/img/image.jpg">
-                                <div class="d-inline float-end"
-                                     style="height: 70px;width: 148px;margin-top: 0px;margin-left: 0px;padding-left: 5px;padding-top: 10px;padding-bottom: 0px;">
-                                    <span class="d-table-row"
-                                          style="font-size: 14px;color: rgb(255,255,255);font-weight: bold;"><%
-                                        for (AgenteBean bean : agenti) {
-                                            if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
-                                                for (UtenteBean utenteBean1 : utente) {
-                                                    if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                    %><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%><%
-                                                    }
-                                                }
-                                            }
-                                        }%></span><span
-                                        class="d-table-row" style="font-size: 14px;color: rgb(255,255,255);">James Estate Agents</span>
-                                </div>
-                            </div>
-                            <div class="text-truncate text-center d-inline-block float-end"
-                                 style="height: 70px;padding: 0px;padding-top: 0px;font-size: 40px;padding-left: 0px;width: 160px;margin: 0px;margin-left: 0px;text-align: left;color: rgb(255,255,255);">
-                                <span style="font-size: 20px;color: rgb(255,255,255);background: rgba(0,0,0,0.72);border-radius: 4px;border-width: 0px;padding-left: 2px;padding-bottom: 2px;padding-right: 2px;padding-top: 2px;"><%=appartamenti.get(i).getTipoVendita()%></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="height: 323px;color: rgb(0,0,0);padding: 30px;background: #ffffff;">
-                        <h1 style="font-family: Lato, sans-serif;font-size: 19px;font-weight: bold;height: 40px;margin-bottom: 0px;">
-                            <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%></a>
-                        </h1>
-                        <div style="height: 21px;"><i class="fa fa-map-marker" style="color: rgb(31,121,184);"></i><span
-                                style="color: rgb(31,121,184);text-decoration:  underline;">Nocera Inferiore(SA), ITALIA</span>
-                        </div>
-                        <div style="height: 20px;"><span
-                                style="height: 20px;">Data aggiunta: <%=appartamenti.get(i).getData().toString()%></span>
-                        </div>
-                        <div style="height: 74px;margin-top: 20px;">
-                            <div class="d-inline-block float-start"
-                                 style="width: 78px;height: 74px;margin-left: 0px;margin-right: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                <span class="d-table-row"
-                                      style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Letti</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i class="la la-bed"
-                                                                                           style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;"><%=appartamenti.get(i).getCamereLetto()%></span>
-                                </div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 84px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Bagni</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i
-                                        class="fas fa-shower d-inline-block"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;"><%=appartamenti.get(i).getBagni()%></span>
-                                </div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 121px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Area</span>
-                                <div class="d-inline-block float-start"
-                                     style="width: 121px;height: 30px;padding-top: 0px;"><i
-                                        class="icon ion-android-checkbox-outline-blank d-inline-flex float-start"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;"><%=appartamenti.get(i).getSuperficie()%></span><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;width: 25.6719px;">mq</span></div>
-                            </div>
-                        </div>
-                        <div style="height: 80px;">
-                            <div class="d-inline-block float-start" style="width: 150px;height: 80px;"><span
-                                    class="d-table-row"><%=appartamenti.get(i).getTipoVendita()%></span><span
-                                    style="font-size: 30px;color: rgb(178,1,53);font-weight: bold;">€ <%=appartamenti.get(i).getPrezzo()%></span>
-                            </div>
-                            <div class="d-inline-block float-end d-xxl-flex align-items-xxl-center"
-                                 style="width: 87px;height: 80px;"><i class="fa fa-heart d-inline-block float-start"
-                                                                      style="font-size: 35px;color: rgb(128,128,128);"></i><i
-                                    class="material-icons d-inline-block float-end"
-                                    style="font-size: 35px;padding-left: 17px;color: rgb(128,128,128);">compare_arrows</i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <%}%>
-        </div>
-    </div>
-</section>
-<section class="d-xxl-flex sfondo" data-aos="fade-up" data-aos-once="true" id="compravendi"
-         style="overflow: hidden;position: relative;padding-top: 0px;padding-bottom: 0px;width: 1904px;">
-    <div class="diagonaltop"></div>
-    <div class="compra" style="width: 1920px;height: 700px;">
-        <div class="justify-content-center align-items-center align-content-center align-self-center"
-             style="width: 1000px;height: 250px;">
-            <h1 class="align-self-center" style="margin-bottom: 10px;">Vuoi acquistare una nuova proprietà o venderne
-                una esistente?&nbsp; </h1>
-            <h1 class="align-self-center" style="margin-top: 10px;margin-bottom: 10px;">Gabetti fa al caso tuo!</h1>
-            <div class="d-flex d-lg-flex justify-content-lg-center" style="height: 60px;margin-top: 20px;">
-                <button class="btn btn-primary" type="button"
-                        style="background: #b20135;border-width: 0px;border-radius: 0px;margin-right: 10px;">richiesta
-                    valutazione
-                </button>
-                <button class="btn btn-primary" type="button"
-                        style="background: rgba(178,1,53,0);border-radius: 0px;margin-right: 0px;margin-left: 10px;border-width: 2px;border-color: #b20135;width: 258.219px;">
-                    cerca appartamenti
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="diagonalbot" style="position: absolute;bottom: 0;"></div>
-</section>
-<section data-aos="fade-up" data-aos-once="true" id="features-1" class="features"
-         style="background: rgb(255,255,255);position: relative;overflow: hidden;">
-    <div class="diagonalsale"></div>
-    <div class="container">
-        <div class="text-center section-heading" style="margin-bottom: 40px;">
-            <h2 style="color: #b20135;">Proprietà in vendita</h2>
-            <p class="text-muted">Dai un'occhiata ad alcune delle nostre ultime proprietà in vendita.<br></p>
-            <hr>
-        </div>
-        <div class="row" style="height: 600px;">
-            <div class="col-md-4 col-xxl-4 offset-xxl-0"
-                 style="height: 580px;padding: 0px;padding-right: 0px;padding-left: 0px;">
-                <div style="width: 420px;height: 560px;padding-top: 0px;margin: 10px;margin-top: 10px;">
-                    <div class="d-xxl-flex align-items-xxl-end"
-                         style="background: url(assets/img/Risorsa1-100.jpg) no-repeat;background-size: contain;height: 237px;">
-                        <div style="padding-top: 0px;width: 420px;">
-                            <div class="d-inline-block" style="width: 220px;height: 70px;font-size: 45px;"><img
-                                    style="height: 60px;margin-left: 10px;margin-top: 0px;padding-bottom: 0px;margin-bottom: 5px;border-radius: 50px;"
-                                    src="assets/img/image.jpg">
-                                <div class="d-inline float-end"
-                                     style="height: 70px;width: 148px;margin-top: 0px;margin-left: 0px;padding-left: 5px;padding-top: 10px;padding-bottom: 0px;">
-                                    <span class="d-table-row"
-                                          style="font-size: 14px;color: rgb(255,255,255);font-weight: bold;">Nathan James</span><span
-                                        class="d-table-row" style="font-size: 14px;color: rgb(255,255,255);">James Estate Agents</span>
-                                </div>
-                            </div>
-                            <div class="text-truncate text-center d-inline-block float-end"
-                                 style="height: 70px;padding: 0px;padding-top: 0px;font-size: 40px;padding-left: 0px;width: 160px;margin: 0px;margin-left: 0px;text-align: left;color: rgb(255,255,255);">
-                                <span style="font-size: 20px;color: rgb(255,255,255);background: rgba(0,0,0,0.72);border-radius: 4px;border-width: 0px;padding-left: 2px;padding-bottom: 2px;padding-right: 2px;padding-top: 2px;">In Vendita</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="height: 323px;color: rgb(0,0,0);padding: 30px;background: #ffffff;">
-                        <h1 style="font-family: Lato, sans-serif;font-size: 19px;font-weight: bold;height: 40px;margin-bottom: 0px;">
-                            Villa in Coral Gables</h1>
-                        <div style="height: 21px;"><i class="fa fa-map-marker" style="color: rgb(31,121,184);"></i><span
-                                style="color: rgb(31,121,184);text-decoration:  underline;">Nocera Inferiore(SA), ITALIA</span>
-                        </div>
-                        <div style="height: 20px;"><span style="height: 20px;">Data aggiunta: 02/02/2022</span></div>
-                        <div style="height: 74px;margin-top: 20px;">
-                            <div class="d-inline-block float-start"
-                                 style="width: 78px;height: 74px;margin-left: 0px;margin-right: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                <span class="d-table-row"
-                                      style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Letti</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i class="la la-bed"
-                                                                                           style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 84px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Bagni</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i
-                                        class="fas fa-shower d-inline-block"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 121px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Area</span>
-                                <div class="d-inline-block float-start"
-                                     style="width: 121px;height: 30px;padding-top: 0px;"><i
-                                        class="icon ion-android-checkbox-outline-blank d-inline-flex float-start"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">100</span><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;width: 25.6719px;">mq</span></div>
-                            </div>
-                        </div>
-                        <div style="height: 80px;">
-                            <div class="d-inline-block float-start" style="width: 150px;height: 80px;"><span
-                                    class="d-table-row">In vendita</span><span
-                                    style="font-size: 30px;color: rgb(178,1,53);font-weight: bold;">€ 100.000</span>
-                            </div>
-                            <div class="d-inline-block float-end d-xxl-flex align-items-xxl-center"
-                                 style="width: 87px;height: 80px;"><i class="fa fa-heart d-inline-block float-start"
-                                                                      style="font-size: 35px;color: rgb(128,128,128);"></i><i
-                                    class="material-icons d-inline-block float-end"
-                                    style="font-size: 35px;padding-left: 17px;color: rgb(128,128,128);">compare_arrows</i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4" style="height: 580px;padding: 0px;">
-                <div style="width: 420px;height: 560px;padding-top: 0px;margin: 10px;margin-top: 10px;">
-                    <div class="d-xxl-flex align-items-xxl-end"
-                         style="background: url(assets/img/Risorsa1-100.jpg) no-repeat;background-size: contain;height: 237px;">
-                        <div style="padding-top: 0px;width: 420px;">
-                            <div class="d-inline-block" style="width: 220px;height: 70px;font-size: 45px;"><img
-                                    style="height: 60px;margin-left: 10px;margin-top: 0px;padding-bottom: 0px;margin-bottom: 5px;border-radius: 50px;"
-                                    src="assets/img/image.jpg">
-                                <div class="d-inline float-end"
-                                     style="height: 70px;width: 148px;margin-top: 0px;margin-left: 0px;padding-left: 5px;padding-top: 10px;padding-bottom: 0px;">
-                                    <span class="d-table-row"
-                                          style="font-size: 14px;color: rgb(255,255,255);font-weight: bold;">Nathan James</span><span
-                                        class="d-table-row" style="font-size: 14px;color: rgb(255,255,255);">James Estate Agents</span>
-                                </div>
-                            </div>
-                            <div class="text-truncate text-center d-inline-block float-end"
-                                 style="height: 70px;padding: 0px;padding-top: 0px;font-size: 40px;padding-left: 0px;width: 160px;margin: 0px;margin-left: 0px;text-align: left;color: rgb(255,255,255);">
-                                <span style="font-size: 20px;color: rgb(255,255,255);background: rgba(0,0,0,0.72);border-radius: 4px;border-width: 0px;padding-left: 2px;padding-bottom: 2px;padding-right: 2px;padding-top: 2px;">In Vendita</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="height: 323px;color: rgb(0,0,0);padding: 30px;background: #ffffff;">
-                        <h1 style="font-family: Lato, sans-serif;font-size: 19px;font-weight: bold;height: 40px;margin-bottom: 0px;">
-                            Villa in Coral Gables</h1>
-                        <div style="height: 21px;"><i class="fa fa-map-marker" style="color: rgb(31,121,184);"></i><span
-                                style="color: rgb(31,121,184);text-decoration:  underline;">Nocera Inferiore(SA), ITALIA</span>
-                        </div>
-                        <div style="height: 20px;"><span style="height: 20px;">Data aggiunta: 02/02/2022</span></div>
-                        <div style="height: 74px;margin-top: 20px;">
-                            <div class="d-inline-block float-start"
-                                 style="width: 78px;height: 74px;margin-left: 0px;margin-right: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                <span class="d-table-row"
-                                      style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Letti</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i class="la la-bed"
-                                                                                           style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 84px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Bagni</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i
-                                        class="fas fa-shower d-inline-block"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 121px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Area</span>
-                                <div class="d-inline-block float-start"
-                                     style="width: 121px;height: 30px;padding-top: 0px;"><i
-                                        class="icon ion-android-checkbox-outline-blank d-inline-flex float-start"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">100</span><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;width: 25.6719px;">mq</span></div>
-                            </div>
-                        </div>
-                        <div style="height: 80px;">
-                            <div class="d-inline-block float-start" style="width: 150px;height: 80px;"><span
-                                    class="d-table-row">In vendita</span><span
-                                    style="font-size: 30px;color: rgb(178,1,53);font-weight: bold;">€ 100.000</span>
-                            </div>
-                            <div class="d-inline-block float-end d-xxl-flex align-items-xxl-center"
-                                 style="width: 87px;height: 80px;"><i class="fa fa-heart d-inline-block float-start"
-                                                                      style="font-size: 35px;color: rgb(128,128,128);"></i><i
-                                    class="material-icons d-inline-block float-end"
-                                    style="font-size: 35px;padding-left: 17px;color: rgb(128,128,128);">compare_arrows</i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4" style="height: 580px;padding: 0px;">
-                <div style="width: 420px;height: 560px;padding-top: 0px;margin: 10px;margin-top: 10px;">
-                    <div class="d-xxl-flex align-items-xxl-end"
-                         style="background: url(assets/img/Risorsa1-100.jpg) no-repeat;background-size: contain;height: 237px;">
-                        <div style="padding-top: 0px;width: 420px;">
-                            <div class="d-inline-block" style="width: 220px;height: 70px;font-size: 45px;"><img
-                                    style="height: 60px;margin-left: 10px;margin-top: 0px;padding-bottom: 0px;margin-bottom: 5px;border-radius: 50px;"
-                                    src="assets/img/image.jpg">
-                                <div class="d-inline float-end"
-                                     style="height: 70px;width: 148px;margin-top: 0px;margin-left: 0px;padding-left: 5px;padding-top: 10px;padding-bottom: 0px;">
-                                    <span class="d-table-row"
-                                          style="font-size: 14px;color: rgb(255,255,255);font-weight: bold;">Nathan James</span><span
-                                        class="d-table-row" style="font-size: 14px;color: rgb(255,255,255);">James Estate Agents</span>
-                                </div>
-                            </div>
-                            <div class="text-truncate text-center d-inline-block float-end"
-                                 style="height: 70px;padding: 0px;padding-top: 0px;font-size: 40px;padding-left: 0px;width: 160px;margin: 0px;margin-left: 0px;text-align: left;color: rgb(255,255,255);">
-                                <span style="font-size: 20px;color: rgb(255,255,255);background: rgba(0,0,0,0.72);border-radius: 4px;border-width: 0px;padding-left: 2px;padding-bottom: 2px;padding-right: 2px;padding-top: 2px;">In Vendita</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="height: 323px;color: rgb(0,0,0);padding: 30px;background: #ffffff;">
-                        <h1 style="font-family: Lato, sans-serif;font-size: 19px;font-weight: bold;height: 40px;margin-bottom: 0px;">
-                            Villa in Coral Gables</h1>
-                        <div style="height: 21px;"><i class="fa fa-map-marker" style="color: rgb(31,121,184);"></i><span
-                                style="color: rgb(31,121,184);text-decoration:  underline;">Nocera Inferiore(SA), ITALIA</span>
-                        </div>
-                        <div style="height: 20px;"><span style="height: 20px;">Data aggiunta: 02/02/2022</span></div>
-                        <div style="height: 74px;margin-top: 20px;">
-                            <div class="d-inline-block float-start"
-                                 style="width: 78px;height: 74px;margin-left: 0px;margin-right: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                <span class="d-table-row"
-                                      style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Letti</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i class="la la-bed"
-                                                                                           style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 84px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Bagni</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i
-                                        class="fas fa-shower d-inline-block"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 121px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Area</span>
-                                <div class="d-inline-block float-start"
-                                     style="width: 121px;height: 30px;padding-top: 0px;"><i
-                                        class="icon ion-android-checkbox-outline-blank d-inline-flex float-start"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">100</span><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;width: 25.6719px;">mq</span></div>
-                            </div>
-                        </div>
-                        <div style="height: 80px;">
-                            <div class="d-inline-block float-start" style="width: 150px;height: 80px;"><span
-                                    class="d-table-row">In vendita</span><span
-                                    style="font-size: 30px;color: rgb(178,1,53);font-weight: bold;">€ 100.000</span>
-                            </div>
-                            <div class="d-inline-block float-end d-xxl-flex align-items-xxl-center"
-                                 style="width: 87px;height: 80px;"><i class="fa fa-heart d-inline-block float-start"
-                                                                      style="font-size: 35px;color: rgb(128,128,128);"></i><i
-                                    class="material-icons d-inline-block float-end"
-                                    style="font-size: 35px;padding-left: 17px;color: rgb(128,128,128);">compare_arrows</i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section data-aos="fade-up" data-aos-once="true" id="features-2" class="features"
-         style="background: #f7f7f7;border-top-right-radius: 0px;color: #212529;position: relative;overflow: hidden;padding-top: 0px;">
-    <div class="diagonalrent"></div>
-    <div class="container" style="padding-top: 100px;">
-        <div class="text-center section-heading" style="margin-bottom: 40px;">
-            <h2 style="color: #b20135;">Proprietà in affitto</h2>
-            <p class="text-muted">Dai un'occhiata ad alcune delle nostre ultime proprietà in affitto.<br></p>
-            <hr>
-        </div>
-        <div class="row" style="height: 600px;">
-            <div class="col-md-4 col-xxl-4 offset-xxl-0"
-                 style="height: 580px;padding: 0px;padding-right: 0px;padding-left: 0px;">
-                <div style="width: 420px;height: 560px;padding-top: 0px;margin: 10px;margin-top: 10px;">
-                    <div class="d-xxl-flex align-items-xxl-end"
-                         style="background: url(assets/img/Risorsa1-100.jpg) no-repeat;background-size: contain;height: 237px;">
-                        <div style="padding-top: 0px;width: 420px;">
-                            <div class="d-inline-block" style="width: 220px;height: 70px;font-size: 45px;"><img
-                                    style="height: 60px;margin-left: 10px;margin-top: 0px;padding-bottom: 0px;margin-bottom: 5px;border-radius: 50px;"
-                                    src="assets/img/image.jpg">
-                                <div class="d-inline float-end"
-                                     style="height: 70px;width: 148px;margin-top: 0px;margin-left: 0px;padding-left: 5px;padding-top: 10px;padding-bottom: 0px;">
-                                    <span class="d-table-row"
-                                          style="font-size: 14px;color: rgb(255,255,255);font-weight: bold;">Nathan James</span><span
-                                        class="d-table-row" style="font-size: 14px;color: rgb(255,255,255);">James Estate Agents</span>
-                                </div>
-                            </div>
-                            <div class="text-truncate text-center d-inline-block float-end"
-                                 style="height: 70px;padding: 0px;padding-top: 0px;font-size: 40px;padding-left: 0px;width: 160px;margin: 0px;margin-left: 0px;text-align: left;color: rgb(255,255,255);">
-                                <span style="font-size: 20px;color: rgb(255,255,255);background: rgba(0,0,0,0.72);border-radius: 4px;border-width: 0px;padding-left: 2px;padding-bottom: 2px;padding-right: 2px;padding-top: 2px;">In Vendita</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="height: 323px;color: rgb(0,0,0);padding: 30px;background: #ffffff;">
-                        <h1 style="font-family: Lato, sans-serif;font-size: 19px;font-weight: bold;height: 40px;margin-bottom: 0px;">
-                            Villa in Coral Gables</h1>
-                        <div style="height: 21px;"><i class="fa fa-map-marker" style="color: rgb(31,121,184);"></i><span
-                                style="color: rgb(31,121,184);text-decoration:  underline;">Nocera Inferiore(SA), ITALIA</span>
-                        </div>
-                        <div style="height: 20px;"><span style="height: 20px;">Data aggiunta: 02/02/2022</span></div>
-                        <div style="height: 74px;margin-top: 20px;">
-                            <div class="d-inline-block float-start"
-                                 style="width: 78px;height: 74px;margin-left: 0px;margin-right: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                <span class="d-table-row"
-                                      style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Letti</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i class="la la-bed"
-                                                                                           style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 84px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Bagni</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i
-                                        class="fas fa-shower d-inline-block"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 121px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Area</span>
-                                <div class="d-inline-block float-start"
-                                     style="width: 121px;height: 30px;padding-top: 0px;"><i
-                                        class="icon ion-android-checkbox-outline-blank d-inline-flex float-start"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">100</span><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;width: 25.6719px;">mq</span></div>
-                            </div>
-                        </div>
-                        <div style="height: 80px;">
-                            <div class="d-inline-block float-start" style="width: 150px;height: 80px;"><span
-                                    class="d-table-row">In vendita</span><span
-                                    style="font-size: 30px;color: rgb(178,1,53);font-weight: bold;">€ 100.000</span>
-                            </div>
-                            <div class="d-inline-block float-end d-xxl-flex align-items-xxl-center"
-                                 style="width: 87px;height: 80px;"><i class="fa fa-heart d-inline-block float-start"
-                                                                      style="font-size: 35px;color: rgb(128,128,128);"></i><i
-                                    class="material-icons d-inline-block float-end"
-                                    style="font-size: 35px;padding-left: 17px;color: rgb(128,128,128);">compare_arrows</i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4" style="height: 580px;padding: 0px;">
-                <div style="width: 420px;height: 560px;padding-top: 0px;margin: 10px;margin-top: 10px;">
-                    <div class="d-xxl-flex align-items-xxl-end"
-                         style="background: url(assets/img/Risorsa1-100.jpg) no-repeat;background-size: contain;height: 237px;">
-                        <div style="padding-top: 0px;width: 420px;">
-                            <div class="d-inline-block" style="width: 220px;height: 70px;font-size: 45px;"><img
-                                    style="height: 60px;margin-left: 10px;margin-top: 0px;padding-bottom: 0px;margin-bottom: 5px;border-radius: 50px;"
-                                    src="assets/img/image.jpg">
-                                <div class="d-inline float-end"
-                                     style="height: 70px;width: 148px;margin-top: 0px;margin-left: 0px;padding-left: 5px;padding-top: 10px;padding-bottom: 0px;">
-                                    <span class="d-table-row"
-                                          style="font-size: 14px;color: rgb(255,255,255);font-weight: bold;">Nathan James</span><span
-                                        class="d-table-row" style="font-size: 14px;color: rgb(255,255,255);">James Estate Agents</span>
-                                </div>
-                            </div>
-                            <div class="text-truncate text-center d-inline-block float-end"
-                                 style="height: 70px;padding: 0px;padding-top: 0px;font-size: 40px;padding-left: 0px;width: 160px;margin: 0px;margin-left: 0px;text-align: left;color: rgb(255,255,255);">
-                                <span style="font-size: 20px;color: rgb(255,255,255);background: rgba(0,0,0,0.72);border-radius: 4px;border-width: 0px;padding-left: 2px;padding-bottom: 2px;padding-right: 2px;padding-top: 2px;">In Vendita</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="height: 323px;color: rgb(0,0,0);padding: 30px;background: #ffffff;">
-                        <h1 style="font-family: Lato, sans-serif;font-size: 19px;font-weight: bold;height: 40px;margin-bottom: 0px;">
-                            Villa in Coral Gables</h1>
-                        <div style="height: 21px;"><i class="fa fa-map-marker" style="color: rgb(31,121,184);"></i><span
-                                style="color: rgb(31,121,184);text-decoration:  underline;">Nocera Inferiore(SA), ITALIA</span>
-                        </div>
-                        <div style="height: 20px;"><span style="height: 20px;">Data aggiunta: 02/02/2022</span></div>
-                        <div style="height: 74px;margin-top: 20px;">
-                            <div class="d-inline-block float-start"
-                                 style="width: 78px;height: 74px;margin-left: 0px;margin-right: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                <span class="d-table-row"
-                                      style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Letti</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i class="la la-bed"
-                                                                                           style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 84px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Bagni</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i
-                                        class="fas fa-shower d-inline-block"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 121px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Area</span>
-                                <div class="d-inline-block float-start"
-                                     style="width: 121px;height: 30px;padding-top: 0px;"><i
-                                        class="icon ion-android-checkbox-outline-blank d-inline-flex float-start"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">100</span><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;width: 25.6719px;">mq</span></div>
-                            </div>
-                        </div>
-                        <div style="height: 80px;">
-                            <div class="d-inline-block float-start" style="width: 150px;height: 80px;"><span
-                                    class="d-table-row">In vendita</span><span
-                                    style="font-size: 30px;color: rgb(178,1,53);font-weight: bold;">€ 100.000</span>
-                            </div>
-                            <div class="d-inline-block float-end d-xxl-flex align-items-xxl-center"
-                                 style="width: 87px;height: 80px;"><i class="fa fa-heart d-inline-block float-start"
-                                                                      style="font-size: 35px;color: rgb(128,128,128);"></i><i
-                                    class="material-icons d-inline-block float-end"
-                                    style="font-size: 35px;padding-left: 17px;color: rgb(128,128,128);">compare_arrows</i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4" style="height: 580px;padding: 0px;">
-                <div style="width: 420px;height: 560px;padding-top: 0px;margin: 10px;margin-top: 10px;">
-                    <div class="d-xxl-flex align-items-xxl-end"
-                         style="background: url(assets/img/Risorsa1-100.jpg) no-repeat;background-size: contain;height: 237px;">
-                        <div style="padding-top: 0px;width: 420px;">
-                            <div class="d-inline-block" style="width: 220px;height: 70px;font-size: 45px;"><img
-                                    style="height: 60px;margin-left: 10px;margin-top: 0px;padding-bottom: 0px;margin-bottom: 5px;border-radius: 50px;"
-                                    src="assets/img/image.jpg">
-                                <div class="d-inline float-end"
-                                     style="height: 70px;width: 148px;margin-top: 0px;margin-left: 0px;padding-left: 5px;padding-top: 10px;padding-bottom: 0px;">
-                                    <span class="d-table-row"
-                                          style="font-size: 14px;color: rgb(255,255,255);font-weight: bold;">Nathan James</span><span
-                                        class="d-table-row" style="font-size: 14px;color: rgb(255,255,255);">James Estate Agents</span>
-                                </div>
-                            </div>
-                            <div class="text-truncate text-center d-inline-block float-end"
-                                 style="height: 70px;padding: 0px;padding-top: 0px;font-size: 40px;padding-left: 0px;width: 160px;margin: 0px;margin-left: 0px;text-align: left;color: rgb(255,255,255);">
-                                <span style="font-size: 20px;color: rgb(255,255,255);background: rgba(0,0,0,0.72);border-radius: 4px;border-width: 0px;padding-left: 2px;padding-bottom: 2px;padding-right: 2px;padding-top: 2px;">In Vendita</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="height: 323px;color: rgb(0,0,0);padding: 30px;background: #ffffff;">
-                        <h1 style="font-family: Lato, sans-serif;font-size: 19px;font-weight: bold;height: 40px;margin-bottom: 0px;">
-                            Villa in Coral Gables</h1>
-                        <div style="height: 21px;"><i class="fa fa-map-marker" style="color: rgb(31,121,184);"></i><span
-                                style="color: rgb(31,121,184);text-decoration:  underline;">Nocera Inferiore(SA), ITALIA</span>
-                        </div>
-                        <div style="height: 20px;"><span style="height: 20px;">Data aggiunta: 02/02/2022</span></div>
-                        <div style="height: 74px;margin-top: 20px;">
-                            <div class="d-inline-block float-start"
-                                 style="width: 78px;height: 74px;margin-left: 0px;margin-right: 0px;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                <span class="d-table-row"
-                                      style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Letti</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i class="la la-bed"
-                                                                                           style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 84px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Bagni</span>
-                                <div style="width: 78px;height: 30px;padding-top: 0px;"><i
-                                        class="fas fa-shower d-inline-block"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-end"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">3</span></div>
-                            </div>
-                            <div class="d-inline-block float-start" style="width: 121px;height: 74px;"><span
-                                    class="d-table-row"
-                                    style="font-size: 15px;font-weight: bold;margin-bottom: 0px;padding-bottom: 0px;">Area</span>
-                                <div class="d-inline-block float-start"
-                                     style="width: 121px;height: 30px;padding-top: 0px;"><i
-                                        class="icon ion-android-checkbox-outline-blank d-inline-flex float-start"
-                                        style="font-size: 27px;width: 25px;height: 25px;"></i><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;font-weight: bold;">100</span><span
-                                        class="d-inline-block float-start"
-                                        style="padding-right: 17px;height: 30px;width: 25.6719px;">mq</span></div>
-                            </div>
-                        </div>
-                        <div style="height: 80px;">
-                            <div class="d-inline-block float-start" style="width: 150px;height: 80px;"><span
-                                    class="d-table-row">In vendita</span><span
-                                    style="font-size: 30px;color: rgb(178,1,53);font-weight: bold;">€ 100.000</span>
-                            </div>
-                            <div class="d-inline-block float-end d-xxl-flex align-items-xxl-center"
-                                 style="width: 87px;height: 80px;"><i class="fa fa-heart d-inline-block float-start"
-                                                                      style="font-size: 35px;color: rgb(128,128,128);"></i><i
-                                    class="material-icons d-inline-block float-end"
-                                    style="font-size: 35px;padding-left: 17px;color: rgb(128,128,128);">compare_arrows</i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section id="features-3" class="features"
-         style="background: rgb(255,255,255);position: relative;border-top-right-radius: 0px;padding-top: 0px;padding-bottom: 100px;overflow: hidden;color: #212529;">
-    <div class="diagonalagents" style="height: 0px;padding-top: 0px;width: 0px;"></div>
-    <div class="container" style="padding-top: 100px;padding-bottom: 100px;">
-        <div class="text-center section-heading" style="margin-bottom: 40px;">
-            <h2 style="color: #b20135;">I nostri agenti</h2>
-            <p class="text-muted">Mettiti in contatto con i nostri esperti immobiliari.<br></p>
-            <hr>
-        </div>
-        <div class="row" style="height: 307px;margin-left: 0px;margin-right: 0px;">
-            <div class="col-md-4 col-xxl-4 offset-xxl-0 d-xxl-flex justify-content-xxl-center"
-                 style="height: 385px;padding: 0px;padding-right: 0px;padding-left: 0px;width: 320px;">
-                <article
-                        style="width: 320px;padding-top: 40px;padding-right: 15px;padding-bottom: 40px;padding-left: 15px;">
-                    <div class="text-center d-xxl-flex justify-content-center align-items-start order-first"
-                         style="height: 302px;box-shadow: 0px 0px 3px 1px rgba(33,37,41,0.43);">
-                        <div class="d-xxl-flex wrap"
-                             style="width: 128px;height: 128px;margin-top: -64px;background: url(assets/img/image.jpg) no-repeat;background-size: contain;"></div>
-                        <div class="wrap" style="width: 288px;height: 200px;margin-top: 100px;">
-                            <h3>Nathan James</h3>
-                            <h6 style="font-size: 19px;text-decoration: underline;color: rgb(178,1,53);">
-                                333.239.33.33</h6>
-                            <h6 style="font-size: 19px;">example@gmail.com</h6>
-                            <div class="d-inline-block" style="width: 250px;height: 60px;"><span
-                                    class="d-xxl-flex justify-content-xxl-center"
-                                    style="font-size: 24px;color: rgb(178,1,53);font-weight: bold;">3</span><span
-                                    style="font-weight: bold;">Proprietà di appartenenza</span></div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <div class="col" style="width: 320px;height: 385px;">
-                <article
-                        style="width: 320px;padding-top: 40px;padding-right: 15px;padding-bottom: 40px;padding-left: 15px;">
-                    <div class="text-center d-xxl-flex justify-content-center align-items-start order-first"
-                         style="height: 302px;box-shadow: 0px 0px 3px 1px rgba(33,37,41,0.43);">
-                        <div class="d-xxl-flex wrap"
-                             style="width: 128px;height: 128px;margin-top: -64px;background: url(assets/img/image.jpg) no-repeat;background-size: contain;"></div>
-                        <div class="wrap" style="width: 288px;height: 200px;margin-top: 100px;">
-                            <h3>Nathan James</h3>
-                            <h6 style="font-size: 19px;text-decoration: underline;color: rgb(178,1,53);">
-                                333.239.33.33</h6>
-                            <h6 style="font-size: 19px;">example@gmail.com</h6>
-                            <div class="d-inline-block" style="width: 250px;height: 60px;"><span
-                                    class="d-xxl-flex justify-content-xxl-center"
-                                    style="font-size: 24px;color: rgb(178,1,53);font-weight: bold;">3</span><span
-                                    style="font-weight: bold;">Proprietà di appartenenza</span></div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-4" style="height: 385px;padding: 0px;width: 320px;">
-                <article
-                        style="width: 320px;padding-top: 40px;padding-right: 15px;padding-bottom: 40px;padding-left: 15px;">
-                    <div class="text-center d-xxl-flex justify-content-center align-items-start order-first"
-                         style="height: 302px;box-shadow: 0px 0px 3px 1px rgba(33,37,41,0.43);">
-                        <div class="d-xxl-flex wrap"
-                             style="width: 128px;height: 128px;margin-top: -64px;background: url(assets/img/image.jpg) no-repeat;background-size: contain;"></div>
-                        <div class="wrap" style="width: 288px;height: 200px;margin-top: 100px;">
-                            <h3>Nathan James</h3>
-                            <h6 style="font-size: 19px;text-decoration: underline;color: rgb(178,1,53);">
-                                333.239.33.33</h6>
-                            <h6 style="font-size: 19px;">example@gmail.com</h6>
-                            <div class="d-inline-block" style="width: 250px;height: 60px;"><span
-                                    class="d-xxl-flex justify-content-xxl-center"
-                                    style="font-size: 24px;color: rgb(178,1,53);font-weight: bold;">3</span><span
-                                    style="font-weight: bold;">Proprietà di appartenenza</span></div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-4" style="height: 385px;padding: 0px;width: 320px;">
-                <article
-                        style="width: 320px;padding-top: 40px;padding-right: 15px;padding-bottom: 40px;padding-left: 15px;">
-                    <div class="text-center d-xxl-flex justify-content-center align-items-start order-first"
-                         style="height: 302px;box-shadow: 0px 0px 3px 1px rgba(33,37,41,0.43);">
-                        <div class="d-xxl-flex wrap"
-                             style="width: 128px;height: 128px;margin-top: -64px;background: url(assets/img/image.jpg) no-repeat;background-size: contain;"></div>
-                        <div class="wrap" style="width: 288px;height: 200px;margin-top: 100px;">
-                            <h3>Nathan James</h3>
-                            <h6 style="font-size: 19px;text-decoration: underline;color: rgb(178,1,53);">
-                                333.239.33.33</h6>
-                            <h6 style="font-size: 19px;">example@gmail.com</h6>
-                            <div class="d-inline-block" style="width: 250px;height: 60px;"><span
-                                    class="d-xxl-flex justify-content-xxl-center"
-                                    style="font-size: 24px;color: rgb(178,1,53);font-weight: bold;">3</span><span
-                                    style="font-weight: bold;">Proprietà di appartenenza</span></div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </div>
-</section>
-<footer data-aos="fade-up" data-aos-once="true"
-        style="height: 600px;border-top-left-radius: 0px;border-width: 0px;overflow: hidden;position: relative;padding-top: 0px;padding-bottom: 0px;">
-    <div class="diagonalfooter"></div>
-</footer>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/js/bs-init.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
-<script src="assets/js/move.js"></script>
-<script src="assets/js/MUSA_carousel-extended.js"></script>
-<script src="assets/js/new-age.js"></script>
-<script src="assets/js/Simple-Slider.js"></script>
-</body>
+    </section>
 
+</header>
+<div class="div_search div_search_init">
+    <form class="search_form search_form_header advance_search_form">
+        <div class="search_fields">
+            <div class="search_wrap search_data">
+                <div class="top_fields">
+                    <div class="search_select search_option">
+                        <label>Località</label>
+                        <span class="search_selectwrap">
+									<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+										<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                                role="combobox">
+											<div class="filter-option">
+												<div class="filter-option-inner">
+													<div class="filter-option-text">
+														Tutte le località
+													</div>
+												</div>
+											</div>
+										</button>
+									</div>
+								</span>
+                    </div>
+                    <div class="search_select search_option">
+                        <label>Stato Proprietà</label>
+                        <span class="search_selectwrap">
+									<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+										<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                                role="combobox">
+											<div class="filter-option">
+												<div class="filter-option-inner">
+													<div class="filter-option-text">
+														Tutte le località
+													</div>
+												</div>
+											</div>
+										</button>
+									</div>
+								</span>
+                    </div>
+                    <div class="search_select search_option">
+                        <label>Tipo Proprietà</label>
+                        <span class="search_selectwrap">
+									<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+										<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                                role="combobox">
+											<div class="filter-option">
+												<div class="filter-option-inner">
+													<div class="filter-option-text">
+														Tutte le località
+													</div>
+												</div>
+											</div>
+										</button>
+									</div>
+								</span>
+                    </div>
+                </div>
+                <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
+                    <div class="collapsed_field_container search_advanced_fields">
+                        <div class="search_option search_select search_beds">
+                            <label>Min camere da letto</label>
+                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        role="combobox">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-text">
+                                                Tutte le località
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="search_option search_select search_beds">
+                            <label>Min bagni</label>
+                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        role="combobox">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-text">
+                                                Tutte le località
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="search_option search_select search_beds">
+                            <label>Prezzo minimo</label>
+                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        role="combobox">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-text">
+                                                Tutte le località
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="search_option search_select search_beds">
+                            <label>Prezzo massimo</label>
+                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        role="combobox">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-text">
+                                                Tutte le località
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="search_option search_select search_beds">
+                            <label>Garage</label>
+                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        role="combobox">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-text">
+                                                Tutte le località
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="search_option search_select search_beds">
+                            <label>Agenti</label>
+                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        role="combobox">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-text">
+                                                Tutte le località
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="search_option search_select search_beds">
+                            <label>Superificie minima</label>
+                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        role="combobox">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-text">
+                                                Tutte le località
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="search_option search_select search_beds">
+                            <label>Superficie massima</label>
+                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        role="combobox">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-text">
+                                                Tutte le località
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="search_button">
+            <div class="search_buttonwrap">
+                <div class="search_advance">
+                    <button type="button" onclick="advancedOption()" id="advanced_options"
+                            class="search_advance_button">
+                        <i class="icon-search-plus"></i>
+                    </button>
+                </div>
+                <div class="search_buttonSubmit">
+                    <button class="submit button_search">
+                        <i class="icon-search"></i>
+                        <span>Cerca</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="wrapper_home_section diagonal_wrapper">
+    <section class="home_section diagonal_mod section_content">
+        <article class="main_content">
+            <div>
+                <section class="section_principalProperties section_principalProperties_stretched">
+                    <div class="title_container">
+                        <div class="title_row">
+                            <div class="title_wrap">
+                                <div class="section_head">
+                                    <h2 class="section_title">Proprietà in evidenza</h2>
+                                    <p class="section_description">Visualizza le proprietà in primo piano</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section_properties_list">
+                    <div class="diagonal_shape"></div>
+                    <div class="properties_list_container">
+                        <div class="properties_list_row">
+                            <div class="properties_list_wrap">
+                                <div class="properties_pagination">
+                                    <%for (int i = 0; i < appartamenti.size() && i < 8; i++) {%>
+                                    <div class="property_style">
+                                        <div class="property_card_style">
+                                            <div class="property_picture_wrapper">
+                                                <div class="property_tags_bot">
+                                                    <div class="agent_wrapper">
+                                                        <div class="agent_list">
+                                                            <a href="" class="agent_image">
+                                                                <img src="images/agente.jpg">
+                                                            </a>
+                                                            <div class="agent_info">
+                                                                <a href="" class="agent_title"><%
+                                                                    for (AgenteBean bean : agenti) {
+                                                                        if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
+                                                                            for (UtenteBean utenteBean1 : utente) {
+                                                                                if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                %><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%><%
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }%></a>
+                                                                <a href="" class="agent_agency">Gabetti Nocera
+                                                                    Inferiore</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="property_status">
+                                                        <span class="property_status_text"><%=appartamenti.get(i).getTipoVendita()%></span>
+                                                    </div>
+                                                </div>
+                                                <a class="property_picture">
+                                                    <img width="488" height="326" src="images/prova.jpg">
+                                                </a>
+                                            </div>
+                                            <div class="property_detail_wrapper">
+                                                <h3 class="property_heading">
+                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%>
+                                                    </a>
+                                                </h3>
+                                                <div class="property_address">
+                                                    <a href="">
+																<span class="address">
+																	<i class="icon-map-marker"></i>
+																</span>
+                                                        <%
+                                                            for (IndirizzoBean indirizzoBean : indirizzi) {
+                                                                if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                        %><%=indirizzoBean.getVia() + ", " + indirizzoBean.getCitta() + ", " + indirizzoBean.getProvincia()%><%
+                                                            }
+                                                        }
+                                                    %>
+                                                    </a>
+                                                </div>
+                                                <div class="prorperty_added">
+                                                    <span>Aggiunto il: </span>
+                                                    <%=appartamenti.get(i).getData()%>
+                                                </div>
+                                                <div class="property_features_wrap">
+                                                    <div class="property_feature">
+                                                        <span class="property_feature_title">Camere</span>
+                                                        <div class="feature_icon_wrapper">
+                                                            <i class="icon-bed"></i>
+                                                            <span class="figure"><%=appartamenti.get(i).getCamereLetto()%></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="property_feature">
+                                                        <span class="property_feature_title">Bagni</span>
+                                                        <div class="feature_icon_wrapper">
+                                                            <i class="icon-shower"></i>
+                                                            <span class="figure"><%=appartamenti.get(i).getBagni()%></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="property_feature">
+                                                        <span class="property_feature_title">Superficie</span>
+                                                        <div class="feature_icon_wrapper">
+                                                            <i class="icon-square-o"></i>
+                                                            <span class="figure"><%=appartamenti.get(i).getSuperficie()%></span>
+                                                            <span>mq</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="property_price">
+                                                    <div class="property_price_box">
+                                                        <span class="property_card_status"><%=appartamenti.get(i).getTipoVendita()%></span>
+                                                        <p class="property_card_price">
+                                                            €<%=appartamenti.get(i).getPrezzo()%>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <%}%>
+                                </div>
+                                <div class="pagination_wrapper">
+                                    <div class="pagination">
+                                        <a href="" class="btn_real current">1</a>
+                                        <a href="" class="btn_real">2</a>
+                                        <a href="" class="btn_real">3</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section_principalProperties section_principalProperties_stretched">
+                    <div class="title_container">
+                        <div class="title_row">
+                            <div class="title_wrap">
+                                <div class="section_head">
+                                    <h2 class="section_title">Proprietà in vendita</h2>
+                                    <p class="section_description">Visualizza le proprietà in vendita</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section_properties_list">
+                    <div class="diagonal_shape"></div>
+                    <div class="properties_list_container">
+                        <div class="properties_list_row">
+                            <div class="properties_list_wrap">
+                                <div class="properties_pagination">
+                                    <%
+                                        for (int i = 0; i < appartamenti.size() && i < 8; i++) {
+                                            if (appartamenti.get(i).getTipoVendita().equals("in vendita")) {
+                                    %>
+                                    <div class="property_style">
+                                        <div class="property_card_style">
+                                            <div class="property_picture_wrapper">
+                                                <div class="property_tags_bot">
+                                                    <div class="agent_wrapper">
+                                                        <div class="agent_list">
+                                                            <a href="" class="agent_image">
+                                                                <img src="images/agente.jpg">
+                                                            </a>
+                                                            <div class="agent_info">
+                                                                <a href="" class="agent_title"><%
+                                                                    for (AgenteBean bean : agenti) {
+                                                                        if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
+                                                                            for (UtenteBean utenteBean1 : utente) {
+                                                                                if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                %><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%><%
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }%></a>
+                                                                <a href="" class="agent_agency">Gabetti Nocera
+                                                                    Inferiore</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="property_status">
+                                                        <span class="property_status_text"><%=appartamenti.get(i).getTipoVendita()%></span>
+                                                    </div>
+                                                </div>
+                                                <a class="property_picture">
+                                                    <img width="488" height="326" src="images/prova.jpg">
+                                                </a>
+                                            </div>
+                                            <div class="property_detail_wrapper">
+                                                <h3 class="property_heading">
+                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%>
+                                                    </a>
+                                                </h3>
+                                                <div class="property_address">
+                                                    <a href="">
+																<span class="address">
+																	<i class="icon-map-marker"></i>
+																</span>
+                                                        <%
+                                                            for (IndirizzoBean indirizzoBean : indirizzi) {
+                                                                if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                        %><%=indirizzoBean.getVia() + ", " + indirizzoBean.getCitta() + ", " + indirizzoBean.getProvincia()%><%
+                                                            }
+                                                        }
+                                                    %>
+                                                    </a>
+                                                </div>
+                                                <div class="prorperty_added">
+                                                    <span>Aggiunto il: </span>
+                                                    <%=appartamenti.get(i).getData()%>
+                                                </div>
+                                                <div class="property_features_wrap">
+                                                    <div class="property_feature">
+                                                        <span class="property_feature_title">Camere</span>
+                                                        <div class="feature_icon_wrapper">
+                                                            <i class="icon-bed"></i>
+                                                            <span class="figure"><%=appartamenti.get(i).getCamereLetto()%></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="property_feature">
+                                                        <span class="property_feature_title">Bagni</span>
+                                                        <div class="feature_icon_wrapper">
+                                                            <i class="icon-shower"></i>
+                                                            <span class="figure"><%=appartamenti.get(i).getBagni()%></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="property_feature">
+                                                        <span class="property_feature_title">Superficie</span>
+                                                        <div class="feature_icon_wrapper">
+                                                            <i class="icon-square-o"></i>
+                                                            <span class="figure"><%=appartamenti.get(i).getSuperficie()%></span>
+                                                            <span>mq</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="property_price">
+                                                    <div class="property_price_box">
+                                                        <span class="property_card_status"><%=appartamenti.get(i).getTipoVendita()%></span>
+                                                        <p class="property_card_price">
+                                                            €<%=appartamenti.get(i).getPrezzo()%>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <%
+                                            }
+                                        }%>
+                                </div>
+                                <div class="pagination_wrapper">
+                                    <div class="pagination">
+                                        <a href="" class="btn_real current">1</a>
+                                        <a href="" class="btn_real">2</a>
+                                        <a href="" class="btn_real">3</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section_principalProperties section_principalProperties_stretched">
+                    <div class="title_container">
+                        <div class="title_row">
+                            <div class="title_wrap">
+                                <div class="section_head">
+                                    <h2 class="section_title">Proprietà in affitto</h2>
+                                    <p class="section_description">Visualizza le proprietà in affitto</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section_properties_list">
+                    <div class="diagonal_shape"></div>
+                    <div class="properties_list_container">
+                        <div class="properties_list_row">
+                            <div class="properties_list_wrap">
+                                <div class="properties_pagination">
+                                    <%
+                                        for (int i = 0; i < appartamenti.size() && i < 8; i++) {
+                                            if (appartamenti.get(i).getTipoVendita().equals("in affitto")) {
+                                    %>
+                                    <div class="property_style">
+                                        <div class="property_card_style">
+                                            <div class="property_picture_wrapper">
+                                                <div class="property_tags_bot">
+                                                    <div class="agent_wrapper">
+                                                        <div class="agent_list">
+                                                            <a href="" class="agent_image">
+                                                                <img src="images/agente.jpg">
+                                                            </a>
+                                                            <div class="agent_info">
+                                                                <a href="" class="agent_title"><%
+                                                                    for (AgenteBean bean : agenti) {
+                                                                        if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
+                                                                            for (UtenteBean utenteBean1 : utente) {
+                                                                                if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                %><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%><%
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }%></a>
+                                                                <a href="" class="agent_agency">Gabetti Nocera
+                                                                    Inferiore</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="property_status">
+                                                        <span class="property_status_text"><%=appartamenti.get(i).getTipoVendita()%></span>
+                                                    </div>
+                                                </div>
+                                                <a class="property_picture">
+                                                    <img width="488" height="326" src="images/prova.jpg">
+                                                </a>
+                                            </div>
+                                            <div class="property_detail_wrapper">
+                                                <h3 class="property_heading">
+                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%>
+                                                    </a>
+                                                </h3>
+                                                <div class="property_address">
+                                                    <a href="">
+																<span class="address">
+																	<i class="icon-map-marker"></i>
+																</span>
+                                                        <%
+                                                            for (IndirizzoBean indirizzoBean : indirizzi) {
+                                                                if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                        %><%=indirizzoBean.getVia() + ", " + indirizzoBean.getCitta() + ", " + indirizzoBean.getProvincia()%><%
+                                                            }
+                                                        }
+                                                    %>
+                                                    </a>
+                                                </div>
+                                                <div class="prorperty_added">
+                                                    <span>Aggiunto il: </span>
+                                                    <%=appartamenti.get(i).getData()%>
+                                                </div>
+                                                <div class="property_features_wrap">
+                                                    <div class="property_feature">
+                                                        <span class="property_feature_title">Camere</span>
+                                                        <div class="feature_icon_wrapper">
+                                                            <i class="icon-bed"></i>
+                                                            <span class="figure"><%=appartamenti.get(i).getCamereLetto()%></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="property_feature">
+                                                        <span class="property_feature_title">Bagni</span>
+                                                        <div class="feature_icon_wrapper">
+                                                            <i class="icon-shower"></i>
+                                                            <span class="figure"><%=appartamenti.get(i).getBagni()%></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="property_feature">
+                                                        <span class="property_feature_title">Superficie</span>
+                                                        <div class="feature_icon_wrapper">
+                                                            <i class="icon-square-o"></i>
+                                                            <span class="figure"><%=appartamenti.get(i).getSuperficie()%></span>
+                                                            <span>mq</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="property_price">
+                                                    <div class="property_price_box">
+                                                        <span class="property_card_status"><%=appartamenti.get(i).getTipoVendita()%></span>
+                                                        <p class="property_card_price">
+                                                            €<%=appartamenti.get(i).getPrezzo()%>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </div>
+                                <div class="pagination_wrapper">
+                                    <div class="pagination">
+                                        <a href="" class="btn_real current">1</a>
+                                        <a href="" class="btn_real">2</a>
+                                        <a href="" class="btn_real">3</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section_agents_list">
+                    <div class="agents_container">
+                        <div class="agents_row">
+                            <div class="agents_column_wrap">
+                                <div class="agents_header">
+                                    <div class="agents_header_content">
+                                        <span class="agents_subtitle">Incontra i nostri Agenti</span>
+                                        <h2 class="agents_title">Agenti</h2>
+                                        <p class="agents_description">Mettiti in contatto con i nostri esperti
+                                            immobiliari.</p>
+                                    </div>
+                                </div>
+                                <div class="agents_list">
+                                    <div class="agents_list_wrap">
+                                        <%for (int j = 0; j < agenteCase.size(); j++) {%>
+                                        <article class="agent_content">
+                                            <div class="agent_content_wrap">
+                                                <div class="agent_content_picture">
+                                                    <a href="">
+                                                        <img src="images/agente.jpg" height="210" width="210">
+                                                    </a>
+                                                </div>
+                                                <div class="agent_content_details">
+                                                    <h3>
+                                                        <a href=""><%
+                                                            for (AgenteBean agenteBean : agenti) {
+                                                                if (agenteBean.getIdAgente() == agenteCase.get(j).getBean().getIdAgente()) {
+                                                                    for (UtenteBean utenteBean : utente) {
+                                                                        if (agenteBean.getIdUtente() == utenteBean.getIdUtente()) {
+                                                        %><%=utenteBean.getNome() + " " + utenteBean.getCognome()%><%
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }%></a>
+                                                    </h3>
+                                                    <p class="agent_content_phone">
+                                                        <a href=""><%=agenteCase.get(j).getBean().getTelefonoCellulare()%>
+                                                        </a>
+                                                    </p>
+                                                    <a href="" class="agent_content_email"><%
+                                                        for (AgenteBean agenteBean : agenti) {
+                                                            if (agenteBean.getIdAgente() == agenteCase.get(j).getBean().getIdAgente()) {
+                                                                for (UtenteBean utenteBean : utente) {
+                                                                    if (agenteBean.getIdUtente() == utenteBean.getIdUtente()) {
+                                                    %><%=utenteBean.getEmail()%><%
+                                                                    }
+                                                                }
+                                                            }
+                                                        }%></a>
+                                                    <div class="agent_listed">
+                                                        <p class="figure"><%=agenteCase.get(j).getContaCase()%>
+                                                        </p>
+                                                        <p class="heading">Immobili pubblicati</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <%}%>
+                                        <div class="pagination_wrapper">
+                                            <div class="pagination">
+                                                <a href="" class="btn_real current">1</a>
+                                                <a href="" class="btn_real">2</a>
+                                                <a href="" class="btn_real">3</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </article>
+    </section>
+</div>
+<div class="footer_wrapper">
+    <footer class="general_footer">
+        <div class="top_footer">
+            <div class="footer_logo">
+                <a title="Gabetti Nocera Inferiore">
+                    <img src="images/gabetti.png" height="200" width="200">
+                </a>
+            </div>
+            <div class="footer_socials">
+                <a class="facebook" href="">
+                    <icon class="icon-facebook"></icon>
+                </a>
+                <a class="instagram" href="">
+                    <icon class="icon-instagram"></icon>
+                </a>
+            </div>
+            <div class="footer_widgets_wrap">
+                <div class="footer_widgets">
+                    <div class="navigation">
+                        <section class="navigation_menu">
+                            <h3 class="title">Link veloci</h3>
+                            <div class="menu_footer">
+                                <ul class="menu">
+                                    <li class="menu_item">
+                                        <a href="">Home</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="script/index.js"></script>
+<script src="bootstrap/js/jquery-3.3.1.min.js"></script>
+<script src="bootstrap/js/popper.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/jquery.sticky.js"></script>
+</body>
 </html>
+
