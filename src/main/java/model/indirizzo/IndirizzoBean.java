@@ -9,18 +9,20 @@ public class IndirizzoBean implements Serializable {
     private String cap;
     private String citta;
     private String provincia;
+    private String zona;
     private int idAppartamento;
 
     public IndirizzoBean() {
     }
 
-    public IndirizzoBean(int idIndirizzo, String via, String numeroCivico, String cap, String citta, String provincia, int idAppartamento) {
+    public IndirizzoBean(int idIndirizzo, String via, String numeroCivico, String cap, String citta, String provincia, String zona, int idAppartamento) {
         this.idIndirizzo = idIndirizzo;
         this.via = via;
         this.numeroCivico = numeroCivico;
         this.cap = cap;
         this.citta = citta;
         this.provincia = provincia;
+        this.zona = zona;
         this.idAppartamento = idAppartamento;
     }
 
@@ -75,6 +77,14 @@ public class IndirizzoBean implements Serializable {
 
     public void setProvincia(String provincia) {
         this.provincia = provincia;
+    }
+
+    public String getZona() {
+        return zona;
+    }
+
+    public void setZona(String zona) {
+        this.zona = zona;
     }
 
     public int getIdAppartamento() {

@@ -371,7 +371,7 @@
                                                         <%
                                                             for (IndirizzoBean indirizzoBean : indirizzi) {
                                                                 if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
-                                                        %><%=indirizzoBean.getVia() + ", " + indirizzoBean.getCitta() + ", " + indirizzoBean.getProvincia()%><%
+                                                        %><%=indirizzoBean.toString()%><%
                                                             }
                                                         }
                                                     %>
