@@ -23,7 +23,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
     public void doSave(IndirizzoBean indirizzo) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        String insertSql = "INSERT INTO Indirizzo(via, numeroCivico, cap, città, provincia, Appartamento_idAppartamento) VALUES(?, ?, ?, ?, ?, ?)";
+        String insertSql = "INSERT INTO Indirizzo(via, numeroCivico, cap, città, provincia, Appartamento_idAppartamento, zona) VALUES(?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = dmcp.getConnection();
             if (indirizzo instanceof IndirizzoBean) {
@@ -34,6 +34,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 ps.setString(4, indirizzo.getCitta());
                 ps.setString(5, indirizzo.getProvincia());
                 ps.setInt(6, indirizzo.getIdAppartamento());
+                ps.setString(7, indirizzo.getZona());
                 connection.commit();
                 System.out.println("doSave: " + indirizzo);
             }
@@ -67,6 +68,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
             bean.setCitta(rs.getString("città"));
             bean.setProvincia(rs.getString("provincia"));
             bean.setIdAppartamento(rs.getInt("Appartamento_idAppartamento"));
+            bean.setZona(rs.getString("zona"));
         }finally {
             try {
                 if (ps != null) {
@@ -98,6 +100,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 bean.setCitta(rs.getString("città"));
                 bean.setProvincia(rs.getString("provincia"));
                 bean.setIdAppartamento(rs.getInt("Appartamento_idAppartamento"));
+                bean.setZona(rs.getString("zona"));
                 array.add(bean);
             }
         }finally {
