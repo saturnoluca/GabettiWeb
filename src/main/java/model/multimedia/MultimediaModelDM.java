@@ -203,4 +203,50 @@ public class MultimediaModelDM implements MultimediaModel {
         return arrayMultimedia;
     }
 
+    public ArrayList<MultimediaBean> RetrieveAllMultimedia() throws SQLException, IOException{
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ArrayList<MultimediaBean> array = new ArrayList<MultimediaBean>();
+        String selectSQL = "SELECT * FROM multimedia";
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSQL);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                MultimediaBean bean = new MultimediaBean();
+                ArrayList<String> immagini = new ArrayList<>();
+                if (rs.getBlob("planimetria") != null) {
+                    String partPlanimetria = null;
+                    partPlanimetria = UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("planimetria")));
+                    immagini.add(0, partPlanimetria);
+                    bean.setPlanimetriaString(immagini);
+                }
+                if (rs.getBlob("foto") != null) {
+                    String part = null;
+                    part = UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto")));
+                    immagini.add(0, part);
+                    bean.setFotoString(immagini);
+                }
+                if (rs.getBlob("video") != null) {
+                    String part = null;
+                    part = UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("video")));
+                    immagini.add(0, part);
+                    bean.setVideoString(immagini);
+                }
+                bean.setIdAppartamento(rs.getInt("Appartamento_idAppartamento"));
+                bean.setIdMultimedia(rs.getInt("idMultimedia"));
+                array.add(bean);
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+            return array;
+        }
+    }
+
 }

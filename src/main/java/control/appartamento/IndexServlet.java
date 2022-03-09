@@ -7,6 +7,8 @@ import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
 import model.indirizzo.IndirizzoBean;
 import model.indirizzo.IndirizzoModelDM;
+import model.multimedia.MultimediaBean;
+import model.multimedia.MultimediaModelDM;
 import model.utente.UtenteBean;
 import model.utente.UtenteModelDM;
 
@@ -17,12 +19,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @WebServlet(name = "IndexServlet", value = "/IndexServlet")
+@MultipartConfig
 public class IndexServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static AppartamentoModelDM modelApp = new AppartamentoModelDM();
     private static AgenteModelDM modelAgenti = new AgenteModelDM();
     private static UtenteModelDM modelUtente = new UtenteModelDM();
     private static IndirizzoModelDM modelIndirizzo= new IndirizzoModelDM();
+    private static MultimediaModelDM modelMultimedia = new MultimediaModelDM();
 
 
     @Override
@@ -32,6 +36,7 @@ public class IndexServlet extends HttpServlet {
         ArrayList<UtenteBean> utente = new ArrayList<UtenteBean>();
         ArrayList<IndirizzoBean> indirizzi = new ArrayList<IndirizzoBean>();
         ArrayList<CompositeKeyAgenteCase> agenteCase = new ArrayList<CompositeKeyAgenteCase>();
+        ArrayList<MultimediaBean> multimedia = new ArrayList<MultimediaBean>();
 
         try {
             if (request.getSession().getAttribute("NoDbConnection") != null) {
@@ -39,12 +44,14 @@ public class IndexServlet extends HttpServlet {
                 modelAgenti = null;
                 modelUtente = null;
                 modelIndirizzo = null;
+                modelMultimedia=null;
             }
             appartamenti = (ArrayList<AppartamentoBean>) modelApp.OrderByVisite();
             agenti = (ArrayList<AgenteBean>) modelAgenti.RetrieveAgente();
             utente = (ArrayList<UtenteBean>) modelUtente.doRetrieveAll();
             indirizzi = (ArrayList<IndirizzoBean>) modelIndirizzo.RetrieveAll();
             agenteCase = (ArrayList<CompositeKeyAgenteCase>) modelAgenti.RetrieveAgenteCase();
+            multimedia = (ArrayList<MultimediaBean>) modelMultimedia.RetrieveAllMultimedia();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,6 +60,7 @@ public class IndexServlet extends HttpServlet {
         request.setAttribute("appartamenti", appartamenti);
         request.setAttribute("indirizzi", indirizzi);
         request.setAttribute("agenteCase", agenteCase);
+        request.setAttribute("multimedia", multimedia);
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
 

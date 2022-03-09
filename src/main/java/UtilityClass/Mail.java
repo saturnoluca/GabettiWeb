@@ -14,8 +14,8 @@ public class Mail {
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");
 
-        String myEmail = "pocketmuseumunisa";
-        String password = "123456Aa/";
+        String myEmail = "juvejuve4ever999";
+        String password = "123456AaSs";
 
         Session session = Session.getInstance(prop, new Authenticator() {
             @Override
@@ -34,6 +34,7 @@ public class Mail {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(myEmail));
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+        message.setText(contenuto);
         message.setSubject("Messaggio da Gabetti");
         return message;
 

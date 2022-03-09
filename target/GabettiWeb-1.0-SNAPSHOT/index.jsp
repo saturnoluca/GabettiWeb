@@ -12,6 +12,7 @@
 <%@ page import="model.utente.UtenteBean" %>
 <%@ page import="model.indirizzo.IndirizzoBean" %>
 <%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
+<%@ page import="model.multimedia.MultimediaBean" %>
 <html lang="it">
 
 <%
@@ -40,6 +41,8 @@
     }
 
     ArrayList<CompositeKeyAgenteCase> agenteCase = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("agenteCase");
+
+    ArrayList<MultimediaBean> multimedia = (ArrayList<MultimediaBean>) request.getAttribute("multimedia");
 %>
 
 <head>
@@ -355,7 +358,18 @@
                                                     </div>
                                                 </div>
                                                 <a class="property_picture">
-                                                    <img width="488" height="326" src="images/prova.jpg">
+                                                    <%
+                                                        for (MultimediaBean multimediaBean : multimedia) {
+                                                            if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && p == 0) {
+                                                    %>
+                                                    <img width="488" height="326"
+                                                         src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
+                                                         alt="images/prova.jpg">
+                                                    <%
+                                                                break;
+                                                            }
+                                                        }
+                                                    %>
                                                 </a>
                                             </div>
                                             <div class="property_detail_wrapper">
