@@ -27,6 +27,16 @@ public class MultimediaBean implements Serializable {
         this.idAppartamento = idAppartamento;
     }
 
+    @Override
+    public String toString() {
+        return "MultimediaBean{" +
+                "idMultimedia=" + idMultimedia +
+                ", fotoString=" + fotoString +
+                ", videoString=" + videoString +
+                ", idAppartamento=" + idAppartamento +
+                '}';
+    }
+
     public MultimediaBean() {
     }
 
