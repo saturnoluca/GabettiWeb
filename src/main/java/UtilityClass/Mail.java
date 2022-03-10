@@ -8,16 +8,21 @@ import java.util.Properties;
 
 public class Mail {
     public static void sendMail(String destinatario, String contenuto) throws Exception {
-        Properties prop = new Properties();
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", "587");
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.starttls.enable", "true");
 
         String myEmail = "juvejuve4ever999";
         String password = "123456AaSs";
 
-        Session session = Session.getInstance(prop, new Authenticator() {
+        Properties props = System.getProperties();
+        String host = "smtp.gmail.com";
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", myEmail);
+        props.put("mail.smtp.password", password);
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+
+
+        Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(myEmail, password);
@@ -26,17 +31,24 @@ public class Mail {
 
         Message message = prepareMessage(session, myEmail, destinatario, contenuto);
         Transport.send(message);
+        System.out.println("message sent");
     }
 
     private static Message prepareMessage(Session session,
                                           String myEmail, String destinatario, String contenuto)
             throws AddressException, MessagingException {
-        Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(myEmail));
-        message.setRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
-        message.setText(contenuto);
-        message.setSubject("Messaggio da Gabetti");
-        return message;
+
+        Message msg = new MimeMessage(session);
+        try {
+            msg.setFrom(new InternetAddress(myEmail));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+            msg.setSubject("Messaggio da Gabetti");
+            msg.setText(contenuto);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return msg;
 
     }
 }

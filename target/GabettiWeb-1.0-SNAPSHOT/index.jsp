@@ -359,13 +359,15 @@
                                                 </div>
                                                 <a class="property_picture">
                                                     <%
+                                                        boolean p = false;
                                                         for (MultimediaBean multimediaBean : multimedia) {
-                                                            if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && p == 0) {
+                                                            if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
                                                     %>
-                                                    <img width="488" height="326"
+                                                    <img
                                                          src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
                                                          alt="images/prova.jpg">
                                                     <%
+                                                                p = true;
                                                                 break;
                                                             }
                                                         }

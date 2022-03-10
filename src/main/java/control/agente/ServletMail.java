@@ -50,7 +50,7 @@ public class ServletMail extends HttpServlet {
             String messaggioGuest = request.getParameter("messaggio");
             String contenuto = "Nome Mittente: " + nomeGuest + "\nEmail Mittente: " + emailGuest + "\nTelefono Mittente: " + telefonoGuest + "\n\n" + messaggioGuest;
             try {
-                Mail.sendMail("lucasaturno1999@gmail.com", contenuto);
+                Mail.sendMail("amminstratore2022@outlook.it", contenuto);
             } catch (Exception e) {
                 e.printStackTrace();
             }
