@@ -220,15 +220,17 @@
                                 <div class="property_multimedia">
                                     <h3 class="tab_title">Multimedia</h3>
                                     <div class="gallery_image_container" id="gallery_image_container"></div>
-                                    <div class="content_gallery_images full_size">
+                                    <input id="fileDragName">
+                                    <div class="content_gallery_images full_size" >
                                         <label class="label_property_title">Immagini</label>
-                                        <div class="drag_drop_container">
+                                        <div class="drag_drop_container" ondragover="this.style.borderColor='#0c0'; return false;" ondragleave="this.style.borderColor='#ccc'"       
+                                        ondrop="getTheFile(event); return false;">
                                             <i class="icon-cloud-upload"></i>
                                             <strong>Trascina e rilascia delle immagini</strong>
                                             <span class="or">oppure</span>
                                             <div class="button_browse">Sfoglia Immagine
                                                 <div class="input_file">
-                                                    <input type="file" multiple id="upload-photo">
+                                                    <input type="file" multiple id="upload-photo" onchange="readFile(event)">
                                                 </div>
                                             </div>
                                             <div id="reset-image" class="button_browse">Reset
@@ -426,7 +428,34 @@ $('#reset-video').click(function(){
     });
 </script>
 
-
+<script>
+    function readFile(e) {
+  var files;
+  console.log("SIUM");
+  if (e.target.files) {
+    files=e.target.files
+  } else {
+    files=e.dataTransfer.files
+  }
+  if (files.length==0) {
+    alert('What you dropped is not a file.');
+    return;
+  }
+  var file=files[0];
+  document.getElementById('fileDragName').value = file.name
+  document.getElementById('fileDragSize').value = file.size
+  document.getElementById('fileDragType').value = file.type
+  reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('fileDragData').value = e.target.result;
+  }
+  reader.readAsDataURL(file);
+}
+function getTheFile(e) {
+  e.target.style.borderColor='#ccc';
+  readFile(e);
+}
+</script>
 
 
 <script src="script/index.js"></script>
