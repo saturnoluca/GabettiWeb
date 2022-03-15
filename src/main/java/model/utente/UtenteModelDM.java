@@ -160,4 +160,79 @@ public class UtenteModelDM implements UtenteModel {
         }
         return bean;
     }
+
+    @Override
+    public UtenteBean Login(String email, String password) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        conn = dmcp.getConnection();
+        String selectSql = "SELECT * FROM utente where email=? AND password=?";
+        UtenteBean bean = new UtenteBean();
+        try {
+            ps = conn.prepareStatement(selectSql);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bean.setIdUtente(rs.getInt("idUtente"));
+                bean.setUsername(rs.getString("username"));
+                bean.setPassword(rs.getString("password"));
+                bean.setNome(rs.getString("nome"));
+                bean.setEmail(rs.getString("email"));
+                bean.setCognome(rs.getString("cognome"));
+                if (rs.getBlob("foto") != null) {
+                    String fotoPart = null;
+                    fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
+                    bean.setFotoString(fotoPart);
+                }
+                bean.setRuolo(rs.getString("ruolo"));
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(conn);
+            }
+        }
+        return bean;
+    }
+
+    @Override
+    public UtenteBean RetrieveByEmail(String email) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        conn = dmcp.getConnection();
+        String selectSql = "SELECT * FROM utente where email=?";
+        UtenteBean bean = new UtenteBean();
+        try {
+            ps = conn.prepareStatement(selectSql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bean.setIdUtente(rs.getInt("idUtente"));
+                bean.setUsername(rs.getString("username"));
+                bean.setPassword(rs.getString("password"));
+                bean.setNome(rs.getString("nome"));
+                bean.setEmail(rs.getString("email"));
+                bean.setCognome(rs.getString("cognome"));
+                if (rs.getBlob("foto") != null) {
+                    String fotoPart = null;
+                    fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
+                    bean.setFotoString(fotoPart);
+                }
+                bean.setRuolo(rs.getString("ruolo"));
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(conn);
+            }
+        }
+        return bean;
+    }
 }

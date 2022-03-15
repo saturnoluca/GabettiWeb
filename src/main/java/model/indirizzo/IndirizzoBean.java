@@ -28,7 +28,7 @@ public class IndirizzoBean implements Serializable {
 
     @Override
     public String toString() {
-        return via + " " + numeroCivico + ", " + citta + ", " + cap + ", " + provincia;
+        return via + " " + numeroCivico + ", " + citta + ", " + cap + ", (" + provincia+")";
     }
 
     public int getIdIndirizzo() {

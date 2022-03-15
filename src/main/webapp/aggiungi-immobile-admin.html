@@ -12,12 +12,12 @@
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
- 
+
      <link rel="stylesheet" href="icomoon/style.css">
-     
+
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
      <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
- 
+
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
    </head>
@@ -100,45 +100,45 @@
                                 <div class="property_title">
                                     <div class="content_fields_column full_size">
                                         <label class="label_property_title">Titolo immobile*</label>
-                                        <input type="text" required placeholder="Inserisci titolo immobile">
+                                        <input type="text" required placeholder="Inserisci titolo immobile" name="titoloImmobile">
                                     </div>
                                 </div>
                                 <div class="property_address">
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Città*</label>
-                                        <input type="text" required placeholder="Inserisci la città">
+                                        <input type="text" required placeholder="Inserisci la città" name="citta">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Provincia*</label>
-                                        <input type="text" required placeholder="Inserisci la provincia">
+                                        <input type="text" required placeholder="Inserisci la provincia" name="provincia">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Indirizzo*</label>
-                                        <input type="text" required placeholder="Inserisci l'indirizzo">
+                                        <input type="text" required placeholder="Inserisci l'indirizzo" name="indirizzo">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Numero civico</label>
-                                        <input type="text" placeholder="Inserisci il numero civico">
+                                        <input type="text" placeholder="Inserisci il numero civico" name="numeroCivico">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">CAP*</label>
-                                        <input type="text" required placeholder="Inserisci il CAP">
+                                        <input type="text" required placeholder="Inserisci il CAP" name="cap">
                                     </div>
                                 </div>
                                 <div class="property_description">
                                     <div class="content_fields_column full_size">
                                         <label class="label_property_title">Descrizione*</label>
-                                        <textarea rows="10" required placeholder="Scrivi una descrizione"></textarea>
+                                        <textarea rows="10" required placeholder="Scrivi una descrizione" name="descrizione"></textarea>
                                     </div>
                                 </div>
                                 <div class="property_features">
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Prezzo*</label>
-                                        <input type="text" required placeholder="Inserisci la città">
+                                        <input type="text" required placeholder="Inserisci il prezzo" name="prezzo">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Tipo immobile*</label>
-                                        <select required>
+                                        <select required name="tipoImmobile">
                                             <option value="" selected disabled>Seleziona tipo immobile</option>
                                             <option value="Appartamento">Appartamento</option>
                                             <option value="Abitazione economica">Abitazione economica</option>
@@ -153,7 +153,7 @@
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Stato appartamento*</label>
-                                        <select required>
+                                        <select required name="statoImmobile">
                                             <option value="" selected disabled>Seleziona stato immobile</option>
                                             <option value="In Vendita">In Vendita</option>
                                             <option value="In Affitto">In Affitto</option>
@@ -161,15 +161,15 @@
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Superficie in mq</label>
-                                        <input type="text" required placeholder="Inserisci la superficie in mq">
+                                        <input type="text" required placeholder="Inserisci la superficie in mq" name="superficie">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Numero Locali</label>
-                                        <input type="text" placeholder="Inserisci il numero dei locali">
+                                        <input type="text" placeholder="Inserisci il numero dei locali" name="locali">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Piano</label>
-                                        <select>
+                                        <select name="piano">
                                             <option value="" selected disabled>Seleziona piano immobile</option>
                                             <option value="Interrato Seminterrato">Interrato / Seminterrato</option>
                                             <option value="Piano terra">Piano terra</option>
@@ -183,19 +183,19 @@
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Posti auto</label>
-                                        <input type="text" required placeholder="Inserisci il numero dei posti auto">
+                                        <input type="text" required placeholder="Inserisci il numero dei posti auto" name="postiAuto">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Numero Bagni</label>
-                                        <input type="text" required placeholder="Inserisci il numero dei bagni">
+                                        <input type="text" required placeholder="Inserisci il numero dei bagni" name="numeroBagni">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Numero Camere Da Letto</label>
-                                        <input type="text" required placeholder="Inserisci il numero delle camere da letto">
+                                        <input type="text" required placeholder="Inserisci il numero delle camere da letto" name="camereLetto">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Riscaldamento</label>
-                                        <select>
+                                        <select name="riscaldamento">
                                             <option value="" selected disabled>Seleziona tipo riscaldamento</option>
                                             <option value="Non presente">Non presente</option>
                                             <option value="Autonomo">Autonomo</option>
@@ -205,11 +205,11 @@
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Classe energetica</label>
-                                        <input type="text" required placeholder="Inserisci la classe energetica">
+                                        <input type="text" required placeholder="Inserisci la classe energetica" name="classeEnegertica">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_property_title">Agente</label>
-                                        <select>
+                                        <select name="Agente">
                                             <option value="" selected disabled>Seleziona l'agente</option>
                                             <option value="Luca Saturno">Luca Saturno</option>
                                             <option value="Gaetano De Filippo">Gaetano De Filippo</option>
@@ -223,14 +223,14 @@
                                     <input id="fileDragName">
                                     <div class="content_gallery_images full_size" >
                                         <label class="label_property_title">Immagini</label>
-                                        <div class="drag_drop_container" ondragover="this.style.borderColor='#0c0'; return false;" ondragleave="this.style.borderColor='#ccc'"       
+                                        <div class="drag_drop_container" ondragover="this.style.borderColor='#0c0'; return false;" ondragleave="this.style.borderColor='#ccc'"
                                         ondrop="getTheFile(event); return false;">
                                             <i class="icon-cloud-upload"></i>
                                             <strong>Trascina e rilascia delle immagini</strong>
                                             <span class="or">oppure</span>
                                             <div class="button_browse">Sfoglia Immagine
                                                 <div class="input_file">
-                                                    <input type="file" multiple id="upload-photo" onchange="readFile(event)">
+                                                    <input type="file" multiple id="upload-photo" onchange="readFile(event)" name="immagine">
                                                 </div>
                                             </div>
                                             <div id="reset-image" class="button_browse">Reset
@@ -270,7 +270,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="div_button_submit">

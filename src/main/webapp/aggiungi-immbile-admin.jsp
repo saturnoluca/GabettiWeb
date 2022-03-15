@@ -30,11 +30,16 @@
 </head>
 
 <%
-    ArrayList<UtenteBean> utenti = (ArrayList<UtenteBean>) session.getAttribute("utenti");
-    if (utenti == null) {
-        response.sendRedirect(response.encodeRedirectURL("ServletLogin"));
-        return;
+    UtenteBean utente = (UtenteBean) session.getAttribute("Admin");
+    if (utente == null) {
+        response.sendRedirect(response.encodeRedirectURL("login.jsp"));
     }
+
+    ArrayList<UtenteBean> utenti = (ArrayList<UtenteBean>) session.getAttribute("array");
+    if (utenti == null) {
+        response.sendRedirect(response.encodeRedirectURL("login.jsp"));
+    }
+
 %>
 <body>
 <div class="sidebar">
@@ -105,7 +110,7 @@
             </div>
         </div>
         <div class="addProperty_page_content">
-            <fo rm class="form_addProperty">
+            <form class="form_addProperty">
                 <div class="addProperty_tab">
                     <h3 class="tab_title">Informazioni generali</h3>
                 </div>
@@ -115,7 +120,8 @@
                             <div class="property_title">
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Titolo immobile*</label>
-                                    <input type="text" required placeholder="Inserisci titolo immobile" name="titoloimmobile">
+                                    <input type="text" required placeholder="Inserisci titolo immobile"
+                                           name="titoloimmobile">
                                 </div>
                             </div>
                             <div class="property_address">
@@ -143,7 +149,8 @@
                             <div class="property_description">
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Descrizione*</label>
-                                    <textarea rows="10" required placeholder="Scrivi una descrizione" name="descrizione"></textarea>
+                                    <textarea rows="10" required placeholder="Scrivi una descrizione"
+                                              name="descrizione"></textarea>
                                 </div>
                             </div>
                             <div class="property_features">
@@ -176,7 +183,8 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Superficie in mq</label>
-                                    <input type="text" required placeholder="Inserisci la superficie in mq" name="superficie">
+                                    <input type="text" required placeholder="Inserisci la superficie in mq"
+                                           name="superficie">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero Locali</label>
@@ -198,15 +206,18 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Posti auto</label>
-                                    <input type="text" required placeholder="Inserisci il numero dei posti auto" name="postiauto">
+                                    <input type="text" required placeholder="Inserisci il numero dei posti auto"
+                                           name="postiauto">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero Bagni</label>
-                                    <input type="text" required placeholder="Inserisci il numero dei bagni" name="bagni">
+                                    <input type="text" required placeholder="Inserisci il numero dei bagni"
+                                           name="bagni">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero Camere Da Letto</label>
-                                    <input type="text" required placeholder="Inserisci il numero delle camere da letto" name="camereletto">
+                                    <input type="text" required placeholder="Inserisci il numero delle camere da letto"
+                                           name="camereletto">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Riscaldamento</label>
@@ -220,7 +231,8 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Classe energetica</label>
-                                    <input type="text" required placeholder="Inserisci la classe energetica" name="classeenergetica">
+                                    <input type="text" required placeholder="Inserisci la classe energetica"
+                                           name="classeenergetica">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Agente</label>
@@ -228,11 +240,14 @@
                                         <option value="" selected disabled>Seleziona l'agente</option>
                                         <%
                                             for (UtenteBean bean : utenti) {
+                                                if (bean.getRuolo().equals("Agente")) {
                                         %>
                                         <option value="<%=bean.getIdUtente()%>"><%=bean.getNome() + " " + bean.getCognome()%>
                                         </option>
                                         <%
-                                            }%>
+                                                }
+                                            }
+                                        %>
                                     </select>
                                 </div>
                             </div>

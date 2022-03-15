@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/amministratoreagente.css">
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
 
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -100,27 +100,27 @@
                                 <div class="user_general">
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Nome*</label>
-                                        <input type="text" required placeholder="Inserisci il nome">
+                                        <input type="text" required placeholder="Inserisci il nome" name="nome">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Cognome*</label>
-                                        <input type="text" required placeholder="Inserisci il cognome">
+                                        <input type="text" required placeholder="Inserisci il cognome" name="cognome">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Email*</label>
-                                        <input type="text" required placeholder="Inserisci l'email">
+                                        <input type="text" required placeholder="Inserisci l'email" name="cognome">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Username</label>
-                                        <input type="text" placeholder="Inserisci un username">
+                                        <input type="text" placeholder="Inserisci un username" name="username">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Password</label>
-                                        <input type="password" required placeholder="Inserisci la password">
+                                        <input type="password" required placeholder="Inserisci la password" name="password">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Ruolo</label>
-                                        <select required id="Selector">
+                                        <select required id="Selector" name="ruolo">
                                             <option value="" selected disabled>Seleziona ruolo utente</option>
                                             <option value="Admin">Admin</option>
                                             <option value="Segretario">Segretario</option>
@@ -130,7 +130,7 @@
                                     </div>
                                     <div class="content_fields_column half_size" id="div_agente" style="display: none;">
                                         <label class="label_user_title">Collaborazione agente</label>
-                                        <select required>
+                                        <select required name="agente">
                                             <option value="" selected disabled>Seleziona collaborazione agente</option>
                                             <option value="Admin">Nathan James</option>
                                             <option value="Segretario">De Filippo Gaetano</option>
@@ -142,15 +142,15 @@
                                     <h3 class="tab_title" style="margin-bottom:50px;">Informazioni Agente</h3>
                                     <div class="content_fields_column full_size">
                                         <label class="label_property_title">Descrizione*</label>
-                                        <textarea rows="10" required placeholder="Scrivi una descrizione"></textarea>
+                                        <textarea rows="10" required placeholder="Scrivi una descrizione" name="descrizione"></textarea>
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Link Facebook</label>
-                                        <input type="text" placeholder="Inserisci link profilo facebook">
+                                        <input type="text" placeholder="Inserisci link profilo facebook" name="facebook">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Link Instagram</label>
-                                        <input type="text" placeholder="Inserisci link profilo instagram">
+                                        <input type="text" placeholder="Inserisci link profilo instagram" name="instagram">
                                     </div>
                                 </div>
 
@@ -165,7 +165,7 @@
                                             <span class="or">oppure</span>
                                             <div class="button_browse">Sfoglia Immagine 
                                                 <div class="input_file">
-                                                    <input type="file" id="upload-photo">
+                                                    <input type="file" id="upload-photo" name="foto">
                                                 </div>
                                             </div>
                                             <div id="reset-image" class="button_browse">Reset

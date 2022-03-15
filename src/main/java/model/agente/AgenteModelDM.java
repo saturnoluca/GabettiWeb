@@ -78,6 +78,7 @@ public class AgenteModelDM implements AgenteModel {
                 numCase = rs.getInt("contaCase");
                 key.setBean(bean);
                 key.setContaCase(numCase);
+                key.setTotvisite(TotaleVisite(bean.getIdAgente()));
                 array.add(key);
             }
         } finally {
@@ -89,6 +90,32 @@ public class AgenteModelDM implements AgenteModel {
                 dmcp.releaseConnection(connection);
             }
             return array;
+        }
+    }
+
+    @Override
+    public int TotaleVisite(int id) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT SUM(visualizzazioni) as totvisite FROM mydb.appartamento where Agente_idAgente=?";
+        int totvisite=0;
+        try{
+            connection=dmcp.getConnection();
+            ps=connection.prepareStatement(selectSql);
+            ps.setInt(1, id);
+            ResultSet rs= ps.executeQuery();
+            while (rs.next()){
+                totvisite=rs.getInt("totvisite");
+            }
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+            return totvisite;
         }
     }
 
@@ -131,6 +158,40 @@ public class AgenteModelDM implements AgenteModel {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM agente WHERE idAgente=?";
+        AgenteBean bean = new AgenteBean();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bean.setIdAgente(rs.getInt("idAgente"));
+                bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
+                bean.setLinkFacebook(rs.getString("linkFacebook"));
+                bean.setLinkTwitter(rs.getString("linkTwitter"));
+                bean.setLinkInstagram(rs.getString("linkInstagram"));
+                bean.setLinkInternet(rs.getString("linkInternet"));
+                bean.setTelefonoFisso(rs.getString("telefonoFisso"));
+                bean.setTelefonoCellulare(rs.getString("telefonoCellulare"));
+                bean.setIdUtente(rs.getInt("Utente_idUtente"));
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+            return bean;
+        }
+    }
+
+    @Override
+    public AgenteBean RetrieveAgenteByIdUtente(int id) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT * FROM agente WHERE Utente_idUtente=?";
         AgenteBean bean = new AgenteBean();
         try {
             connection = dmcp.getConnection();

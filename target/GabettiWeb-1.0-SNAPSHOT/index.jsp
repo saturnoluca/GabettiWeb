@@ -41,8 +41,16 @@
     }
 
     ArrayList<CompositeKeyAgenteCase> agenteCase = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("agenteCase");
+    if (agenteCase == null) {
+        response.sendRedirect(response.encodeRedirectURL("IndexServlet"));
+        return;
+    }
 
     ArrayList<MultimediaBean> multimedia = (ArrayList<MultimediaBean>) request.getAttribute("multimedia");
+    if (multimedia == null) {
+        response.sendRedirect(response.encodeRedirectURL("IndexServlet"));
+        return;
+    }
 %>
 
 <head>
