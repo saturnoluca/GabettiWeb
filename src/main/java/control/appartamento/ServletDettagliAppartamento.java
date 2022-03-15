@@ -15,6 +15,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @WebServlet(name = "ServletDettagliAppartamento", value = "/ServletDettagliAppartamento")
@@ -36,7 +37,8 @@ public class ServletDettagliAppartamento extends HttpServlet {
         UtenteBean utenteBean = new UtenteBean();
         IndirizzoBean indirizzoBean = new IndirizzoBean();
         MultimediaBean multimediaBean = new MultimediaBean();
-
+        ArrayList<AppartamentoBean> array = new ArrayList<AppartamentoBean>();
+        ArrayList<MultimediaBean> allMulti = new ArrayList<MultimediaBean>();
         try {
             if (request.getSession().getAttribute("NoDbConnection") != null) {
                 modelApp = null;
@@ -52,11 +54,15 @@ public class ServletDettagliAppartamento extends HttpServlet {
             multimediaBean.setFotoString(modelMultimedia.doRetrieveFoto(appBean.getIdAppartamento()));
             multimediaBean.setVideoString(modelMultimedia.doRetrieveVideo(appBean.getIdAppartamento()));
             multimediaBean.setPlanimetriaString(modelMultimedia.doRetrievePlanimetria(appBean.getIdAppartamento()));
+            array =(ArrayList<AppartamentoBean>) modelApp.OrderByVisite();
+            allMulti=modelMultimedia.RetrieveAllMultimedia();
             request.setAttribute("appartamento", appBean);
             request.setAttribute("agente", agenteBean);
             request.setAttribute("utente", utenteBean);
             request.setAttribute("indirizzo", indirizzoBean);
             request.setAttribute("multimedia", multimediaBean);
+            request.setAttribute("visite", array);
+            request.setAttribute("allMulti", allMulti);
             RequestDispatcher rd = request.getRequestDispatcher("/dettagliappartamento.jsp");
             rd.forward(request, response);
 

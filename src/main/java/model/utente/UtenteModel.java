@@ -17,4 +17,9 @@ public interface UtenteModel<T> {
     public void doDelete(int idUtente) throws SQLException;
 
     public UtenteBean doRetrieveUtenteByKeyAgente(int idUtente) throws SQLException;
+
+    public UtenteBean Login(String email, String password) throws SQLException;
+
+    public UtenteBean RetrieveByEmail(String email) throws SQLException;
+
 }

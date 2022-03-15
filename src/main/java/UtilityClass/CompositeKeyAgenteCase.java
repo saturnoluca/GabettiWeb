@@ -7,25 +7,19 @@ import java.io.Serializable;
 public class CompositeKeyAgenteCase implements Serializable {
     private AgenteBean bean;
     private int contaCase;
+    private int totvisite;
 
     public CompositeKeyAgenteCase() {
     }
 
-    public CompositeKeyAgenteCase(AgenteBean bean, int contaCase) {
+    public CompositeKeyAgenteCase(AgenteBean bean, int contaCase, int totvisite) {
         this.bean = bean;
         this.contaCase = contaCase;
+        this.totvisite = totvisite;
     }
 
     public AgenteBean getBean() {
         return bean;
-    }
-
-    @Override
-    public String toString() {
-        return "CompositeKeyAgenteCase{" +
-                "bean=" + bean +
-                ", contaCase=" + contaCase +
-                '}';
     }
 
     public void setBean(AgenteBean bean) {
@@ -38,5 +32,13 @@ public class CompositeKeyAgenteCase implements Serializable {
 
     public void setContaCase(int contaCase) {
         this.contaCase = contaCase;
+    }
+
+    public int getTotvisite() {
+        return totvisite;
+    }
+
+    public void setTotvisite(int totvisite) {
+        this.totvisite = totvisite;
     }
 }

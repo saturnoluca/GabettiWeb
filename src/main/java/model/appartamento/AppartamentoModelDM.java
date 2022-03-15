@@ -248,40 +248,40 @@ public class AppartamentoModelDM implements AppartamentoModel {
         String maxSuperficie = "";
         String minGarage = "";
         if (ricerca.getCittà() != null) {
-            città = " AND indirizzo.città=" + "'" + ricerca.getCittà()+"'";
-            selectSql=selectSql+città;
+            città = " AND indirizzo.città=" + "'" + ricerca.getCittà() + "'";
+            selectSql = selectSql + città;
         }
-        if (ricerca.getVendita() != null){
-            vendita = " AND appartamento.tipoVendita=" +"'" + ricerca.getVendita()+"'";
-            selectSql=selectSql+vendita;
+        if (ricerca.getVendita() != null) {
+            vendita = " AND appartamento.tipoVendita=" + "'" + ricerca.getVendita() + "'";
+            selectSql = selectSql + vendita;
         }
-        if (ricerca.getCategoria() != null){
+        if (ricerca.getCategoria() != null) {
             categoria = " AND appartamento.categoria=" + ricerca.getCategoria();
-            selectSql=selectSql+categoria;
+            selectSql = selectSql + categoria;
         }
-        if (ricerca.getLetti() != -1){
+        if (ricerca.getLetti() != -1) {
             letti = " AND appartamento.camereLetto=" + ricerca.getLetti();
-            selectSql=selectSql+letti;
+            selectSql = selectSql + letti;
         }
-        if (ricerca.getBagni() != null){
+        if (ricerca.getBagni() != null) {
             bagni = " AND appartamento.bagni=" + ricerca.getBagni();
-            selectSql=selectSql+bagni;
+            selectSql = selectSql + bagni;
         }
-        if (ricerca.getMinPrezzo() != -1){
+        if (ricerca.getMinPrezzo() != -1) {
             minPrezzo = " AND appartamento.prezzo>" + ricerca.getMinPrezzo();
-            selectSql=selectSql+minPrezzo;
+            selectSql = selectSql + minPrezzo;
         }
-        if (ricerca.getMaxPrezzo() != -1){
+        if (ricerca.getMaxPrezzo() != -1) {
             maxPrezzo = " AND appartamento.prezzo<" + ricerca.getMaxPrezzo();
-            selectSql=selectSql+maxPrezzo;
+            selectSql = selectSql + maxPrezzo;
         }
-        if (ricerca.getMinSuperficie() != -1){
+        if (ricerca.getMinSuperficie() != -1) {
             minSuperficie = " AND appartamento.superficie>" + ricerca.getMinSuperficie();
-            selectSql=selectSql+minSuperficie;
+            selectSql = selectSql + minSuperficie;
         }
-        if (ricerca.getMaxSuperficie() != -1){
+        if (ricerca.getMaxSuperficie() != -1) {
             maxSuperficie = " AND appartamento.superficie<" + ricerca.getMaxSuperficie();
-            selectSql=selectSql+maxSuperficie;
+            selectSql = selectSql + maxSuperficie;
         }
         try {
             connection = dmcp.getConnection();
@@ -321,18 +321,18 @@ public class AppartamentoModelDM implements AppartamentoModel {
 
     @Override
     public void updateVisite(AppartamentoBean app) throws SQLException {
-        Connection connection=null;
+        Connection connection = null;
         PreparedStatement ps = null;
-        String updateSql= "UPDATE `mydb`.`appartamento` SET `visualizzazioni` = ? WHERE (`idAppartamento` = ?)";
-        try{
+        String updateSql = "UPDATE `mydb`.`appartamento` SET `visualizzazioni` = ? WHERE (`idAppartamento` = ?)";
+        try {
             connection = dmcp.getConnection();
-            if(app instanceof AppartamentoBean){
-                ps= connection.prepareStatement(updateSql);
+            if (app instanceof AppartamentoBean) {
+                ps = connection.prepareStatement(updateSql);
                 ps.setInt(1, app.getVisualizzazioni());
-                ps.setInt(2, app.getVisualizzazioni()+1);
+                ps.setInt(2, app.getVisualizzazioni() + 1);
                 connection.commit();
             }
-        }finally {
+        } finally {
             try {
                 if (ps != null) {
                     ps.close();
@@ -349,9 +349,9 @@ public class AppartamentoModelDM implements AppartamentoModel {
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM appartamento where idAppartamento = ?";
         AppartamentoBean bean = new AppartamentoBean();
-        try{
-            connection= dmcp.getConnection();
-            ps=connection.prepareStatement(selectSql);
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -371,7 +371,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
             bean.setData(rs.getDate("data"));
             bean.setIdAgente(rs.getInt("Agente_idAgente"));
             bean.setPostoAuto(rs.getInt("postoAuto"));
-        }finally {
+        } finally {
             try {
                 if (ps != null) {
                     ps.close();
@@ -466,6 +466,34 @@ public class AppartamentoModelDM implements AppartamentoModel {
             }
         }
         return appartamento;
+    }
+
+    @Override
+    public int RetrieveByBean(AppartamentoBean bean) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String selectSQL = "SELECT idAppartamento FROM appartamento WHERE nomeAppartamento=? AND descrizioneAppartamento=? AND idAgente=?";
+        int id=0;
+        try {
+            conn = dmcp.getConnection();
+            ps = conn.prepareStatement(selectSQL);
+            ps.setString(1, bean.getNomeAppartamento());
+            ps.setString(2, bean.getDescrizioneAppartamento());
+            ps.setInt(3, bean.getIdAgente());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("idAppartamento");
+            }
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(conn);
+            }
+        }
+        return id;
     }
 
 }
