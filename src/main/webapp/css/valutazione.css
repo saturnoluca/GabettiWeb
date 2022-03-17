@@ -300,6 +300,10 @@ body {
     font-size: 16px;
 }
 
+.form_features input[type="checkbox"]{
+    display: inline-block;
+}
+
 .form_features .form_checkbox_label{
     display: block;
     font-size: 14px;
