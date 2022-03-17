@@ -1,13 +1,15 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.utente.UtenteBean" %><%--
+<%@ page import="model.utente.UtenteBean" %>
+<%@ page import="model.agente.AgenteBean" %><%--
   Created by IntelliJ IDEA.
   User: Luca
-  Date: 10/03/2022
-  Time: 11:27
+  Date: 16/03/2022
+  Time: 09:36
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
@@ -30,22 +32,18 @@
 </head>
 
 <%
-    UtenteBean utente = (UtenteBean) session.getAttribute("Admin");
-    if (utente == null) {
+    UtenteBean admin = (UtenteBean) session.getAttribute("utente");
+    if (admin == null||!admin.getRuolo().equals("Agente")) {
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
+        return;
     }
-
-    ArrayList<UtenteBean> utenti = (ArrayList<UtenteBean>) session.getAttribute("array");
-    if (utenti == null) {
-        response.sendRedirect(response.encodeRedirectURL("login.jsp"));
-    }
-
+    AgenteBean agente = (AgenteBean) session.getAttribute("agente");
 %>
 <body>
 <div class="sidebar">
     <div class="logo-details">
         <div class="logo_name">Gabetti</div>
-        <i class='bx bx-menu' id="btn"></i>
+        <i class='bx bx-menu' id="btn" ></i>
     </div>
     <ul class="nav-list">
         <li>
@@ -64,28 +62,28 @@
         </li>
         <li>
             <a href="#">
-                <i class='bx bx-home'></i>
+                <i class='bx bx-home' ></i>
                 <span class="links_name">Lista immobili</span>
             </a>
             <span class="tooltip">Lista immobili</span>
         </li>
         <li>
-            <a href="aggiungi-immobile-admin.html">
-                <i class='bx bx-home-smile'></i>
+            <a href="aggiungi-immobile-agente.html">
+                <i class='bx bx-home-smile' ></i>
                 <span class="links_name">Aggiungi immobile</span>
             </a>
             <span class="tooltip">Aggiungi immobile</span>
         </li>
         <li>
             <a href="#">
-                <i class='bx bxs-user-detail'></i>
+                <i class='bx bxs-user-detail' ></i>
                 <span class="links_name">Lista utenti</span>
             </a>
             <span class="tooltip">Lista utenti</span>
         </li>
         <li>
-            <a href="aggiungi-utente.html">
-                <i class='bx bx-user-plus'></i>
+            <a href="#">
+                <i class='bx bx-user-plus' ></i>
                 <span class="links_name">Aggiungi utente</span>
             </a>
             <span class="tooltip">Aggiungi utente</span>
@@ -98,7 +96,7 @@
                     <div class="job">Amministratore</div>
                 </div>
             </div>
-            <i class='bx bx-log-out' id="log_out"></i>
+            <i class='bx bx-log-out' id="log_out" ></i>
         </li>
     </ul>
 </div>
@@ -110,7 +108,9 @@
             </div>
         </div>
         <div class="addProperty_page_content">
-            <form class="form_addProperty">
+            <form class="form_addProperty" action="/SalvaAppartamento" method="post">
+                <input type="hidden" name="ruolo" value="<%=admin.getRuolo()%>">
+                <input type="hidden" name="idAgente" value="<%=agente.getIdAgente()%>">
                 <div class="addProperty_tab">
                     <h3 class="tab_title">Informazioni generali</h3>
                 </div>
@@ -121,7 +121,7 @@
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Titolo immobile*</label>
                                     <input type="text" required placeholder="Inserisci titolo immobile"
-                                           name="titoloimmobile">
+                                           name="titoloImmobile">
                                 </div>
                             </div>
                             <div class="property_address">
@@ -135,11 +135,11 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Indirizzo*</label>
-                                    <input type="text" required placeholder="Inserisci l'indirizzo" name="Indirizzo">
+                                    <input type="text" required placeholder="Inserisci l'indirizzo" name="indirizzo">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero civico</label>
-                                    <input type="text" placeholder="Inserisci il numero civico" name="numerocivico">
+                                    <input type="text" placeholder="Inserisci il numero civico" name="numeroCivico">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">CAP*</label>
@@ -156,11 +156,11 @@
                             <div class="property_features">
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Prezzo*</label>
-                                    <input type="text" required placeholder="Inserisci la città" name="prezzo">
+                                    <input type="text" required placeholder="Inserisci il prezzo" name="prezzo">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Tipo immobile*</label>
-                                    <select required name="tipoimmobile">
+                                    <select required name="tipoImmobile">
                                         <option value="" selected disabled>Seleziona tipo immobile</option>
                                         <option value="Appartamento">Appartamento</option>
                                         <option value="Abitazione economica">Abitazione economica</option>
@@ -175,7 +175,7 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Stato appartamento*</label>
-                                    <select required name="statoappartamento">
+                                    <select required name="statoImmobile">
                                         <option value="" selected disabled>Seleziona stato immobile</option>
                                         <option value="In Vendita">In Vendita</option>
                                         <option value="In Affitto">In Affitto</option>
@@ -188,7 +188,7 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero Locali</label>
-                                    <input type="text" placeholder="Inserisci il numero dei locali" name="numerolocali">
+                                    <input type="text" placeholder="Inserisci il numero dei locali" name="locali">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Piano</label>
@@ -207,17 +207,17 @@
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Posti auto</label>
                                     <input type="text" required placeholder="Inserisci il numero dei posti auto"
-                                           name="postiauto">
+                                           name="postiAuto">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero Bagni</label>
                                     <input type="text" required placeholder="Inserisci il numero dei bagni"
-                                           name="bagni">
+                                           name="numeroBagni">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero Camere Da Letto</label>
                                     <input type="text" required placeholder="Inserisci il numero delle camere da letto"
-                                           name="camereletto">
+                                           name="camereLetto">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Riscaldamento</label>
@@ -232,37 +232,26 @@
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Classe energetica</label>
                                     <input type="text" required placeholder="Inserisci la classe energetica"
-                                           name="classeenergetica">
-                                </div>
-                                <div class="content_fields_column half_size">
-                                    <label class="label_property_title">Agente</label>
-                                    <select>
-                                        <option value="" selected disabled>Seleziona l'agente</option>
-                                        <%
-                                            for (UtenteBean bean : utenti) {
-                                                if (bean.getRuolo().equals("Agente")) {
-                                        %>
-                                        <option value="<%=bean.getIdUtente()%>"><%=bean.getNome() + " " + bean.getCognome()%>
-                                        </option>
-                                        <%
-                                                }
-                                            }
-                                        %>
-                                    </select>
+                                           name="classeEnegertica">
                                 </div>
                             </div>
                             <div class="property_multimedia">
                                 <h3 class="tab_title">Multimedia</h3>
                                 <div class="gallery_image_container" id="gallery_image_container"></div>
+                                <input id="fileDragName">
                                 <div class="content_gallery_images full_size">
                                     <label class="label_property_title">Immagini</label>
-                                    <div class="drag_drop_container">
+                                    <div class="drag_drop_container"
+                                         ondragover="this.style.borderColor='#0c0'; return false;"
+                                         ondragleave="this.style.borderColor='#ccc'"
+                                         ondrop="getTheFile(event); return false;">
                                         <i class="icon-cloud-upload"></i>
                                         <strong>Trascina e rilascia delle immagini</strong>
                                         <span class="or">oppure</span>
                                         <div class="button_browse">Sfoglia Immagine
                                             <div class="input_file">
-                                                <input type="file" multiple id="upload-photo">
+                                                <input type="file" multiple id="upload-photo"
+                                                       onchange="readFile(event)">
                                             </div>
                                         </div>
                                         <div id="reset-image" class="button_browse">Reset
@@ -321,22 +310,22 @@
     let closeBtn = document.querySelector("#btn");
     let searchBtn = document.querySelector(".bx-search");
 
-    closeBtn.addEventListener("click", () => {
+    closeBtn.addEventListener("click", ()=>{
         sidebar.classList.toggle("open");
         menuBtnChange();//calling the function(optional)
     });
 
-    searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
         sidebar.classList.toggle("open");
         menuBtnChange(); //calling the function(optional)
     });
 
     // following are the code to change sidebar button(optional)
     function menuBtnChange() {
-        if (sidebar.classList.contains("open")) {
+        if(sidebar.classList.contains("open")){
             closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-        } else {
-            closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+        }else {
+            closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
         }
     }
 </script>
@@ -359,11 +348,11 @@
 
             var reader = new FileReader();
 
-            reader.addEventListener("load", function () {
+            reader.addEventListener("load", function() {
                 var image = new Image();
                 image.height = 100;
-                image.title = file.name;
-                image.src = this.result;
+                image.title  = file.name;
+                image.src    = this.result;
                 preview.appendChild(image);
             });
 
@@ -375,7 +364,7 @@
 
     document.querySelector('#upload-photo').addEventListener("change", previewImages);
 
-    $('#reset-image').click(function () {
+    $('#reset-image').click(function(){
         $("#upload-photo").val('');
         $("#gallery_image_container").empty();
     });
@@ -399,11 +388,11 @@
 
             var reader = new FileReader();
 
-            reader.addEventListener("load", function () {
+            reader.addEventListener("load", function() {
                 var image = new Image();
                 image.height = 100;
-                image.title = file.name;
-                image.src = this.result;
+                image.title  = file.name;
+                image.src    = this.result;
                 preview.appendChild(image);
             });
 
@@ -415,7 +404,7 @@
 
     document.querySelector('#upload-planimetria').addEventListener("change", previewImages);
 
-    $('#reset-planimetria').click(function () {
+    $('#reset-planimetria').click(function(){
         $("#upload-planimetria").val('');
         $("#planimetria_image_container").empty();
     });
@@ -439,11 +428,11 @@
 
             var reader = new FileReader();
 
-            reader.addEventListener("load", function () {
+            reader.addEventListener("load", function() {
                 var image = new Image();
                 image.height = 100;
-                image.title = file.name;
-                image.src = this.result;
+                image.title  = file.name;
+                image.src    = this.result;
                 preview.appendChild(image);
             });
 
@@ -455,10 +444,12 @@
 
     document.querySelector('#upload-video').addEventListener("change", previewImages);
 
-    $('#reset-video').click(function () {
+    $('#reset-video').click(function(){
         $("#upload-video").val('');
     });
 </script>
+
+
 
 
 <script src="script/index.js"></script>
@@ -468,5 +459,4 @@
 <script src="bootstrap/js/jquery.sticky.js"></script>
 
 </body>
-</html>
 </html>

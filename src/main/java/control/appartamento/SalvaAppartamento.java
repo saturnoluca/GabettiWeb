@@ -30,6 +30,7 @@ public class SalvaAppartamento extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String ruolo = request.getParameter("ruolo");
         AppartamentoModelDM model = new AppartamentoModelDM();
         AppartamentoBean bean = new AppartamentoBean();
         bean.setCategoria(request.getParameter("categoria"));

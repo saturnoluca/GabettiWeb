@@ -33,7 +33,7 @@
 
 <%
     UtenteBean admin = (UtenteBean) session.getAttribute("utente");
-    if (admin == null) {
+    if (admin == null || !admin.getRuolo().equals("Admin")) {
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
@@ -115,7 +115,8 @@
             </div>
         </div>
         <div class="addProperty_page_content">
-            <form class="form_addProperty" action="/SalvaAppartamento">
+            <form class="form_addProperty" action="/SalvaAppartamento" method="post">
+                <input type="hidden" name="ruolo" value="<%=admin.getRuolo()%>">
                 <div class="addProperty_tab">
                     <h3 class="tab_title">Informazioni generali</h3>
                 </div>

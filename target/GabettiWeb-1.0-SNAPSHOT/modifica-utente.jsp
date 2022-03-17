@@ -3,7 +3,7 @@
   Created by IntelliJ IDEA.
   User: Luca
   Date: 16/03/2022
-  Time: 09:28
+  Time: 10:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/amministratoreagente.css">
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -30,6 +30,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
+
 <%
     UtenteBean utente = (UtenteBean) session.getAttribute("utente");
     if (utente == null) {
@@ -40,13 +41,19 @@
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
-    ArrayList<UtenteBean> array = (ArrayList<UtenteBean>) session.getAttribute("array");
+
+    ArrayList<UtenteBean> arrayList = (ArrayList<UtenteBean>) session.getAttribute("array");
+    UtenteBean utenteDaMoficare = (UtenteBean) request.getAttribute("utenteDaModificare");
+    if (utenteDaMoficare == null) {
+        response.sendRedirect(response.encodeRedirectURL("lista-utenti.jsp"));
+        return;
+    }
 %>
 <body>
 <div class="sidebar">
     <div class="logo-details">
         <div class="logo_name">Gabetti</div>
-        <i class='bx bx-menu' id="btn" ></i>
+        <i class='bx bx-menu' id="btn"></i>
     </div>
     <ul class="nav-list">
         <li>
@@ -65,28 +72,28 @@
         </li>
         <li>
             <a href="#">
-                <i class='bx bx-home' ></i>
+                <i class='bx bx-home'></i>
                 <span class="links_name">Lista immobili</span>
             </a>
             <span class="tooltip">Lista immobili</span>
         </li>
         <li>
             <a href="aggiungi-immobile-admin.html">
-                <i class='bx bx-home-smile' ></i>
+                <i class='bx bx-home-smile'></i>
                 <span class="links_name">Aggiungi immobile</span>
             </a>
             <span class="tooltip">Aggiungi immobile</span>
         </li>
         <li>
             <a href="#">
-                <i class='bx bxs-user-detail' ></i>
+                <i class='bx bxs-user-detail'></i>
                 <span class="links_name">Lista utenti</span>
             </a>
             <span class="tooltip">Lista utenti</span>
         </li>
         <li>
             <a href="aggiungi-utente.html">
-                <i class='bx bx-user-plus' ></i>
+                <i class='bx bx-user-plus'></i>
                 <span class="links_name">Aggiungi utente</span>
             </a>
             <span class="tooltip">Aggiungi utente</span>
@@ -99,7 +106,7 @@
                     <div class="job">Amministratore</div>
                 </div>
             </div>
-            <i class='bx bx-log-out' id="log_out" ></i>
+            <i class='bx bx-log-out' id="log_out"></i>
         </li>
     </ul>
 </div>
@@ -107,11 +114,11 @@
     <div class="div_addUser_page">
         <div class="addUser_page_head">
             <div class="addUser_head_title">
-                <h1 class="head_title">Aggiungi Utente</h1>
+                <h1 class="head_title">Modifica Utente</h1>
             </div>
         </div>
         <div class="addUser_page_content">
-            <form method="post" action="ServletAggiungiUtente" class="form_addUser">
+            <form class="form_addUser">
                 <div class="addUser_tab">
                     <h3 class="tab_title">Informazioni generali</h3>
                 </div>
@@ -121,27 +128,27 @@
                             <div class="user_general">
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Nome*</label>
-                                    <input type="text" required placeholder="Inserisci il nome" name="nome">
+                                    <input type="text" required placeholder="<%=utenteDaMoficare.getNome()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Cognome*</label>
-                                    <input type="text" required placeholder="Inserisci il cognome" name="cognome">
+                                    <input type="text" required placeholder="<%=utenteDaMoficare.getCognome()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Email*</label>
-                                    <input type="text" required placeholder="Inserisci l'email" name="cognome">
+                                    <input type="text" required placeholder="<%=utenteDaMoficare.getEmail()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Username</label>
-                                    <input type="text" placeholder="Inserisci un username" name="username">
+                                    <input type="text" placeholder="<%=utenteDaMoficare.getUsername()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Password</label>
-                                    <input type="password" required placeholder="Inserisci la password" name="password">
+                                    <input type="password" required placeholder="******">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Ruolo</label>
-                                    <select required id="Selector" name="ruolo">
+                                    <select required id="Selector">
                                         <option value="" selected disabled>Seleziona ruolo utente</option>
                                         <option value="Admin">Admin</option>
                                         <option value="Segretario">Segretario</option>
@@ -151,13 +158,14 @@
                                 </div>
                                 <div class="content_fields_column half_size" id="div_agente" style="display: none;">
                                     <label class="label_user_title">Collaborazione agente</label>
-                                    <select required name="agente">
+                                    <select required>
                                         <option value="" selected disabled>Seleziona collaborazione agente</option>
                                         <%
-                                            for (UtenteBean bean : array) {
+                                            for (UtenteBean bean : arrayList) {
                                                 if (bean.getRuolo().equals("Agente")) {
                                         %>
-                                        <option value="<%=bean.getIdUtente()%>"><%=bean.getNome()+" "+bean.getCognome()%></option>
+                                        <option value="<%=bean.getIdUtente()%>"><%=bean.getNome() + " " + bean.getCognome()%>
+                                        </option>
                                         <%
                                                 }
                                             }
@@ -169,16 +177,15 @@
                                 <h3 class="tab_title" style="margin-bottom:50px;">Informazioni Agente</h3>
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Descrizione*</label>
-                                    <textarea rows="10" required placeholder="Scrivi una descrizione"
-                                              name="descrizione"></textarea>
+                                    <textarea rows="10" required placeholder="Scrivi una descrizione"></textarea>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Link Facebook</label>
-                                    <input type="text" placeholder="Inserisci link profilo facebook" name="facebook">
+                                    <input type="text" placeholder="Inserisci link profilo facebook">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Link Instagram</label>
-                                    <input type="text" placeholder="Inserisci link profilo instagram" name="instagram">
+                                    <input type="text" placeholder="Inserisci link profilo instagram">
                                 </div>
                             </div>
 
@@ -193,7 +200,7 @@
                                         <span class="or">oppure</span>
                                         <div class="button_browse">Sfoglia Immagine
                                             <div class="input_file">
-                                                <input type="file" id="upload-photo" name="foto">
+                                                <input type="file" id="upload-photo">
                                             </div>
                                         </div>
                                         <div id="reset-image" class="button_browse">Reset
@@ -219,22 +226,22 @@
     let closeBtn = document.querySelector("#btn");
     let searchBtn = document.querySelector(".bx-search");
 
-    closeBtn.addEventListener("click", ()=>{
+    closeBtn.addEventListener("click", () => {
         sidebar.classList.toggle("open");
         menuBtnChange();//calling the function(optional)
     });
 
-    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+    searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
         sidebar.classList.toggle("open");
         menuBtnChange(); //calling the function(optional)
     });
 
     // following are the code to change sidebar button(optional)
     function menuBtnChange() {
-        if(sidebar.classList.contains("open")){
+        if (sidebar.classList.contains("open")) {
             closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-        }else {
-            closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+        } else {
+            closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
         }
     }
 </script>
@@ -257,11 +264,11 @@
 
             var reader = new FileReader();
 
-            reader.addEventListener("load", function() {
+            reader.addEventListener("load", function () {
                 var image = new Image();
                 image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
+                image.title = file.name;
+                image.src = this.result;
                 preview.appendChild(image);
             });
 
@@ -273,7 +280,7 @@
 
     document.querySelector('#upload-photo').addEventListener("change", previewImages);
 
-    $('#reset-image').click(function(){
+    $('#reset-image').click(function () {
         $("#upload-photo").val('');
         $("#gallery_image_container").empty();
     });
@@ -297,11 +304,11 @@
 
             var reader = new FileReader();
 
-            reader.addEventListener("load", function() {
+            reader.addEventListener("load", function () {
                 var image = new Image();
                 image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
+                image.title = file.name;
+                image.src = this.result;
                 preview.appendChild(image);
             });
 
@@ -313,7 +320,7 @@
 
     document.querySelector('#upload-planimetria').addEventListener("change", previewImages);
 
-    $('#reset-planimetria').click(function(){
+    $('#reset-planimetria').click(function () {
         $("#upload-planimetria").val('');
         $("#planimetria_image_container").empty();
     });
@@ -337,11 +344,11 @@
 
             var reader = new FileReader();
 
-            reader.addEventListener("load", function() {
+            reader.addEventListener("load", function () {
                 var image = new Image();
                 image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
+                image.title = file.name;
+                image.src = this.result;
                 preview.appendChild(image);
             });
 
@@ -353,7 +360,7 @@
 
     document.querySelector('#upload-video').addEventListener("change", previewImages);
 
-    $('#reset-video').click(function(){
+    $('#reset-video').click(function () {
         $("#upload-video").val('');
     });
 </script>
@@ -361,28 +368,26 @@
 <script>
     document.getElementById("Selector").onchange = changeListener;
 
-    function changeListener(){
+    function changeListener() {
         var value = this.value
         console.log(value);
 
-        if ((value == "Agente") || (value == "Collaboratore")){
+        if ((value == "Agente") || (value == "Collaboratore")) {
             $('#info_agente').slideDown();
-        }else {
+        } else {
             $('#info_agente').slideUp();
         }
 
-        if (value == "Collaboratore"){
+        if (value == "Collaboratore") {
             $('#div_agente').slideDown();
-        }else {
+        } else {
             $('#div_agente').slideUp();
         }
-
 
 
     }
 
 </script>
-
 
 
 <script src="script/index.js"></script>

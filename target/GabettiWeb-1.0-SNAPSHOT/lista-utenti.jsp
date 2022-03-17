@@ -177,7 +177,7 @@
                                         <i class="icon-eye"></i>
                                         Visualizza
                                     </a>
-                                    <a href="">
+                                    <a href="${pageContext.request.contextPath}/ServletControlloModificaUtente?idUtente=<%=bean.getIdUtente()%>">
                                         <i class="icon-mode_edit"></i>
                                         Modifica
                                     </a>

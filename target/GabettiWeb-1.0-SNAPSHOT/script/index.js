@@ -138,13 +138,13 @@ function advancedOption(){
             if(elem.classList.contains("localita_selected")){
               elem.classList.remove("localita_selected");
               div.innerHTML = "Qualsiasi Località";
-                $("#localita").val("Tutti");
+                $("#localita_immobile").val("Tutti");
             }
             else{
               $("a").removeClass("localita_selected");
               elem.classList.add("localita_selected");
               div.innerHTML = text.innerHTML;
-                $("#localita").val(text);
+                $("#localita_immobile").val(text);
             }
           }
 
@@ -154,14 +154,14 @@ function advancedOption(){
             if(elem.classList.contains("stato_selected")){
               elem.classList.remove("stato_selected");
               div.innerHTML = "Qualsiasi";
-                $("#localita").val("Tutti");
+                $("#stato_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("stato_selected");
               elem.classList.add("stato_selected");
               div.innerHTML = text.innerHTML;
-                $("#localita").val(text);
+                $("#stato_immobile").val(text);
             }
           }
 
@@ -171,14 +171,14 @@ function advancedOption(){
             if(elem.classList.contains("tipo_selected")){
               elem.classList.remove("tipo_selected");
               div.innerHTML = "Qualsiasi tipi";
-                $("#localita").val("Tutti");
+                $("#tipo_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("tipo_selected");
               elem.classList.add("tipo_selected");
               div.innerHTML = text.innerHTML;
-                $("#localita").val(text);
+                $("#tipo_immobile").val(text);
             }
           }
 
@@ -190,14 +190,14 @@ function advancedOption(){
             if(elem.classList.contains("minCamere_selected")){
               elem.classList.remove("minCamere_selected");
               div.innerHTML = "Qualsiasi";
-                $("#localita").val("Tutti");
+                $("#camere_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("minCamere_selected");
               elem.classList.add("minCamere_selected");
               div.innerHTML = text.innerHTML;
-                $("#localita").val(text);
+                $("#camere_immobile").val(text);
             }
           }
 
@@ -208,14 +208,14 @@ function advancedOption(){
             if(elem.classList.contains("minBagni_selected")){
               elem.classList.remove("minBagni_selected");
               div.innerHTML = "Qualsiasi";
-                $("#localita").val("Tutti");
+                $("#bagni_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("minBagni_selected");
               elem.classList.add("minBagni_selected");
               div.innerHTML = text.innerHTML;
-                $("#localita").val(text);
+                $("#bagni_immobile").val(text);
             }
           }
 
@@ -226,14 +226,14 @@ function advancedOption(){
             if(elem.classList.contains("minPrezzo_selected")){
               elem.classList.remove("minPrezzo_selected");
               div.innerHTML = "Qualsiasi";
-                $("#localita").val("Tutti");
+                $("#minPrezzo_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("minPrezzo_selected");
               elem.classList.add("minPrezzo_selected");
               div.innerHTML = text.innerHTML;
-                $("#localita").val(text);
+                $("#minPrezzo_immobile").val(text);
             }
           }
 
@@ -243,14 +243,14 @@ function advancedOption(){
             if(elem.classList.contains("maxPrezzo_selected")){
               elem.classList.remove("maxPrezzo_selected");
               div.innerHTML = "Qualsiasi";
-                $("#localita").val("Tutti");
+                $("#maxPrezzo_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("maxPrezzo_selected");
               elem.classList.add("maxPrezzo_selected");
               div.innerHTML = text.innerHTML;
-                $("#localita").val(text);
+                $("#maxPrezzo_immobile").val(text);
             }
           }
 
@@ -260,14 +260,14 @@ function advancedOption(){
             if(elem.classList.contains("minAuto_selected")){
               elem.classList.remove("minAuto_selected");
               div.innerHTML = "Qualsiasi";
-                $("#localita").val("Tutti");
+                $("#auto_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("minAuto_selected");
               elem.classList.add("minAuto_selected");
               div.innerHTML = text.innerHTML;
-                $("#localita").val(text);
+                $("#auto_immobile").val(text);
             }
           }
 
@@ -277,13 +277,13 @@ function advancedOption(){
             if(elem.classList.contains("agente_selected")){
               elem.classList.remove("agente_selected");
               div.innerHTML = "Qualsiasi";
-                $("#localita").val("Tutti");
+                $("#agente_immobile").val("Tutti");
             }
             else{
               $("a").removeClass("agente_selected");
               elem.classList.add("agente_selected");
               div.innerHTML = text.innerHTML;
-                $("#localita").val(text);
+                $("#agente_immobile").val(text);
             }
           }
           

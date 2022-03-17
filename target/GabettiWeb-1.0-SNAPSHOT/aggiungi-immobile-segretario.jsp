@@ -33,7 +33,7 @@
 
 <%
     UtenteBean admin = (UtenteBean) session.getAttribute("utente");
-    if (admin == null || !admin.getRuolo().equals("Admin")) {
+    if (admin == null || !admin.getRuolo().equals("Segretario")) {
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }

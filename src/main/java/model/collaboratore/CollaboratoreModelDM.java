@@ -19,15 +19,16 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
     }
 
     @Override
-    public void doSave(CollaboratoreBean bean) throws SQLException {
+    public CollaboratoreBean doSave(CollaboratoreBean bean) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        String insertSql = "INSERT INTO collaboratore(Agente_idAgente) VALUES(?)";
+        String insertSql = "INSERT INTO collaboratore(Agente_idAgente, Utente_idUtente) VALUES(?, ?)";
         try {
             connection = dmcp.getConnection();
             if (bean instanceof CollaboratoreBean) {
                 ps = connection.prepareStatement(insertSql);
                 ps.setInt(1, bean.getIdAgente());
+                ps.setInt(2, bean.getIdUtente());
                 connection.commit();
                 System.out.println("doSave: " + bean);
             }
@@ -40,20 +41,22 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
                 dmcp.releaseConnection(connection);
             }
         }
+        return bean;
     }
 
     @Override
-    public CollaboratoreBean RetrieveCollaboratore(int idCollaboratore) throws SQLException {
+    public CollaboratoreBean RetrieveCollaboratore(int idUtente) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        String selectSql = "SELECT * FROM collaboratore WHERE idCollaboratore=?";
+        String selectSql = "SELECT * FROM collaboratore WHERE idCollaboratore=? AND idUtente";
         CollaboratoreBean bean = new CollaboratoreBean();
         try {
             ps = connection.prepareStatement(selectSql);
-            ps.setInt(1, idCollaboratore);
+            ps.setInt(1, idUtente);
             ResultSet rs = ps.executeQuery();
             bean.setIdCollaboratore(rs.getInt("idCollaboratore"));
             bean.setIdAgente(rs.getInt("Agente_idAgente"));
+            bean.setIdUtente(rs.getInt("Utente_idUtente"));
         } finally {
             try {
                 if (ps != null) {
@@ -80,6 +83,7 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
                 CollaboratoreBean bean = new CollaboratoreBean();
                 bean.setIdCollaboratore(rs.getInt("idCollaboratore"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
+                bean.setIdUtente(rs.getInt("Utente_idUtente"));
                 collaboratori.add(bean);
             }
         }finally {
@@ -107,6 +111,7 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
                 CollaboratoreBean bean = new CollaboratoreBean();
                 bean.setIdCollaboratore(rs.getInt("idCollaboratore"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
+                bean.setIdUtente(rs.getInt("Utente_idUtente"));
                 collaboratori.add(bean);
             }
         }finally {

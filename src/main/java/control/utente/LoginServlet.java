@@ -52,7 +52,8 @@ public class LoginServlet extends HttpServlet {
                     redirect = "myprofile.jsp";
                 } else if (bean.getRuolo().equals("Segretario")) {
                     request.getSession(true).setAttribute("utente", bean);
-                    redirect = "Homepage.jsp";
+                    request.getSession(true).setAttribute("array", array);
+                    redirect = "myprofile.jsp";
                 }
             } else {
                 throw new IllegalArgumentException("L'accesso non va a buon fine poichè"

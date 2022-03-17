@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface CollaboratoreModel<T> {
-    public void doSave(CollaboratoreBean bean) throws SQLException;
+    public CollaboratoreBean doSave(CollaboratoreBean bean) throws SQLException;
 
     public CollaboratoreBean RetrieveCollaboratore(int idCollaboratore) throws SQLException;
 

@@ -1,20 +1,22 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.utente.UtenteBean" %><%--
+<%@ page import="model.utente.UtenteBean" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Luca
-  Date: 15/03/2022
-  Time: 10:27
+  Date: 16/03/2022
+  Time: 09:28
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="it" dir="ltr">
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
     <link rel="stylesheet" href="css/amministratoreagente.css">
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -28,7 +30,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
-
 <%
     UtenteBean utente = (UtenteBean) session.getAttribute("utente");
     if (utente == null) {
@@ -218,22 +219,22 @@
     let closeBtn = document.querySelector("#btn");
     let searchBtn = document.querySelector(".bx-search");
 
-    closeBtn.addEventListener("click", () => {
+    closeBtn.addEventListener("click", ()=>{
         sidebar.classList.toggle("open");
         menuBtnChange();//calling the function(optional)
     });
 
-    searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
         sidebar.classList.toggle("open");
         menuBtnChange(); //calling the function(optional)
     });
 
     // following are the code to change sidebar button(optional)
     function menuBtnChange() {
-        if (sidebar.classList.contains("open")) {
+        if(sidebar.classList.contains("open")){
             closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-        } else {
-            closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+        }else {
+            closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
         }
     }
 </script>
@@ -256,11 +257,11 @@
 
             var reader = new FileReader();
 
-            reader.addEventListener("load", function () {
+            reader.addEventListener("load", function() {
                 var image = new Image();
                 image.height = 100;
-                image.title = file.name;
-                image.src = this.result;
+                image.title  = file.name;
+                image.src    = this.result;
                 preview.appendChild(image);
             });
 
@@ -272,7 +273,7 @@
 
     document.querySelector('#upload-photo').addEventListener("change", previewImages);
 
-    $('#reset-image').click(function () {
+    $('#reset-image').click(function(){
         $("#upload-photo").val('');
         $("#gallery_image_container").empty();
     });
@@ -296,11 +297,11 @@
 
             var reader = new FileReader();
 
-            reader.addEventListener("load", function () {
+            reader.addEventListener("load", function() {
                 var image = new Image();
                 image.height = 100;
-                image.title = file.name;
-                image.src = this.result;
+                image.title  = file.name;
+                image.src    = this.result;
                 preview.appendChild(image);
             });
 
@@ -312,7 +313,7 @@
 
     document.querySelector('#upload-planimetria').addEventListener("change", previewImages);
 
-    $('#reset-planimetria').click(function () {
+    $('#reset-planimetria').click(function(){
         $("#upload-planimetria").val('');
         $("#planimetria_image_container").empty();
     });
@@ -336,11 +337,11 @@
 
             var reader = new FileReader();
 
-            reader.addEventListener("load", function () {
+            reader.addEventListener("load", function() {
                 var image = new Image();
                 image.height = 100;
-                image.title = file.name;
-                image.src = this.result;
+                image.title  = file.name;
+                image.src    = this.result;
                 preview.appendChild(image);
             });
 
@@ -352,7 +353,7 @@
 
     document.querySelector('#upload-video').addEventListener("change", previewImages);
 
-    $('#reset-video').click(function () {
+    $('#reset-video').click(function(){
         $("#upload-video").val('');
     });
 </script>
@@ -360,26 +361,28 @@
 <script>
     document.getElementById("Selector").onchange = changeListener;
 
-    function changeListener() {
+    function changeListener(){
         var value = this.value
         console.log(value);
 
-        if ((value == "Agente") || (value == "Collaboratore")) {
+        if ((value == "Agente") || (value == "Collaboratore")){
             $('#info_agente').slideDown();
-        } else {
+        }else {
             $('#info_agente').slideUp();
         }
 
-        if (value == "Collaboratore") {
+        if (value == "Collaboratore"){
             $('#div_agente').slideDown();
-        } else {
+        }else {
             $('#div_agente').slideUp();
         }
+
 
 
     }
 
 </script>
+
 
 
 <script src="script/index.js"></script>
