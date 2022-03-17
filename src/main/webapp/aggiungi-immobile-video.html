@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="css/amministratoreagente.css">
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
- 
+
      <link rel="stylesheet" href="icomoon/style.css">
-     
+
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
      <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
- 
+
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
    </head>
@@ -83,100 +83,39 @@
         </ul>
     </div>
     <section class="home-section">
-        <div class="div_addUser_page">
-            <div class="addUser_page_head">
-                <div class="addUser_head_title">
-                    <h1 class="head_title">Aggiungi Utente</h1>
+        <div class="div_addProperty_page">
+            <div class="addProperty_page_head">
+                <div class="addProperty_head_title">
+                    <h1 class="head_title">Aggiungi immobile</h1>
                 </div>
             </div>
-            <div class="addUser_page_content">
-                <form class="form_addUser">
-                    <div class="addUser_tab">
-                        <h3 class="tab_title">Informazioni generali</h3>
-                    </div>
-                    <div class="addUser_content">
+            <div class="addProperty_page_content">
+                <form class="form_addProperty">
+                    <div class="addProperty_content">
                         <div class="form_content_fields">
                             <div class="content_fields_row">
-                                <div class="user_general">
-                                    <div class="content_fields_column half_size">
-                                        <label class="label_user_title">Nome*</label>
-                                        <input type="text" required placeholder="Inserisci il nome" name="nome">
-                                    </div>
-                                    <div class="content_fields_column half_size">
-                                        <label class="label_user_title">Cognome*</label>
-                                        <input type="text" required placeholder="Inserisci il cognome" name="cognome">
-                                    </div>
-                                    <div class="content_fields_column half_size">
-                                        <label class="label_user_title">Email*</label>
-                                        <input type="text" required placeholder="Inserisci l'email" name="cognome">
-                                    </div>
-                                    <div class="content_fields_column half_size">
-                                        <label class="label_user_title">Username</label>
-                                        <input type="text" placeholder="Inserisci un username" name="username">
-                                    </div>
-                                    <div class="content_fields_column half_size">
-                                        <label class="label_user_title">Password</label>
-                                        <input type="password" required placeholder="Inserisci la password" name="password">
-                                    </div>
-                                    <div class="content_fields_column half_size">
-                                        <label class="label_user_title">Ruolo</label>
-                                        <select required id="Selector" name="ruolo">
-                                            <option value="" selected disabled>Seleziona ruolo utente</option>
-                                            <option value="Admin">Admin</option>
-                                            <option value="Segretario">Segretario</option>
-                                            <option value="Agente">Agente</option>
-                                            <option value="Collaboratore">Collaboratore</option>
-                                        </select>
-                                    </div>
-                                    <div class="content_fields_column half_size" id="div_agente" style="display: none;">
-                                        <label class="label_user_title">Collaborazione agente</label>
-                                        <select required name="agente">
-                                            <option value="" selected disabled>Seleziona collaborazione agente</option>
-                                            <option value="Admin">Nathan James</option>
-                                            <option value="Segretario">De Filippo Gaetano</option>
-                                            <option value="Agente">Saturno Luca</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="user_otherInfo" id="info_agente" style="display: none;">
-                                    <h3 class="tab_title" style="margin-bottom:50px;">Informazioni Agente</h3>
-                                    <div class="content_fields_column full_size">
-                                        <label class="label_property_title">Descrizione*</label>
-                                        <textarea rows="10" required placeholder="Scrivi una descrizione" name="descrizione"></textarea>
-                                    </div>
-                                    <div class="content_fields_column half_size">
-                                        <label class="label_user_title">Link Facebook</label>
-                                        <input type="text" placeholder="Inserisci link profilo facebook" name="facebook">
-                                    </div>
-                                    <div class="content_fields_column half_size">
-                                        <label class="label_user_title">Link Instagram</label>
-                                        <input type="text" placeholder="Inserisci link profilo instagram" name="instagram">
-                                    </div>
-                                </div>
-
                                 <div class="property_multimedia">
                                     <h3 class="tab_title">Multimedia</h3>
-                                    <div class="gallery_image_container" id="gallery_image_container"></div>
                                     <div class="content_gallery_images full_size">
-                                        <label class="label_property_title">Foto profilo</label>
+                                        <label class="label_property_title">Video</label>
                                         <div class="drag_drop_container">
                                             <i class="icon-cloud-upload"></i>
-                                            <strong>Trascina e rilascia un'immagine</strong>
+                                            <strong>Seleziona un video</strong>
                                             <span class="or">oppure</span>
-                                            <div class="button_browse">Sfoglia Immagine 
+                                            <div class="button_browse">Sfoglia Video
                                                 <div class="input_file">
-                                                    <input type="file" id="upload-photo" name="foto">
+                                                    <input type="file" id="upload-video">
                                                 </div>
                                             </div>
-                                            <div id="reset-image" class="button_browse">Reset
+                                            <div id="reset-video" class="button_browse">Reset
                                             </div>
                                         </div>
+                                    </div>
 
-                                    </div>      
                                 </div>
                             </div>
                             <div class="div_button_submit">
-                                <input type="submit" value="Aggiungi Utente">
+                                <input type="submit" value="Aggiungi immobile">
                             </div>
                         </div>
                     </div>
@@ -331,30 +270,33 @@ $('#reset-video').click(function(){
 </script>
 
 <script>
-    document.getElementById("Selector").onchange = changeListener;
-    
-    function changeListener(){
-    var value = this.value
-      console.log(value);
-      
-      if ((value == "Agente") || (value == "Collaboratore")){
-        $('#info_agente').slideDown();
-      }else {
-        $('#info_agente').slideUp();
-      }
-
-      if (value == "Collaboratore"){
-        $('#div_agente').slideDown();
-      }else {
-        $('#div_agente').slideUp();
-      }
-
-
-      
-    }
-  
-  </script>
-
+    function readFile(e) {
+  var files;
+  console.log("SIUM");
+  if (e.target.files) {
+    files=e.target.files
+  } else {
+    files=e.dataTransfer.files
+  }
+  if (files.length==0) {
+    alert('What you dropped is not a file.');
+    return;
+  }
+  var file=files[0];
+  document.getElementById('fileDragName').value = file.name
+  document.getElementById('fileDragSize').value = file.size
+  document.getElementById('fileDragType').value = file.type
+  reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('fileDragData').value = e.target.result;
+  }
+  reader.readAsDataURL(file);
+}
+function getTheFile(e) {
+  e.target.style.borderColor='#ccc';
+  readFile(e);
+}
+</script>
 
 
 <script src="script/index.js"></script>

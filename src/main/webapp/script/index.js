@@ -137,13 +137,14 @@ function advancedOption(){
             var div = document.getElementById("valore_localita");
             if(elem.classList.contains("localita_selected")){
               elem.classList.remove("localita_selected");
-              div.innerHTML = "Qualsiasi località";
-  
+              div.innerHTML = "Qualsiasi Località";
+                $("#localita_immobile").val("Tutti");
             }
             else{
               $("a").removeClass("localita_selected");
               elem.classList.add("localita_selected");
               div.innerHTML = text.innerHTML;
+                $("#localita_immobile").val(text);
             }
           }
 
@@ -153,12 +154,14 @@ function advancedOption(){
             if(elem.classList.contains("stato_selected")){
               elem.classList.remove("stato_selected");
               div.innerHTML = "Qualsiasi";
+                $("#stato_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("stato_selected");
               elem.classList.add("stato_selected");
               div.innerHTML = text.innerHTML;
+                $("#stato_immobile").val(text);
             }
           }
 
@@ -168,12 +171,14 @@ function advancedOption(){
             if(elem.classList.contains("tipo_selected")){
               elem.classList.remove("tipo_selected");
               div.innerHTML = "Qualsiasi tipi";
+                $("#tipo_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("tipo_selected");
               elem.classList.add("tipo_selected");
               div.innerHTML = text.innerHTML;
+                $("#tipo_immobile").val(text);
             }
           }
 
@@ -185,12 +190,14 @@ function advancedOption(){
             if(elem.classList.contains("minCamere_selected")){
               elem.classList.remove("minCamere_selected");
               div.innerHTML = "Qualsiasi";
+                $("#camere_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("minCamere_selected");
               elem.classList.add("minCamere_selected");
               div.innerHTML = text.innerHTML;
+                $("#camere_immobile").val(text);
             }
           }
 
@@ -201,12 +208,14 @@ function advancedOption(){
             if(elem.classList.contains("minBagni_selected")){
               elem.classList.remove("minBagni_selected");
               div.innerHTML = "Qualsiasi";
+                $("#bagni_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("minBagni_selected");
               elem.classList.add("minBagni_selected");
               div.innerHTML = text.innerHTML;
+                $("#bagni_immobile").val(text);
             }
           }
 
@@ -217,12 +226,14 @@ function advancedOption(){
             if(elem.classList.contains("minPrezzo_selected")){
               elem.classList.remove("minPrezzo_selected");
               div.innerHTML = "Qualsiasi";
+                $("#minPrezzo_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("minPrezzo_selected");
               elem.classList.add("minPrezzo_selected");
               div.innerHTML = text.innerHTML;
+                $("#minPrezzo_immobile").val(text);
             }
           }
 
@@ -232,12 +243,14 @@ function advancedOption(){
             if(elem.classList.contains("maxPrezzo_selected")){
               elem.classList.remove("maxPrezzo_selected");
               div.innerHTML = "Qualsiasi";
+                $("#maxPrezzo_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("maxPrezzo_selected");
               elem.classList.add("maxPrezzo_selected");
               div.innerHTML = text.innerHTML;
+                $("#maxPrezzo_immobile").val(text);
             }
           }
 
@@ -247,12 +260,14 @@ function advancedOption(){
             if(elem.classList.contains("minAuto_selected")){
               elem.classList.remove("minAuto_selected");
               div.innerHTML = "Qualsiasi";
+                $("#auto_immobile").val("Tutti");
   
             }
             else{
               $("a").removeClass("minAuto_selected");
               elem.classList.add("minAuto_selected");
               div.innerHTML = text.innerHTML;
+                $("#auto_immobile").val(text);
             }
           }
 
@@ -262,12 +277,13 @@ function advancedOption(){
             if(elem.classList.contains("agente_selected")){
               elem.classList.remove("agente_selected");
               div.innerHTML = "Qualsiasi";
-  
+                $("#agente_immobile").val("Tutti");
             }
             else{
               $("a").removeClass("agente_selected");
               elem.classList.add("agente_selected");
               div.innerHTML = text.innerHTML;
+                $("#agente_immobile").val(text);
             }
           }
           

@@ -86,7 +86,7 @@
         <div class="div_addUser_page">
             <div class="addUser_page_head">
                 <div class="addUser_head_title">
-                    <h1 class="head_title">Aggiungi Utente</h1>
+                    <h1 class="head_title">Modifica Utente</h1>
                 </div>
             </div>
             <div class="addUser_page_content">
@@ -100,31 +100,31 @@
                                 <div class="user_general">
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Nome*</label>
-                                        <input type="text" required placeholder="Inserisci il nome">
+                                        <input type="text" required placeholder="Gaetano">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Cognome*</label>
-                                        <input type="text" required placeholder="Inserisci il cognome">
+                                        <input type="text" required placeholder="De Filippo">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Email*</label>
-                                        <input type="text" required placeholder="Inserisci l'email">
+                                        <input type="text" required placeholder="example@gmail.com">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Username</label>
-                                        <input type="text" placeholder="Inserisci un username">
+                                        <input type="text" placeholder="gadf00">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Password</label>
-                                        <input type="password" required placeholder="Inserisci la password">
+                                        <input type="password" required placeholder="*********">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Ruolo</label>
                                         <select required id="Selector">
-                                            <option value="" selected disabled>Seleziona ruolo utente</option>
+                                            <option value="" disabled>Seleziona ruolo utente</option>
                                             <option value="Admin">Admin</option>
                                             <option value="Segretario">Segretario</option>
-                                            <option value="Agente">Agente</option>
+                                            <option selected value="Agente">Agente</option>
                                             <option value="Collaboratore">Collaboratore</option>
                                         </select>
                                     </div>
@@ -142,15 +142,15 @@
                                     <h3 class="tab_title" style="margin-bottom:50px;">Informazioni Agente</h3>
                                     <div class="content_fields_column full_size">
                                         <label class="label_property_title">Descrizione*</label>
-                                        <textarea rows="10" required placeholder="Scrivi una descrizione"></textarea>
+                                        <textarea rows="10" required placeholder="bravo agente"></textarea>
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Link Facebook</label>
-                                        <input type="text" placeholder="Inserisci link profilo facebook">
+                                        <input type="text" placeholder="www.facebook.com">
                                     </div>
                                     <div class="content_fields_column half_size">
                                         <label class="label_user_title">Link Instagram</label>
-                                        <input type="text" placeholder="Inserisci link profilo instagram">
+                                        <input type="text" placeholder="www.instagram.com">
                                     </div>
                                 </div>
 
@@ -176,7 +176,7 @@
                                 </div>
                             </div>
                             <div class="div_button_submit">
-                                <input type="submit" value="Aggiungi Utente">
+                                <input type="submit" value="Modifica Utente">
                             </div>
                         </div>
                     </div>
@@ -331,7 +331,17 @@ $('#reset-video').click(function(){
 </script>
 
 <script>
+    $(document).ready(function() {
+        if(($('#Selector').val() == "Agente") || ($('#Selector').val() == "Collaboratore")){
+            console.log("ciao");
+            $('#info_agente').css("display","block");
+        }
+        else{
+            $('#info_agente').css("display","none");
+        }
+});
     document.getElementById("Selector").onchange = changeListener;
+    
     
     function changeListener(){
     var value = this.value
