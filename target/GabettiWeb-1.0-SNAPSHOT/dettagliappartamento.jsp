@@ -405,7 +405,7 @@
                         <div class="property_map">
                             <input type="hidden" name="indirizzoAppartamento" value="<%=indirizzoBean.getCitta()+", "+indirizzoBean.getProvincia()+", "+ indirizzoBean.getNumeroCivico()%>">
                             <h4 class="property_heading_h4">Mappa</h4>
-                            <div id="map_canvas" ></div>
+                            <iframe allowfullscreen frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCghlu8qhmsmptec4eSidg5APpA57lCPlU&q=<%=indirizzoBean.getVia()+"+"+indirizzoBean.getProvincia()+"+"+indirizzoBean.getNumeroCivico()%>&zoom=17" width="100%" height="450"></iframe>
                         </div>
                     </div>
 
