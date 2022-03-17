@@ -69,6 +69,7 @@
 
     <!-- Style -->
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/aggiunte.css">
 
     <title>Gabetti Nocera | Homepage</title>
 
@@ -122,7 +123,7 @@
                             <div id="valore_localita" class="filter-option-text">
                               Qualsiasi località
                             </div>
-                              <input type="hidden" name="localita "id="localita">
+                              <input type="hidden" name="localita_immobile"id="localita_immobile">
                           </div>
                         </div>
                       </button>
@@ -205,6 +206,7 @@
                             <div  id="valore_stato" class="filter-option-text">
                               Qualsiasi
                             </div>
+                            <input type="hidden" name="stato_immobile"id="stato_immobile">
                           </div>
                         </div>
                       </button>
@@ -243,6 +245,7 @@
                             <div  id="valore_tipo" class="filter-option-text">
                               Qualsiasi
                             </div>
+                            <input type="hidden" name="tipo_immobile"id="tipo_immobile">
                           </div>
                         </div>
                       </button>
@@ -295,6 +298,7 @@
                                                 <div id="valore_minCamere"class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
+                                                <input type="hidden" name="camere_immobile"id="camere_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -331,6 +335,7 @@
                                                 <div id="valore_minBagni"class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
+                                                <input type="hidden" name="bagni_immobile"id="bagni_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -367,6 +372,7 @@
                                                 <div id="valore_minPrezzo" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
+                                                <input type="hidden" name="minPrezzo_immobile"id="minPrezzo_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -403,6 +409,7 @@
                                                 <div id="valore_maxPrezzo" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
+                                                <input type="hidden" name="maxPrezzo_immobile"id="maxPrezzo_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -439,6 +446,7 @@
                                                 <div id="valore_minAuto" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
+                                                <input type="hidden" name="auto_immobile"id="auto_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -475,6 +483,7 @@
                                                 <div id="valore_agente" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
+                                                <input type="hidden" name="agente_immobile"id="agente_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -504,11 +513,11 @@
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Superificie minima (mq)</label>
-                                <input type="text" placeholder="Qualsiasi">
+                                <input name="minSuperficie_immobile" type="text" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Superficie massima (mq)</label>
-                                <input type="text" placeholder="Qualsiasi">
+                                <input name="maxSuperficie_immobile" type="text" placeholder="Qualsiasi">
                             </div>
                         </div>
                     </div>

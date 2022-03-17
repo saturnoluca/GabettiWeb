@@ -1,8 +1,12 @@
-<%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.appartamento.AppartamentoBean" %>
+<%@ page import="model.agente.AgenteBean" %>
+<%@ page import="model.utente.UtenteBean" %>
+<%@ page import="UtilityClass.CompositeKeyAgenteCase" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 17/03/2022
-  Time: 12:53
+  Time: 08:32
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -28,6 +32,18 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
+<%
+    ArrayList<AppartamentoBean> appArray = (ArrayList<AppartamentoBean>) request.getAttribute("array");
+    if (appArray == null) {
+        response.sendRedirect(response.encodeRedirectURL("ServletListaAppartamenti?numero=1"));
+        return;
+    }
+    ArrayList<AgenteBean> agenteArray = (ArrayList<AgenteBean>) request.getAttribute("arrayAgente");
+    ArrayList<UtenteBean> utenteArray = (ArrayList<UtenteBean>) request.getAttribute("arrayUtente");
+    String sizeArrayString = (String) request.getAttribute("sizeArray");
+    ArrayList<CompositeKeyAgenteCase> arrayComp = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("arrayComp");
+    int sizeArray = Integer.parseInt(sizeArrayString);
+%>
 <body>
 <nav id="navbar">
     <div class="logo">Gabetti</div>
@@ -38,7 +54,7 @@
     <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="#">Lista Immobili</a></li>
-        <li><a class="active"href="valutazione.html">Valutazione Immobile</a></li>
+        <li><a class="active" href="valutazione.html">Valutazione Immobile</a></li>
         <li><a href="listaagenti.html">I Nostri Agenti</a></li>
         <li><a href="contact.html">Contattaci</a></li>
     </ul>
@@ -155,12 +171,13 @@
                   </span>
                         </div>
                     </div>
-                    <div id="advanced_option_div"class="form_collapsed_field_wrapper" style="display: none;">
+                    <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
                         <div class="collapsed_field_container search_advanced_fields">
                             <div class="search_option search_select search_beds">
                                 <label>Min camere da letto</label>
                                 <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" role="combobox">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                            role="combobox">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
                                                 <div class="filter-option-text">
@@ -169,7 +186,7 @@
                                             </div>
                                         </div>
                                     </button>
-                                    <div id="myDropdown2" class="dropdown-content">
+                                    <div id="myDropdown" class="dropdown-content">
                                         <ul class="ul_inner">
                                             <li class="li_selected">
                                                 <a href="#">
@@ -202,7 +219,8 @@
                             <div class="search_option search_select search_beds">
                                 <label>Min bagni</label>
                                 <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" role="combobox">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                            role="combobox">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
                                                 <div class="filter-option-text">
@@ -216,7 +234,8 @@
                             <div class="search_option search_select search_beds">
                                 <label>Prezzo minimo</label>
                                 <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" role="combobox">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                            role="combobox">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
                                                 <div class="filter-option-text">
@@ -230,7 +249,8 @@
                             <div class="search_option search_select search_beds">
                                 <label>Prezzo massimo</label>
                                 <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" role="combobox">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                            role="combobox">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
                                                 <div class="filter-option-text">
@@ -244,7 +264,8 @@
                             <div class="search_option search_select search_beds">
                                 <label>Garage</label>
                                 <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" role="combobox">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                            role="combobox">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
                                                 <div class="filter-option-text">
@@ -258,7 +279,8 @@
                             <div class="search_option search_select search_beds">
                                 <label>Agenti</label>
                                 <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" role="combobox">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                            role="combobox">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
                                                 <div class="filter-option-text">
@@ -272,7 +294,8 @@
                             <div class="search_option search_select search_beds">
                                 <label>Superificie minima</label>
                                 <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" role="combobox">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                            role="combobox">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
                                                 <div class="filter-option-text">
@@ -286,7 +309,8 @@
                             <div class="search_option search_select search_beds">
                                 <label>Superficie massima</label>
                                 <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" role="combobox">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                            role="combobox">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
                                                 <div class="filter-option-text">
@@ -304,7 +328,8 @@
             <div class="search_button">
                 <div class="search_buttonwrap">
                     <div class="search_advance">
-                        <button type="button" onclick="advancedOption()" id="advanced_options"class="search_advance_button">
+                        <button type="button" onclick="advancedOption()" id="advanced_options"
+                                class="search_advance_button">
                             <i class="icon-search-plus"></i>
                         </button>
                     </div>
@@ -320,7 +345,9 @@
     </div>
     <div class="section_map">
         <div id="map_head">
-            <iframe id="map" allowfullscreen frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCghlu8qhmsmptec4eSidg5APpA57lCPlU&q=Gabetti+nocera+inferiore&zoom=17" width="100%" height="600px"></iframe>
+            <iframe id="map" allowfullscreen frameborder="0" loading="lazy"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCghlu8qhmsmptec4eSidg5APpA57lCPlU&q=Gabetti+nocera+inferiore&zoom=17"
+                    width="100%" height="600px"></iframe>
         </div>
     </div>
     <section class="section_properties_search">
@@ -339,42 +366,50 @@
                 </div>
             </div>
             <div class="page_listing">
+                <%for (AppartamentoBean appartamentoBean : appArray) {%>
                 <div class="list_card">
                     <div class="list_card_wrap">
                         <figure class="list_card_picture">
                             <div class="figure_property">
                                 <a href="">
-                                    <div class="post_picture" style="background:url(images/prova.jpg) 50% 50% no-repeat; background-size: cover;"></div>
+                                    <div class="post_picture"
+                                         style="background:url(images/prova.jpg) 50% 50% no-repeat; background-size: cover;"></div>
                                 </a>
                             </div>
                         </figure>
                         <div class="list_card_details_wrap">
                             <div class="list_card_details">
                                 <h3>
-                                    <a href="">Casa a Nocera Inferiore</a>
+                                    <a href=""><%=appartamentoBean.getNomeAppartamento()%>
+                                    </a>
                                 </h3>
-                                <p class="list_card_description">Casa bella</p>
+                                <p class="list_card_description"><%
+                                    if (appartamentoBean.getDescrizioneAppartamento().length() > 30) {
+                                %><%=appartamentoBean.getDescrizioneAppartamento().substring(0, 30) + ".."%><%
+                                } else {
+                                %><%=appartamentoBean.getDescrizioneAppartamento()%><%
+                                    }%></p>
                                 <div class="list_card_meta_wrap">
                                     <div class="list_card_meta_style">
                                         <div class="list_card_meta">
                                             <span class="meta_tile">Camere</span>
                                             <div class="meta_icon_wrapper">
                                                 <i class="icon-bed"></i>
-                                                <span class="figure">3</span>
+                                                <span class="figure"><%=appartamentoBean.getCamereLetto()%></span>
                                             </div>
                                         </div>
                                         <div class="list_card_meta">
                                             <span class="meta_tile">Bagni</span>
                                             <div class="meta_icon_wrapper">
                                                 <i class="icon-shower"></i>
-                                                <span class="figure">3</span>
+                                                <span class="figure"><%=appartamentoBean.getBagni()%></span>
                                             </div>
                                         </div>
                                         <div class="list_card_meta">
                                             <span class="meta_tile">Superficie</span>
                                             <div class="meta_icon_wrapper">
                                                 <i class="icon-square-o"></i>
-                                                <span class="figure">300</span>
+                                                <span class="figure"><%=appartamentoBean.getSuperficie()%></span>
                                                 <span class="figure">mq</span>
                                             </div>
                                         </div>
@@ -383,22 +418,35 @@
                             </div>
                             <div class="list_card_priceLabel">
                                 <div class="list_card_price">
-                                    <span class="status">In vendita</span>
-                                    <p class="price">€500.000</p>
+                                    <span class="status"><%=appartamentoBean.getTipoVendita()%></span>
+                                    <p class="price">€<%=appartamentoBean.getPrezzo()%>
+                                    </p>
                                 </div>
                                 <p class="list_card_agent">
                                     Di&nbsp;
-                                    <span class="agent">Gaetano De Filippo</span>
+                                    <span class="agent"><%
+                                        for (AgenteBean bean : agenteArray) {
+                                            if (bean.getIdAgente() == appartamentoBean.getIdAgente()) {
+                                                for (UtenteBean utenteBean : utenteArray) {
+                                                    if (utenteBean.getIdUtente() == bean.getIdAgente()) {
+                                    %><%=utenteBean.getNome() + " " + utenteBean.getCognome()%><%
+                                                    }
+                                                }
+                                            }
+                                        }%></span>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
+                <%}%>
             </div>
             <div class="pagination">
-                <a href="" class="pagination_btn current">1</a>
-                <a href="" class="pagination_btn">2</a>
-                <a href="" class="pagination_btn">3</a>
+                <%for (int i = 1; i <= sizeArray; i++) {%>
+                <a href="${pageContext.request.contextPath}/ServletListaAppartamenti?numero=<%=i%>"
+                   class="pagination_btn"><%=i%>
+                </a>
+                <%}%>
             </div>
         </div>
         <div class="page_sidebar">
@@ -406,48 +454,28 @@
                 <section class="widget clearfix">
                     <h3 class="title">Agenti</h3>
                     <div class="agents_list_widget">
+                        <%
+                            for (int k = 0; k < 2; k++) {
+                                for (UtenteBean utenteBean : utenteArray) {
+                                    if (utenteBean.getIdUtente() == arrayComp.get(k).getBean().getIdUtente()) {
+                        %>
                         <article class="agent_list_item clearfix">
                             <figure class="agent_picture">
-                                <a href=""><img src="images/agente.jpg"></a>
+                                <a href=""><img src="data:image/png;base64,<%=utenteBean.getFotoString()%>"></a>
                             </figure>
                             <div class="agent_widget_content">
                                 <h4 class="agent_name">
-                                    <a href="">Gaetano De Filippo</a>
+                                    <a href=""><%=utenteBean.getNome()+" "+utenteBean.getCognome()%></a>
                                 </h4>
-                                <a href="" class="agent_email">example@gmail.com</a>
+                                <a href="" class="agent_email"><%=utenteBean.getEmail()%></a>
                                 <div class="agent_number">
-                                    <a href="">3312294330</a>
+                                    <a href=""><%=arrayComp.get(k).getBean().getTelefonoCellulare()%></a>
                                 </div>
                             </div>
                         </article>
-                        <article class="agent_list_item clearfix">
-                            <figure class="agent_picture">
-                                <a href=""><img src="images/agente.jpg"></a>
-                            </figure>
-                            <div class="agent_widget_content">
-                                <h4 class="agent_name">
-                                    <a href="">Gaetano De Filippo</a>
-                                </h4>
-                                <a href="" class="agent_email">example@gmail.com</a>
-                                <div class="agent_number">
-                                    <a href="">3312294330</a>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="agent_list_item clearfix">
-                            <figure class="agent_picture">
-                                <a href=""><img src="images/agente.jpg"></a>
-                            </figure>
-                            <div class="agent_widget_content">
-                                <h4 class="agent_name">
-                                    <a href="">Gaetano De Filippo</a>
-                                </h4>
-                                <a href="" class="agent_email">example@gmail.com</a>
-                                <div class="agent_number">
-                                    <a href="">3312294330</a>
-                                </div>
-                            </div>
-                        </article>
+                        <%  }
+                          }
+                        }%>
                     </div>
                 </section>
             </div>
@@ -465,37 +493,33 @@
     function cambia(elem) {
         var text = elem.children[1];
         var div = document.getElementById("valore_localita");
-        if(elem.classList.contains("li_selected")){
+        if (elem.classList.contains("li_selected")) {
             elem.classList.remove("li_selected")
             var oldWord = div.innerHTML;
             console.log(oldWord);
             console.log(text.innerHTML);
-            console.log("risultato: " + oldWord.replace(text.innerHTML,""));
-            var newWord = oldWord.replace(text.innerHTML,"");
+            console.log("risultato: " + oldWord.replace(text.innerHTML, ""));
+            var newWord = oldWord.replace(text.innerHTML, "");
             console.log("sss" + newWord);
             div.innerHTML = newWord;
-            console.log("a"+newWord+"a");
-            if(newWord.includes(" ") && newWord.length < 3){
+            console.log("a" + newWord + "a");
+            if (newWord.includes(" ") && newWord.length < 3) {
                 div.innerHTML = "Tutte le località";
             }
-        }
-        else{
+        } else {
             elem.classList.add("li_selected");
-            if(div.textContent.includes("Tutte le località")){
+            if (div.textContent.includes("Tutte le località")) {
                 console.log("Sium");
                 div.innerHTML = text.innerHTML;
             }
-            if(div.textContent.includes(text.innerHTML)){
+            if (div.textContent.includes(text.innerHTML)) {
                 console.log("Sium");
                 div.innerHTML = text.innerHTML;
-            }
-            else{
+            } else {
                 div.innerHTML = div.innerHTML + " " + text.innerHTML;
             }
         }
     }
-
-
 
 
 </script>

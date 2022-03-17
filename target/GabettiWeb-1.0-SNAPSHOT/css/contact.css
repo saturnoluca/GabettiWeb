@@ -1,3 +1,4 @@
+
 body {
     min-height: 100%;
     margin: 0;
@@ -5,7 +6,7 @@ body {
     font-weight: 400;
     line-height: 1.2;
     background: #f7f7f7;
-  }
+}
 
 .banner{
     height: 300px;
@@ -324,6 +325,7 @@ body {
 
 .contact_item{
     margin-bottom: 25px;
+    color: #808080;
 }
 
 .contact_details .contact_item .icon{
@@ -337,8 +339,9 @@ body {
     color: #808080;
 }
 
-.contact_details .contact_item .content{
+.contact_details .contact_item p{
     display: table;
+    color: #808080;
 }
 
 .contact_details .contact_item .label{
@@ -350,14 +353,14 @@ body {
     line-height: 1.2;
 }
 
-.contact_details .contact_item .content a:not(:hover){
+.contact_details .contact_item p a{
     font-size: 14px;
     color: #808080;
     font-weight: 400;
     line-height: 1.2;
 }
 
-.contact_details .contact_item .content a{
+.contact_details .contact_item p a:hover{
     color: #b20135;
     text-decoration: none;
     font-weight: 400;
