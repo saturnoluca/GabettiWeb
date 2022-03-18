@@ -235,4 +235,9 @@ public class UtenteModelDM implements UtenteModel {
         }
         return bean;
     }
+
+    @Override
+    public UtenteBean RetrieveNomeCognome(String nome, String cognome) {
+        return null;
+    }
 }

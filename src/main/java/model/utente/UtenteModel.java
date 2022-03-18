@@ -22,4 +22,6 @@ public interface UtenteModel<T> {
 
     public UtenteBean RetrieveByEmail(String email) throws SQLException;
 
+    public UtenteBean RetrieveNomeCognome(String nome, String cognome);
+
 }

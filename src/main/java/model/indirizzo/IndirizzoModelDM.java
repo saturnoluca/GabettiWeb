@@ -1,5 +1,6 @@
 package model.indirizzo;
 
+import UtilityClass.Città;
 import model.DriverManagerConnectionPool;
 
 import java.sql.Connection;
@@ -53,11 +54,11 @@ public class IndirizzoModelDM implements IndirizzoModel {
     public IndirizzoBean RetrieveIndirizzoByAppId(int id) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        String selectSql="SELECT * FROM indirizzo WHERE Appartamento_idAppartamento=?";
+        String selectSql = "SELECT * FROM indirizzo WHERE Appartamento_idAppartamento=?";
         IndirizzoBean bean = new IndirizzoBean();
-        try{
-            connection=dmcp.getConnection();
-            ps= connection.prepareStatement(selectSql);
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -69,7 +70,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
             bean.setProvincia(rs.getString("provincia"));
             bean.setIdAppartamento(rs.getInt("Appartamento_idAppartamento"));
             bean.setZona(rs.getString("zona"));
-        }finally {
+        } finally {
             try {
                 if (ps != null) {
                     ps.close();
@@ -85,13 +86,13 @@ public class IndirizzoModelDM implements IndirizzoModel {
     public Collection<IndirizzoBean> RetrieveAll() throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        String selectSql="SELECT * FROM indirizzo";
+        String selectSql = "SELECT * FROM indirizzo";
         ArrayList<IndirizzoBean> array = new ArrayList<IndirizzoBean>();
-        try{
-            connection=dmcp.getConnection();
-            ps= connection.prepareStatement(selectSql);
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 IndirizzoBean bean = new IndirizzoBean();
                 bean.setIdIndirizzo(rs.getInt("idIndirizzo"));
                 bean.setVia(rs.getString("via"));
@@ -103,7 +104,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 bean.setZona(rs.getString("zona"));
                 array.add(bean);
             }
-        }finally {
+        } finally {
             try {
                 if (ps != null) {
                     ps.close();
@@ -114,4 +115,49 @@ public class IndirizzoModelDM implements IndirizzoModel {
         }
         return array;
     }
+
+    @Override
+    public Città RetrieveCittàZone(String zona) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT città FROM indirizzo WHERE zona=?";
+        Città città = new Città();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            città.setNomeCittà("città");
+        } finally {
+            selectSql = "SELECT DISTINCT zona FROM indirizzo WHERE città=?";
+            ps = connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<String> zone = new ArrayList<String>();
+            while (rs.next()) {
+                zone.add(rs.getString("zona"));
+            }
+            città.setZone(zone);
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+        }
+        return città;
+    }
+
+    @Override
+    public boolean isCittà(String zona) throws SQLException {
+        Città città;
+        IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
+        città = indirizzoModelDM.RetrieveCittàZone(zona);
+        if(zona.equals(città.getNomeCittà())){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
+
