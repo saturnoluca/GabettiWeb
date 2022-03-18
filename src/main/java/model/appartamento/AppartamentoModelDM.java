@@ -252,18 +252,13 @@ public class AppartamentoModelDM implements AppartamentoModel {
         String agente = "";
         if (ricerca.getCittà() != null) {
             IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
-            Città città = new Città();
-            città = indirizzoModelDM.RetrieveCittàZone(ricerca.getCittà());
             if (indirizzoModelDM.isCittà(ricerca.getCittà())) {
                 zona = " AND indirizzo.città=" + "'" + ricerca.getCittà() + "'";
                 selectSql = selectSql + zona;
             } else {
-                zona = " AND indirizzo.zona=" + "'" + città.getZone().get(0) + "'";
+                zona = " AND indirizzo.zona=" + "'" + ricerca.getCittà() + "'";
                 selectSql = selectSql + zona;
-                for (int i = 1; i < (città.getZone().size()) - 1; i++) {
-                    zona = " OR indirizzo.zona=" + "'" + città.getZone().get(i) + "'";
-                    selectSql = selectSql + zona;
-                }
+
             }
         }
         if (ricerca.getVendita() != null) {
@@ -300,7 +295,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
         }
 
         if (ricerca.getAgente() != -1) {
-            agente = "AND agente.idAgente=" + ricerca.getAgente();
+            agente = "AND appartamento.Agente_idAgente=" + ricerca.getAgente();
             selectSql = selectSql + agente;
         }
         try {

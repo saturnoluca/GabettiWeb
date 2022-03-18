@@ -116,21 +116,63 @@ public class IndirizzoModelDM implements IndirizzoModel {
         return array;
     }
 
+    public ArrayList<String> RetrieveAllCittà() throws SQLException{
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT DISTINCT città FROM indirizzo";
+        ArrayList<String> città = new ArrayList<String>();
+        try{
+            connection=dmcp.getConnection();
+            ps=connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String cittàString = rs.getString("città");;
+                città.add(cittàString);
+            }
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+        }
+        return città;
+    }
+
     @Override
     public Città RetrieveCittàZone(String zona) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT città FROM indirizzo WHERE zona=?";
         Città città = new Città();
+        ArrayList<String> arrayCittà= new ArrayList<String>();
+        IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
+        arrayCittà=indirizzoModelDM.RetrieveAllCittà();
+        boolean trovato = false;
         try {
-            connection = dmcp.getConnection();
-            ps = connection.prepareStatement(selectSql);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            città.setNomeCittà("città");
+            for(String c : arrayCittà){
+                if(c.equals(zona)){
+                    trovato=true;
+                    città.setNomeCittà(c);
+                }
+            }
+            if(!trovato){
+                connection = dmcp.getConnection();
+                ps = connection.prepareStatement(selectSql);
+                ps.setString(1, zona);
+                ResultSet rs = ps.executeQuery();
+                rs.next();
+                città.setNomeCittà(rs.getString("città"));
+            }
         } finally {
             selectSql = "SELECT DISTINCT zona FROM indirizzo WHERE città=?";
+            if(connection==null){
+                connection=dmcp.getConnection();
+            }
             ps = connection.prepareStatement(selectSql);
+            ps.setString(1, città.getNomeCittà());
             ResultSet rs = ps.executeQuery();
             ArrayList<String> zone = new ArrayList<String>();
             while (rs.next()) {
