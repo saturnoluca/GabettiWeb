@@ -1,5 +1,6 @@
 function advancedOption(){
     if(document.getElementById("advanced_option_div").style.display == "none"){
+        console.log("ciao");
         $('#advanced_option_div').slideDown();
     }
     else{
