@@ -12,11 +12,12 @@ public class Ricerca {
     private int minGarage=-1;
     private float minSuperficie=-1;
     private float maxSuperficie=-1;
+    private int agente=-1;
 
     public Ricerca() {
     }
 
-    public Ricerca(String città, String vendita, String categoria, int letti, String bagni, float minPrezzo, float maxPrezzo, int minGarage, float minSuperficie, float maxSuperficie) {
+    public Ricerca(String città, String vendita, String categoria, int letti, String bagni, float minPrezzo, float maxPrezzo, int minGarage, float minSuperficie, float maxSuperficie, int agente) {
         this.città = città;
         this.vendita = vendita;
         this.categoria = categoria;
@@ -27,6 +28,7 @@ public class Ricerca {
         this.minGarage = minGarage;
         this.minSuperficie = minSuperficie;
         this.maxSuperficie = maxSuperficie;
+        this.agente = agente;
     }
 
     public String getCittà() {
@@ -107,5 +109,13 @@ public class Ricerca {
 
     public void setMaxSuperficie(float maxSuperficie) {
         this.maxSuperficie = maxSuperficie;
+    }
+
+    public int getAgente() {
+        return agente;
+    }
+
+    public void setAgente(int agente) {
+        this.agente = agente;
     }
 }

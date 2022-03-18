@@ -1,7 +1,9 @@
 package model.appartamento;
 
+import UtilityClass.Città;
 import UtilityClass.Ricerca;
 import model.DriverManagerConnectionPool;
+import model.indirizzo.IndirizzoModelDM;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -237,7 +239,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
         String selectSql = "select appartamento.idAppartamento, appartamento.categoria, appartamento.nomeAppartamento, appartamento.descrizioneAppartamento, appartamento.superficie," +
                 "appartamento.locali, appartamento.bagni, appartamento.piano, appartamento.riscaldamento, appartamento.classeEnergetica, appartamento.tipoVendita, appartamento.prezzo, " +
                 "appartamento.data, appartamento.Agente_idAgente, appartamento.visualizzazioni, appartamento.camereLetto, appartamento.postoAuto from appartamento inner join indirizzo on appartamento.idAppartamento=indirizzo.Appartamento_idAppartamento";
-        String città = "";
+        String zona = "";
         String vendita = "";
         String categoria = "";
         String letti = "";
@@ -247,9 +249,22 @@ public class AppartamentoModelDM implements AppartamentoModel {
         String minSuperficie = "";
         String maxSuperficie = "";
         String minGarage = "";
+        String agente = "";
         if (ricerca.getCittà() != null) {
-            città = " AND indirizzo.città=" + "'" + ricerca.getCittà() + "'";
-            selectSql = selectSql + città;
+            IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
+            Città città = new Città();
+            città = indirizzoModelDM.RetrieveCittàZone(ricerca.getCittà());
+            if (indirizzoModelDM.isCittà(ricerca.getCittà())) {
+                zona = " AND indirizzo.città=" + "'" + ricerca.getCittà() + "'";
+                selectSql = selectSql + zona;
+            } else {
+                zona = " AND indirizzo.zona=" + "'" + città.getZone().get(0) + "'";
+                selectSql = selectSql + zona;
+                for (int i = 1; i < (città.getZone().size()) - 1; i++) {
+                    zona = " OR indirizzo.zona=" + "'" + città.getZone().get(i) + "'";
+                    selectSql = selectSql + zona;
+                }
+            }
         }
         if (ricerca.getVendita() != null) {
             vendita = " AND appartamento.tipoVendita=" + "'" + ricerca.getVendita() + "'";
@@ -282,6 +297,11 @@ public class AppartamentoModelDM implements AppartamentoModel {
         if (ricerca.getMaxSuperficie() != -1) {
             maxSuperficie = " AND appartamento.superficie<" + ricerca.getMaxSuperficie();
             selectSql = selectSql + maxSuperficie;
+        }
+
+        if (ricerca.getAgente() != -1) {
+            agente = "AND agente.idAgente=" + ricerca.getAgente();
+            selectSql = selectSql + agente;
         }
         try {
             connection = dmcp.getConnection();
@@ -473,7 +493,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
         Connection conn = null;
         PreparedStatement ps = null;
         String selectSQL = "SELECT idAppartamento FROM appartamento WHERE nomeAppartamento=? AND descrizioneAppartamento=? AND idAgente=?";
-        int id=0;
+        int id = 0;
         try {
             conn = dmcp.getConnection();
             ps = conn.prepareStatement(selectSQL);
@@ -484,7 +504,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
             while (rs.next()) {
                 id = rs.getInt("idAppartamento");
             }
-        }finally {
+        } finally {
             try {
                 if (ps != null) {
                     ps.close();
