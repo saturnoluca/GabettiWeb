@@ -231,14 +231,57 @@ body {
     flex-direction: column;
 }
 
-.picture{
+.container_slideshow {
+    margin: 0 auto;
     width: 100%;
     position: relative;
+    overflow: hidden;
 }
 
-.picture img{
-    width: 100%;
+.slides {
+    display: flex;
+    height: 100%;
 }
+.slide {
+    min-width: 100%;
+    position: relative;
+}
+.slide img {
+    width: 100%;
+    height: 100%;
+}
+.slide-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#next-btn,
+#prev-btn {
+    cursor: pointer;
+    background: transparent;
+    font-size: 30px;
+    border: none;
+    padding: 10px;
+    color: white;
+}
+#next-btn:focus,
+#prev-btn:focus {
+    outline: none;
+}
+.slide-content {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+    font-size: 60px;
+    color: white;
+}
+
 
 .property_wrap{
     display: flex;
@@ -319,7 +362,27 @@ body {
     color: rgba(128,128,128,.5);
     position: relative;
     text-align: center;
+    cursor: pointer;
 }
+
+.property_functions button{
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+.property_functions button:focus{
+    border: none;
+    outline: none;
+}
+
+.property_functions button i{
+    color: rgba(128,128,128,0.5);
+}
+
 
 .property_name{
     display: flex;
@@ -909,4 +972,15 @@ body {
     color: #b20135;
     font-size: 22px;
     margin-bottom: 0;
+}
+
+
+
+@media print {
+    .noPrint{
+        display:none;
+    }
+}
+h1{
+    color:#f6f6;
 }

@@ -30,6 +30,11 @@
     <!-- Style -->
     <link rel="stylesheet" href="css/dettagliappartamento.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/aggiunte.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"/>
+
+    <script src="script/dettagliappartamento.js"></script>
 
     <title>Gabetti Nocera | Homepage</title>
 
@@ -49,528 +54,852 @@
 %>
 
 <body>
-<nav class="navbar navbar-expand-lg py-3">
-    <div class="container">
-        <a href="#" class="navbar-brand">
-            <img src="images/gabetti.png" width="100" alt="" class="d-inline-block align-middle mr-2">
-        </a>
-
-        <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-                class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
-
-        <div id="navbarSupportedContent" class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="#" class="nav-link">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item"><a href="#" class="nav-link">Proprietà</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Agenti</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Valutatore</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link">Contattaci</a></li>
-            </ul>
-        </div>
-    </div>
+<nav id="navbar" class="noPrint">
+    <a href="index.jsp" class="logo">
+        <img src="images/logo.png">
+    </a>
+    <input type="checkbox" id="click">
+    <label for="click" class="menu-btn noPrint">
+        <i class="icon-bars noPrint"></i>
+    </label>
+    <ul>
+        <li><a href="index.jsp">Home</a></li>
+        <li><a href="#">Lista Immobili</a></li>
+        <li><a class="active" href="valutazione.html">Valutazione Immobile</a></li>
+        <li><a href="listaagenti.html">I Nostri Agenti</a></li>
+        <li><a  href="contact.html">Contattaci</a></li>
+    </ul>
 </nav>
-<section class="banner" style="background-image: url(images/banner.jpg); background-position: center 0%;">
-    <div class="banner_cover"></div>
-    <div class="banner_wrap">
-        <h1 class="banner_title"><%=appBean.getNomeAppartamento()%>
-        </h1>
+<div class="content">
+    <section class="banner noPrint" style="background-image: url(images/banner.jpg); background-position: center 0%;">
+        <div class="banner_cover noPrint"></div>
+        <div class="banner_wrap noPrint">
+            <h1 class="banner_title noPrint"><%=appBean.getNomeAppartamento()%>
+            </h1>
+        </div>
+    </section>
+    <div class="div_search div_search_init noPrint">
+        <form class="search_form search_form_header advance_search_form noPrint" action="ServletRicerca" method="post">
+            <div class="search_fields">
+                <div class="search_wrap search_data">
+                    <div class="top_fields">
+                        <div class="search_select search_option">
+                            <label>Località</label>
+                            <span class="search_selectwrap">
+							<div class="bootstrap-select picker trigger" style="width: 100%;">
+							  <button type="button" onclick="apriScegliLocalita()" class="btn dropdown-toggle">
+								<div class="filter-option">
+								  <div class="filter-option-inner">
+									<div id="valore_localita" class="filter-option-text">
+									  Qualsiasi
+									</div>
+									  <input type="hidden" name="localita_immobile"id="localita_immobile" value="Qualsiasi">
+								  </div>
+								</div>
+							  </button>
+							  <div id="selezionaLocalita" class="dropdown-content wrap_content">
+								<ul class="ul_inner">
+								  <li>
+									<a onclick="cambiaLocalita(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">Qualsiasi</span>
+									</a>
+								</li>
+								  <li>
+									  <a onclick="cambiaLocalita(this)" role="option" href="#">
+										<span class="icon-check check_mark"></span>
+										<span class="text">Sarno</span>
+									  </a>
+								  </li>
+								  <li>
+									<ul class="ul_inner">
+									  <li>
+										<a onclick="cambiaLocalita(this)" role="option" href="#">
+										  <span class="icon-check check_mark"></span>
+										  <span class="sublist text">Episcopio</span>
+										</a>
+									  </li>
+									  <li>
+										<a onclick="cambiaLocalita(this)" role="option" href="#">
+										  <span class="icon-check check_mark"></span>
+										  <span class="sublist text">Lavorate</span>
+										</a>
+									  </li>
+									  <li>
+										<a onclick="cambiaLocalita(this)" role="option" href="#">
+										  <span class="icon-check check_mark"></span>
+										  <span class="sublist text">Foce</span>
+										</a>
+									  </li>
+									</ul>
+								  </li>
+								  <li>
+									<a onclick="cambiaLocalita(this)" onclick="cambia(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">Sarno</span>
+									</a>
+								  </li>
+								  <li>
+									<ul class="ul_inner">
+									  <li>
+										<a onclick="cambiaLocalita(this)" role="option" href="#">
+										  <span class="icon-check check_mark"></span>
+										  <span class="sublist text">Episcopio</span>
+										</a>
+									  </li>
+									  <li>
+										<a onclick="cambiaLocalita(this)" role="option" href="#">
+										  <span class="icon-check check_mark"></span>
+										  <span class="sublist text">Lavorate</span>
+										</a>
+									  </li>
+									  <li>
+										<a onclick="cambiaLocalita(this)" role="option" href="#">
+										  <span class="icon-check check_mark"></span>
+										  <span class="sublist text">Foce</span>
+										</a>
+									  </li>
+									</ul>
+								  </li>
+								</ul>
+							  </div>
+							</div>
+						  </span>
+                        </div>
+                        <div class="search_select search_option">
+                            <label>Stato Immobile</label>
+                            <span class="search_selectwrap">
+							<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+							  <button type="button" onclick="apriScegliStato()" class="btn dropdown-toggle">
+								<div class="filter-option">
+								  <div class="filter-option-inner">
+									<div  id="valore_stato" class="filter-option-text">
+									  Qualsiasi
+									</div>
+									<input type="hidden" name="stato_immobile"id="stato_immobile" value="Qualsiasi">
+								  </div>
+								</div>
+							  </button>
+							  <div id="selezionaStato" class="dropdown-content">
+								<ul class="ul_inner">
+								  <li>
+									<a onclick="cambiaStato(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">Qualsiasi</span>
+									</a>
+								</li>
+								  <li>
+									  <a onclick="cambiaStato(this)" role="option" href="#">
+										<span class="icon-check check_mark"></span>
+										<span class="text">In Vendita</span>
+									  </a>
+								  </li>
+								  <li>
+									<a onclick="cambiaStato(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">in Affitto</span>
+									</a>
+								</li>
+								</ul>
+							  </div>
+							</div>
+						  </span>
+                        </div>
+                        <div class="search_select search_option">
+                            <label>Tipo Immobile</label>
+                            <span class="search_selectwrap">
+							<div class="bootstrap-select picker trigger" style="width: 100%;">
+							  <button type="button" onclick="apriScegliTipo()" class="btn dropdown-toggle">
+								<div class="filter-option">
+								  <div class="filter-option-inner">
+									<div  id="valore_tipo" class="filter-option-text">
+									  Qualsiasi
+									</div>
+									<input type="hidden" name="tipo_immobile"id="tipo_immobile" value="Qualsiasi">
+								  </div>
+								</div>
+							  </button>
+							  <div id="selezionaTipo" class="dropdown-content wrap_content_max">
+								<ul class="ul_inner">
+								  <li>
+									<a onclick="cambiaTipo(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">Qualsiasi</span>
+									</a>
+								  </li>
+								  <li>
+									  <a onclick="cambiaTipo(this)" role="option" href="#">
+										<span class="icon-check check_mark"></span>
+										<span class="text">Appartamento</span>
+									  </a>
+								  </li>
+								  <li>
+									<a onclick="cambiaTipo(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">Abitazione economia</span>
+									</a>
+								  </li>
+								  <li>
+									<a onclick="cambiaTipo(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">Mansarda</span>
+									</a>
+								  </li>
+								  <li>
+									<a onclick="cambiaTipo(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">Villetta a schiera</span>
+									</a>
+								  </li>
+								</ul>
+							  </div>
+							</div>
+						  </span>
+                        </div>
+                    </div>
+                    <div id="advanced_option_div"class="form_collapsed_field_wrapper" style="display: none;">
+                        <div class="collapsed_field_container search_advanced_fields">
+                            <div class="search_option search_select search_beds">
+                                <label>Min camere da letto</label>
+                                <div class="bootstrap-select picker trigger" style="width: 100%;">
+                                    <button type="button" onclick="apriScegliMinCamere()" class="btn dropdown-toggle">
+                                        <div class="filter-option">
+                                            <div class="filter-option-inner">
+                                                <div id="valore_minCamere"class="filter-option-text">
+                                                    Qualsiasi
+                                                </div>
+                                                <input type="hidden" name="camere_immobile"id="camere_immobile" value="Qualsiasi">
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="selezionaMinCamere" class="dropdown-content wrap_content_half">
+                                        <ul class="ul_inner">
+                                            <li>
+                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">Qualsiasi</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">1</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">2</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Min bagni</label>
+                                <div class="bootstrap-select picker trigger" style="width: 100%;">
+                                    <button type="button" onclick="apriScegliMinBagni()" class="btn dropdown-toggle">
+                                        <div class="filter-option">
+                                            <div class="filter-option-inner">
+                                                <div id="valore_minBagni"class="filter-option-text">
+                                                    Qualsiasi
+                                                </div>
+                                                <input type="hidden" name="bagni_immobile"id="bagni_immobile" value="Qualsiasi">
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="selezionaMinBagni" class="dropdown-content wrap_content_half">
+                                        <ul class="ul_inner">
+                                            <li>
+                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">Qualsiasi</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">1</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">2</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Prezzo minimo</label>
+                                <div class="bootstrap-select picker trigger" style="width: 100%;">
+                                    <button type="button" onclick="apriScegliMinPrezzo()" class="btn dropdown-toggle">
+                                        <div class="filter-option">
+                                            <div class="filter-option-inner">
+                                                <div id="valore_minPrezzo" class="filter-option-text">
+                                                    Qualsiasi
+                                                </div>
+                                                <input type="hidden" name="minPrezzo_immobile"id="minPrezzo_immobile" value="Qualsiasi">
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="selezionaMinPrezzo" class="dropdown-content wrap_content_half">
+                                        <ul class="ul_inner">
+                                            <li>
+                                                <a onclick="cambiaMinPrezzo(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">Qualsiasi</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaMinPrezzo(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">1</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaMinPrezzo(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">2</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Prezzo massimo</label>
+                                <div class="bootstrap-select picker trigger" style="width: 100%;">
+                                    <button type="button" onclick="apriScegliMaxPrezzo()" class="btn dropdown-toggle">
+                                        <div class="filter-option">
+                                            <div class="filter-option-inner">
+                                                <div id="valore_maxPrezzo" class="filter-option-text">
+                                                    Qualsiasi
+                                                </div>
+                                                <input type="hidden" name="maxPrezzo_immobile"id="maxPrezzo_immobile" value="Qualsiasi">
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="selezionaMaxPrezzo" class="dropdown-content wrap_content_half">
+                                        <ul class="ul_inner">
+                                            <li>
+                                                <a onclick="cambiaMaxPrezzo(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">Qualsiasi</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaMaxPrezzo(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">1</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaMaxPrezzo(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">2</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Min Posti Auto</label>
+                                <div class="bootstrap-select picker trigger" style="width: 100%;">
+                                    <button type="button" onclick="apriScegliMinAuto()" class="btn dropdown-toggle">
+                                        <div class="filter-option">
+                                            <div class="filter-option-inner">
+                                                <div id="valore_minAuto" class="filter-option-text">
+                                                    Qualsiasi
+                                                </div>
+                                                <input type="hidden" name="auto_immobile"id="auto_immobile" value="Qualsiasi">
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="selezionaMinAuto" class="dropdown-content wrap_content_half">
+                                        <ul class="ul_inner">
+                                            <li>
+                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">Qualsiasi</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">1</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">2</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Agenti</label>
+                                <div class="bootstrap-select picker trigger" style="width: 100%;">
+                                    <button type="button" onclick="apriScegliAgente()" class="btn dropdown-toggle">
+                                        <div class="filter-option">
+                                            <div class="filter-option-inner">
+                                                <div id="valore_agente" class="filter-option-text">
+                                                    Qualsiasi
+                                                </div>
+                                                <input type="hidden" name="agente_immobile"id="agente_immobile" value="Qualsiasi">
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="selezionaAgente" class="dropdown-content wrap_content_half">
+                                        <ul class="ul_inner">
+                                            <li>
+                                                <a onclick="cambiaAgente(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">Qualsiasi</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaAgente(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">1</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onclick="cambiaAgente(this)" role="option" href="#">
+                                                    <span class="icon-check check_mark"></span>
+                                                    <span class="text">2</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Superificie minima (mq)</label>
+                                <input name="minSuperficie_immobile" type="text" placeholder="Qualsiasi">
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Superficie massima (mq)</label>
+                                <input name="maxSuperficie_immobile" type="text" placeholder="Qualsiasi">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="search_button noPrint">
+                <div class="search_buttonwrap noPrint">
+                    <div class="search_advance noPrint">
+                        <button type="button" onclick="advancedOption()" id="advanced_options"class="search_advance_button noPrint">
+                            <i class="icon-search-plus noPrint"></i>
+                        </button>
+                    </div>
+                    <div class="search_buttonSubmit noPrint">
+                        <button class="submit button_search noPrint">
+                            <i class="icon-search noPrint"></i>
+                            <span>Cerca</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-</section>
-<div class="div_search div_search_init">
-    <form class="search_form search_form_header advance_search_form">
-        <div class="search_fields">
-            <div class="search_wrap search_data">
-                <div class="top_fields">
-                    <div class="search_select search_option">
-                        <label>Località</label>
-                        <span class="search_selectwrap">
-									<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-										<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                                role="combobox">
-											<div class="filter-option">
-												<div class="filter-option-inner">
-													<div class="filter-option-text">
-														Tutte le località
-													</div>
-												</div>
-											</div>
-										</button>
-									</div>
-								</span>
-                    </div>
-                    <div class="search_select search_option">
-                        <label>Stato Proprietà</label>
-                        <span class="search_selectwrap">
-									<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-										<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                                role="combobox">
-											<div class="filter-option">
-												<div class="filter-option-inner">
-													<div class="filter-option-text">
-														Tutte le località
-													</div>
-												</div>
-											</div>
-										</button>
-									</div>
-								</span>
-                    </div>
-                    <div class="search_select search_option">
-                        <label>Tipo Proprietà</label>
-                        <span class="search_selectwrap">
-									<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-										<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                                role="combobox">
-											<div class="filter-option">
-												<div class="filter-option-inner">
-													<div class="filter-option-text">
-														Tutte le località
-													</div>
-												</div>
-											</div>
-										</button>
-									</div>
-								</span>
-                    </div>
+    <section class="section_details_property">
+        <div class="page_fullWidth">
+            <div class="property_head">
+                <div class="property_title">
+                    <h1 class="title"><%=appBean.getNomeAppartamento()%>
+                    </h1>
+                    <p class="address"><%=indirizzoBean.toString()%>
+                    </p>
                 </div>
-                <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
-                    <div class="collapsed_field_container search_advanced_fields">
-                        <div class="search_option search_select search_beds">
-                            <label>Min camere da letto</label>
-                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                        role="combobox">
-                                    <div class="filter-option">
-                                        <div class="filter-option-inner">
-                                            <div class="filter-option-text">
-                                                Tutte le località
-                                            </div>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="search_option search_select search_beds">
-                            <label>Min bagni</label>
-                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                        role="combobox">
-                                    <div class="filter-option">
-                                        <div class="filter-option-inner">
-                                            <div class="filter-option-text">
-                                                Tutte le località
-                                            </div>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="search_option search_select search_beds">
-                            <label>Prezzo minimo</label>
-                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                        role="combobox">
-                                    <div class="filter-option">
-                                        <div class="filter-option-inner">
-                                            <div class="filter-option-text">
-                                                Tutte le località
-                                            </div>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="search_option search_select search_beds">
-                            <label>Prezzo massimo</label>
-                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                        role="combobox">
-                                    <div class="filter-option">
-                                        <div class="filter-option-inner">
-                                            <div class="filter-option-text">
-                                                Tutte le località
-                                            </div>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="search_option search_select search_beds">
-                            <label>Garage</label>
-                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                        role="combobox">
-                                    <div class="filter-option">
-                                        <div class="filter-option-inner">
-                                            <div class="filter-option-text">
-                                                Tutte le località
-                                            </div>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="search_option search_select search_beds">
-                            <label>Agenti</label>
-                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                        role="combobox">
-                                    <div class="filter-option">
-                                        <div class="filter-option-inner">
-                                            <div class="filter-option-text">
-                                                Tutte le località
-                                            </div>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="search_option search_select search_beds">
-                            <label>Superificie minima</label>
-                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                        role="combobox">
-                                    <div class="filter-option">
-                                        <div class="filter-option-inner">
-                                            <div class="filter-option-text">
-                                                Tutte le località
-                                            </div>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="search_option search_select search_beds">
-                            <label>Superficie massima</label>
-                            <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                        role="combobox">
-                                    <div class="filter-option">
-                                        <div class="filter-option-inner">
-                                            <div class="filter-option-text">
-                                                Tutte le località
-                                            </div>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="property_price">
+                    <p class="status"><%=appBean.getTipoVendita()%>
+                    </p>
+                    <p class="price">€<%=appBean.getPrezzo()    %>
+                    </p>
                 </div>
             </div>
-        </div>
-        <div class="search_button">
-            <div class="search_buttonwrap">
-                <div class="search_advance">
-                    <button type="button" onclick="advancedOption()" id="advanced_options"
-                            class="search_advance_button">
-                        <i class="icon-search-plus"></i>
-                    </button>
-                </div>
-                <div class="search_buttonSubmit">
-                    <button class="submit button_search">
-                        <i class="icon-search"></i>
-                        <span>Cerca</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-<section class="section_details_property">
-    <div class="page_fullWidth">
-        <div class="property_head">
-            <div class="property_title">
-                <h1 class="title"><%=appBean.getNomeAppartamento()%>
-                </h1>
-                <p class="address"><%=indirizzoBean.toString()%>
-                </p>
-            </div>
-            <div class="property_price">
-                <p class="status"><%=appBean.getTipoVendita()%>
-                </p>
-                <p class="price">€<%=appBean.getPrezzo()    %>
-                </p>
-            </div>
-        </div>
-        <div class="property">
-            <div class="picture">
-                <img src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>">
-            </div>
-            <div class="property_wrap">
-                <div class="property_main">
-                    <div class="property_content">
-                        <div class="property_content_head">
-                            <div class="property_name">
-                                <p class="name">Nome: </p>
-                                <p class="id"><%=appBean.getNomeAppartamento()%>
-                                </p>
-                            </div>
-                            <div class="property_functions">
-                                <a href="">
-                                    <i class="icon-share"></i>
-                                </a>
-                                <a href="">
-                                    <i class="icon-print"></i>
-                                </a>
-                            </div>
+            <div class="property">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="images/casa.jpg" alt="First slide">
                         </div>
-                        <div class="property_features_wrap">
-                            <div class="property_feature">
-                                <span class="feature_title">Camere</span>
-                                <div class="feature_content">
-                                    <i class="icon-bed"></i>
-                                    <span class="text"><%=appBean.getCamereLetto()%></span>
-                                </div>
-                            </div>
-                            <div class="property_feature">
-                                <span class="feature_title">Bagni</span>
-                                <div class="feature_content">
-                                    <i class="icon-shower"></i>
-                                    <span class="text"><%=appBean.getBagni()%></span>
-                                </div>
-                            </div>
-                            <div class="property_feature">
-                                <span class="feature_title">Garage</span>
-                                <div class="feature_content">
-                                    <i class="icon-car"></i>
-                                    <span class="text"><%=appBean.getPostoAuto()%></span>
-                                </div>
-                            </div>
-                            <div class="property_feature">
-                                <span class="feature_title">Anno di costruzione</span>
-                                <div class="feature_content">
-                                    <i class="icon-calendar"></i>
-                                    <span class="text">2013</span>
-                                </div>
-                            </div>
-                            <div class="property_feature">
-                                <span class="feature_title">Superficie</span>
-                                <div class="feature_content">
-                                    <i class="icon-square-o"></i>
-                                    <span class="text"><%=appBean.getSuperficie()%></span>
-                                    <span class="text">mq</span>
-                                </div>
-                            </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="images/casa.jpg" alt="Second slide">
                         </div>
-                        <h4 class="property_heading_h4">Descrizione</h4>
-                        <div class="description_content">
-                            <p><%=appBean.getDescrizioneAppartamento()%>
-                            </p>
-                        </div>
-                        <h4 class="property_heading_h4">Dettagli addizionali</h4>
-                        <ul class="property_additional">
-                            <li>
-                                <span class="valore">Piano: </span>
-                                <span class="value"><%=appBean.getPiano()%></span>
-                            </li>
-                            <li>
-                                <span class="valore">Classe Energetica: </span>
-                                <span class="value"><%=appBean.getClasseEnergetica()%></span>
-                            </li>
-                            <li>
-                                <span class="valore">Riscaldamento: </span>
-                                <span class="value"><%=appBean.getRiscaldamento()%></span>
-                            </li>
-                        </ul>
-                        <div class="property_floor_plans">
-                            <h4 class="property_heading_h4">Planimetria</h4>
-                            <div class="floor_plans_accordions">
-                                <div class="floor_plan">
-                                    <div class="floor_plan_title" onclick="show()">
-                                        <div class="floor_title">
-                                            <i class="icon-plus"></i>
-                                            <h3>Piano principale</h3>
-                                        </div>
-                                    </div>
-                                    <div id="floor" class="floor_plan_content" style="display: block;">
-                                        <div>
-                                            <a href="">
-                                                <img src="data:image/png;base64,<%=multimediaBean.getPlanimetriaString().get(0)%>">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="property_video">
-                            <h4 class="property_heading_h4">Video</h4>
-                            <video controls>
-                                <source type="video/mp4"
-                                        src="data:video/mp4;base64,<%=multimediaBean.getVideoString().get(0)%>">
-                            </video>
-                        </div>
-                        <div class="property_map">
-                            <input type="hidden" name="indirizzoAppartamento" value="<%=indirizzoBean.getCitta()+", "+indirizzoBean.getProvincia()+", "+ indirizzoBean.getNumeroCivico()%>">
-                            <h4 class="property_heading_h4">Mappa</h4>
-                            <iframe allowfullscreen frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCghlu8qhmsmptec4eSidg5APpA57lCPlU&q=<%=indirizzoBean.getVia()+"+"+indirizzoBean.getProvincia()+"+"+indirizzoBean.getNumeroCivico()%>&zoom=17" width="100%" height="450"></iframe>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="images/casa.jpg" alt="Third slide">
                         </div>
                     </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
 
-                </div>
-                <div class="property_sidebar">
-                    <aside class="sidebar">
-                        <section class="property_agent">
-                            <a href="" class="agent_image">
-                                <img src="images/agente.jpg">
-                            </a>
-                            <h3 class="property_agent_title">
-                                Agente <%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
-                            </h3>
-                            <div class=property_agent_info>
-                                <p class="contact">
-                                    <span>Cellulare:&nbsp;</span>
-                                    <a href=""><%=agenteBean.getTelefonoCellulare()%>
+                <div class="property_wrap">
+                    <div class="property_main">
+                        <div class="property_content">
+                            <div class="property_content_head">
+                                <div class="property_name">
+                                    <p class="name">Nome: </p>
+                                    <p class="id"><%=appBean.getNomeAppartamento()%>
+                                    </p>
+                                </div>
+                                <div class="property_functions">
+                                    <a href="">
+                                        <i class="icon-share"></i>
                                     </a>
-                                </p>
-                                <p class="contact">
-                                    <span>Whatsapp:&nbsp;</span>
-                                    <a href="https://wa.me/39<%=agenteBean.getTelefonoCellulare()%>"></a>
-                                </p>
-                                <p class="contact">
-                                    <span>Email:&nbsp;</span>
-                                    <a href=""><%=utenteBean.getEmail()%>
-                                    </a>
+                                    <button type="button" onclick="window.print();">
+                                        <i class="icon-print"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="property_features_wrap">
+                                <div class="property_feature">
+                                    <span class="feature_title">Camere</span>
+                                    <div class="feature_content">
+                                        <i class="icon-bed"></i>
+                                        <span class="text"><%=appBean.getCamereLetto()%></span>
+                                    </div>
+                                </div>
+                                <div class="property_feature">
+                                    <span class="feature_title">Bagni</span>
+                                    <div class="feature_content">
+                                        <i class="icon-shower"></i>
+                                        <span class="text"><%=appBean.getBagni()%></span>
+                                    </div>
+                                </div>
+                                <div class="property_feature">
+                                    <span class="feature_title">Garage</span>
+                                    <div class="feature_content">
+                                        <i class="icon-car"></i>
+                                        <span class="text"><%=appBean.getPostoAuto()%></span>
+                                    </div>
+                                </div>
+                                <div class="property_feature">
+                                    <span class="feature_title">Anno di costruzione</span>
+                                    <div class="feature_content">
+                                        <i class="icon-calendar"></i>
+                                        <span class="text">2013</span>
+                                    </div>
+                                </div>
+                                <div class="property_feature">
+                                    <span class="feature_title">Superficie</span>
+                                    <div class="feature_content">
+                                        <i class="icon-square-o"></i>
+                                        <span class="text"><%=appBean.getSuperficie()%></span>
+                                        <span class="text">mq</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="property_heading_h4">Descrizione</h4>
+                            <div class="description_content">
+                                <p><%=appBean.getDescrizioneAppartamento()%>
                                 </p>
                             </div>
-                            <a class="agent_property_listing" href="">Visualizza i miei immobili</a>
-                            <div class="agent_property_contact_form">
-                                <form class="contact_form">
-                                    <input type="hidden" name="action" value="agente">
-                                    <input type="hidden" name="agenteid" value="<%=agenteBean.getIdAgente()%>">
-                                    <p class="contact_form_row">
-                                        <label>Nome e cognome</label>
-                                        <input type="text" placeholder="Inserisci il tuo nome e cognome"
-                                               name="nomeGuest">
-                                    </p>
-                                    <p class="contact_form_row">
-                                        <label>Email</label>
-                                        <input type="email" placeholder="Inserisci la tua email" name="emailGuest">
-                                    </p>
-                                    <p class="contact_form_row">
-                                        <label>Telefono</label>
-                                        <input type="text" placeholder="Inserisci il tuo numero di telefono"
-                                               name="telefonoGuest">
-                                    </p>
-                                    <p class="contact_form_row">
-                                        <label>Messaggio</label>
-                                        <textarea cols="40" rows="6"
-                                                  placeholder="Ciao vorrei maggiori informazioni su questo immobile"
-                                                  name="messaggioGuest"></textarea>
-                                    </p>
-                                    <div class="privacy_agreement">
-                                        <span class="privacy_checkboxLabel">Consenso sulla privacy</span>
-                                        <input type="checkbox">
-                                        <label>I consent to having this website store my submitted information so they
-                                            can respond to my inquiry.</label>
+                            <h4 class="property_heading_h4">Dettagli addizionali</h4>
+                            <ul class="property_additional">
+                                <li>
+                                    <span class="valore">Piano: </span>
+                                    <span class="value"><%=appBean.getPiano()%></span>
+                                </li>
+                                <li>
+                                    <span class="valore">Classe Energetica: </span>
+                                    <span class="value"><%=appBean.getClasseEnergetica()%></span>
+                                </li>
+                                <li>
+                                    <span class="valore">Riscaldamento: </span>
+                                    <span class="value"><%=appBean.getRiscaldamento()%></span>
+                                </li>
+                            </ul>
+                            <div class="property_floor_plans">
+                                <h4 class="property_heading_h4">Planimetria</h4>
+                                <div class="floor_plans_accordions">
+                                    <div class="floor_plan">
+                                        <div class="floor_plan_title" onclick="show()">
+                                            <div class="floor_title">
+                                                <i class="icon-plus"></i>
+                                                <h3>Piano principale</h3>
+                                            </div>
+                                        </div>
+                                        <div id="floor" class="floor_plan_content" style="display: block;">
+                                            <div>
+                                                <a href="">
+                                                    <img src="data:image/png;base64,<%=multimediaBean.getPlanimetriaString().get(0)%>">
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="agent_call">
-                                        <a href="https://wa.me/393662545295" class="agent_link">
-                                            <i class="icon-whatsapp"></i>
-                                            <span>Whatsapp</span>
-                                        </a>
-                                        <a href="" class="agent_link">
-                                            <i class="icon-phone"></i>
-                                            <span>Chiama ora</span>
-                                        </a>
-                                    </div>
-                                    <div class="agent_message">
-                                        <a href="" class="agent_link">
-                                            <i class="icon-mail_outline"></i>
-                                            <span>Invia messaggio</span>
-                                        </a>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
-                        </section>
-                        <section class="widget">
-                            <h3 class="title">Immobile in evidenza</h3>
-                            <%
-                                int i = 0;
-                                for (AppartamentoBean appartamentoBean : array) {
-                                    if (appartamentoBean.getIdAgente() == agenteBean.getIdAgente()) {
-                                        i++;%>
-                            <article class="featured_card featured_card_block">
-                                <div class="featured_card_wrap">
-                                    <figure class="featured_card_figure">
-                                        <div class="featured_card_picture">
-                                            <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
-                                                <%
-                                                    int p = 0;
-                                                    for (MultimediaBean multimediaBean1 : allMulti) {
-                                                        if (multimediaBean1.getIdAppartamento() == appartamentoBean.getIdAppartamento()) {
-                                                            i++;
-                                                %><img width="680" height="510" src="data:image/png;base64,<%=multimediaBean1.getFotoString().get(0)%>"><%
-                                                    }
-                                                        if(p!=0) break;
-                                                }
-                                            %>
+                            <div class="property_video">
+                                <h4 class="property_heading_h4">Video</h4>
+                                <video controls>
+                                    <source type="video/mp4"
+                                            src="data:video/mp4;base64,<%=multimediaBean.getVideoString().get(0)%>">
+                                </video>
+                            </div>
+                            <div class="property_map">
+                                <input type="hidden" name="indirizzoAppartamento" value="<%=indirizzoBean.getCitta()+", "+indirizzoBean.getProvincia()+", "+ indirizzoBean.getNumeroCivico()%>">
+                                <h4 class="property_heading_h4">Mappa</h4>
+                                <iframe allowfullscreen frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCghlu8qhmsmptec4eSidg5APpA57lCPlU&q=<%=indirizzoBean.getVia()+"+"+indirizzoBean.getProvincia()+"+"+indirizzoBean.getNumeroCivico()%>&zoom=17" width="100%" height="450"></iframe>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="property_sidebar">
+                        <aside class="sidebar">
+                            <section class="property_agent">
+                                <a href="" class="agent_image">
+                                    <img src="images/agente.jpg">
+                                </a>
+                                <h3 class="property_agent_title">
+                                    Agente <%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
+                                </h3>
+                                <div class=property_agent_info>
+                                    <p class="contact">
+                                        <span>Cellulare:&nbsp;</span>
+                                        <a href=""><%=agenteBean.getTelefonoCellulare()%>
+                                        </a>
+                                    </p>
+                                    <p class="contact">
+                                        <span>Whatsapp:&nbsp;</span>
+                                        <a href="https://wa.me/39<%=agenteBean.getTelefonoCellulare()%>"></a>
+                                    </p>
+                                    <p class="contact">
+                                        <span>Email:&nbsp;</span>
+                                        <a href=""><%=utenteBean.getEmail()%>
+                                        </a>
+                                    </p>
+                                </div>
+                                <a class="agent_property_listing" href="">Visualizza i miei immobili</a>
+                                <div class="agent_property_contact_form">
+                                    <form class="contact_form">
+                                        <input type="hidden" name="action" value="agente">
+                                        <input type="hidden" name="agenteid" value="<%=agenteBean.getIdAgente()%>">
+                                        <p class="contact_form_row">
+                                            <label>Nome e cognome</label>
+                                            <input type="text" placeholder="Inserisci il tuo nome e cognome"
+                                                   name="nomeGuest">
+                                        </p>
+                                        <p class="contact_form_row">
+                                            <label>Email</label>
+                                            <input type="email" placeholder="Inserisci la tua email" name="emailGuest">
+                                        </p>
+                                        <p class="contact_form_row">
+                                            <label>Telefono</label>
+                                            <input type="text" placeholder="Inserisci il tuo numero di telefono"
+                                                   name="telefonoGuest">
+                                        </p>
+                                        <p class="contact_form_row">
+                                            <label>Messaggio</label>
+                                            <textarea cols="40" rows="6"
+                                                      placeholder="Ciao vorrei maggiori informazioni su questo immobile"
+                                                      name="messaggioGuest"></textarea>
+                                        </p>
+                                        <div class="privacy_agreement">
+                                            <span class="privacy_checkboxLabel">Consenso sulla privacy</span>
+                                            <input type="checkbox">
+                                            <label>I consent to having this website store my submitted information so they
+                                                can respond to my inquiry.</label>
+                                        </div>
+                                        <div class="agent_call">
+                                            <a href="https://wa.me/393662545295" class="agent_link">
+                                                <i class="icon-whatsapp"></i>
+                                                <span>Whatsapp</span>
+                                            </a>
+                                            <a href="" class="agent_link">
+                                                <i class="icon-phone"></i>
+                                                <span>Chiama ora</span>
                                             </a>
                                         </div>
-                                    </figure>
-                                    <div class="featured_card_details">
-                                        <h3>
-                                            <a href=""><%=appartamentoBean.getNomeAppartamento()%></a>
-                                        </h3>
-                                        <p class="featured_card_description"><%if (appartamentoBean.getDescrizioneAppartamento().length() > 30) {
+                                        <div class="agent_message">
+                                            <a href="" class="agent_link">
+                                                <i class="icon-mail_outline"></i>
+                                                <span>Invia messaggio</span>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                            <section class="widget">
+                                <h3 class="title">Immobile in evidenza</h3>
+                                <%
+                                    int i = 0;
+                                    for (AppartamentoBean appartamentoBean : array) {
+                                        if (appartamentoBean.getIdAgente() == agenteBean.getIdAgente()) {
+                                            i++;%>
+                                <article class="featured_card featured_card_block">
+                                    <div class="featured_card_wrap">
+                                        <figure class="featured_card_figure">
+                                            <div class="featured_card_picture">
+                                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
+                                                    <%
+                                                        int p = 0;
+                                                        for (MultimediaBean multimediaBean1 : allMulti) {
+                                                            if (multimediaBean1.getIdAppartamento() == appartamentoBean.getIdAppartamento()) {
+                                                                i++;
+                                                    %><img width="680" height="510" src="data:image/png;base64,<%=multimediaBean1.getFotoString().get(0)%>"><%
+                                                        }
+                                                        if(p!=0) break;
+                                                    }
+                                                %>
+                                                </a>
+                                            </div>
+                                        </figure>
+                                        <div class="featured_card_details">
+                                            <h3>
+                                                <a href=""><%=appartamentoBean.getNomeAppartamento()%></a>
+                                            </h3>
+                                            <p class="featured_card_description"><%if (appartamentoBean.getDescrizioneAppartamento().length() > 30) {
                                             %><%=appartamentoBean.getDescrizioneAppartamento().substring(0, 30) + ".."%><%
                                             } else {
                                             %><%=appartamentoBean.getDescrizioneAppartamento()%><%
                                                 }%> </p>
-                                        <div class="featured_card_features_wrap">
-                                            <div class="featured_card_feature">
-                                                <span class="features_title">Camere da letto</span>
-                                                <div>
-                                                    <i class="feature_icon icon-bed"></i>
-                                                    <span class="text_feature"><%=appartamentoBean.getCamereLetto()%></span>
+                                            <div class="featured_card_features_wrap">
+                                                <div class="featured_card_feature">
+                                                    <span class="features_title">Camere da letto</span>
+                                                    <div>
+                                                        <i class="feature_icon icon-bed"></i>
+                                                        <span class="text_feature"><%=appartamentoBean.getCamereLetto()%></span>
+                                                    </div>
+                                                </div>
+                                                <div class="featured_card_feature">
+                                                    <span class="features_title">Bagni</span>
+                                                    <div>
+                                                        <i class="feature_icon icon-shower"></i>
+                                                        <span class="text_feature"><%=appartamentoBean.getBagni()%></span>
+                                                    </div>
+                                                </div>
+                                                <div class="featured_card_feature">
+                                                    <span class="features_title">Superficie</span>
+                                                    <div>
+                                                        <i class="feature_icon icon-crop_square"></i>
+                                                        <span class="text_feature"><%=appartamentoBean.getSuperficie()%></span>
+                                                        <span class="text_add">mq</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="featured_card_feature">
-                                                <span class="features_title">Bagni</span>
-                                                <div>
-                                                    <i class="feature_icon icon-shower"></i>
-                                                    <span class="text_feature"><%=appartamentoBean.getBagni()%></span>
-                                                </div>
-                                            </div>
-                                            <div class="featured_card_feature">
-                                                <span class="features_title">Superficie</span>
-                                                <div>
-                                                    <i class="feature_icon icon-crop_square"></i>
-                                                    <span class="text_feature"><%=appartamentoBean.getSuperficie()%></span>
-                                                    <span class="text_add">mq</span>
+                                            <div class="featured_card_priceLabel">
+                                                <div class="featured_card_price">
+                                                    <span class="status"><%=appartamentoBean.getTipoVendita()%></span>
+                                                    <p class="price">€<%=appartamentoBean.getPrezzo()%></p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="featured_card_priceLabel">
-                                            <div class="featured_card_price">
-                                                <span class="status"><%=appartamentoBean.getTipoVendita()%></span>
-                                                <p class="price">€<%=appartamentoBean.getPrezzo()%></p>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
-                            </article>
-                            <%
+                                    </div>
+                                </article>
+                                <%
+                                        }
+                                        if (i != 0) {
+                                            break;
+                                        }
                                     }
-                                    if (i != 0) {
-                                        break;
-                                    }
-                                }
-                            %>
-                        </section>
-                    </aside>
+                                %>
+                            </section>
+                        </aside>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
+    <div class="footer_wrapper">
+        <footer class="general_footer">
+            <div class="top_footer">
+                <div class="footer_logo">
+                    <a href="" title="Gabetti Nocera Inferiore">
+                        <img src="images/logogabetti.svg" height="200" width="200">
+                    </a>
+                </div>
+                <div class="footer_socials">
+                    <a class="facebook" href="https://www.facebook.com/GabettiNocerainferiore">
+                        <icon class="icon-facebook"></icon>
+                    </a>
+                    <a class="instagram" href="https://www.instagram.com/gabetti.nocera/">
+                        <icon class="icon-instagram"></icon>
+                    </a>
+                </div>
+            </div>
+            <div class="footer_widgets_wrap">
+                <div class="footer_widgets">
+                    <div class="navigation">
+                        <section class="navigation_menu">
+                            <h3 class="title">Link veloci</h3>
+                            <div class="menu_footer">
+                                <ul class="menu">
+                                    <li class="menu_item">
+                                        <a href="index.jsp">Home</a>
+                                    </li>
+                                    <li class="menu_item">
+                                        <a href="">Lista Immobili</a>
+                                    </li>
+                                    <li class="menu_item">
+                                        <a href="valutazione.html">Valutazione Immobile</a>
+                                    </li>
+                                    <li class="menu_item">
+                                        <a href="">I Nostri Agenti</a>
+                                    </li>
+                                    <li class="menu_item">
+                                        <a href="contact.html">Contattaci</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="footer_widgets">
+                    <div class="contact_widget">
+                        <h3 class="title">I nostri contatti</h3>
+                        <div class="contact_widget_item">
+                            <p class="contact_icon">
+                                <i class="icon-map-marker"></i>
+                            </p>
+                            <p class="contact_content">Via Attilio Barbarulo, 132, 84014 Nocera inferiore SA</p>
+                        </div>
+                        <div class="contact_widget_item">
+                            <p class="contact_icon">
+                                <i class="icon-whatsapp"></i>
+                            </p>
+                            <a class="contact_content" href="">3312294330</a>
+                        </div>
+                        <div class="contact_widget_item">
+                            <p class="contact_icon">
+                                <i class="icon-phone"></i>
+                            </p>
+                            <a class="contact_content" href="">081/5173146</a>
+                        </div>
+                        <div class="contact_widget_item">
+                            <p class="contact_icon">
+                                <i class="icon-mail_outline"></i>
+                            </p>
+                            <a href="mailto:nocera@gabetti.it" class="contact_content">nocera@gabetti.it</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </footer>
     </div>
-</section>
+</div>
+
 
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDjdvGlwSrEXd5rBJNTvPCtmACuc29-HiU"></script>
 <script src="script/index.js"></script>
-<script src="script/dettagliappartamento.js"></script>
+
 <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
 <script src="bootstrap/js/popper.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
@@ -627,6 +956,82 @@
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+<script>
+    const slideContainer = document.querySelector('.container_slideshow');
+    const slide = document.querySelector('.slides');
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const interval = 3000;
+
+    let slides = document.querySelectorAll('.slide');
+    let index = 1;
+    let slideId;
+
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone = slides[slides.length - 1].cloneNode(true);
+
+    firstClone.id = 'first-clone';
+    lastClone.id = 'last-clone';
+
+    slide.append(firstClone);
+    slide.prepend(lastClone);
+
+    const slideWidth = slides[index].clientWidth;
+
+    slide.style.transform = `translateX(${-slideWidth * index}px)`;
+
+    console.log(slides);
+
+    const startSlide = () => {
+        slideId = setInterval(() => {
+            moveToNextSlide();
+        }, interval);
+    };
+
+    const getSlides = () => document.querySelectorAll('.slide');
+
+    slide.addEventListener('transitionend', () => {
+        slides = getSlides();
+        if (slides[index].id === firstClone.id) {
+            slide.style.transition = 'none';
+            index = 1;
+            slide.style.transform = `translateX(${-slideWidth * index}px)`;
+        }
+
+        if (slides[index].id === lastClone.id) {
+            slide.style.transition = 'none';
+            index = slides.length - 2;
+            slide.style.transform = `translateX(${-slideWidth * index}px)`;
+        }
+    });
+
+    const moveToNextSlide = () => {
+        slides = getSlides();
+        if (index >= slides.length - 1) return;
+        index++;
+        slide.style.transition = '.7s ease-out';
+        slide.style.transform = `translateX(${-slideWidth * index}px)`;
+    };
+
+    const moveToPreviousSlide = () => {
+        if (index <= 0) return;
+        index--;
+        slide.style.transition = '.7s ease-out';
+        slide.style.transform = `translateX(${-slideWidth * index}px)`;
+    };
+
+    slideContainer.addEventListener('mouseenter', () => {
+        clearInterval(slideId);
+    });
+
+    slideContainer.addEventListener('mouseleave', startSlide);
+    nextBtn.addEventListener('click', moveToNextSlide);
+    prevBtn.addEventListener('click', moveToPreviousSlide);
+
+    startSlide();
+
+</script>
+
 </body>
 </html>
 
