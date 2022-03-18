@@ -142,6 +142,11 @@ public class IndirizzoModelDM implements IndirizzoModel {
     }
 
     @Override
+    public ArrayList<Città> RetrieveAllCittàZone(ArrayList città) throws SQLException {
+        return null;
+    }
+
+    @Override
     public Città RetrieveCittàZone(String zona) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;

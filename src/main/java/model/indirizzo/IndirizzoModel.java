@@ -3,6 +3,7 @@ package model.indirizzo;
 import UtilityClass.Città;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public interface IndirizzoModel<T> {
@@ -16,4 +17,7 @@ public interface IndirizzoModel<T> {
 
     public boolean isCittà(String zona) throws SQLException;
 
+    public ArrayList<String> RetrieveAllCittà() throws SQLException;
+
+    public ArrayList<Città> RetrieveAllCittàZone(ArrayList<String> città) throws SQLException;
 }
