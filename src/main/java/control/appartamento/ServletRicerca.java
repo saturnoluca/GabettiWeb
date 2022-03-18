@@ -78,8 +78,7 @@ public class ServletRicerca extends HttpServlet {
         if (agente.equals("Qualsiasi")) {
             ricerca.setAgente(-1);
         } else {
-            UtenteBean utenteBean = new UtenteBean();
-            UtenteModelDM utenteModelDM = new UtenteModelDM();
+            UtenteBean utenteBean;
             utenteBean = nomeCognome(agente);
             AgenteBean agenteBean = new AgenteBean();
             AgenteModelDM agenteModelDM = new AgenteModelDM();
