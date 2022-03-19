@@ -116,20 +116,21 @@ public class IndirizzoModelDM implements IndirizzoModel {
         return array;
     }
 
-    public ArrayList<String> RetrieveAllCittà() throws SQLException{
+    public ArrayList<String> RetrieveAllCittà() throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT DISTINCT città FROM indirizzo";
         ArrayList<String> città = new ArrayList<String>();
-        try{
-            connection=dmcp.getConnection();
-            ps=connection.prepareStatement(selectSql);
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                String cittàString = rs.getString("città");;
+            while (rs.next()) {
+                String cittàString = rs.getString("città");
+                ;
                 città.add(cittàString);
             }
-        }finally {
+        } finally {
             try {
                 if (ps != null) {
                     ps.close();
@@ -143,7 +144,36 @@ public class IndirizzoModelDM implements IndirizzoModel {
 
     @Override
     public ArrayList<Città> RetrieveAllCittàZone(ArrayList città) throws SQLException {
-        return null;
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSQL = "SELECT DISTINCT zona FROM indirizzo where città=?";
+        ArrayList<Città> allCittà = new ArrayList<Città>();
+
+        for (String c : (ArrayList<String>) città) {
+            try {
+                ArrayList<String> allZone = new ArrayList<String>();
+                Città city = new Città();
+                connection = dmcp.getConnection();
+                ps = connection.prepareStatement(selectSQL);
+                ps.setString(1, c);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    allZone.add(rs.getString("zona"));
+                    city.setNomeCittà(c);
+                    city.setZone(allZone);
+                    allCittà.add(city);
+                }
+            } finally {
+                try {
+                    if (ps != null) {
+                        ps.close();
+                    }
+                } finally {
+                    dmcp.releaseConnection(connection);
+                }
+            }
+        }
+        return allCittà;
     }
 
     @Override
@@ -152,18 +182,18 @@ public class IndirizzoModelDM implements IndirizzoModel {
         PreparedStatement ps = null;
         String selectSql = "SELECT città FROM indirizzo WHERE zona=?";
         Città città = new Città();
-        ArrayList<String> arrayCittà= new ArrayList<String>();
+        ArrayList<String> arrayCittà = new ArrayList<String>();
         IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
-        arrayCittà=indirizzoModelDM.RetrieveAllCittà();
+        arrayCittà = indirizzoModelDM.RetrieveAllCittà();
         boolean trovato = false;
         try {
-            for(String c : arrayCittà){
-                if(c.equals(zona)){
-                    trovato=true;
+            for (String c : arrayCittà) {
+                if (c.equals(zona)) {
+                    trovato = true;
                     città.setNomeCittà(c);
                 }
             }
-            if(!trovato){
+            if (!trovato) {
                 connection = dmcp.getConnection();
                 ps = connection.prepareStatement(selectSql);
                 ps.setString(1, zona);
@@ -173,8 +203,8 @@ public class IndirizzoModelDM implements IndirizzoModel {
             }
         } finally {
             selectSql = "SELECT DISTINCT zona FROM indirizzo WHERE città=?";
-            if(connection==null){
-                connection=dmcp.getConnection();
+            if (connection == null) {
+                connection = dmcp.getConnection();
             }
             ps = connection.prepareStatement(selectSql);
             ps.setString(1, città.getNomeCittà());
@@ -200,9 +230,9 @@ public class IndirizzoModelDM implements IndirizzoModel {
         Città città;
         IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
         città = indirizzoModelDM.RetrieveCittàZone(zona);
-        if(zona.equals(città.getNomeCittà())){
+        if (zona.equals(città.getNomeCittà())) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

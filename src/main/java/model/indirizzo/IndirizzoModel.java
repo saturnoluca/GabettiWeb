@@ -13,11 +13,13 @@ public interface IndirizzoModel<T> {
 
     public Collection<IndirizzoBean> RetrieveAll() throws SQLException;
 
+    public Collection<Città> RetrieveAllCittàZone(ArrayList<T> citta)throws SQLException;
+
     public Città RetrieveCittàZone(String zona) throws SQLException;
 
     public boolean isCittà(String zona) throws SQLException;
 
     public ArrayList<String> RetrieveAllCittà() throws SQLException;
 
-    public ArrayList<Città> RetrieveAllCittàZone(ArrayList<String> città) throws SQLException;
+
 }

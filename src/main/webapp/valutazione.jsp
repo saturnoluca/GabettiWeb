@@ -1,4 +1,5 @@
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="UtilityClass.Città" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 18/03/2022
@@ -30,9 +31,9 @@
 </head>
 
 <%
-    ArrayList<String> allCittà = (ArrayList<String>) request.getAttribute("allCittà");
-    if(allCittà==null){
-        response.sendRedirect(response.encodeRedirectURL("/ServletValutazioneRicerca"));
+    ArrayList<Città> allCittàZone = (ArrayList<Città>) request.getAttribute("allCittaZone");
+    if (allCittàZone == null) {
+        response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
         return;
     }
 %>
@@ -50,7 +51,7 @@
         <li><a href="#">Lista Immobili</a></li>
         <li><a class="active" href="valutazione.html">Valutazione Immobile</a></li>
         <li><a href="listaagenti.html">I Nostri Agenti</a></li>
-        <li><a  href="contact.html">Contattaci</a></li>
+        <li><a href="contact.html">Contattaci</a></li>
     </ul>
 </nav>
 <div class="content">
@@ -75,7 +76,8 @@
 									<div id="valore_localita" class="filter-option-text">
 									  Qualsiasi
 									</div>
-									  <input type="hidden" name="localita_immobile"id="localita_immobile" value="Qualsiasi">
+									  <input type="hidden" name="localita_immobile" id="localita_immobile"
+                                             value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -87,60 +89,27 @@
 									  <span class="text">Qualsiasi</span>
 									</a>
 								</li>
+                                    <%for (Città c : allCittàZone) {%>
 								  <li>
 									  <a onclick="cambiaLocalita(this)" role="option" href="#">
 										<span class="icon-check check_mark"></span>
-										<span class="text">Sarno</span>
+										<span class="text"><%=c.getNomeCittà()%></span>
 									  </a>
 								  </li>
+                                    <%for (String z : c.getZone()) {%>
 								  <li>
 									<ul class="ul_inner">
 									  <li>
 										<a onclick="cambiaLocalita(this)" role="option" href="#">
 										  <span class="icon-check check_mark"></span>
-										  <span class="sublist text">Episcopio</span>
+										  <span class="sublist text"><%=z%></span>
 										</a>
 									  </li>
-									  <li>
-										<a onclick="cambiaLocalita(this)" role="option" href="#">
-										  <span class="icon-check check_mark"></span>
-										  <span class="sublist text">Lavorate</span>
-										</a>
-									  </li>
-									  <li>
-										<a onclick="cambiaLocalita(this)" role="option" href="#">
-										  <span class="icon-check check_mark"></span>
-										  <span class="sublist text">Foce</span>
-										</a>
-									  </li>
-									</ul>
-								  </li>
-								  <li>
-									<a onclick="cambiaLocalita(this)" onclick="cambia(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">Sarno</span>
-									</a>
-								  </li>
-								  <li>
-									<ul class="ul_inner">
-									  <li>
-										<a onclick="cambiaLocalita(this)" role="option" href="#">
-										  <span class="icon-check check_mark"></span>
-										  <span class="sublist text">Episcopio</span>
-										</a>
-									  </li>
-									  <li>
-										<a onclick="cambiaLocalita(this)" role="option" href="#">
-										  <span class="icon-check check_mark"></span>
-										  <span class="sublist text">Lavorate</span>
-										</a>
-									  </li>
-									  <li>
-										<a onclick="cambiaLocalita(this)" role="option" href="#">
-										  <span class="icon-check check_mark"></span>
-										  <span class="sublist text">Foce</span>
-										</a>
-									  </li>
+
+                                        <%
+                                                }
+                                            }
+                                        %>
 									</ul>
 								  </li>
 								</ul>
@@ -155,10 +124,10 @@
 							  <button type="button" onclick="apriScegliStato()" class="btn dropdown-toggle">
 								<div class="filter-option">
 								  <div class="filter-option-inner">
-									<div  id="valore_stato" class="filter-option-text">
+									<div id="valore_stato" class="filter-option-text">
 									  Qualsiasi
 									</div>
-									<input type="hidden" name="stato_immobile"id="stato_immobile" value="Qualsiasi">
+									<input type="hidden" name="stato_immobile" id="stato_immobile" value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -194,10 +163,10 @@
 							  <button type="button" onclick="apriScegliTipo()" class="btn dropdown-toggle">
 								<div class="filter-option">
 								  <div class="filter-option-inner">
-									<div  id="valore_tipo" class="filter-option-text">
+									<div id="valore_tipo" class="filter-option-text">
 									  Qualsiasi
 									</div>
-									<input type="hidden" name="tipo_immobile"id="tipo_immobile" value="Qualsiasi">
+									<input type="hidden" name="tipo_immobile" id="tipo_immobile" value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -239,7 +208,7 @@
 						  </span>
                         </div>
                     </div>
-                    <div id="advanced_option_div"class="form_collapsed_field_wrapper" style="display: none;">
+                    <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
                         <div class="collapsed_field_container search_advanced_fields">
                             <div class="search_option search_select search_beds">
                                 <label>Min camere da letto</label>
@@ -247,10 +216,11 @@
                                     <button type="button" onclick="apriScegliMinCamere()" class="btn dropdown-toggle">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
-                                                <div id="valore_minCamere"class="filter-option-text">
+                                                <div id="valore_minCamere" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="camere_immobile"id="camere_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="camere_immobile" id="camere_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -284,10 +254,11 @@
                                     <button type="button" onclick="apriScegliMinBagni()" class="btn dropdown-toggle">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
-                                                <div id="valore_minBagni"class="filter-option-text">
+                                                <div id="valore_minBagni" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="bagni_immobile"id="bagni_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="bagni_immobile" id="bagni_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -324,7 +295,8 @@
                                                 <div id="valore_minPrezzo" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="minPrezzo_immobile"id="minPrezzo_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="minPrezzo_immobile" id="minPrezzo_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -361,7 +333,8 @@
                                                 <div id="valore_maxPrezzo" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="maxPrezzo_immobile"id="maxPrezzo_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="maxPrezzo_immobile" id="maxPrezzo_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -398,7 +371,8 @@
                                                 <div id="valore_minAuto" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="auto_immobile"id="auto_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="auto_immobile" id="auto_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -435,7 +409,8 @@
                                                 <div id="valore_agente" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="agente_immobile"id="agente_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="agente_immobile" id="agente_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -478,7 +453,8 @@
             <div class="search_button">
                 <div class="search_buttonwrap">
                     <div class="search_advance">
-                        <button type="button" onclick="advancedOption()" id="advanced_options"class="search_advance_button">
+                        <button type="button" onclick="advancedOption()" id="advanced_options"
+                                class="search_advance_button">
                             <i class="icon-search-plus"></i>
                         </button>
                     </div>
@@ -511,7 +487,8 @@
                                 <form class="valutazione_form">
                                     <div class="valutazione_form_field half_size">
                                         <label>Indirizzo</label>
-                                        <input type="text" placeholder="Indirizzo del tuo immobile compreso di numero civico">
+                                        <input type="text"
+                                               placeholder="Indirizzo del tuo immobile compreso di numero civico">
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Comune</label>

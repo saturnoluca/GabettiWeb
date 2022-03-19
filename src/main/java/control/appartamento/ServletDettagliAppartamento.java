@@ -63,6 +63,7 @@ public class ServletDettagliAppartamento extends HttpServlet {
             request.setAttribute("multimedia", multimediaBean);
             request.setAttribute("visite", array);
             request.setAttribute("allMulti", allMulti);
+            System.out.println(multimediaBean.getFotoString().size());
             RequestDispatcher rd = request.getRequestDispatcher("/dettagliappartamento.jsp");
             rd.forward(request, response);
 

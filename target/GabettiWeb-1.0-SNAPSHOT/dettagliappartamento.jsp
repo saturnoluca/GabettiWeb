@@ -530,14 +530,13 @@
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="d-block w-100" src="images/casa.jpg" alt="First slide">
+                            <img class="d-block w-100" src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="First slide">
                         </div>
+                        <%for(int i=1;i<multimediaBean.getFotoString().size() && i<=2;i++){%>
                         <div class="carousel-item">
-                            <img class="d-block w-100" src="images/casa.jpg" alt="Second slide">
+                            <img class="d-block w-100" src="data:image/png;base64,<%=multimediaBean.getFotoString().get(i)%>">
                         </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="images/casa.jpg" alt="Third slide">
-                        </div>
+                        <%}%>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
