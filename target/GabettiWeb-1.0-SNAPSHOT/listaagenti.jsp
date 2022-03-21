@@ -613,8 +613,7 @@
                                     if (u.getRuolo().equals("Agente")) {
                                         for (CompositeKeyAgenteCase ag : agenteBeans) {
                                             if (ag.getBean().getIdUtente() == u.getIdUtente()) {
-                                %><a
-                                    href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=ag.getBean().getIdAgente()%>"
+                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=ag.getBean().getIdAgente()%>"
                                     class="agent_card_link">
                                 <span>Visualizza le mie proprietà</span>
                                 <i class="icon-angle-right"></i>

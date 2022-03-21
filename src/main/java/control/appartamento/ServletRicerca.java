@@ -109,7 +109,9 @@ public class ServletRicerca extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        response.sendRedirect("index.jsp");
+        request.getSession().setAttribute("ricercaString", "ricerca");
+        request.getSession().setAttribute("ricerca", arrayApp);
+        response.sendRedirect("ServletListaAppartamenti");
     }
 
     public UtenteBean nomeCognome(String agente) {
