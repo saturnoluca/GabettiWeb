@@ -127,7 +127,6 @@ public class IndirizzoModelDM implements IndirizzoModel {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String cittàString = rs.getString("città");
-                ;
                 città.add(cittàString);
             }
         } finally {
@@ -158,11 +157,15 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 ps.setString(1, c);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    allZone.add(rs.getString("zona"));
+                    String zona="";
+                    zona=rs.getString("zona");
+                    if(!zona.equals(c)){
+                        allZone.add(zona);
+                    }
                     city.setNomeCittà(c);
                     city.setZone(allZone);
-                    allCittà.add(city);
                 }
+                allCittà.add(city);
             } finally {
                 try {
                     if (ps != null) {
@@ -180,7 +183,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
     public Città RetrieveCittàZone(String zona) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        String selectSql = "SELECT città FROM indirizzo WHERE zona=?";
+        String selectSql = "SELECT DISTINCT città FROM indirizzo WHERE zona=?";
         Città città = new Città();
         ArrayList<String> arrayCittà = new ArrayList<String>();
         IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();

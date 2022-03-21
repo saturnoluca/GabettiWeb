@@ -23,7 +23,6 @@ public class ServletValutazioneCampiRicerca extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(allCittàZone);
         request.setAttribute("allCittaZone", allCittàZone);
         RequestDispatcher rd = request.getRequestDispatcher("/valutazione.jsp");
         rd.forward(request, response);
