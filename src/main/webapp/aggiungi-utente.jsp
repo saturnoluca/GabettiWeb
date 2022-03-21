@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 
     <link rel="stylesheet" href="icomoon/style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
 
@@ -184,22 +184,25 @@
 
                             <div class="property_multimedia">
                                 <h3 class="tab_title">Multimedia</h3>
-                                <div class="gallery_image_container" id="gallery_image_container"></div>
-                                <div class="content_gallery_images full_size">
-                                    <label class="label_property_title">Foto profilo</label>
-                                    <div class="drag_drop_container">
-                                        <i class="icon-cloud-upload"></i>
-                                        <strong>Trascina e rilascia un'immagine</strong>
-                                        <span class="or">oppure</span>
-                                        <div class="button_browse">Sfoglia Immagine
-                                            <div class="input_file">
-                                                <input type="file" id="upload-photo" name="foto">
+                                <div class="container_gallery">
+                                    <div class="wrapper">
+                                        <div class="image">
+                                            <img id="preview" src="" alt="">
+                                        </div>
+                                        <div class="content">
+                                            <div class="icon">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                            </div>
+                                            <div class="text">
+                                                Nessuna immagine selezionata
                                             </div>
                                         </div>
-                                        <div id="reset-image" class="button_browse">Reset
+                                        <div id="cancel-btn">
+                                            <i class="fas fa-times"></i>
                                         </div>
                                     </div>
-
+                                    <button onclick="defaultBtnActive()" id="custom-btn">Seleziona un'immagine</button>
+                                    <input id="default-btn" type="file" hidden>
                                 </div>
                             </div>
                         </div>
@@ -238,125 +241,35 @@
         }
     }
 </script>
-
 <script>
-    function previewImages() {
-
-        var preview = document.querySelector('#gallery_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
+    const wrapper = document.querySelector(".wrapper");
+    const fileName = document.querySelector(".file-name");
+    const defaultBtn = document.querySelector("#default-btn");
+    const customBtn = document.querySelector("#custom-btn");
+    const cancelBtn = document.querySelector("#cancel-btn i");
+    const img = document.querySelector("#preview");
+    let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+    function defaultBtnActive(){
+        defaultBtn.click();
     }
-
-    document.querySelector('#upload-photo').addEventListener("change", previewImages);
-
-    $('#reset-image').click(function(){
-        $("#upload-photo").val('');
-        $("#gallery_image_container").empty();
+    defaultBtn.addEventListener("change", function(){
+        const file = this.files[0];
+        if(file){
+            const reader = new FileReader();
+            reader.onload = function(){
+                const result = reader.result;
+                img.src = result;
+                wrapper.classList.add("active");
+            }
+            cancelBtn.addEventListener("click", function(){
+                img.src = "";
+                wrapper.classList.remove("active");
+            })
+            reader.readAsDataURL(file);
+        }
     });
 </script>
 
-<script>
-    function previewImages() {
-
-        var preview = document.querySelector('#planimetria_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-planimetria').addEventListener("change", previewImages);
-
-    $('#reset-planimetria').click(function(){
-        $("#upload-planimetria").val('');
-        $("#planimetria_image_container").empty();
-    });
-</script>
-
-<script>
-    function previewImages() {
-
-        var preview = document.querySelector('#video_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-video').addEventListener("change", previewImages);
-
-    $('#reset-video').click(function(){
-        $("#upload-video").val('');
-    });
-</script>
 
 <script>
     document.getElementById("Selector").onchange = changeListener;
