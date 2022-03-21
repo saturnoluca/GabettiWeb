@@ -717,10 +717,10 @@
                                         <a href="index.jsp">Home</a>
                                     </li>
                                     <li class="menu_item">
-                                        <a href="">Lista Immobili</a>
+                                        <a href="${pageContext.request.contextPath}/ServletInvalidateSessionListaAppartamento">Lista Immobili</a>
                                     </li>
                                     <li class="menu_item">
-                                        <a href="valutazione.html">Valutazione Immobile</a>
+                                        <a href="">Valutazione Immobile</a>
                                     </li>
                                     <li class="menu_item">
                                         <a href="">I Nostri Agenti</a>

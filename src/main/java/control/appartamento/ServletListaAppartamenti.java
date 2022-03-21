@@ -21,8 +21,8 @@ public class ServletListaAppartamenti extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String numeroString = request.getParameter("numero");
         int num = 0;
-        int sizeArray=0;
-        String sizeArrayString=null;
+        int sizeArray = 0;
+        String sizeArrayString = null;
         if (numeroString == null) {
             num = 1;
         } else {
@@ -35,14 +35,14 @@ public class ServletListaAppartamenti extends HttpServlet {
         ArrayList<AgenteBean> agenteArray = new ArrayList<AgenteBean>();
         UtenteModelDM utenteModelDM = new UtenteModelDM();
         ArrayList<UtenteBean> utenteArray = new ArrayList<UtenteBean>();
-        ArrayList<CompositeKeyAgenteCase> arrayComp= new ArrayList<CompositeKeyAgenteCase>();
+        ArrayList<CompositeKeyAgenteCase> arrayComp = new ArrayList<CompositeKeyAgenteCase>();
         try {
             appArray = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllAppartamento();
-            sizeArray=(int) Math.ceil((double)appArray.size()/10);
-            sizeArrayString=Integer.toString(sizeArray);
+            sizeArray = (int) Math.ceil((double) appArray.size() / 10);
+            sizeArrayString = Integer.toString(sizeArray);
             agenteArray = (ArrayList<AgenteBean>) agenteModelDM.RetrieveAgente();
             utenteArray = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
-            arrayComp=(ArrayList<CompositeKeyAgenteCase>) agenteModelDM.RetrieveAgenteCase();
+            arrayComp = (ArrayList<CompositeKeyAgenteCase>) agenteModelDM.RetrieveAgenteCase();
         } catch (SQLException e) {
             e.printStackTrace();
         }
