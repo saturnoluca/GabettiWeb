@@ -36,6 +36,7 @@
         response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
         return;
     }
+    ArrayList<String> categorie = (ArrayList<String>) request.getAttribute("categorie");
 %>
 <body>
 <nav id="navbar">
@@ -178,30 +179,14 @@
 									  <span class="text">Qualsiasi</span>
 									</a>
 								  </li>
+                                    <%for(String s : categorie){%>
 								  <li>
 									  <a onclick="cambiaTipo(this)" role="option" href="#">
 										<span class="icon-check check_mark"></span>
-										<span class="text">Appartamento</span>
+										<span class="text"><%=s%></span>
 									  </a>
 								  </li>
-								  <li>
-									<a onclick="cambiaTipo(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">Abitazione economia</span>
-									</a>
-								  </li>
-								  <li>
-									<a onclick="cambiaTipo(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">Mansarda</span>
-									</a>
-								  </li>
-								  <li>
-									<a onclick="cambiaTipo(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">Villetta a schiera</span>
-									</a>
-								  </li>
+                                    <%}%>
 								</ul>
 							  </div>
 							</div>
@@ -288,79 +273,11 @@
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Prezzo minimo</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliMinPrezzo()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_minPrezzo" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="minPrezzo_immobile" id="minPrezzo_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <div id="selezionaMinPrezzo" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaMinPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <input name="minPrezzo_immobile" type="text" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Prezzo massimo</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliMaxPrezzo()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_maxPrezzo" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="maxPrezzo_immobile" id="maxPrezzo_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <div id="selezionaMaxPrezzo" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaMaxPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMaxPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMaxPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <input name="maxPrezzo_immobile" type="text" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Min Posti Auto</label>

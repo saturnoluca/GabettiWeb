@@ -29,4 +29,6 @@ public interface AppartamentoModel<T> {
     public Collection<AppartamentoBean> RetrieveAllAppartamento() throws SQLException;
 
     public int RetrieveByBean(AppartamentoBean bean) throws SQLException;
+
+    public ArrayList<String> RetrieveAllTipoAppartamento() throws SQLException;
 }

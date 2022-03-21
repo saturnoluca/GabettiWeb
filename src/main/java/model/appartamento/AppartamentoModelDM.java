@@ -511,4 +511,29 @@ public class AppartamentoModelDM implements AppartamentoModel {
         return id;
     }
 
+    @Override
+    public ArrayList<String> RetrieveAllTipoAppartamento() throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String selectSQL = "SELECT DISTINCT categoria FROM appartamento";
+        ArrayList<String> allCategorie = new ArrayList<String>();
+        try {
+            conn = dmcp.getConnection();
+            ps = conn.prepareStatement(selectSQL);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                allCategorie.add(rs.getString("categoria"));
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(conn);
+            }
+        }
+        return allCategorie;
+    }
+
 }

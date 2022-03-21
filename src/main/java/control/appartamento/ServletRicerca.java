@@ -57,13 +57,13 @@ public class ServletRicerca extends HttpServlet {
             ricerca.setBagni(bagni);
         }
         String prezzoMin = request.getParameter("minPrezzo_immobile");
-        if (prezzoMin.equals("Qualsiasi")) {
+        if (prezzoMin == null || prezzoMin.equals("")) {
             ricerca.setMinPrezzo(-1);
         } else {
             ricerca.setMinPrezzo(Float.parseFloat(prezzoMin));
         }
         String prezzoMax = request.getParameter("maxPrezzo_immobile");
-        if (prezzoMax.equals("Qualsiasi")) {
+        if (prezzoMax == null || prezzoMax.equals("")) {
             ricerca.setMaxPrezzo(-1);
         } else {
             ricerca.setMaxPrezzo(Float.parseFloat(prezzoMax));

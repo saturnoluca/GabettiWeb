@@ -5,6 +5,8 @@ import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.collaboratore.CollaboratoreBean;
+import model.collaboratore.CollaboratoreModelDM;
 import model.utente.UtenteBean;
 import model.utente.UtenteModelDM;
 
@@ -20,28 +22,40 @@ public class ServletAgentiPage extends HttpServlet {
     private static AgenteModelDM modelAgenti = new AgenteModelDM();
     private static UtenteModelDM modelUtente = new UtenteModelDM();
     private static AppartamentoModelDM modelAppartamento = new AppartamentoModelDM();
+    private static CollaboratoreModelDM modelCollaboratore = new CollaboratoreModelDM();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<UtenteBean> utente = new ArrayList<UtenteBean>();
         ArrayList<CompositeKeyAgenteCase> agentiCase = new ArrayList<CompositeKeyAgenteCase>();
         ArrayList<AppartamentoBean> inEvidenza = new ArrayList<AppartamentoBean>();
+        ArrayList<CollaboratoreBean> collaboratoreBeans = new ArrayList<CollaboratoreBean>();
         try {
             if (request.getSession().getAttribute("NoDbConnection") != null) {
                 modelAgenti = null;
                 modelUtente = null;
                 modelAppartamento = null;
+                modelCollaboratore = null;
+
             }
             agentiCase = (ArrayList<CompositeKeyAgenteCase>) modelAgenti.RetrieveAgenteCase();
             utente = (ArrayList<UtenteBean>) modelUtente.doRetrieveAll();
             inEvidenza = (ArrayList<AppartamentoBean>) modelAppartamento.OrderByVisite();
+            collaboratoreBeans = (ArrayList<CollaboratoreBean>) modelCollaboratore.RetrieveAllCollaboratore();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        request.setAttribute("utenti", utente);
+        ArrayList<UtenteBean> utenti = new ArrayList<UtenteBean>();
+        for(UtenteBean u : utente){
+            if(u.getRuolo().equals("Collaboratore")||u.getRuolo().equals("Agente")){
+                utenti.add(u);
+            }
+        }
+        request.setAttribute("utenti", utenti);
         request.setAttribute("agentiCase", agentiCase);
         request.setAttribute("inEvidenza", inEvidenza);
-        RequestDispatcher rd = request.getRequestDispatcher("/listagenti.jsp");
+        request.setAttribute("collaboratori", collaboratoreBeans);
+        RequestDispatcher rd = request.getRequestDispatcher("/listaagenti.jsp");
         rd.forward(request, response);
     }
 

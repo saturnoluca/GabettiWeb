@@ -22,13 +22,17 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
     public CollaboratoreBean doSave(CollaboratoreBean bean) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        String insertSql = "INSERT INTO collaboratore(Agente_idAgente, Utente_idUtente) VALUES(?, ?)";
+        String insertSql = "INSERT INTO collaboratore(Agente_idAgente, Utente_idUtente, telefonoCellulare, linkFacebook, linkInstagram, descrizionePersonale) VALUES(?, ?, ?, ?, ?, ?)";
         try {
             connection = dmcp.getConnection();
             if (bean instanceof CollaboratoreBean) {
                 ps = connection.prepareStatement(insertSql);
                 ps.setInt(1, bean.getIdAgente());
                 ps.setInt(2, bean.getIdUtente());
+                ps.setString(3, bean.getTelefonoCellulare());
+                ps.setString(4, bean.getLinkFacebook());
+                ps.setString(5, bean.getLinkInstagram());
+                ps.setString(6, bean.getDescrizionePersonale());
                 connection.commit();
                 System.out.println("doSave: " + bean);
             }
@@ -57,6 +61,10 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
             bean.setIdCollaboratore(rs.getInt("idCollaboratore"));
             bean.setIdAgente(rs.getInt("Agente_idAgente"));
             bean.setIdUtente(rs.getInt("Utente_idUtente"));
+            bean.setTelefonoCellulare(rs.getString("telefonoCellulare"));
+            bean.setLinkFacebook(rs.getString("linkFacebook"));
+            bean.setLinkInstagram(rs.getString("linkInstagram"));
+            bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
         } finally {
             try {
                 if (ps != null) {
@@ -84,6 +92,10 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
                 bean.setIdCollaboratore(rs.getInt("idCollaboratore"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
                 bean.setIdUtente(rs.getInt("Utente_idUtente"));
+                bean.setTelefonoCellulare(rs.getString("telefonoCellulare"));
+                bean.setLinkFacebook(rs.getString("linkFacebook"));
+                bean.setLinkInstagram(rs.getString("linkInstagram"));
+                bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
                 collaboratori.add(bean);
             }
         }finally {
@@ -105,6 +117,7 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
         String selectSql = "SELECT * FROM collaboratore";
         ArrayList<CollaboratoreBean> collaboratori = new ArrayList<CollaboratoreBean>();
         try {
+            connection = dmcp.getConnection();
             ps = connection.prepareStatement(selectSql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -112,6 +125,10 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
                 bean.setIdCollaboratore(rs.getInt("idCollaboratore"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
                 bean.setIdUtente(rs.getInt("Utente_idUtente"));
+                bean.setTelefonoCellulare(rs.getString("telefonoCellulare"));
+                bean.setLinkFacebook(rs.getString("linkFacebook"));
+                bean.setLinkInstagram(rs.getString("linkInstagram"));
+                bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
                 collaboratori.add(bean);
             }
         }finally {

@@ -663,7 +663,7 @@
                         <aside class="sidebar">
                             <section class="property_agent">
                                 <a href="" class="agent_image">
-                                    <img src="images/agente.jpg">
+                                    <img src="data:image/png;base64,<%=utenteBean.getFotoString()%>">
                                 </a>
                                 <h3 class="property_agent_title">
                                     Agente <%=utenteBean.getNome() + " " + utenteBean.getCognome()%>

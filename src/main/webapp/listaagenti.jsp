@@ -1,13 +1,13 @@
-<%@ page import="model.appartamento.AppartamentoBean" %>
-<%@ page import="model.agente.AgenteBean" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="model.utente.UtenteBean" %>
-<%@ page import="model.indirizzo.IndirizzoBean" %>
-<%@ page import="model.multimedia.MultimediaBean" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="model.agente.AgenteBean" %>
+<%@ page import="model.appartamento.AppartamentoBean" %>
+<%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
+<%@ page import="model.collaboratore.CollaboratoreBean" %><%--
   Created by IntelliJ IDEA.
   User: Luca
-  Date: 14/03/2022
-  Time: 09:20
+  Date: 21/03/2022
+  Time: 10:37
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -28,58 +28,55 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 
     <!-- Style -->
-    <link rel="stylesheet" href="css/dettagliappartamento.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/listaagenti.css">
     <link rel="stylesheet" href="css/aggiunte.css">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="script/index.js"></script>
+    <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/jquery.sticky.js"></script>
 
-    <script src="script/dettagliappartamento.js"></script>
-
-    <title>Gabetti Nocera | Homepage</title>
-
+    <title>Gabetti Nocera | Agente</title>
 </head>
+
 <%
-    AppartamentoBean appBean = (AppartamentoBean) request.getAttribute("appartamento");
-    if (appBean == null) {
-        response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+    ArrayList<UtenteBean> utenteBeans = (ArrayList<UtenteBean>) request.getAttribute("utenti");
+    if (utenteBeans == null) {
+        response.sendRedirect("ServletAgentiPage");
         return;
     }
-    AgenteBean agenteBean = (AgenteBean) request.getAttribute("agente");
-    UtenteBean utenteBean = (UtenteBean) request.getAttribute("utente");
-    IndirizzoBean indirizzoBean = (IndirizzoBean) request.getAttribute("indirizzo");
-    MultimediaBean multimediaBean = (MultimediaBean) request.getAttribute("multimedia");
-    ArrayList<AppartamentoBean> array = (ArrayList<AppartamentoBean>) request.getAttribute("visite");
-    ArrayList<MultimediaBean> allMulti = (ArrayList<MultimediaBean>) request.getAttribute("allMulti");
+    ArrayList<CompositeKeyAgenteCase> agenteBeans = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("agentiCase");
+    ArrayList<AppartamentoBean> appartamentoBeans = (ArrayList<AppartamentoBean>) request.getAttribute("inEvidenza");
+    ArrayList<CollaboratoreBean> collaboratoreBeans = (ArrayList<CollaboratoreBean>) request.getAttribute("collaboratori");
 %>
-
 <body>
-<nav id="navbar" class="noPrint">
+<nav id="navbar">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">
     </a>
     <input type="checkbox" id="click">
-    <label for="click" class="menu-btn noPrint">
-        <i class="icon-bars noPrint"></i>
+    <label for="click" class="menu-btn">
+        <i class="icon-bars"></i>
     </label>
     <ul>
         <li><a href="index.jsp">Home</a></li>
         <li><a href="#">Lista Immobili</a></li>
-        <li><a class="active" href="valutazione.html">Valutazione Immobile</a></li>
-        <li><a href="listaagenti.html">I Nostri Agenti</a></li>
-        <li><a  href="contact.html">Contattaci</a></li>
+        <li><a href="valutazione.html">Valutazione Immobile</a></li>
+        <li><a class="active" href="listaagenti.html">I Nostri Agenti</a></li>
+        <li><a href="contact.html">Contattaci</a></li>
     </ul>
 </nav>
 <div class="content">
-    <section class="banner noPrint" style="background-image: url(images/banner.jpg); background-position: center 0%;">
-        <div class="banner_cover noPrint"></div>
-        <div class="banner_wrap noPrint">
-            <h1 class="banner_title noPrint"><%=appBean.getNomeAppartamento()%>
-            </h1>
+    <section class="banner" style="background-image: url(images/banner.jpg); background-position: center 0%;">
+        <div class="banner_cover"></div>
+        <div class="banner_wrap">
+            <h1 class="banner_title">I nostri agenti</h1>
         </div>
     </section>
-    <div class="div_search div_search_init noPrint">
-        <form class="search_form search_form_header advance_search_form noPrint" action="ServletRicerca" method="post">
+    <div class="div_search div_search_init">
+        <form class="search_form search_form_header advance_search_form">
             <div class="search_fields">
                 <div class="search_wrap search_data">
                     <div class="top_fields">
@@ -93,7 +90,8 @@
 									<div id="valore_localita" class="filter-option-text">
 									  Qualsiasi
 									</div>
-									  <input type="hidden" name="localita_immobile"id="localita_immobile" value="Qualsiasi">
+									  <input type="hidden" name="localita_immobile" id="localita_immobile"
+                                             value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -173,10 +171,10 @@
 							  <button type="button" onclick="apriScegliStato()" class="btn dropdown-toggle">
 								<div class="filter-option">
 								  <div class="filter-option-inner">
-									<div  id="valore_stato" class="filter-option-text">
+									<div id="valore_stato" class="filter-option-text">
 									  Qualsiasi
 									</div>
-									<input type="hidden" name="stato_immobile"id="stato_immobile" value="Qualsiasi">
+									<input type="hidden" name="stato_immobile" id="stato_immobile" value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -212,10 +210,10 @@
 							  <button type="button" onclick="apriScegliTipo()" class="btn dropdown-toggle">
 								<div class="filter-option">
 								  <div class="filter-option-inner">
-									<div  id="valore_tipo" class="filter-option-text">
+									<div id="valore_tipo" class="filter-option-text">
 									  Qualsiasi
 									</div>
-									<input type="hidden" name="tipo_immobile"id="tipo_immobile" value="Qualsiasi">
+									<input type="hidden" name="tipo_immobile" id="tipo_immobile" value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -257,7 +255,7 @@
 						  </span>
                         </div>
                     </div>
-                    <div id="advanced_option_div"class="form_collapsed_field_wrapper" style="display: none;">
+                    <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
                         <div class="collapsed_field_container search_advanced_fields">
                             <div class="search_option search_select search_beds">
                                 <label>Min camere da letto</label>
@@ -265,10 +263,11 @@
                                     <button type="button" onclick="apriScegliMinCamere()" class="btn dropdown-toggle">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
-                                                <div id="valore_minCamere"class="filter-option-text">
+                                                <div id="valore_minCamere" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="camere_immobile"id="camere_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="camere_immobile" id="camere_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -302,10 +301,11 @@
                                     <button type="button" onclick="apriScegliMinBagni()" class="btn dropdown-toggle">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
-                                                <div id="valore_minBagni"class="filter-option-text">
+                                                <div id="valore_minBagni" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="bagni_immobile"id="bagni_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="bagni_immobile" id="bagni_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -342,7 +342,8 @@
                                                 <div id="valore_minPrezzo" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="minPrezzo_immobile"id="minPrezzo_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="minPrezzo_immobile" id="minPrezzo_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -379,7 +380,8 @@
                                                 <div id="valore_maxPrezzo" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="maxPrezzo_immobile"id="maxPrezzo_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="maxPrezzo_immobile" id="maxPrezzo_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -416,7 +418,8 @@
                                                 <div id="valore_minAuto" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="auto_immobile"id="auto_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="auto_immobile" id="auto_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -453,7 +456,8 @@
                                                 <div id="valore_agente" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="agente_immobile"id="agente_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="agente_immobile" id="agente_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -493,16 +497,17 @@
                     </div>
                 </div>
             </div>
-            <div class="search_button noPrint">
-                <div class="search_buttonwrap noPrint">
-                    <div class="search_advance noPrint">
-                        <button type="button" onclick="advancedOption()" id="advanced_options"class="search_advance_button noPrint">
-                            <i class="icon-search-plus noPrint"></i>
+            <div class="search_button">
+                <div class="search_buttonwrap">
+                    <div class="search_advance">
+                        <button type="button" onclick="advancedOption()" id="advanced_options"
+                                class="search_advance_button">
+                            <i class="icon-search-plus"></i>
                         </button>
                     </div>
-                    <div class="search_buttonSubmit noPrint">
-                        <button class="submit button_search noPrint">
-                            <i class="icon-search noPrint"></i>
+                    <div class="search_buttonSubmit">
+                        <button class="submit button_search">
+                            <i class="icon-search"></i>
                             <span>Cerca</span>
                         </button>
                     </div>
@@ -510,310 +515,188 @@
             </div>
         </form>
     </div>
-    <section class="section_details_property">
-        <div class="page_fullWidth">
-            <div class="property_head">
-                <div class="property_title">
-                    <h1 class="title"><%=appBean.getNomeAppartamento()%>
-                    </h1>
-                    <p class="address"><%=indirizzoBean.toString()%>
-                    </p>
-                </div>
-                <div class="property_price">
-                    <p class="status"><%=appBean.getTipoVendita()%>
-                    </p>
-                    <p class="price">€<%=appBean.getPrezzo()    %>
-                    </p>
-                </div>
-            </div>
-            <div class="property">
-                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="First slide">
-                        </div>
-                        <%for(int i=1;i<multimediaBean.getFotoString().size() && i<=2;i++){%>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="data:image/png;base64,<%=multimediaBean.getFotoString().get(i)%>">
-                        </div>
-                        <%}%>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-
-                <div class="property_wrap">
-                    <div class="property_main">
-                        <div class="property_content">
-                            <div class="property_content_head">
-                                <div class="property_name">
-                                    <p class="name">Nome: </p>
-                                    <p class="id"><%=appBean.getNomeAppartamento()%>
-                                    </p>
-                                </div>
-                                <div class="property_functions">
-                                    <a href="">
-                                        <i class="icon-share"></i>
-                                    </a>
-                                    <button type="button" onclick="window.print();">
-                                        <i class="icon-print"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="property_features_wrap">
-                                <div class="property_feature">
-                                    <span class="feature_title">Camere</span>
-                                    <div class="feature_content">
-                                        <i class="icon-bed"></i>
-                                        <span class="text"><%=appBean.getCamereLetto()%></span>
-                                    </div>
-                                </div>
-                                <div class="property_feature">
-                                    <span class="feature_title">Bagni</span>
-                                    <div class="feature_content">
-                                        <i class="icon-shower"></i>
-                                        <span class="text"><%=appBean.getBagni()%></span>
-                                    </div>
-                                </div>
-                                <div class="property_feature">
-                                    <span class="feature_title">Garage</span>
-                                    <div class="feature_content">
-                                        <i class="icon-car"></i>
-                                        <span class="text"><%=appBean.getPostoAuto()%></span>
-                                    </div>
-                                </div>
-                                <div class="property_feature">
-                                    <span class="feature_title">Anno di costruzione</span>
-                                    <div class="feature_content">
-                                        <i class="icon-calendar"></i>
-                                        <span class="text">2013</span>
-                                    </div>
-                                </div>
-                                <div class="property_feature">
-                                    <span class="feature_title">Superficie</span>
-                                    <div class="feature_content">
-                                        <i class="icon-square-o"></i>
-                                        <span class="text"><%=appBean.getSuperficie()%></span>
-                                        <span class="text">mq</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <h4 class="property_heading_h4">Descrizione</h4>
-                            <div class="description_content">
-                                <p><%=appBean.getDescrizioneAppartamento()%>
-                                </p>
-                            </div>
-                            <h4 class="property_heading_h4">Dettagli addizionali</h4>
-                            <ul class="property_additional">
-                                <li>
-                                    <span class="valore">Piano: </span>
-                                    <span class="value"><%=appBean.getPiano()%></span>
-                                </li>
-                                <li>
-                                    <span class="valore">Classe Energetica: </span>
-                                    <span class="value"><%=appBean.getClasseEnergetica()%></span>
-                                </li>
-                                <li>
-                                    <span class="valore">Riscaldamento: </span>
-                                    <span class="value"><%=appBean.getRiscaldamento()%></span>
-                                </li>
-                            </ul>
-                            <div class="property_floor_plans">
-                                <h4 class="property_heading_h4">Planimetria</h4>
-                                <div class="floor_plans_accordions">
-                                    <div class="floor_plan">
-                                        <div class="floor_plan_title" onclick="show()">
-                                            <div class="floor_title">
-                                                <i class="icon-plus"></i>
-                                                <h3>Piano principale</h3>
-                                            </div>
-                                        </div>
-                                        <div id="floor" class="floor_plan_content" style="display: block;">
-                                            <div>
-                                                <a href="">
-                                                    <img src="data:image/png;base64,<%=multimediaBean.getPlanimetriaString().get(0)%>">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="property_video">
-                                <h4 class="property_heading_h4">Video</h4>
-                                <video controls>
-                                    <source type="video/mp4"
-                                            src="data:video/mp4;base64,<%=multimediaBean.getVideoString().get(0)%>">
-                                </video>
-                            </div>
-                            <div class="property_map">
-                                <input type="hidden" name="indirizzoAppartamento" value="<%=indirizzoBean.getCitta()+", "+indirizzoBean.getProvincia()+", "+ indirizzoBean.getNumeroCivico()%>">
-                                <h4 class="property_heading_h4">Mappa</h4>
-                                <iframe allowfullscreen frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCghlu8qhmsmptec4eSidg5APpA57lCPlU&q=<%=indirizzoBean.getVia()+"+"+indirizzoBean.getProvincia()+"+"+indirizzoBean.getNumeroCivico()%>&zoom=17" width="100%" height="450"></iframe>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="property_sidebar">
-                        <aside class="sidebar">
-                            <section class="property_agent">
-                                <a href="" class="agent_image">
-                                    <img src="data:image/png;base64,<%=utenteBean.getFotoString()%>">
+    <section class="agents_section agents_section_flex agents_section_padding">
+        <div class="page page_agents page_main">
+            <div class="agents_listing">
+                <%for (UtenteBean u : utenteBeans) {%>
+                <article class="agent_card">
+                    <div class="agent_card_wrap">
+                        <div class="agent_card_head">
+                            <figure class="agent_card_figure">
+                                <a href="">
+                                    <img width="210" height="210" src="data:image/png;base64,<%=u.getFotoString()%>">
                                 </a>
-                                <h3 class="property_agent_title">
-                                    Agente <%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
-                                </h3>
-                                <div class=property_agent_info>
-                                    <p class="contact">
-                                        <span>Cellulare:&nbsp;</span>
-                                        <a href=""><%=agenteBean.getTelefonoCellulare()%>
-                                        </a>
-                                    </p>
-                                    <p class="contact">
-                                        <span>Whatsapp:&nbsp;</span>
-                                        <a href="https://wa.me/39<%=agenteBean.getTelefonoCellulare()%>"></a>
-                                    </p>
-                                    <p class="contact">
-                                        <span>Email:&nbsp;</span>
-                                        <a href=""><%=utenteBean.getEmail()%>
-                                        </a>
-                                    </p>
-                                </div>
-                                <a class="agent_property_listing" href="">Visualizza i miei immobili</a>
-                                <div class="agent_property_contact_form">
-                                    <form class="contact_form">
-                                        <input type="hidden" name="action" value="agente">
-                                        <input type="hidden" name="agenteid" value="<%=agenteBean.getIdAgente()%>">
-                                        <p class="contact_form_row">
-                                            <label>Nome e cognome</label>
-                                            <input type="text" placeholder="Inserisci il tuo nome e cognome"
-                                                   name="nomeGuest">
-                                        </p>
-                                        <p class="contact_form_row">
-                                            <label>Email</label>
-                                            <input type="email" placeholder="Inserisci la tua email" name="emailGuest">
-                                        </p>
-                                        <p class="contact_form_row">
-                                            <label>Telefono</label>
-                                            <input type="text" placeholder="Inserisci il tuo numero di telefono"
-                                                   name="telefonoGuest">
-                                        </p>
-                                        <p class="contact_form_row">
-                                            <label>Messaggio</label>
-                                            <textarea cols="40" rows="6"
-                                                      placeholder="Ciao vorrei maggiori informazioni su questo immobile"
-                                                      name="messaggioGuest"></textarea>
-                                        </p>
-                                        <div class="privacy_agreement">
-                                            <span class="privacy_checkboxLabel">Consenso sulla privacy</span>
-                                            <input type="checkbox">
-                                            <label>I consent to having this website store my submitted information so they
-                                                can respond to my inquiry.</label>
-                                        </div>
-                                        <div class="agent_call">
-                                            <a href="https://wa.me/393662545295" class="agent_link">
-                                                <i class="icon-whatsapp"></i>
-                                                <span>Whatsapp</span>
-                                            </a>
-                                            <a href="" class="agent_link">
-                                                <i class="icon-phone"></i>
-                                                <span>Chiama ora</span>
-                                            </a>
-                                        </div>
-                                        <div class="agent_message">
-                                            <a href="" class="agent_link">
-                                                <i class="icon-mail_outline"></i>
-                                                <span>Invia messaggio</span>
-                                            </a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </section>
-                            <section class="widget">
-                                <h3 class="title">Immobile in evidenza</h3>
-                                <%
-                                    int i = 0;
-                                    for (AppartamentoBean appartamentoBean : array) {
-                                        if (appartamentoBean.getIdAgente() == agenteBean.getIdAgente()) {
-                                            i++;%>
-                                <article class="featured_card featured_card_block">
-                                    <div class="featured_card_wrap">
-                                        <figure class="featured_card_figure">
-                                            <div class="featured_card_picture">
-                                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
-                                                    <%
-                                                        int p = 0;
-                                                        for (MultimediaBean multimediaBean1 : allMulti) {
-                                                            if (multimediaBean1.getIdAppartamento() == appartamentoBean.getIdAppartamento()) {
-                                                                i++;
-                                                    %><img width="680" height="510" src="data:image/png;base64,<%=multimediaBean1.getFotoString().get(0)%>"><%
-                                                        }
-                                                        if(p!=0) break;
+                            </figure>
+                            <div class="agent_card_name">
+                                <h4 class="name">
+                                    <a href=""><%=u.getNome() + " " + u.getCognome()%>
+                                    </a>
+                                </h4>
+                                <%if (u.getRuolo().equals("Collaboratore")) {%>
+                                <h4 class="name">
+                                    Collaboratore associato all'agente:<a href=""><%
+                                    for (CollaboratoreBean c : collaboratoreBeans) {
+                                        for (CompositeKeyAgenteCase agenteCase : agenteBeans) {
+                                            if (c.getIdAgente() == agenteCase.getBean().getIdAgente()) {
+                                                for (UtenteBean utente : utenteBeans) {
+                                                    if (utente.getIdUtente() == agenteCase.getBean().getIdUtente()) {
+                                %><%=utente.getNome() + " " + utente.getCognome()%><%
                                                     }
-                                                %>
-                                                </a>
-                                            </div>
-                                        </figure>
-                                        <div class="featured_card_details">
-                                            <h3>
-                                                <a href=""><%=appartamentoBean.getNomeAppartamento()%></a>
-                                            </h3>
-                                            <p class="featured_card_description"><%if (appartamentoBean.getDescrizioneAppartamento().length() > 30) {
-                                            %><%=appartamentoBean.getDescrizioneAppartamento().substring(0, 30) + ".."%><%
-                                            } else {
-                                            %><%=appartamentoBean.getDescrizioneAppartamento()%><%
-                                                }%> </p>
-                                            <div class="featured_card_features_wrap">
-                                                <div class="featured_card_feature">
-                                                    <span class="features_title">Camere da letto</span>
-                                                    <div>
-                                                        <i class="feature_icon icon-bed"></i>
-                                                        <span class="text_feature"><%=appartamentoBean.getCamereLetto()%></span>
-                                                    </div>
-                                                </div>
-                                                <div class="featured_card_feature">
-                                                    <span class="features_title">Bagni</span>
-                                                    <div>
-                                                        <i class="feature_icon icon-shower"></i>
-                                                        <span class="text_feature"><%=appartamentoBean.getBagni()%></span>
-                                                    </div>
-                                                </div>
-                                                <div class="featured_card_feature">
-                                                    <span class="features_title">Superficie</span>
-                                                    <div>
-                                                        <i class="feature_icon icon-crop_square"></i>
-                                                        <span class="text_feature"><%=appartamentoBean.getSuperficie()%></span>
-                                                        <span class="text_add">mq</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="featured_card_priceLabel">
-                                                <div class="featured_card_price">
-                                                    <span class="status"><%=appartamentoBean.getTipoVendita()%></span>
-                                                    <p class="price">€<%=appartamentoBean.getPrezzo()%></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </article>
-                                <%
+                                                }
+                                            }
                                         }
-                                        if (i != 0) {
-                                            break;
+                                    }%></a>
+                                </h4>
+                                <%}%>
+                            </div>
+                            <div class="agent_card_listings">
+                                <p class="head">Proprietà possedute</p>
+                                <%if (u.getRuolo().equals("Agente")) {%>
+                                <p class="count"><%
+                                    for (CompositeKeyAgenteCase ag : agenteBeans) {
+                                        if (u.getIdUtente() == ag.getBean().getIdUtente()) {
+                                %><%=ag.getContaCase()%><%
+                                        }
+                                    }%></p>
+                                <%} else {%>
+                                <p class="count"><%
+                                    for (CollaboratoreBean c : collaboratoreBeans) {
+                                        if (u.getIdUtente() == c.getIdUtente()) {
+                                            for(CompositeKeyAgenteCase ag : agenteBeans){
+                                                if(ag.getBean().getIdAgente()==c.getIdAgente()){
+                                                     %>
+                                        <%=ag.getContaCase()%>
+                                        <%
+                                                }
+                                            }
+                                        }
+                                    }%>
+                                        <%}%>
+                            </div>
+                        </div>
+                        <div class="agent_card_details">
+                            <p>
+                                <%
+                                    if (u.getRuolo().equals("Agente")) {
+                                        for (CompositeKeyAgenteCase ag : agenteBeans) {
+                                            if (u.getIdUtente() == ag.getBean().getIdUtente()) {
+                                %><%=ag.getBean().getDescrizionePersonale()%><%
+                                    }
+                                }
+                            } else {
+                            %><%
+                                for (CollaboratoreBean c : collaboratoreBeans) {
+                                    if (u.getIdUtente() == c.getIdUtente()) {
+                            %><%=c.getDescrizionePersonale()%><%
+                                    }
+                                }%><%
+                                }%>
+                            </p>
+                            <div class="agent_card_contact">
+                                <div class="agent_card_contact_wrap">
+                                    <%
+                                        if (u.getRuolo().equals("Agente")) {
+                                            for (CompositeKeyAgenteCase ag : agenteBeans) {
+                                                if (ag.getBean().getIdUtente() == u.getIdUtente()) {
+                                    %> <p class="contact">Cellulare: <a href=""><%=ag.getBean().getTelefonoCellulare()%>
+                                </a></p>
+                                    <a href="https://wa.me/39<%=ag.getBean().getTelefonoCellulare()%>"><p
+                                            class="contact">Whatsapp</p></a>
+                                    <p class="contact">Email: <a href=""><%=u.getEmail()%>
+                                    </a></p><%
                                         }
                                     }
                                 %>
-                            </section>
-                        </aside>
+                                    <%}%>
+                                </div>
+                                <%
+                                    if (u.getRuolo().equals("Agente")) {
+                                        for (CompositeKeyAgenteCase ag : agenteBeans) {
+                                            if (ag.getBean().getIdUtente() == u.getIdUtente()) {
+                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=ag.getBean().getIdAgente()%>"
+                                    class="agent_card_link">
+                                <span>Visualizza le mie proprietà</span>
+                                <i class="icon-angle-right"></i>
+                            </a><%
+                                    }
+                                }
+                            } else {
+                                for (CollaboratoreBean c : collaboratoreBeans) {
+                                    if (c.getIdUtente() == u.getIdUtente()) {
+                                        for (CompositeKeyAgenteCase ag : agenteBeans) {
+                                            if (ag.getBean().getIdAgente() == c.getIdAgente()) {
+                            %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=ag.getBean().getIdAgente()%>"
+                                 class="agent_card_link">
+                                <span>Visualizza le mie proprietà</span>
+                                <i class="icon-angle-right"></i>
+                            </a><%
+                                                }
+                                            }
+                                        }
+                                    }
+                                }%>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </article>
+                <%}%>
             </div>
+        </div>
+        <div class="page_right page_sidebar">
+            <aside class="featured_sidebar">
+                <section class="widget">
+                    <h3 class="title">Proprietà in evidenza</h3>
+                    <article class="featured_card featured_card_block">
+                        <div class="featured_card_wrap">
+                            <figure class="featured_card_figure">
+                                <div class="featured_card_picture">
+                                    <a href="">
+                                        <img width="680" height="510" src="images/prova.jpg">
+                                    </a>
+                                </div>
+                            </figure>
+                            <div class="featured_card_details">
+                                <h3>
+                                    <a href=""> Villa on Grand Avenue</a>
+                                </h3>
+                                <p class="featured_card_description">Spacious and fabulous home in a prime location.
+                                    This executive…</p>
+                                <div class="featured_card_features_wrap">
+                                    <div class="featured_card_feature">
+                                        <span class="features_title">Camere da letto</span>
+                                        <div>
+                                            <i class="feature_icon icon-bed"></i>
+                                            <span class="text">3</span>
+                                        </div>
+                                    </div>
+                                    <div class="featured_card_feature">
+                                        <span class="features_title">Bagni</span>
+                                        <div>
+                                            <i class="feature_icon icon-shower"></i>
+                                            <span class="text">3</span>
+                                        </div>
+                                    </div>
+                                    <div class="featured_card_feature">
+                                        <span class="features_title">Superficie</span>
+                                        <div>
+                                            <i class="feature_icon icon-crop_square"></i>
+                                            <span class="text">500</span>
+                                            <span class=>mq</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="featured_card_priceLabel">
+                                    <div class="featured_card_price">
+                                        <span class="status">For Sale</span>
+                                        <p class="price">€800,000</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </article>
+                </section>
+            </aside>
         </div>
     </section>
     <div class="footer_wrapper">
@@ -895,68 +778,5 @@
     </div>
 </div>
 
-
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDjdvGlwSrEXd5rBJNTvPCtmACuc29-HiU"></script>
-<script src="script/index.js"></script>
-
-<script src="bootstrap/js/jquery-3.3.1.min.js"></script>
-<script src="bootstrap/js/popper.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="bootstrap/js/jquery.sticky.js"></script>
-<script>
-    var geocoder;
-    var map;
-    var address = $('#indirizzoAppartamento').val();
-
-    function initialize() {
-        geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(-34.397, 150.644);
-        var myOptions = {
-            zoom: 8,
-            center: latlng,
-            mapTypeControl: true,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-            },
-            navigationControl: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-        if (geocoder) {
-            geocoder.geocode({
-                'address': address
-            }, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-                        map.setCenter(results[0].geometry.location);
-
-                        var infowindow = new google.maps.InfoWindow({
-                            content: '<b>' + address + '</b>',
-                            size: new google.maps.Size(150, 50)
-                        });
-
-                        var marker = new google.maps.Marker({
-                            position: results[0].geometry.location,
-                            map: map,
-                            title: address
-                        });
-                        google.maps.event.addListener(marker, 'click', function() {
-                            infowindow.open(map, marker);
-                        });
-
-                    } else {
-                        alert("No results found");
-                    }
-                } else {
-                    alert("Geocode was not successful for the following reason: " + status);
-                }
-            });
-        }
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-
-
 </body>
 </html>
-

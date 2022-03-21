@@ -1,6 +1,8 @@
 package control.appartamento;
 
 import UtilityClass.Città;
+import model.appartamento.AppartamentoModel;
+import model.appartamento.AppartamentoModelDM;
 import model.indirizzo.IndirizzoModelDM;
 
 import javax.servlet.*;
@@ -16,13 +18,17 @@ public class ServletValutazioneCampiRicerca extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<String> allCittà = new ArrayList<String>();
         IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
+        AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
         ArrayList<Città> allCittàZone = new ArrayList<Città>();
+        ArrayList<String> categorie = new ArrayList<String>();
         try {
-            allCittà=indirizzoModelDM.RetrieveAllCittà();
-            allCittàZone=indirizzoModelDM.RetrieveAllCittàZone(allCittà);
+            allCittà = indirizzoModelDM.RetrieveAllCittà();
+            allCittàZone = indirizzoModelDM.RetrieveAllCittàZone(allCittà);
+            categorie = appartamentoModelDM.RetrieveAllTipoAppartamento();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        request.setAttribute("categorie", categorie);
         request.setAttribute("allCittaZone", allCittàZone);
         RequestDispatcher rd = request.getRequestDispatcher("/valutazione.jsp");
         rd.forward(request, response);
