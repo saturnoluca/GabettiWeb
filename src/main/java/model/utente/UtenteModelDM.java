@@ -203,10 +203,10 @@ public class UtenteModelDM implements UtenteModel {
     public UtenteBean RetrieveByEmail(String email) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
-        conn = dmcp.getConnection();
         String selectSql = "SELECT * FROM utente where email=?";
         UtenteBean bean = new UtenteBean();
         try {
+            conn = dmcp.getConnection();
             ps = conn.prepareStatement(selectSql);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
@@ -238,6 +238,6 @@ public class UtenteModelDM implements UtenteModel {
 
     @Override
     public UtenteBean RetrieveNomeCognome(String nome, String cognome) {
-        return null;
+                return null;
     }
 }

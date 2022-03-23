@@ -1,22 +1,22 @@
 import UtilityClass.Ricerca;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.utente.UtenteBean;
+import model.utente.UtenteModelDM;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args){
-        AppartamentoBean bean = new AppartamentoBean();
-        AppartamentoModelDM model = new AppartamentoModelDM();
-        ArrayList<AppartamentoBean> array = new ArrayList<AppartamentoBean>();
-        Ricerca ricerca = new Ricerca();
-        ricerca.setCittà("Sarno");
+        UtenteBean u = new UtenteBean();
+        UtenteModelDM utenteModelDM = new UtenteModelDM();
         try{
-            array=model.barraRicerca(ricerca);
+            u= utenteModelDM.RetrieveByEmail("bobaggiustatutto@gmail.com");
         }catch (SQLException e){
             e.printStackTrace();
         }
-        System.out.println(array.get(0).toString());
+        System.out.println(u.getEmail()+" "+u.getIdUtente());
+
     }
 }

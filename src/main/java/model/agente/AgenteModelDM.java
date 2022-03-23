@@ -38,8 +38,9 @@ public class AgenteModelDM implements AgenteModel {
                 ps.setString(6, agent.getTelefonoCellulare());
                 ps.setString(7, agent.getDescrizionePersonale());
                 ps.setInt(8, agent.getIdUtente());
+                ps.executeUpdate();
                 connection.commit();
-                System.out.println("doSave: " + agent);
+                System.out.println("doSave: " + ps.toString());
             }
         } finally {
             try {

@@ -111,7 +111,7 @@
             </div>
         </div>
         <div class="addUser_page_content">
-            <form method="post" action="ServletAggiungiUtente" class="form_addUser">
+            <form method="post" action="ServletAggiungiUtente" class="form_addUser" enctype="multipart/form-data">
                 <div class="addUser_tab">
                     <h3 class="tab_title">Informazioni generali</h3>
                 </div>
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Email*</label>
-                                    <input type="text" required placeholder="Inserisci l'email" name="cognome">
+                                    <input type="text" required placeholder="Inserisci l'email" name="email">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Username</label>
@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="content_fields_column half_size" id="div_agente" style="display: none;">
                                     <label class="label_user_title">Collaborazione agente</label>
-                                    <select required name="agente">
+                                    <select name="agente">
                                         <option value="" selected disabled>Seleziona collaborazione agente</option>
                                         <%
                                             for (UtenteBean bean : array) {
@@ -160,7 +160,7 @@
                                         <option value="<%=bean.getIdUtente()%>"><%=bean.getNome()+" "+bean.getCognome()%></option>
                                         <%
                                                 }
-                                            }
+                                               }
                                         %>
                                     </select>
                                 </div>
@@ -169,7 +169,7 @@
                                 <h3 class="tab_title" style="margin-bottom:50px;">Informazioni Agente</h3>
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Descrizione*</label>
-                                    <textarea rows="10" required placeholder="Scrivi una descrizione"
+                                    <textarea rows="10" placeholder="Scrivi una descrizione"
                                               name="descrizione"></textarea>
                                 </div>
                                 <div class="content_fields_column half_size">
@@ -208,7 +208,6 @@
                         </div>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
