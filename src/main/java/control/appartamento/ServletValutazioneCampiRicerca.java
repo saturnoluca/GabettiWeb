@@ -28,9 +28,9 @@ public class ServletValutazioneCampiRicerca extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        request.setAttribute("categorie", categorie);
-        request.setAttribute("allCittaZone", allCittàZone);
-        RequestDispatcher rd = request.getRequestDispatcher("/valutazione.jsp");
+        request.getSession().setAttribute("categorie", categorie);
+        request.getSession().setAttribute("allCittaZone", allCittàZone);
+        RequestDispatcher rd = request.getRequestDispatcher("/"+request.getSession().getAttribute("nomepagina"));
         rd.forward(request, response);
     }
 }

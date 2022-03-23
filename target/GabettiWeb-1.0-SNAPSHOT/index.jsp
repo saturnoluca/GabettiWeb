@@ -13,9 +13,17 @@
 <%@ page import="model.indirizzo.IndirizzoBean" %>
 <%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
 <%@ page import="model.multimedia.MultimediaBean" %>
+<%@ page import="UtilityClass.Città" %>
 <html lang="it">
 
 <%
+    ArrayList<Città> allCittàZone = (ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
+    if (allCittàZone == null) {
+        session.setAttribute("nomepagina", "index.jsp");
+        response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
+        return;
+    }
+    ArrayList<String> categorie = (ArrayList<String>) request.getSession().getAttribute("categorie");
     ArrayList<AppartamentoBean> appartamenti = (ArrayList<AppartamentoBean>) request.getAttribute("appartamenti");
     if (appartamenti == null) {
         response.sendRedirect(response.encodeRedirectURL("IndexServlet"));
@@ -109,185 +117,137 @@
 
     </header>
     <div class="div_search div_search_init">
-        <form class="search_form search_form_header advance_search_form">
+        <form class="search_form search_form_header advance_search_form" action="ServletRicerca" method="post">
             <div class="search_fields">
                 <div class="search_wrap search_data">
                     <div class="top_fields">
                         <div class="search_select search_option">
                             <label>Località</label>
                             <span class="search_selectwrap">
-                    <div class="bootstrap-select picker trigger" style="width: 100%;">
-                      <button type="button" onclick="apriScegliLocalita()" class="btn dropdown-toggle">
-                        <div class="filter-option">
-                          <div class="filter-option-inner">
-                            <div id="valore_localita" class="filter-option-text">
-                              Qualsiasi località
-                            </div>
-                              <input type="hidden" name="localita_immobile"id="localita_immobile">
-                          </div>
-                        </div>
-                      </button>
-                      <div id="selezionaLocalita" class="dropdown-content wrap_content">
-                        <ul class="ul_inner">
-                          <li>
-                            <a onclick="cambiaLocalita(this)" role="option" href="#">
-                              <span class="icon-check check_mark"></span>
-                              <span class="text">Qualsiasi località</span>
-                            </a>
-                        </li>
-                          <li>
-                              <a onclick="cambiaLocalita(this)" role="option" href="#">
-                                <span class="icon-check check_mark"></span>
-                                <span class="text">Sarno</span>
-                              </a>
-                          </li>
-                          <li>
-                            <ul class="ul_inner">
-                              <li>
-                                <a onclick="cambiaLocalita(this)" role="option" href="#">
-                                  <span class="icon-check check_mark"></span>
-                                  <span class="sublist text">Episcopio</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a onclick="cambiaLocalita(this)" role="option" href="#">
-                                  <span class="icon-check check_mark"></span>
-                                  <span class="sublist text">Lavorate</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a onclick="cambiaLocalita(this)" role="option" href="#">
-                                  <span class="icon-check check_mark"></span>
-                                  <span class="sublist text">Foce</span>
-                                </a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li>
-                            <a onclick="cambiaLocalita(this)" onclick="cambia(this)" role="option" href="#">
-                              <span class="icon-check check_mark"></span>
-                              <span class="text">Sarno</span>
-                            </a>
-                          </li>
-                          <li>
-                            <ul class="ul_inner">
-                              <li>
-                                <a onclick="cambiaLocalita(this)" role="option" href="#">
-                                  <span class="icon-check check_mark"></span>
-                                  <span class="sublist text">Episcopio</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a onclick="cambiaLocalita(this)" role="option" href="#">
-                                  <span class="icon-check check_mark"></span>
-                                  <span class="sublist text">Lavorate</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a onclick="cambiaLocalita(this)" role="option" href="#">
-                                  <span class="icon-check check_mark"></span>
-                                  <span class="sublist text">Foce</span>
-                                </a>
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </span>
+							<div class="bootstrap-select picker trigger" style="width: 100%;">
+							  <button type="button" onclick="apriScegliLocalita()" class="btn dropdown-toggle">
+								<div class="filter-option">
+								  <div class="filter-option-inner">
+									<div id="valore_localita" class="filter-option-text">
+									  Qualsiasi
+									</div>
+									  <input type="hidden" name="localita_immobile" id="localita_immobile"
+                                             value="Qualsiasi">
+								  </div>
+								</div>
+							  </button>
+							  <div id="selezionaLocalita" class="dropdown-content wrap_content">
+								<ul class="ul_inner">
+								  <li>
+									<a onclick="cambiaLocalita(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">Qualsiasi</span>
+									</a>
+								</li>
+                                    <%for (Città c : allCittàZone) {%>
+								  <li>
+									  <a onclick="cambiaLocalita(this)" role="option" href="#">
+										<span class="icon-check check_mark"></span>
+										<span class="text"><%=c.getNomeCittà()%></span>
+									  </a>
+								  </li>
+                                    <%for (String z : c.getZone()) {%>
+								  <li>
+									<ul class="ul_inner">
+									  <li>
+										<a onclick="cambiaLocalita(this)" role="option" href="#">
+										  <span class="icon-check check_mark"></span>
+										  <span class="sublist text"><%=z%></span>
+										</a>
+									  </li>
+
+                                        <%
+                                                }
+                                            }
+                                        %>
+									</ul>
+								  </li>
+								</ul>
+							  </div>
+							</div>
+						  </span>
                         </div>
                         <div class="search_select search_option">
                             <label>Stato Immobile</label>
                             <span class="search_selectwrap">
-                    <div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-                      <button type="button" onclick="apriScegliStato()" class="btn dropdown-toggle">
-                        <div class="filter-option">
-                          <div class="filter-option-inner">
-                            <div  id="valore_stato" class="filter-option-text">
-                              Qualsiasi
-                            </div>
-                            <input type="hidden" name="stato_immobile"id="stato_immobile">
-                          </div>
-                        </div>
-                      </button>
-                      <div id="selezionaStato" class="dropdown-content">
-                        <ul class="ul_inner">
-                          <li>
-                            <a onclick="cambiaStato(this)" role="option" href="#">
-                              <span class="icon-check check_mark"></span>
-                              <span class="text">Qualsiasi</span>
-                            </a>
-                        </li>
-                          <li>
-                              <a onclick="cambiaStato(this)" role="option" href="#">
-                                <span class="icon-check check_mark"></span>
-                                <span class="text">In Vendita</span>
-                              </a>
-                          </li>
-                          <li>
-                            <a onclick="cambiaStato(this)" role="option" href="#">
-                              <span class="icon-check check_mark"></span>
-                              <span class="text">in Affitto</span>
-                            </a>
-                        </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </span>
+							<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+							  <button type="button" onclick="apriScegliStato()" class="btn dropdown-toggle">
+								<div class="filter-option">
+								  <div class="filter-option-inner">
+									<div id="valore_stato" class="filter-option-text">
+									  Qualsiasi
+									</div>
+									<input type="hidden" name="stato_immobile" id="stato_immobile" value="Qualsiasi">
+								  </div>
+								</div>
+							  </button>
+							  <div id="selezionaStato" class="dropdown-content">
+								<ul class="ul_inner">
+								  <li>
+									<a onclick="cambiaStato(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">Qualsiasi</span>
+									</a>
+								</li>
+								  <li>
+									  <a onclick="cambiaStato(this)" role="option" href="#">
+										<span class="icon-check check_mark"></span>
+										<span class="text">In Vendita</span>
+									  </a>
+								  </li>
+								  <li>
+									<a onclick="cambiaStato(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">in Affitto</span>
+									</a>
+								</li>
+								</ul>
+							  </div>
+							</div>
+						  </span>
                         </div>
                         <div class="search_select search_option">
                             <label>Tipo Immobile</label>
                             <span class="search_selectwrap">
-                    <div class="bootstrap-select picker trigger" style="width: 100%;">
-                      <button type="button" onclick="apriScegliTipo()" class="btn dropdown-toggle">
-                        <div class="filter-option">
-                          <div class="filter-option-inner">
-                            <div  id="valore_tipo" class="filter-option-text">
-                              Qualsiasi
-                            </div>
-                            <input type="hidden" name="tipo_immobile"id="tipo_immobile">
-                          </div>
-                        </div>
-                      </button>
-                      <div id="selezionaTipo" class="dropdown-content wrap_content_max">
-                        <ul class="ul_inner">
-                          <li>
-                            <a onclick="cambiaTipo(this)" role="option" href="#">
-                              <span class="icon-check check_mark"></span>
-                              <span class="text">Qualsiasi</span>
-                            </a>
-                          </li>
-                          <li>
-                              <a onclick="cambiaTipo(this)" role="option" href="#">
-                                <span class="icon-check check_mark"></span>
-                                <span class="text">Appartamento</span>
-                              </a>
-                          </li>
-                          <li>
-                            <a onclick="cambiaTipo(this)" role="option" href="#">
-                              <span class="icon-check check_mark"></span>
-                              <span class="text">Abitazione economia</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a onclick="cambiaTipo(this)" role="option" href="#">
-                              <span class="icon-check check_mark"></span>
-                              <span class="text">Mansarda</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a onclick="cambiaTipo(this)" role="option" href="#">
-                              <span class="icon-check check_mark"></span>
-                              <span class="text">Villetta a schiera</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </span>
+							<div class="bootstrap-select picker trigger" style="width: 100%;">
+							  <button type="button" onclick="apriScegliTipo()" class="btn dropdown-toggle">
+								<div class="filter-option">
+								  <div class="filter-option-inner">
+									<div id="valore_tipo" class="filter-option-text">
+									  Qualsiasi
+									</div>
+									<input type="hidden" name="tipo_immobile" id="tipo_immobile" value="Qualsiasi">
+								  </div>
+								</div>
+							  </button>
+							  <div id="selezionaTipo" class="dropdown-content wrap_content_max">
+								<ul class="ul_inner">
+								  <li>
+									<a onclick="cambiaTipo(this)" role="option" href="#">
+									  <span class="icon-check check_mark"></span>
+									  <span class="text">Qualsiasi</span>
+									</a>
+								  </li>
+                                    <%for(String s : categorie){%>
+								  <li>
+									  <a onclick="cambiaTipo(this)" role="option" href="#">
+										<span class="icon-check check_mark"></span>
+										<span class="text"><%=s%></span>
+									  </a>
+								  </li>
+                                    <%}%>
+								</ul>
+							  </div>
+							</div>
+						  </span>
                         </div>
                     </div>
-                    <div id="advanced_option_div"class="form_collapsed_field_wrapper" style="display: none;">
+                    <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
                         <div class="collapsed_field_container search_advanced_fields">
                             <div class="search_option search_select search_beds">
                                 <label>Min camere da letto</label>
@@ -295,10 +255,11 @@
                                     <button type="button" onclick="apriScegliMinCamere()" class="btn dropdown-toggle">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
-                                                <div id="valore_minCamere"class="filter-option-text">
+                                                <div id="valore_minCamere" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="camere_immobile"id="camere_immobile">
+                                                <input type="hidden" name="camere_immobile" id="camere_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -332,10 +293,11 @@
                                     <button type="button" onclick="apriScegliMinBagni()" class="btn dropdown-toggle">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
-                                                <div id="valore_minBagni"class="filter-option-text">
+                                                <div id="valore_minBagni" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="bagni_immobile"id="bagni_immobile">
+                                                <input type="hidden" name="bagni_immobile" id="bagni_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -365,77 +327,11 @@
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Prezzo minimo</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliMinPrezzo()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_minPrezzo" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="minPrezzo_immobile"id="minPrezzo_immobile">
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <div id="selezionaMinPrezzo" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaMinPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <input name="minPrezzo_immobile" type="text" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Prezzo massimo</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliMaxPrezzo()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_maxPrezzo" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="maxPrezzo_immobile"id="maxPrezzo_immobile">
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <div id="selezionaMaxPrezzo" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaMaxPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMaxPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMaxPrezzo(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <input name="maxPrezzo_immobile" type="text" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Min Posti Auto</label>
@@ -446,7 +342,8 @@
                                                 <div id="valore_minAuto" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="auto_immobile"id="auto_immobile">
+                                                <input type="hidden" name="auto_immobile" id="auto_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -483,7 +380,8 @@
                                                 <div id="valore_agente" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="agente_immobile"id="agente_immobile">
+                                                <input type="hidden" name="agente_immobile" id="agente_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -526,7 +424,8 @@
             <div class="search_button">
                 <div class="search_buttonwrap">
                     <div class="search_advance">
-                        <button type="button" onclick="advancedOption()" id="advanced_options"class="search_advance_button">
+                        <button type="button" onclick="advancedOption()" id="advanced_options"
+                                class="search_advance_button">
                             <i class="icon-search-plus"></i>
                         </button>
                     </div>

@@ -48,6 +48,8 @@ public class ServletListaAppartamenti extends HttpServlet {
         }
         if (appArray != null) {
             if (appArray.size() < 10) {
+                request.setAttribute("allCittaZone", request.getSession().getAttribute("allCittàZone"));
+                request.setAttribute("categorie", request.getSession().getAttribute("categorie"));
                 request.setAttribute("array", appArray);
                 request.setAttribute("arrayAgente", agenteArray);
                 request.setAttribute("arrayUtente", utenteArray);
@@ -59,6 +61,8 @@ public class ServletListaAppartamenti extends HttpServlet {
                 for (int i = (num - 1) * 10; i < appArray.size(); i++) {
                     appArray2.add(appArray.get(i));
                 }
+                request.setAttribute("allCittaZone", request.getSession().getAttribute("allCittàZone"));
+                request.setAttribute("categorie", request.getSession().getAttribute("categorie"));
                 request.setAttribute("array", appArray2);
                 request.setAttribute("arrayAgente", agenteArray);
                 request.setAttribute("arrayUtente", utenteArray);

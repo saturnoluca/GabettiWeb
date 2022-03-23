@@ -76,7 +76,7 @@ public class ServletRicercaAppartamenti extends HttpServlet {
                     request.setAttribute("arrayUtente", utenteArray);
                     request.setAttribute("sizeArray", sizeArrayString);
                     request.setAttribute("arrayComp", arrayComp);
-                    RequestDispatcher rd = request.getRequestDispatcher("/listaappartamenti.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/listaappartamentiricerca.jsp");
                     rd.forward(request, response);
                 }
             }

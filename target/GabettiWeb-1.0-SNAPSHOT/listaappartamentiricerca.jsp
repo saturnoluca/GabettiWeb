@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Luca
+  Date: 22/03/2022
+  Time: 08:39
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.appartamento.AppartamentoBean" %>
 <%@ page import="model.agente.AgenteBean" %>
@@ -35,10 +42,9 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
 <%
-    ArrayList<Città> allCittàZone =(ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
-    if(allCittàZone==null){
-        System.out.println("SIUM");
-        request.getSession().setAttribute("nomepagina", "listaappartamenti.jsp");
+    ArrayList<Città> allCittàZone = (ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
+    if (allCittàZone == null) {
+        session.setAttribute("nomepagina", "listaappartamentiricerca.jsp");
         response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
         return;
     }
@@ -53,7 +59,6 @@
     String sizeArrayString = (String) request.getAttribute("sizeArray");
     ArrayList<CompositeKeyAgenteCase> arrayComp = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("arrayComp");
     int sizeArray = Integer.parseInt(sizeArrayString);
-    System.out.println("ziopera");
 %>
 <body>
 <nav id="navbar">
@@ -501,7 +506,7 @@
             </div>
             <div class="pagination">
                 <%for (int i = 1; i <= sizeArray; i++) {%>
-                <a href="${pageContext.request.contextPath}/ServletListaAppartamenti?numero=<%=i%>"
+                <a href="${pageContext.request.contextPath}/ServletRicercaAppartamenti?numero=<%=i%>"
                    class="pagination_btn"><%=i%>
                 </a>
                 <%}%>
@@ -532,7 +537,7 @@
                             </div>
                         </article>
                         <%  }
-                          }
+                        }
                         }%>
                     </div>
                 </section>
@@ -718,4 +723,5 @@
 <script src="bootstrap/js/jquery.sticky.js"></script>
 </body>
 </html>
+
 

@@ -31,12 +31,13 @@
 </head>
 
 <%
-    ArrayList<Città> allCittàZone = (ArrayList<Città>) request.getAttribute("allCittaZone");
+    ArrayList<Città> allCittàZone = (ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
     if (allCittàZone == null) {
+        session.setAttribute("nomepagina", "valutazione.jsp");
         response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
         return;
     }
-    ArrayList<String> categorie = (ArrayList<String>) request.getAttribute("categorie");
+    ArrayList<String> categorie = (ArrayList<String>) request.getSession().getAttribute("categorie");
 %>
 <body>
 <nav id="navbar">
