@@ -157,7 +157,6 @@
                                     <h3 class="user_title">
                                         <a href=""><%=bean.getNome()+" "+bean.getCognome()%></a>
                                     </h3>
-                                    <p class="user_description">bravo agente</p>
                                 </div>
                             </div>
                         </div>
