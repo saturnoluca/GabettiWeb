@@ -448,11 +448,11 @@
                                     <div class="form_piano half_size">
                                         <label>Ultimo piano?</label>
                                         <div class="choice-piano">
-                                            <input type="radio">
+                                            <input type="radio" value="choice">
                                             <label class="choice">Si.</label>
                                         </div>
                                         <div class="choice-piano">
-                                            <input type="radio">
+                                            <input type="radio" name="choice">
                                             <label class="choice">No.</label>
                                         </div>
                                     </div>

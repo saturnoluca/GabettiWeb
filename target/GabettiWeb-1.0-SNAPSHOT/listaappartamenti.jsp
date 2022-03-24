@@ -37,7 +37,6 @@
 <%
     ArrayList<Città> allCittàZone =(ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
     if(allCittàZone==null){
-        System.out.println("SIUM");
         request.getSession().setAttribute("nomepagina", "listaappartamenti.jsp");
         response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
         return;
@@ -53,7 +52,6 @@
     String sizeArrayString = (String) request.getAttribute("sizeArray");
     ArrayList<CompositeKeyAgenteCase> arrayComp = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("arrayComp");
     int sizeArray = Integer.parseInt(sizeArrayString);
-    System.out.println("ziopera");
 %>
 <body>
 <nav id="navbar">
