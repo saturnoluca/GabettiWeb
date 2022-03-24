@@ -55,13 +55,13 @@ public class ServletAggiungiUtente extends HttpServlet {
             utenteBean.setCognome(request.getParameter("cognome"));
             utenteBean.setEmail(request.getParameter("email"));
             utenteBean.setUsername(request.getParameter("username"));
-            utenteBean.setPassword(request.getParameter("ruolo"));
+            utenteBean.setPassword(request.getParameter("password"));
             utenteBean.setRuolo(request.getParameter("ruolo"));
             utenteBean.setFoto(request.getPart("foto"));
             try{
                 utenteModelDM.doSave(utenteBean);
-                u=utenteModelDM.RetrieveByEmail(utenteBean.getEmail());
-                System.out.println(u.getEmail()+" "+u.getIdUtente());
+                System.out.println(utenteModelDM.RetrieveByEmail(utenteBean.getEmail()).getIdUtente());
+                u = utenteModelDM.RetrieveByEmail(utenteBean.getEmail());
                 agenteBean.setIdUtente(u.getIdUtente());
                 agenteBean.setDescrizionePersonale(request.getParameter("descrizione"));
                 agenteBean.setTelefonoCellulare("telefonoCellulare");
