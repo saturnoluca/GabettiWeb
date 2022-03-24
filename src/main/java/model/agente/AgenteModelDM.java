@@ -25,7 +25,7 @@ public class AgenteModelDM implements AgenteModel {
     public void doSave(AgenteBean agent) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        String insertSql = "INSERT INTO agente(linkFacebook, linkInstagram, linkTwitter, telefonoFisso, telefonoCellulare, descrizionePersonale, Utente_idUtente) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertSql = "INSERT INTO agente(linkFacebook, linkInstagram, linkTwitter, linkInternet, telefonoFisso, telefonoCellulare, descrizionePersonale, Utente_idUtente) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = dmcp.getConnection();
             if (agent instanceof AgenteBean) {
@@ -34,7 +34,7 @@ public class AgenteModelDM implements AgenteModel {
                 ps.setString(2, agent.getLinkInstagram());
                 ps.setString(3, agent.getLinkTwitter());
                 ps.setString(4, agent.getLinkInternet());
-                ps.setString(5, agent.getTelefonoFisso());
+                ps.setString(5, "335459451");
                 ps.setString(6, agent.getTelefonoCellulare());
                 ps.setString(7, agent.getDescrizionePersonale());
                 ps.setInt(8, agent.getIdUtente());
