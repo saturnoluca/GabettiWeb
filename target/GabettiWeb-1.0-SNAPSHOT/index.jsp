@@ -97,8 +97,7 @@
             <div class="wrapper_homepage_sfondo">
                 <div class="wrapper_content">
                     <p class="sfondo_title">Compra o vendi</p>
-                    <h3 class="sfondo_slogan">Vuoi acquistare una nuovo immobile o venderne uno esistente? Gabetti ti
-                        offre
+                    <h3 class="sfondo_slogan">Vuoi acquistare una nuovo immobile o venderne uno esistente? Gabetti ti offre
                         una soluzione fantastica!</h3>
                     <div class="sfondo_choice_button">
                         <a href="" class="button_valutatore">Valuta un immobile</a>
@@ -124,7 +123,7 @@
                             <div id="valore_localita" class="filter-option-text">
                               Qualsiasi località
                             </div>
-                              <input type="hidden" name="localita_immobile" id="localita_immobile">
+                              <input type="hidden" name="localita_immobile"id="localita_immobile">
                           </div>
                         </div>
                       </button>
@@ -204,10 +203,10 @@
                       <button type="button" onclick="apriScegliStato()" class="btn dropdown-toggle">
                         <div class="filter-option">
                           <div class="filter-option-inner">
-                            <div id="valore_stato" class="filter-option-text">
+                            <div  id="valore_stato" class="filter-option-text">
                               Qualsiasi
                             </div>
-                            <input type="hidden" name="stato_immobile" id="stato_immobile">
+                            <input type="hidden" name="stato_immobile"id="stato_immobile">
                           </div>
                         </div>
                       </button>
@@ -243,10 +242,10 @@
                       <button type="button" onclick="apriScegliTipo()" class="btn dropdown-toggle">
                         <div class="filter-option">
                           <div class="filter-option-inner">
-                            <div id="valore_tipo" class="filter-option-text">
+                            <div  id="valore_tipo" class="filter-option-text">
                               Qualsiasi
                             </div>
-                            <input type="hidden" name="tipo_immobile" id="tipo_immobile">
+                            <input type="hidden" name="tipo_immobile"id="tipo_immobile">
                           </div>
                         </div>
                       </button>
@@ -288,7 +287,7 @@
                   </span>
                         </div>
                     </div>
-                    <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
+                    <div id="advanced_option_div"class="form_collapsed_field_wrapper" style="display: none;">
                         <div class="collapsed_field_container search_advanced_fields">
                             <div class="search_option search_select search_beds">
                                 <label>Min camere da letto</label>
@@ -296,10 +295,10 @@
                                     <button type="button" onclick="apriScegliMinCamere()" class="btn dropdown-toggle">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
-                                                <div id="valore_minCamere" class="filter-option-text">
+                                                <div id="valore_minCamere"class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="camere_immobile" id="camere_immobile">
+                                                <input type="hidden" name="camere_immobile"id="camere_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -333,10 +332,10 @@
                                     <button type="button" onclick="apriScegliMinBagni()" class="btn dropdown-toggle">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
-                                                <div id="valore_minBagni" class="filter-option-text">
+                                                <div id="valore_minBagni"class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="bagni_immobile" id="bagni_immobile">
+                                                <input type="hidden" name="bagni_immobile"id="bagni_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -373,7 +372,7 @@
                                                 <div id="valore_minPrezzo" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="minPrezzo_immobile" id="minPrezzo_immobile">
+                                                <input type="hidden" name="minPrezzo_immobile"id="minPrezzo_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -410,7 +409,7 @@
                                                 <div id="valore_maxPrezzo" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="maxPrezzo_immobile" id="maxPrezzo_immobile">
+                                                <input type="hidden" name="maxPrezzo_immobile"id="maxPrezzo_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -447,7 +446,7 @@
                                                 <div id="valore_minAuto" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="auto_immobile" id="auto_immobile">
+                                                <input type="hidden" name="auto_immobile"id="auto_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -484,7 +483,7 @@
                                                 <div id="valore_agente" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="agente_immobile" id="agente_immobile">
+                                                <input type="hidden" name="agente_immobile"id="agente_immobile">
                                             </div>
                                         </div>
                                     </button>
@@ -527,8 +526,7 @@
             <div class="search_button">
                 <div class="search_buttonwrap">
                     <div class="search_advance">
-                        <button type="button" onclick="advancedOption()" id="advanced_options"
-                                class="search_advance_button">
+                        <button type="button" onclick="advancedOption()" id="advanced_options"class="search_advance_button">
                             <i class="icon-search-plus"></i>
                         </button>
                     </div>
@@ -617,25 +615,15 @@
                                                         </a>
                                                     </h3>
                                                     <div class="property_address">
-                                                            <% for (IndirizzoBean linkIndirizzo : indirizzi) {
-                                                                if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
-                                                        <a href="https://www.google.it/maps/place/
-                                                                    <%=linkIndirizzo.toString()%>"
-                                                                <%}
-                                                                }%>
+                                                        <a href="">
 																<span class="address">
 																	<i class="icon-map-marker"></i>
 																</span>
                                                             <%
                                                                 for (IndirizzoBean indirizzoBean : indirizzi) {
                                                                     if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
-                                                                        if (indirizzoBean.toString().length() > 42) {%>
-                                                            <%=indirizzoBean.toString().substring(0, 42) + "..."%><%
-                                                        } else { %>
-
-                                                            <%=indirizzoBean.toString()%><%
+                                                            %><%=indirizzoBean.toString()%><%
                                                                 }
-                                                            }
                                                             }
                                                         %>
                                                         </a>
@@ -1099,6 +1087,7 @@
         </footer>
     </div>
 </div>
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
