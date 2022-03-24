@@ -105,7 +105,8 @@
             <div class="wrapper_homepage_sfondo">
                 <div class="wrapper_content">
                     <p class="sfondo_title">Compra o vendi</p>
-                    <h3 class="sfondo_slogan">Vuoi acquistare una nuovo immobile o venderne uno esistente? Gabetti ti offre
+                    <h3 class="sfondo_slogan">Vuoi acquistare una nuovo immobile o venderne uno esistente? Gabetti ti
+                        offre
                         una soluzione fantastica!</h3>
                     <div class="sfondo_choice_button">
                         <a href="" class="button_valutatore">Valuta un immobile</a>
@@ -233,7 +234,7 @@
 									  <span class="text">Qualsiasi</span>
 									</a>
 								  </li>
-                                    <%for(String s : categorie){%>
+                                    <%for (String s : categorie) {%>
 								  <li>
 									  <a onclick="cambiaTipo(this)" role="option" href="#">
 										<span class="icon-check check_mark"></span>
@@ -514,17 +515,29 @@
                                                         </a>
                                                     </h3>
                                                     <div class="property_address">
-                                                        <a href="">
-																<span class="address">
-																	<i class="icon-map-marker"></i>
-																</span>
-                                                            <%
-                                                                for (IndirizzoBean indirizzoBean : indirizzi) {
-                                                                    if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
-                                                            %><%=indirizzoBean.toString()%><%
+                                                        <% for (IndirizzoBean linkIndirizzo : indirizzi) {
+                                                            if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
+                                                        <a href="https://www.google.it/maps/place/
+                                                                    <%=linkIndirizzo.toString()%>"
+                                                        <%
                                                                 }
                                                             }
                                                         %>
+                                                        <span class="address">
+																	<i class="icon-map-marker"></i>
+																</span>
+                                                        <%
+                                                            for (IndirizzoBean indirizzoBean : indirizzi) {
+                                                                if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                                    if (indirizzoBean.toString().length() > 42) {%>
+                                                        <%=indirizzoBean.toString().substring(0, 42) + "..."%><%
+                                                    } else { %>
+
+                                                        <%=indirizzoBean.toString()%><%
+                                                                }
+                                                            }
+                                                        }
+                                                    %>
                                                         </a>
                                                     </div>
                                                     <div class="prorperty_added">
@@ -986,7 +999,6 @@
         </footer>
     </div>
 </div>
-
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
