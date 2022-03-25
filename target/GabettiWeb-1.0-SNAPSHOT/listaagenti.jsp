@@ -524,7 +524,12 @@
                         <div class="agent_card_head">
                             <figure class="agent_card_figure">
                                 <a href="">
-                                    <img src="data:image/png;base64,<%=u.getFotoString()%>">
+                                    <%if(u.getFotoString() == null){%>
+                                        <img src="images/agente.jpg">
+                                    <%}else{%>
+                                        <img src="data:image/png;base64,<%=u.getFotoString()%>">
+                                    <%}%>
+
                                 </a>
                             </figure>
                             <div class="agent_card_name">
