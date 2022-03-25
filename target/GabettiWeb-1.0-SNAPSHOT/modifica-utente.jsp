@@ -264,7 +264,6 @@
     defaultBtn.addEventListener("change", function(){
         const file = this.files[0];
         if(file) {
-            console.log("SIUM");
             const reader = new FileReader();
             reader.onload = function () {
                 const result = reader.result;

@@ -201,7 +201,7 @@
                                             <i class="fas fa-times"></i>
                                         </div>
                                     </div>
-                                    <button onclick="defaultBtnActive()" id="custom-btn">Seleziona un'immagine</button>
+                                    <button type="button" onclick="defaultBtnActive()" id="custom-btn">Seleziona un'immagine</button>
                                     <input id="default-btn" type="file" hidden>
                                 </div>
                             </div>
