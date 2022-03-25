@@ -1,0 +1,100 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: gaeta
+  Date: 25/03/2022
+  Time: 09:49
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">Gabetti</div>
+        <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul class="nav-list">
+        <li>
+            <a href="#">
+                <i class='bx bx-grid-alt'></i>
+                <span class="links_name">Dashboard</span>
+            </a>
+            <span class="tooltip">Dashboard</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-user'></i>
+                <span class="links_name">Il mio profilo</span>
+            </a>
+            <span class="tooltip">Il mio profilo</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-home'></i>
+                <span class="links_name">Lista immobili</span>
+            </a>
+            <span class="tooltip">Lista immobili</span>
+        </li>
+        <li>
+            <a href="aggiungi-immobile-admin.html">
+                <i class='bx bx-home-smile'></i>
+                <span class="links_name">Aggiungi immobile</span>
+            </a>
+            <span class="tooltip">Aggiungi immobile</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-user-detail'></i>
+                <span class="links_name">Lista utenti</span>
+            </a>
+            <span class="tooltip">Lista utenti</span>
+        </li>
+        <li>
+            <a href="aggiungi-utente.html">
+                <i class='bx bx-user-plus'></i>
+                <span class="links_name">Aggiungi utente</span>
+            </a>
+            <span class="tooltip">Aggiungi utente</span>
+        </li>
+        <li class="profile">
+            <div class="profile-details">
+                <img src="images/agente.jpg" alt="profileImg">
+                <div class="name_job">
+                    <div class="name">Gaetano De Filippo</div>
+                    <div class="job">Amministratore</div>
+                </div>
+            </div>
+            <i class='bx bx-log-out' id="log_out"></i>
+        </li>
+    </ul>
+</div>
+
+<script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+    let searchBtn = document.querySelector(".bx-search");
+
+    closeBtn.addEventListener("click", ()=>{
+        sidebar.classList.toggle("open");
+        menuBtnChange();//calling the function(optional)
+    });
+
+    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+        sidebar.classList.toggle("open");
+        menuBtnChange(); //calling the function(optional)
+    });
+
+    // following are the code to change sidebar button(optional)
+    function menuBtnChange() {
+        if(sidebar.classList.contains("open")){
+            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+        }else {
+            closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+        }
+    }
+</script>
+</body>
+</html>

@@ -26,7 +26,8 @@
     <!-- Style -->
     <link rel="stylesheet" href="css/valutazione.css">
     <link rel="stylesheet" href="css/aggiunte.css">
-    <title>Gabetti Nocera | Homepage</title>
+    <title>Gabetti Nocera | Valutazione Immobile</title>
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
 
 </head>
 

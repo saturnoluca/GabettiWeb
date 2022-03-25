@@ -148,7 +148,12 @@
                             <div class="column column_picture">
                                 <figure>
                                     <a href="">
+                                        <%if(bean.getFotoString() == null){%>
+                                        <img src="images/agente.jpg">
+                                        <%}else{%>
                                         <img src="data:image/png;base64,<%=bean.getFotoString()%>">
+                                        <%}%>
+
                                     </a>
                                 </figure>
                             </div>

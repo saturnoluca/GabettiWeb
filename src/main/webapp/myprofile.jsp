@@ -124,8 +124,11 @@
                 <div class="user_col_left">
                     <div class="user_profile_pic">
                         <div class="picture_body">
-                            <img src="data:image/png;base64,<%=admin.getFotoString()%>" height="160" width="160"
-                                 alt="no photo">
+                            <%if(admin.getFotoString() == null){%>
+                                <img src="images/agente.jpg" height="160" width="160" alt="no photo">
+                            <%}else{%>
+                                <img src="data:image/png;base64,<%=admin.getFotoString()%>" height="160" width="160" alt="no photo">
+                            <%}%>
                             <div class="change_pic">
                                 <button type="submit" class="change_pic_button">Cambia foto</button>
                             </div>

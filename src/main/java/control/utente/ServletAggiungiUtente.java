@@ -10,7 +10,9 @@ import model.utente.UtenteModelDM;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 
 @WebServlet(name = "ServletAggiungiUtente", value = "/ServletAggiungiUtente")
@@ -29,6 +31,7 @@ public class ServletAggiungiUtente extends HttpServlet {
             utenteBean.setPassword(request.getParameter("ruolo"));
             utenteBean.setRuolo(request.getParameter("ruolo"));
             utenteBean.setFoto(request.getPart("foto"));
+
             try{
                 utenteModelDM.doSave(utenteBean);
             }catch (SQLException e){

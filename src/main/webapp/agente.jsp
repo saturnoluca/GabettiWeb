@@ -24,6 +24,8 @@
 %>
 
 <head>
+    <title>Gabetti - Agente</title>
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,9 +41,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-
-
-    <title>Gabetti Nocera | Agente</title>
 </head>
 
 <body>

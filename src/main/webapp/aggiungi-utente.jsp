@@ -9,8 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
-<html lang="en" dir="ltr">
+<html lang="it" dir="ltr">
 <head>
+    <title>Gabetti - Aggiungi Utente</title>
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
     <meta charset="UTF-8">
     <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
     <link rel="stylesheet" href="css/amministratoreagente.css">
@@ -43,70 +45,11 @@
     ArrayList<UtenteBean> array = (ArrayList<UtenteBean>) session.getAttribute("array");
 %>
 <body>
-<div class="sidebar">
-    <div class="logo-details">
-        <div class="logo_name">Gabetti</div>
-        <i class='bx bx-menu' id="btn" ></i>
-    </div>
-    <ul class="nav-list">
-        <li>
-            <a href="#">
-                <i class='bx bx-grid-alt'></i>
-                <span class="links_name">Dashboard</span>
-            </a>
-            <span class="tooltip">Dashboard</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-user'></i>
-                <span class="links_name">Il mio profilo</span>
-            </a>
-            <span class="tooltip">Il mio profilo</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-home' ></i>
-                <span class="links_name">Lista immobili</span>
-            </a>
-            <span class="tooltip">Lista immobili</span>
-        </li>
-        <li>
-            <a href="aggiungi-immobile-admin.html">
-                <i class='bx bx-home-smile' ></i>
-                <span class="links_name">Aggiungi immobile</span>
-            </a>
-            <span class="tooltip">Aggiungi immobile</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bxs-user-detail' ></i>
-                <span class="links_name">Lista utenti</span>
-            </a>
-            <span class="tooltip">Lista utenti</span>
-        </li>
-        <li>
-            <a href="aggiungi-utente.html">
-                <i class='bx bx-user-plus' ></i>
-                <span class="links_name">Aggiungi utente</span>
-            </a>
-            <span class="tooltip">Aggiungi utente</span>
-        </li>
-        <li class="profile">
-            <div class="profile-details">
-                <img src="images/agente.jpg" alt="profileImg">
-                <div class="name_job">
-                    <div class="name">Gaetano De Filippo</div>
-                    <div class="job">Amministratore</div>
-                </div>
-            </div>
-            <i class='bx bx-log-out' id="log_out" ></i>
-        </li>
-    </ul>
-</div>
+<jsp:include page="sidebar.jsp" />
 <section class="home-section">
     <div class="div_addUser_page">
         <div class="addUser_page_head">
-            <div class="addUser_head_title">
+            <div w3-include-html="h1.html"></div><div class="addUser_head_title">
                 <h1 class="head_title">Aggiungi Utente</h1>
             </div>
         </div>
@@ -202,7 +145,7 @@
                                         </div>
                                     </div>
                                     <button type="button" onclick="defaultBtnActive()" id="custom-btn">Seleziona un'immagine</button>
-                                    <input id="default-btn" type="file" hidden>
+                                    <input id="default-btn" type="file" hidden name="foto">
                                 </div>
                             </div>
                         </div>
@@ -215,31 +158,6 @@
         </div>
     </div>
 </section>
-
-<script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector(".bx-search");
-
-    closeBtn.addEventListener("click", ()=>{
-        sidebar.classList.toggle("open");
-        menuBtnChange();//calling the function(optional)
-    });
-
-    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
-        sidebar.classList.toggle("open");
-        menuBtnChange(); //calling the function(optional)
-    });
-
-    // following are the code to change sidebar button(optional)
-    function menuBtnChange() {
-        if(sidebar.classList.contains("open")){
-            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-        }else {
-            closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
-        }
-    }
-</script>
 
 <script>
     const wrapper = document.querySelector(".wrapper");
@@ -298,7 +216,6 @@
     }
 
 </script>
-
 
 
 <script src="script/index.js"></script>

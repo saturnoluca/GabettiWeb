@@ -3,8 +3,11 @@ package model.utente;
 import UtilityClass.UtilityBlob;
 import model.DriverManagerConnectionPool;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +35,7 @@ public class UtenteModelDM implements UtenteModel {
         try {
             connection = dmcp.getConnection();
             if (utente instanceof UtenteBean) {
-                if (((UtenteBean) utente).getFoto() == null) {
+                if (((UtenteBean) utente).getFoto().getSize() <= 0) {
                     insertSql = "INSERT INTO Utente(username, password, nome, cognome, email, ruolo) VALUES(?, ?, ?, ?, ?, ?)";
                     ps = connection.prepareStatement(insertSql);
                     ps.setString(1, ((UtenteBean) utente).getUsername());
@@ -41,7 +44,9 @@ public class UtenteModelDM implements UtenteModel {
                     ps.setString(4, ((UtenteBean) utente).getCognome());
                     ps.setString(5, ((UtenteBean) utente).getEmail());
                     ps.setString(6, ((UtenteBean) utente).getRuolo());
+
                 } else {
+
                     insertSql = "INSERT INTO Utente(username, password, nome, cognome, email, foto, ruolo) VALUES(?, ?, ?, ?, ?, ?, ?)";
                     ps = connection.prepareStatement(insertSql);
                     ps.setString(1, ((UtenteBean) utente).getUsername());
@@ -50,6 +55,7 @@ public class UtenteModelDM implements UtenteModel {
                     ps.setString(4, ((UtenteBean) utente).getCognome());
                     ps.setString(5, ((UtenteBean) utente).getEmail());
                     in = ((UtenteBean) utente).getFoto().getInputStream();
+
                     ps.setBlob(6, in);
                     ps.setString(7, ((UtenteBean) utente).getRuolo());
                 }
