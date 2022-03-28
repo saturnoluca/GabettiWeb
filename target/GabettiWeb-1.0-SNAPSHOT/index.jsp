@@ -80,6 +80,7 @@
     <link rel="stylesheet" href="css/aggiunte.css">
 
     <title>Gabetti Nocera | Homepage</title>
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
 
 </head>
 <body>
@@ -93,9 +94,9 @@
     </label>
     <ul>
         <li><a href="index.jsp" class="active">Home</a></li>
-        <li><a href="#">Lista Immobili</a></li>
-        <li><a href="valutazione.html">Valutazione Immobile</a></li>
-        <li><a href="listaagenti.html">I Nostri Agenti</a></li>
+        <li><a href="listaappartamenti.jsp">Lista Immobili</a></li>
+        <li><a href="valutazione.jsp">Valutazione Immobile</a></li>
+        <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
         <li><a href="contact.html">Contattaci</a></li>
     </ul>
 </nav>
@@ -109,8 +110,8 @@
                         offre
                         una soluzione fantastica!</h3>
                     <div class="sfondo_choice_button">
-                        <a href="" class="button_valutatore">Valuta un immobile</a>
-                        <a href="" class="button_cerca">Cerca un immobile</a>
+                        <a href="valutazione.jsp" class="button_valutatore">Valuta un immobile</a>
+                        <a href="listaappartamenti.jsp" class="button_cerca">Cerca un immobile</a>
                     </div>
                 </div>
             </div>
@@ -952,19 +953,19 @@
                             <div class="menu_footer">
                                 <ul class="menu">
                                     <li class="menu_item">
-                                        <a href="">Home</a>
+                                        <a href="index.jsp">Home</a>
                                     </li>
                                     <li class="menu_item">
-                                        <a href="">Lista Immobili</a>
+                                        <a href="listaappartamenti.jsp">Lista Immobili</a>
                                     </li>
                                     <li class="menu_item">
-                                        <a href="">Valutazione Immobile</a>
+                                        <a href="valutazione.jsp">Valutazione Immobile</a>
                                     </li>
                                     <li class="menu_item">
-                                        <a href="">I Nostri Agenti</a>
+                                        <a href="listaagenti.jsp">I Nostri Agenti</a>
                                     </li>
                                     <li class="menu_item">
-                                        <a href="">Contattaci</a>
+                                        <a href="contact.html">Contattaci</a>
                                     </li>
                                 </ul>
                             </div>
