@@ -127,7 +127,24 @@ public class UtenteModelDM implements UtenteModel {
 
     @Override
     public void doDelete(int idUtente) throws SQLException {
-
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String deleteSql="DELETE FROM utente WHERE idUtente=?";
+        try{
+            connection=dmcp.getConnection();
+            ps= connection.prepareStatement(deleteSql);
+            ps.setInt(1, idUtente);
+            ps.executeUpdate();
+            connection.commit();
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
     }
 
     @Override

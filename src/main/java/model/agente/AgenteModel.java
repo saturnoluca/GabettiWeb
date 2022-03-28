@@ -1,6 +1,7 @@
 package model.agente;
 
 import UtilityClass.CompositeKeyAgenteCase;
+import model.utente.UtenteBean;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -18,4 +19,5 @@ public interface AgenteModel<T> {
 
     public AgenteBean RetrieveAgenteByIdUtente(int id) throws SQLException;
 
+    void doDelete(UtenteBean utenteAgente) throws SQLException;
 }

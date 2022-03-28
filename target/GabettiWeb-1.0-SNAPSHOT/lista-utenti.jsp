@@ -31,6 +31,12 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
 <%
+    response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+    response.setHeader("Pragma","no-cache"); //HTTP 1.0
+    response.setDateHeader ("Expires", 0);
+//prevents caching at the proxy server
+%>
+<%
     ArrayList<UtenteBean> utenti=null;
     UtenteBean admin = (UtenteBean) session.getAttribute("utente");
     if (admin == null) {
@@ -192,7 +198,7 @@
                                         <i class="icon-mode_edit"></i>
                                         Modifica
                                     </a>
-                                    <a href="">
+                                    <a href="${pageContext.request.contextPath}/ServletEliminaUtente?idUtente=<%=bean.getIdUtente()%>">
                                         <i class="icon-delete"></i>
                                         Elimina
                                     </a>

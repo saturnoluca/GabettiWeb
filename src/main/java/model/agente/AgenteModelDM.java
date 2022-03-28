@@ -3,6 +3,7 @@ package model.agente;
 import UtilityClass.CompositeKeyAgenteCase;
 import model.DriverManagerConnectionPool;
 import model.appartamento.AppartamentoBean;
+import model.utente.UtenteBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -219,6 +220,28 @@ public class AgenteModelDM implements AgenteModel {
                 dmcp.releaseConnection(connection);
             }
             return bean;
+        }
+    }
+
+    @Override
+    public void doDelete(UtenteBean utenteAgente) throws SQLException{
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String deleteSql="DELETE FROM utente WHERE idUtente=?";
+        try{
+            connection=dmcp.getConnection();
+            ps= connection.prepareStatement(deleteSql);
+            ps.setInt(1, utenteAgente.getIdUtente());
+            ps.executeUpdate();
+            connection.commit();
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
         }
     }
 
