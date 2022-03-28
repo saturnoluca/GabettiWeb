@@ -31,15 +31,19 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
 <%
+    ArrayList<UtenteBean> utenti=null;
     UtenteBean admin = (UtenteBean) session.getAttribute("utente");
     if (admin == null) {
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
-    ArrayList<UtenteBean> utenti = null;
-    if (admin.getRuolo().equals("Admin")) {
-        utenti = (ArrayList<UtenteBean>) session.getAttribute("array");
-    } else {
+    if (admin.getRuolo().equals("Admin") && session.getAttribute("entrato")==null) {
+        response.sendRedirect(response.encodeRedirectURL("ServletListaUtente"));
+        return;
+    }
+    session.removeAttribute("entrato");
+    utenti = (ArrayList<UtenteBean>) session.getAttribute("lista-utenti");
+    if(!admin.getRuolo().equals("Admin")){
         request.getSession(false);
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
@@ -98,7 +102,8 @@
             <div class="profile-details">
                 <img src="images/agente.jpg" alt="profileImg">
                 <div class="name_job">
-                    <div class="name"><%=admin.getNome()+" "+admin.getCognome()%></div>
+                    <div class="name"><%=admin.getNome() + " " + admin.getCognome()%>
+                    </div>
                     <div class="job">Amministratore</div>
                 </div>
             </div>
@@ -148,9 +153,9 @@
                             <div class="column column_picture">
                                 <figure>
                                     <a href="">
-                                        <%if(bean.getFotoString() == null){%>
+                                        <%if (bean.getFotoString() == null) {%>
                                         <img src="images/agente.jpg">
-                                        <%}else{%>
+                                        <%} else {%>
                                         <img src="data:image/png;base64,<%=bean.getFotoString()%>">
                                         <%}%>
 
@@ -160,7 +165,8 @@
                             <div class="column column-info">
                                 <div class="user_info_wrap">
                                     <h3 class="user_title">
-                                        <a href=""><%=bean.getNome()+" "+bean.getCognome()%></a>
+                                        <a href=""><%=bean.getNome() + " " + bean.getCognome()%>
+                                        </a>
                                     </h3>
                                     <p class="user_description">bravo agente</p>
                                 </div>
