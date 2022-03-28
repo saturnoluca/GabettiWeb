@@ -928,77 +928,7 @@
             </article>
         </section>
     </div>
-    <div class="footer_wrapper">
-        <footer class="general_footer">
-            <div class="top_footer">
-                <div class="footer_logo">
-                    <a href="" title="Gabetti Nocera Inferiore">
-                        <img src="images/logogabetti.svg" height="200" width="200">
-                    </a>
-                </div>
-                <div class="footer_socials">
-                    <a class="facebook" href="">
-                        <icon class="icon-facebook"></icon>
-                    </a>
-                    <a class="instagram" href="">
-                        <icon class="icon-instagram"></icon>
-                    </a>
-                </div>
-            </div>
-            <div class="footer_widgets_wrap">
-                <div class="footer_widgets">
-                    <div class="navigation">
-                        <section class="navigation_menu">
-                            <h3 class="title">Link veloci</h3>
-                            <div class="menu_footer">
-                                <ul class="menu">
-                                    <li class="menu_item">
-                                        <a href="index.jsp">Home</a>
-                                    </li>
-                                    <li class="menu_item">
-                                        <a href="listaappartamenti.jsp">Lista Immobili</a>
-                                    </li>
-                                    <li class="menu_item">
-                                        <a href="valutazione.jsp">Valutazione Immobile</a>
-                                    </li>
-                                    <li class="menu_item">
-                                        <a href="listaagenti.jsp">I Nostri Agenti</a>
-                                    </li>
-                                    <li class="menu_item">
-                                        <a href="contact.html">Contattaci</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-                <div class="footer_widgets">
-                    <div class="contact_widget">
-                        <h3 class="title">I nostri contatti</h3>
-                        <div class="contact_widget_item">
-                            <p class="contact_icon">
-                                <i class="icon-map-marker"></i>
-                            </p>
-                            <p class="contact_content">Via Attilio Barbarulo, 132, 84014 Nocera inferiore SA</p>
-                        </div>
-                        <div class="contact_widget_item">
-                            <p class="contact_icon">
-                                <i class="icon-whatsapp"></i>
-                            </p>
-                            <a class="contact_content" href="">3312294330</a>
-                        </div>
-                        <div class="contact_widget_item">
-                            <p class="contact_icon">
-                                <i class="icon-mail_outline"></i>
-                            </p>
-                            <a class="contact_content">example@gmail.com</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </footer>
-    </div>
+    <jsp:include page="footer.jsp" />
 </div>
 
 
