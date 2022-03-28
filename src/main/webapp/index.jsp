@@ -109,7 +109,7 @@
                         offre
                         una soluzione fantastica!</h3>
                     <div class="sfondo_choice_button">
-                        <a href="" class="button_valutatore">Valuta un immobile</a>
+                        <a href="valutazione.jsp" class="button_valutatore">Valuta un immobile</a>
                         <a href="" class="button_cerca">Cerca un immobile</a>
                     </div>
                 </div>
