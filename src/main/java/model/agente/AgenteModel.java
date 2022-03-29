@@ -20,4 +20,6 @@ public interface AgenteModel<T> {
     public AgenteBean RetrieveAgenteByIdUtente(int id) throws SQLException;
 
     void doDelete(UtenteBean utenteAgente) throws SQLException;
+
+    void doUpdate(AgenteBean agenteBean) throws SQLException;
 }

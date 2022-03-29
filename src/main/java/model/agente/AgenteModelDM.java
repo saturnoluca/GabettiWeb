@@ -245,4 +245,30 @@ public class AgenteModelDM implements AgenteModel {
         }
     }
 
+    @Override
+    public void doUpdate(AgenteBean agenteBean) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String updateSql="UPDATE agente SET linkFacebook=? , linkInstagram=? , telefonoCellulare=? , descrizionePersonale=? WHERE idAgente=?";
+        try{
+            connection=dmcp.getConnection();
+            ps=connection.prepareStatement(updateSql);
+            ps.setString(1, agenteBean.getLinkFacebook());
+            ps.setString(2, agenteBean.getLinkInstagram());
+            ps.setString(3, agenteBean.getTelefonoCellulare());
+            ps.setString(4, agenteBean.getDescrizionePersonale());
+            ps.setInt(5, agenteBean.getIdAgente());
+            ps.executeUpdate();
+            connection.commit();
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
+    }
+
 }

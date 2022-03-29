@@ -129,14 +129,14 @@ public class UtenteModelDM implements UtenteModel {
     public void doDelete(int idUtente) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        String deleteSql="DELETE FROM utente WHERE idUtente=?";
-        try{
-            connection=dmcp.getConnection();
-            ps= connection.prepareStatement(deleteSql);
+        String deleteSql = "DELETE FROM utente WHERE idUtente=?";
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(deleteSql);
             ps.setInt(1, idUtente);
             ps.executeUpdate();
             connection.commit();
-        }finally {
+        } finally {
             try {
                 if (ps != null) {
                     ps.close();
@@ -261,6 +261,37 @@ public class UtenteModelDM implements UtenteModel {
 
     @Override
     public UtenteBean RetrieveNomeCognome(String nome, String cognome) {
-                return null;
+        return null;
+    }
+
+    @Override
+    public void doUpdate(UtenteBean utenteBean) throws SQLException, IOException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        InputStream in = null;
+        String updateSql="UPDATE utente SET username=? , password=? , nome=? , cognome=? , email=? , foto=? , ruolo=? WHERE idUtente=?";
+        try{
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(updateSql);
+            ps.setString(1, utenteBean.getCognome());
+            ps.setString(2, utenteBean.getPassword());
+            ps.setString(3, utenteBean.getNome());
+            ps.setString(4, utenteBean.getCognome());
+            ps.setString(5, utenteBean.getEmail());
+            in = ((UtenteBean) utenteBean).getFoto().getInputStream();
+            ps.setBlob(6, in);
+            ps.setString(7, utenteBean.getRuolo());
+            ps.setInt(8, utenteBean.getIdUtente());
+            ps.executeUpdate();
+            connection.commit();
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
     }
 }

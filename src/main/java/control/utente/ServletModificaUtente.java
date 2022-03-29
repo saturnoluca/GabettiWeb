@@ -58,7 +58,7 @@ public class ServletModificaUtente extends HttpServlet {
             try{
                 agenteModel.doUpdate(agenteBean);
                 utente.doUpdate(utenteBean);
-            }catch (SQLException e){
+            }catch (Exception e){
                 e.printStackTrace();
             }
         }
