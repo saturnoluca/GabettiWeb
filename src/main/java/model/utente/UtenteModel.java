@@ -24,4 +24,6 @@ public interface UtenteModel<T> {
 
     public UtenteBean RetrieveNomeCognome(String nome, String cognome);
 
+    void doUpdate(UtenteBean utenteBean) throws SQLException, IOException;
+
 }

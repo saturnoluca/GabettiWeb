@@ -3,6 +3,7 @@ package model.agente;
 import UtilityClass.CompositeKeyAgenteCase;
 import model.DriverManagerConnectionPool;
 import model.appartamento.AppartamentoBean;
+import model.utente.UtenteBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -219,6 +220,54 @@ public class AgenteModelDM implements AgenteModel {
                 dmcp.releaseConnection(connection);
             }
             return bean;
+        }
+    }
+
+    @Override
+    public void doDelete(UtenteBean utenteAgente) throws SQLException{
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String deleteSql="DELETE FROM utente WHERE idUtente=?";
+        try{
+            connection=dmcp.getConnection();
+            ps= connection.prepareStatement(deleteSql);
+            ps.setInt(1, utenteAgente.getIdUtente());
+            ps.executeUpdate();
+            connection.commit();
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
+    }
+
+    @Override
+    public void doUpdate(AgenteBean agenteBean) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String updateSql="UPDATE agente SET linkFacebook=? , linkInstagram=? , telefonoCellulare=? , descrizionePersonale=? WHERE idAgente=?";
+        try{
+            connection=dmcp.getConnection();
+            ps=connection.prepareStatement(updateSql);
+            ps.setString(1, agenteBean.getLinkFacebook());
+            ps.setString(2, agenteBean.getLinkInstagram());
+            ps.setString(3, agenteBean.getTelefonoCellulare());
+            ps.setString(4, agenteBean.getDescrizionePersonale());
+            ps.setInt(5, agenteBean.getIdAgente());
+            ps.executeUpdate();
+            connection.commit();
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
         }
     }
 
