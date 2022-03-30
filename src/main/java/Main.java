@@ -3,6 +3,8 @@ import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.multimedia.MultimediaBean;
+import model.multimedia.MultimediaModelDM;
 import model.utente.UtenteBean;
 import model.utente.UtenteModelDM;
 
@@ -11,33 +13,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args){
-        UtenteBean u = new UtenteBean();
-        UtenteModelDM utenteModelDM = new UtenteModelDM();
-        u.setNome("lu");
-        u.setCognome("sa");
-        u.setEmail("ciao@gmail.com");
-        u.setRuolo("Agente");
-        u.setUsername("lusa");
-        u.setPassword("sium");
-        UtenteBean utenteBean;
-        try{
-            utenteModelDM.doSave(u);
-            utenteBean = utenteModelDM.RetrieveByEmail(u.getEmail());
-            AgenteBean agenteBean = new AgenteBean();
-            AgenteModelDM agenteModelDM= new AgenteModelDM();
-            agenteBean.setLinkInstagram("dkpqdqw");
-            agenteBean.setLinkFacebook("fdfew");
-            agenteBean.setTelefonoFisso("fewfwe");
-            agenteBean.setTelefonoCellulare("feqfe");
-            agenteBean.setIdUtente(utenteBean.getIdUtente());
-            agenteBean.setLinkTwitter("efewfw");
-            agenteBean.setLinkInternet("efewf");
-            agenteModelDM.doSave(agenteBean);
-        }catch (SQLException e){
+    public static void main(String[] args) {
+        MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
+        AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
+        ArrayList<AppartamentoBean> appartamentoBeans = new ArrayList<>();
+        ArrayList<MultimediaBean> multimedia = new ArrayList<>();
+        try {
+            appartamentoBeans = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllAppartamento();
+            multimedia = multimediaModelDM.RetrieveAll(appartamentoBeans);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+
+        for (MultimediaBean multimediaBean : multimedia) {
+            System.out.println(multimediaBean.getFotoString());
         }
     }
 }

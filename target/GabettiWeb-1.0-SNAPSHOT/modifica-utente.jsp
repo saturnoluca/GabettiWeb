@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="addUser_page_content">
-            <form class="form_addUser">
+            <form class="form_addUser" action="/ServletModificaUtente" method="get" enctype="multipart/form-data">
                 <div class="addUser_tab">
                     <h3 class="tab_title">Informazioni generali</h3>
                 </div>
@@ -71,27 +71,27 @@
                             <div class="user_general">
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Nome*</label>
-                                    <input type="text" required value="<%=utenteDaMoficare.getNome()%>">
+                                    <input type="text" required value="<%=utenteDaMoficare.getNome()%>" name="nome">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Cognome*</label>
-                                    <input type="text" required value="<%=utenteDaMoficare.getCognome()%>">
+                                    <input type="text" required value="<%=utenteDaMoficare.getCognome()%>" name="cognome">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Email*</label>
-                                    <input type="text" required value="<%=utenteDaMoficare.getEmail()%>">
+                                    <input type="text" required value="<%=utenteDaMoficare.getEmail()%>" name="email">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Username</label>
-                                    <input type="text" value="<%=utenteDaMoficare.getUsername()%>">
+                                    <input type="text" value="<%=utenteDaMoficare.getUsername()%>" name="username">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Password</label>
-                                    <input type="password" required placeholder="******">
+                                    <input type="password" required placeholder="******" name="password">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Ruolo</label>
-                                    <select required id="Selector">
+                                    <select required id="Selector" name="ruolo">
                                         <option value="" selected disabled>Seleziona ruolo utente</option>
                                         <option value="Admin">Admin</option>
                                         <option value="Segretario">Segretario</option>
@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="content_fields_column half_size" id="div_agente" style="display: none;">
                                     <label class="label_user_title">Collaborazione agente</label>
-                                    <select required>
+                                    <select required name="idAgente">
                                         <option value="" selected disabled>Seleziona collaborazione agente</option>
                                         <%
                                             for (UtenteBean bean : arrayList) {
@@ -120,15 +120,15 @@
                                 <h3 class="tab_title" style="margin-bottom:50px;">Informazioni Agente</h3>
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Descrizione*</label>
-                                    <textarea rows="10" required placeholder="Scrivi una descrizione"></textarea>
+                                    <textarea rows="10" required placeholder="Scrivi una descrizione" name="descrizionePersonale"></textarea>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Link Facebook</label>
-                                    <input type="text" placeholder="Inserisci link profilo facebook">
+                                    <input type="text" placeholder="Inserisci link profilo facebook" name="linkFacebook">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Link Instagram</label>
-                                    <input type="text" placeholder="Inserisci link profilo instagram">
+                                    <input type="text" placeholder="Inserisci link profilo instagram" name="linkInstagram">
                                 </div>
                             </div>
 
@@ -137,7 +137,7 @@
                                 <div class="container_gallery">
                                     <div class="wrapper">
                                         <div class="image">
-                                            <img id="preview" src="" alt="">
+                                            <img id="preview" src="data:image/png;base64,<%=utente.getFotoString()%>" alt="">
                                         </div>
                                         <div class="content">
                                             <div class="icon">
@@ -152,12 +152,12 @@
                                         </div>
                                     </div>
                                     <button onclick="defaultBtnActive()" id="custom-btn">Seleziona un'immagine</button>
-                                    <input id="default-btn" type="file" hidden>
+                                    <input id="default-btn" type="file" hidden name="foto">
                                 </div>
                             </div>
                         </div>
                         <div class="div_button_submit">
-                            <input type="submit" value="Aggiungi Utente">
+                            <input type="submit" value="Modifica Utente">
                         </div>
                     </div>
                 </div>
