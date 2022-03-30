@@ -29,6 +29,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
+    <title>Gabetti Nocera | Lista Utenti</title>
 </head>
 <%
     ArrayList<UtenteBean> utenti=null;
@@ -50,67 +52,7 @@
     }
 %>
 <body>
-<div class="sidebar">
-    <div class="logo-details">
-        <div class="logo_name">Gabetti</div>
-        <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul class="nav-list">
-        <li>
-            <a href="#">
-                <i class='bx bx-grid-alt'></i>
-                <span class="links_name">Dashboard</span>
-            </a>
-            <span class="tooltip">Dashboard</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-user'></i>
-                <span class="links_name">Il mio profilo</span>
-            </a>
-            <span class="tooltip">Il mio profilo</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-home'></i>
-                <span class="links_name">Lista immobili</span>
-            </a>
-            <span class="tooltip">Lista immobili</span>
-        </li>
-        <li>
-            <a href="aggiungi-immobile-admin.html">
-                <i class='bx bx-home-smile'></i>
-                <span class="links_name">Aggiungi immobile</span>
-            </a>
-            <span class="tooltip">Aggiungi immobile</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bxs-user-detail'></i>
-                <span class="links_name">Lista utenti</span>
-            </a>
-            <span class="tooltip">Lista utenti</span>
-        </li>
-        <li>
-            <a href="aggiungi-utente.html">
-                <i class='bx bx-user-plus'></i>
-                <span class="links_name">Aggiungi utente</span>
-            </a>
-            <span class="tooltip">Aggiungi utente</span>
-        </li>
-        <li class="profile">
-            <div class="profile-details">
-                <img src="images/agente.jpg" alt="profileImg">
-                <div class="name_job">
-                    <div class="name"><%=admin.getNome() + " " + admin.getCognome()%>
-                    </div>
-                    <div class="job">Amministratore</div>
-                </div>
-            </div>
-            <i class='bx bx-log-out' id="log_out"></i>
-        </li>
-    </ul>
-</div>
+<jsp:include page="sidebar.jsp" />
 <section class="home-section">
     <div class="div_user_list">
         <div class="user_list_page_head">
