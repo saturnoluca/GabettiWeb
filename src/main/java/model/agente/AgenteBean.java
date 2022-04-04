@@ -99,4 +99,15 @@ public class AgenteBean implements Serializable {
     public void setIdUtente(int idUtente) {
         this.idUtente = idUtente;
     }
+
+    @Override
+    public String toString() {
+        return "AgenteBean{" +
+                "idAgente=" + idAgente +
+                ", linkFacebook='" + linkFacebook + '\'' +
+                ", linkInstagram='" + linkInstagram + '\'' +
+                ", descrizionePersonale='" + descrizionePersonale + '\'' +
+                ", idUtente=" + idUtente +
+                '}';
+    }
 }

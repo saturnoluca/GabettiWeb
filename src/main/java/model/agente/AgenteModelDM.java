@@ -251,6 +251,7 @@ public class AgenteModelDM implements AgenteModel {
         PreparedStatement ps = null;
         String updateSql="UPDATE agente SET linkFacebook=? , linkInstagram=? , telefonoCellulare=? , descrizionePersonale=? WHERE idAgente=?";
         try{
+            System.out.println("SIUM");
             connection=dmcp.getConnection();
             ps=connection.prepareStatement(updateSql);
             ps.setString(1, agenteBean.getLinkFacebook());

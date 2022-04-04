@@ -18,7 +18,7 @@ public class ServletModificaUtente extends HttpServlet {
     AgenteModelDM agenteModel = new AgenteModelDM();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UtenteBean utenteBean = new UtenteBean();
         UtenteBean utenteAgente = new UtenteBean();
         utenteBean.setIdUtente(Integer.parseInt(request.getParameter("idUtente")));
@@ -35,26 +35,36 @@ public class ServletModificaUtente extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (!utenteBean.getRuolo().equals("Agente") && utenteAgente.getRuolo().equals("Agente")) {
-            try {
-                agenteModel.doDelete(utenteAgente);
-                utente.doUpdate(utenteBean);
-            } catch (SQLException e) {
-                e.printStackTrace();
+        if(utenteAgente != null) {
+            if (!utenteBean.getRuolo().equals("Agente") && utenteAgente.getRuolo().equals("Agente")) {
+                try {
+                    agenteModel.doDelete(utenteAgente);
+                    utente.doUpdate(utenteBean);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-        } else if (!request.getParameter("ruolo").equals("Agente") && !request.getParameter("ruolo").equals("Collaboratore")) {
+        }
+        if (!request.getParameter("ruolo").equals("Agente") && !request.getParameter("ruolo").equals("Collaboratore")) {
             try {
+                System.out.println(utenteBean);
                 utente.doUpdate(utenteBean);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }else if(request.getParameter("ruolo").equals("Agente") || request.getParameter("ruolo").equals("Collaboratore")){
             AgenteBean agenteBean = new AgenteBean();
+            try {
+                agenteBean.setIdAgente(agenteModel.RetrieveAgenteByIdUtente(Integer.parseInt(request.getParameter("idUtente"))).getIdAgente());
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
             agenteBean.setLinkFacebook(request.getParameter("linkFacebook"));
             agenteBean.setLinkInstagram(request.getParameter("linkInstagram"));
             agenteBean.setDescrizionePersonale(request.getParameter("descrizionePersonale"));
             agenteBean.setTelefonoCellulare(request.getParameter("telefono"));
             agenteBean.setIdUtente(Integer.parseInt(request.getParameter("idUtente")));
+            System.out.println(agenteBean);
             try{
                 agenteModel.doUpdate(agenteBean);
                 utente.doUpdate(utenteBean);

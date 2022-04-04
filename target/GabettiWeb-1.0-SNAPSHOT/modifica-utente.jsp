@@ -61,13 +61,14 @@
             </div>
         </div>
         <div class="addUser_page_content">
-            <form class="form_addUser" action="/ServletModificaUtente" method="get" enctype="multipart/form-data">
+            <form class="form_addUser" action="ServletModificaUtente" method="post" enctype="multipart/form-data">
                 <div class="addUser_tab">
                     <h3 class="tab_title">Informazioni generali</h3>
                 </div>
                 <div class="addUser_content">
                     <div class="form_content_fields">
                         <div class="content_fields_row">
+                            <input type="hidden" name="idUtente" value="<%=utenteDaMoficare.getIdUtente()%>">
                             <div class="user_general">
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Nome*</label>
@@ -101,7 +102,7 @@
                                 </div>
                                 <div class="content_fields_column half_size" id="div_agente" style="display: none;">
                                     <label class="label_user_title">Collaborazione agente</label>
-                                    <select required name="idAgente">
+                                    <select name="idAgente">
                                         <option value="" selected disabled>Seleziona collaborazione agente</option>
                                         <%
                                             for (UtenteBean bean : arrayList) {
@@ -120,7 +121,7 @@
                                 <h3 class="tab_title" style="margin-bottom:50px;">Informazioni Agente</h3>
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Descrizione*</label>
-                                    <textarea rows="10" required placeholder="Scrivi una descrizione" name="descrizionePersonale"></textarea>
+                                    <textarea rows="10"  placeholder="Scrivi una descrizione" name="descrizionePersonale"></textarea>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Link Facebook</label>
@@ -137,7 +138,7 @@
                                 <div class="container_gallery">
                                     <div class="wrapper">
                                         <div class="image">
-                                            <img id="preview" src="data:image/png;base64,<%=utente.getFotoString()%>" alt="">
+                                            <img id="preview" src="data:image/png;base64,<%=utenteDaMoficare.getFotoString()%>" alt="">
                                         </div>
                                         <div class="content">
                                             <div class="icon">
@@ -151,8 +152,8 @@
                                             <i class="fas fa-times"></i>
                                         </div>
                                     </div>
-                                    <button onclick="defaultBtnActive()" id="custom-btn">Seleziona un'immagine</button>
-                                    <input id="default-btn" type="file" hidden name="foto">
+                                    <button type="button" onclick="defaultBtnActive()" id="custom-btn">Seleziona un'immagine</button>
+                                    <input id="default-btn" type="file" hidden name="foto" value="<%=utenteDaMoficare.getFoto()%>">
                                 </div>
                             </div>
                         </div>
