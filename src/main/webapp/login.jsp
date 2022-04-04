@@ -7,8 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
-<head>
-    <title>Login V2</title>
+<head>s
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -32,6 +31,8 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="icomoon/util.css">
     <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
+    <title>Gabetti Nocera | Login Admin</title>
     <!--===============================================================================================-->
 </head>
 <body>

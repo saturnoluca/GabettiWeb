@@ -32,6 +32,8 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="icomoon/util.css">
     <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
+    <title>Gabetti Nocera | Login Admin</title>
     <!--===============================================================================================-->
 </head>
 <body>
