@@ -36,7 +36,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 AppartamentoBean bean = new AppartamentoBean();
                 bean.setCamereLetto(rs.getInt("camereLetto"));
                 bean.setCategoria(rs.getString("categoria"));
-                bean.setIdAppartamento(rs.getInt("idApparamento"));
+                bean.setIdAppartamento(rs.getInt("idAppartamento"));
                 bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
                 bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
                 bean.setSuperficie(rs.getFloat("superficie"));

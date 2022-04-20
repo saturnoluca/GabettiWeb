@@ -25,14 +25,14 @@
             <span class="tooltip">Dashboard</span>
         </li>
         <li>
-            <a href="#">
+            <a href="myprofile.jsp">
                 <i class='bx bx-user'></i>
                 <span class="links_name">Il mio profilo</span>
             </a>
             <span class="tooltip">Il mio profilo</span>
         </li>
         <li>
-            <a href="#">
+            <a href="gestione-lista-immobili.jsp">
                 <i class='bx bx-home'></i>
                 <span class="links_name">Lista immobili</span>
             </a>
@@ -46,14 +46,14 @@
             <span class="tooltip">Aggiungi immobile</span>
         </li>
         <li>
-            <a href="#">
+            <a href="lista-utenti.jsp">
                 <i class='bx bxs-user-detail'></i>
                 <span class="links_name">Lista utenti</span>
             </a>
             <span class="tooltip">Lista utenti</span>
         </li>
         <li>
-            <a href="aggiungi-utente.html">
+            <a href="aggiungi-utente.jsp">
                 <i class='bx bx-user-plus'></i>
                 <span class="links_name">Aggiungi utente</span>
             </a>
@@ -67,7 +67,10 @@
                     <div class="job">Amministratore</div>
                 </div>
             </div>
-            <i class='bx bx-log-out' id="log_out"></i>
+            <a href="ServletLogout">
+                <i class='bx bx-log-out' id="log_out"></i>
+            </a>
+            <span class="tooltip">Logout</span>
         </li>
     </ul>
 </div>

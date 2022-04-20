@@ -425,7 +425,7 @@ input{
   padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 30px;
-  min-width: 310px;
+  min-width: 423.33px;
 }
 
 .property_card_style{
@@ -689,8 +689,13 @@ h3.property_heading a{
   text-align: center;
   transition: .2s all linear;
   box-shadow: 0 0 20px #dddddd;
-  background: #fff;
+  background: #b20135;
   color: gray;
+  padding: 10px;
+}
+
+.carousel-control-next, .carousel-control-prev{
+  position: relative;
 }
 
 .homepage_sfondo{

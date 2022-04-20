@@ -2,7 +2,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.appartamento.AppartamentoBean" %>
 <%@ page import="model.agente.AgenteBean" %>
-<%@ page import="model.multimedia.MultimediaBean" %><%--
+<%@ page import="model.multimedia.MultimediaBean" %>
+<%@ page import="UtilityClass.VisualizzazioneImmobile" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 29/03/2022
@@ -35,91 +36,24 @@
 </head>
 
 <%
-    ArrayList<AppartamentoBean> appartamentoBeans = null;
-    ArrayList<UtenteBean> utenti = null;
-    ArrayList<AgenteBean> agenti = null;
-    ArrayList<MultimediaBean> multimedia = null;
+    ArrayList<VisualizzazioneImmobile> visualizzazioneImmobili = null;
+
     UtenteBean admin = (UtenteBean) session.getAttribute("utente");
     if (admin == null) {
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
-    if (admin.getRuolo().equals("Admin") && session.getAttribute("entrato-immobili") == null) {
-        response.sendRedirect(response.encodeRedirectURL("ServletListaImmobili"));
+    if (session.getAttribute("entrato-immobili") == null) {
+        response.sendRedirect(response.encodeRedirectURL("ServletAppartamentiAdmin"));
         return;
     }
     session.removeAttribute("entrato-immobili");
-    utenti = (ArrayList<UtenteBean>) session.getAttribute("lista-utenti-immobili");
-    appartamentoBeans = (ArrayList<AppartamentoBean>) session.getAttribute("lista-immobili");
-    agenti = (ArrayList<AgenteBean>) session.getAttribute("agenti-immobili");
-    multimedia = (ArrayList<MultimediaBean>) session.getAttribute("multimedia-immobili");
-    if (!admin.getRuolo().equals("Admin")) {
-        request.getSession(false);
-        response.sendRedirect(response.encodeRedirectURL("login.jsp"));
-        return;
-    }
+    visualizzazioneImmobili= (ArrayList<VisualizzazioneImmobile>) session.getAttribute("visualizzazione-immobile");
 %>
 <body>
-<div class="sidebar">
-    <div class="logo-details">
-        <div class="logo_name">Gabetti</div>
-        <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul class="nav-list">
-        <li>
-            <a href="#">
-                <i class='bx bx-grid-alt'></i>
-                <span class="links_name">Dashboard</span>
-            </a>
-            <span class="tooltip">Dashboard</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-user'></i>
-                <span class="links_name">Il mio profilo</span>
-            </a>
-            <span class="tooltip">Il mio profilo</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-home'></i>
-                <span class="links_name">Lista immobili</span>
-            </a>
-            <span class="tooltip">Lista immobili</span>
-        </li>
-        <li>
-            <a href="aggiungi-immobile-admin.html">
-                <i class='bx bx-home-smile'></i>
-                <span class="links_name">Aggiungi immobile</span>
-            </a>
-            <span class="tooltip">Aggiungi immobile</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bxs-user-detail'></i>
-                <span class="links_name">Lista utenti</span>
-            </a>
-            <span class="tooltip">Lista utenti</span>
-        </li>
-        <li>
-            <a href="aggiungi-utente.html">
-                <i class='bx bx-user-plus'></i>
-                <span class="links_name">Aggiungi utente</span>
-            </a>
-            <span class="tooltip">Aggiungi utente</span>
-        </li>
-        <li class="profile">
-            <div class="profile-details">
-                <img src="../java/model/utente/agente.jpg" alt="profileImg">
-                <div class="name_job">
-                    <div class="name">Gaetano De Filippo</div>
-                    <div class="job">Amministratore</div>
-                </div>
-            </div>
-            <i class='bx bx-log-out' id="log_out"></i>
-        </li>
-    </ul>
-</div>
+
+<jsp:include page="sidebar.jsp"/>
+
 <section class="home-section">
     <div class="div_property_list">
         <div class="property_list_page_head">
@@ -152,50 +86,42 @@
                     </div>
                 </div>
                 <div class="dashboard_properties_list_body">
-                    <%for (AppartamentoBean appartamentoBean : appartamentoBeans) {%>
+                    <%for (VisualizzazioneImmobile immobili : visualizzazioneImmobili) {%>
                     <div class="property_column_wrap">
                         <div class="large_column_wrap">
                             <div class="column column_picture">
                                 <figure>
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
-                                        <%
-                                            for (MultimediaBean multimediaBean : multimedia) {
-                                                if (multimediaBean.getIdAppartamento() == appartamentoBean.getIdAppartamento()) {
-                                        %>
-                                        <img src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>">
-                                        <%
-                                                }
-                                            }
-                                        %>
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=immobili.getIdAppartamento()%>">
+                                        <img src="data:image/png;base64,<%=immobili.getFoto()%>">
                                     </a>
                                 </figure>
                             </div>
                             <div class="column column-info">
                                 <div class="property_info_wrap">
                                     <h3 class="property_title">
-                                        <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>"></a>
+                                        <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=immobili.getIdAppartamento()%>"></a>
                                     </h3>
-                                    <p class="property-description"><%=appartamentoBean.getNomeAppartamento()%></p>
+                                    <p class="property-description"><%=immobili.getNomeAppartamento()%></p>
                                     <ul class="property_meta">
                                         <li>
                                             <span class="property_meta_label">Camere</span>
                                             <div class="property_meta_icon">
                                                 <icon class="icon icon-bed"></icon>
-                                                <span class="figure"><%=appartamentoBean.getCamereLetto()%></span>
+                                                <span class="figure"><%=immobili.getCamereLetto()%></span>
                                             </div>
                                         </li>
                                         <li>
                                             <span class="property_meta_label">Bagni</span>
                                             <div class="property_meta_icon">
                                                 <icon class="icon icon-shower"></icon>
-                                                <span class="figure"><%=appartamentoBean.getBagni()%></span>
+                                                <span class="figure"><%=immobili.getBagni()%></span>
                                             </div>
                                         </li>
                                         <li>
                                             <span class="property_meta_label">Superficie</span>
                                             <div class="property_meta_icon">
                                                 <icon class="icon icon-square-o"></icon>
-                                                <span class="figure"><%=appartamentoBean.getSuperficie()%></span>
+                                                <span class="figure"><%=immobili.getSuperficie()%></span>
                                                 <span class="figure">mq</span>
                                             </div>
                                         </li>
@@ -205,17 +131,17 @@
                         </div>
                         <div class="small_column_wrap">
                             <div class="column column_data">
-                                <span class="property_date"><%=appartamentoBean.getData()%></span>
+                                <span class="property_date"><%=immobili.getData()%></span>
                             </div>
                             <div class="column column_status">
-                                <span class="property_status"><%=appartamentoBean.getTipoVendita()%></span>
+                                <span class="property_status"><%=immobili.getCategoria()%></span>
                             </div>
                             <div class="column column_price">
-                                <span class="property_price">€<%=appartamentoBean.getPrezzo()%></span>
+                                <span class="property_price">€<%=immobili.getPrezzo()%></span>
                             </div>
                             <div class="column column_price">
                                 <div class="property_actions">
-                                    <a href="">
+                                    <a href="ServletDettagliAppartamento?id=<%=immobili.getIdAppartamento()%>">
                                         <i class="icon-eye"></i>
                                         Visualizza
                                     </a>

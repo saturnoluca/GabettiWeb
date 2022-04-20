@@ -43,6 +43,6 @@ public class ServletListaImmobili extends HttpServlet {
         request.getSession().setAttribute("agenti-immobili", agenti);
         request.getSession().setAttribute("multimedia-immobili", multimedia);
         request.getSession().setAttribute("entrato-immobili", "si");
-        response.sendRedirect("amministratore-lista-immobili.jsp");
+        response.sendRedirect("gestione-lista-immobili.jsp");
     }
 }
