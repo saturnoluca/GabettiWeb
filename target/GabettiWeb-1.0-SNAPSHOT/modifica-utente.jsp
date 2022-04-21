@@ -175,7 +175,7 @@
     const customBtn = document.querySelector("#custom-btn");
     const cancelBtn = document.querySelector("#cancel-btn i");
     const img = document.querySelector("#preview");
-    let divText = document.querySelector(".text");
+    let divText = document.querySelector(".content");
     let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
     function defaultBtnActive() {
         defaultBtn.click();

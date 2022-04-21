@@ -14,6 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet(name = "ServletAggiungiUtente", value = "/ServletAggiungiUtente")
 @MultipartConfig
@@ -23,6 +24,7 @@ public class ServletAggiungiUtente extends HttpServlet {
         String tipo = request.getParameter("ruolo");
         UtenteBean utenteBean = new UtenteBean();
         UtenteModelDM utenteModelDM = new UtenteModelDM();
+        ArrayList<UtenteBean> utenti = null;
         if(tipo.equals("Admin")){
             utenteBean.setNome(request.getParameter("nome"));
             utenteBean.setCognome(request.getParameter("cognome"));
@@ -34,6 +36,8 @@ public class ServletAggiungiUtente extends HttpServlet {
 
             try{
                 utenteModelDM.doSave(utenteBean);
+                utenti = new ArrayList<UtenteBean>();
+                utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
             }catch (SQLException e){
                 e.printStackTrace();
             }
@@ -47,6 +51,8 @@ public class ServletAggiungiUtente extends HttpServlet {
             utenteBean.setFoto(request.getPart("foto"));
             try{
                 utenteModelDM.doSave(utenteBean);
+                utenti = new ArrayList<UtenteBean>();
+                utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
             }catch (SQLException e){
                 e.printStackTrace();
             }
@@ -72,6 +78,8 @@ public class ServletAggiungiUtente extends HttpServlet {
                 agenteBean.setLinkFacebook(request.getParameter("facebook"));
                 agenteBean.setLinkInstagram(request.getParameter("instagram"));
                 agenteModelDM.doSave(agenteBean);
+                utenti = new ArrayList<UtenteBean>();
+                utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
             }catch (SQLException e){
                 e.printStackTrace();
             }
@@ -97,10 +105,14 @@ public class ServletAggiungiUtente extends HttpServlet {
                 collaboratoreBean.setLinkFacebook(request.getParameter("facebook"));
                 collaboratoreBean.setLinkInstagram(request.getParameter("instagram"));
                 collaboratoreModelDM.doSave(collaboratoreBean);
+                utenti = new ArrayList<UtenteBean>();
+                utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
             }catch (SQLException e){
                 e.printStackTrace();
             }
         }
+        request.getSession().removeAttribute("lista-utenti");
+        request.getSession().setAttribute("lista-utenti",utenti);
         response.sendRedirect("aggiungi-utente.jsp");
     }
 }

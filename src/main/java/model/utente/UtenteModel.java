@@ -1,6 +1,10 @@
 package model.utente;
 
+import model.DriverManagerConnectionPool;
+
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,5 +29,4 @@ public interface UtenteModel<T> {
     public UtenteBean RetrieveNomeCognome(String nome, String cognome);
 
     void doUpdate(UtenteBean utenteBean) throws SQLException, IOException;
-
 }

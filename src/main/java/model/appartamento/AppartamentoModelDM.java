@@ -536,4 +536,25 @@ public class AppartamentoModelDM implements AppartamentoModel {
         return allCategorie;
     }
 
+    @Override
+    public void doDelete(int idAppartamento) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String deleteSql = "DELETE FROM appartamento WHERE idAppartamento=?";
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(deleteSql);
+            ps.setInt(1, idAppartamento);
+            ps.executeUpdate();
+            connection.commit();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
+    }
 }

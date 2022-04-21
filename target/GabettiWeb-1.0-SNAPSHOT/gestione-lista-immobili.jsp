@@ -149,7 +149,7 @@
                                         <i class="icon-mode_edit"></i>
                                         Modifica
                                     </a>
-                                    <a href="">
+                                    <a href="ServletEliminaImmobile?idImmobile=<%=immobili.getIdAppartamento()%>">
                                         <i class="icon-delete"></i>
                                         Elimina
                                     </a>

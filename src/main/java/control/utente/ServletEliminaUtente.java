@@ -8,6 +8,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet(name = "ServletEliminaUtente", value = "/ServletEliminaUtente")
 public class ServletEliminaUtente extends HttpServlet {
@@ -21,11 +22,16 @@ public class ServletEliminaUtente extends HttpServlet {
             response.sendRedirect("login.jsp");
         }
         int id = Integer.parseInt(request.getParameter("idUtente"));
+        ArrayList<UtenteBean> utenti = null;
         try {
             utenteModel.doDelete(id);
+            utenti = new ArrayList<UtenteBean>();
+            utenti = (ArrayList<UtenteBean>) utenteModel.doRetrieveAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        request.getSession().removeAttribute("lista-utenti");
+        request.getSession().setAttribute("lista-utenti",utenti);
         request.getSession().removeAttribute("entrato");
         response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/lista-utenti.jsp"));
     }

@@ -662,38 +662,47 @@
                             </figure>
                             <div class="featured_card_details">
                                 <h3>
-                                    <a href=""> Villa on Grand Avenue</a>
+                                    <a href=""><%=appartamentoBeans.get(0).getNomeAppartamento()%></a>
                                 </h3>
-                                <p class="featured_card_description">Spacious and fabulous home in a prime location.
-                                    This executive…</p>
+                                <p class="featured_card_description">
+                                    <%
+                                        if(appartamentoBeans.get(0).getDescrizioneAppartamento().length() > 30){
+                                    %>
+                                        <%=appartamentoBeans.get(0).getDescrizioneAppartamento().substring(0,30) + "..."%>
+                                    <%
+                                        }else{
+                                    %>
+                                        <%=appartamentoBeans.get(0).getDescrizioneAppartamento()%>
+                                    <%}%>
+                                </p>
                                 <div class="featured_card_features_wrap">
                                     <div class="featured_card_feature">
                                         <span class="features_title">Camere da letto</span>
                                         <div>
                                             <i class="feature_icon icon-bed"></i>
-                                            <span class="text">3</span>
+                                            <span class="text"><%=appartamentoBeans.get(0).getCamereLetto()%></span>
                                         </div>
                                     </div>
                                     <div class="featured_card_feature">
                                         <span class="features_title">Bagni</span>
                                         <div>
                                             <i class="feature_icon icon-shower"></i>
-                                            <span class="text">3</span>
+                                            <span class="text"><%=appartamentoBeans.get(0).getBagni()%></span>
                                         </div>
                                     </div>
                                     <div class="featured_card_feature">
                                         <span class="features_title">Superficie</span>
                                         <div>
                                             <i class="feature_icon icon-crop_square"></i>
-                                            <span class="text">500</span>
+                                            <span class="text"><%=appartamentoBeans.get(0).getSuperficie()%></span>
                                             <span class=>mq</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="featured_card_priceLabel">
                                     <div class="featured_card_price">
-                                        <span class="status">For Sale</span>
-                                        <p class="price">€800,000</p>
+                                        <span class="status"><%=appartamentoBeans.get(0).getTipoVendita()%></span>
+                                        <p class="price"><%=appartamentoBeans.get(0).getPrezzo() + "€"%></p>
                                     </div>
                                 </div>
                             </div>
