@@ -593,7 +593,7 @@
                                                 </div>
                                                 <div class="carousel-item">
                                                     <div class="properties_pagination">
-                                                        <%for (int i = 0; i < 3 && i < 8; i++) {%>
+                                                        <%for (int i = 3; i < 6 && i < 8; i++) {%>
                                                         <div class="property_style">
                                                             <div class="property_card_style">
                                                                 <div class="property_picture_wrapper">

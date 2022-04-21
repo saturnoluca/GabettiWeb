@@ -16,7 +16,7 @@ public interface AppartamentoModel<T> {
 
     public Collection<AppartamentoBean> OrderByVisite() throws SQLException;
 
-    public void doSave(AppartamentoBean app) throws SQLException;
+    public int doSave(AppartamentoBean app) throws SQLException;
 
     public ArrayList<AppartamentoBean> barraRicerca(Ricerca ricerca) throws SQLException;
 

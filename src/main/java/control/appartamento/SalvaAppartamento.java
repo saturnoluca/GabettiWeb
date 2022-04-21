@@ -45,9 +45,9 @@ public class SalvaAppartamento extends HttpServlet {
         bean.setTipoVendita(request.getParameter("tipoVendita"));
         bean.setPrezzo(parseFloat(request.getParameter("prezzo")));
         bean.setData(Date.valueOf(request.getParameter("data")));
-        bean.setIdAgente(parseInt(request.getParameter("idAgente")));
+        bean.setIdAgente(parseInt(request.getParameter("Agente")));
         bean.setCamereLetto(parseInt(request.getParameter("camereLetto")));
-        bean.setPostoAuto(parseInt(request.getParameter("postoAuto")));
+        bean.setPostoAuto(parseInt(request.getParameter("postiAuto")));
         try{
             model.doSave(bean);
         }catch(SQLException e){

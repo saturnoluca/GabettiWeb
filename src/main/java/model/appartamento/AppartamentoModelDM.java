@@ -5,10 +5,7 @@ import UtilityClass.Ricerca;
 import model.DriverManagerConnectionPool;
 import model.indirizzo.IndirizzoModelDM;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -194,14 +191,15 @@ public class AppartamentoModelDM implements AppartamentoModel {
     }
 
     @Override
-    public void doSave(AppartamentoBean app) throws SQLException {
+    public int doSave(AppartamentoBean app) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
+        int key=0;
         String insertSql = "INSERT into appartamento(nomeAppartamento, descrizioneAppartamento, superficie, locali, bagni, piano, riscaldamento, classeEnergetica, tipoVendita, prezzo, data, Agente_idAgente, categoria, camereLetto, postoAuto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = dmcp.getConnection();
             if (app instanceof AppartamentoBean) {
-                ps = connection.prepareStatement(insertSql);
+                ps = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, app.getNomeAppartamento());
                 ps.setString(2, app.getDescrizioneAppartamento());
                 ps.setFloat(3, app.getSuperficie());
@@ -214,21 +212,25 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 ps.setFloat(10, app.getPrezzo());
                 ps.setDate(11, app.getData());
                 ps.setInt(12, app.getIdAgente());
-                ps.setInt(13, app.getCamereLetto());
-                ps.setString(14, app.getCategoria());
+                ps.setString(13, app.getCategoria());
+                ps.setInt(14, app.getCamereLetto());
                 ps.setInt(15, app.getPostoAuto());
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                while(rs.next()) {
+                    key=rs.getInt(1);
+                }
                 connection.commit();
                 System.out.println("doSave: " + app);
             }
         } finally {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
+                ps.close();
             } finally {
                 dmcp.releaseConnection(connection);
             }
         }
+        return key;
     }
 
     @Override
@@ -487,7 +489,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
     public int RetrieveByBean(AppartamentoBean bean) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
-        String selectSQL = "SELECT idAppartamento FROM appartamento WHERE nomeAppartamento=? AND descrizioneAppartamento=? AND idAgente=?";
+        String selectSQL = "SELECT idAppartamento FROM appartamento WHERE nomeAppartamento=? AND descrizioneAppartamento=? AND Agente_idAgente=?";
         int id = 0;
         try {
             conn = dmcp.getConnection();
@@ -501,9 +503,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
             }
         } finally {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
+                ps.close();
             } finally {
                 dmcp.releaseConnection(conn);
             }

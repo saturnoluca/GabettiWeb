@@ -36,6 +36,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 ps.setString(5, indirizzo.getProvincia());
                 ps.setInt(6, indirizzo.getIdAppartamento());
                 ps.setString(7, indirizzo.getZona());
+                ps.executeUpdate();
                 connection.commit();
                 System.out.println("doSave: " + indirizzo);
             }

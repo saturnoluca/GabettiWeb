@@ -34,7 +34,6 @@ public class MultimediaModelDM implements MultimediaModel {
                 if (i > 0) {
                     connection = dmcp.getConnection();
                     for (int k = 1; k < i; k++) {
-                        System.out.println("SIUM1");
                         insertSql = "INSERT INTO multimedia(foto, Appartamento_idAppartamento) VALUES(?, ?)";
                         ps = connection.prepareStatement(insertSql);
                         in = multi.getFoto().get(k).getInputStream();
@@ -96,6 +95,43 @@ public class MultimediaModelDM implements MultimediaModel {
             }
         }
 
+    }
+
+    @Override
+    public void doSavePlanimetria(MultimediaBean multi) throws SQLException, IOException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        InputStream in = null;
+        String insertSql = null;
+        try {
+            if (multi instanceof MultimediaBean) {
+                int i = multi.getPlanimetria().size();
+                if (i > 0) {
+                    connection = dmcp.getConnection();
+                    for (int k = 1; k < i; k++) {
+                        insertSql = "INSERT INTO multimedia(planimetria, Appartamento_idAppartamento) VALUES(?, ?)";
+                        ps = connection.prepareStatement(insertSql);
+                        in = multi.getPlanimetria().get(k).getInputStream();
+                        ps.setBlob(1, in);
+                        ps.setInt(2, multi.getIdAppartamento());
+                        System.out.println("doSavePlanimetria:" + ps.toString());
+                        ps.executeUpdate();
+                        connection.commit();
+                    }
+                }
+            }
+            if (in != null) {
+                in.close();
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+        }
     }
 
     @Override

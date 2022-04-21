@@ -115,7 +115,7 @@
             </div>
         </div>
         <div class="addProperty_page_content">
-            <form class="form_addProperty" action="/SalvaAppartamento" method="post">
+            <form class="form_addProperty" action="ServletAggiungiAppartamento" method="post" onsubmit="data()">
                 <input type="hidden" name="ruolo" value="<%=admin.getRuolo()%>">
                 <div class="addProperty_tab">
                     <h3 class="tab_title">Informazioni generali</h3>
@@ -238,7 +238,7 @@
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Classe energetica</label>
                                     <input type="text" required placeholder="Inserisci la classe energetica"
-                                           name="classeEnegertica">
+                                           name="classeEnergetica">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Agente</label>
@@ -321,7 +321,7 @@
                         </div>
                     </div>
                 </div>
-
+                <input type="hidden" name="data" value="" id="data">
             </form>
         </div>
     </div>
@@ -471,6 +471,19 @@
     $('#reset-video').click(function () {
         $("#upload-video").val('');
     });
+</script>
+
+<script>
+    $(document).ready(function(){
+        var today = new Date();
+        var month = today.getMonth()+1;
+        if(month<10){
+            month='0'+month;
+        }
+        var date = today.getFullYear()+'-'+month+'-'+today.getDate();
+        $("#data").val(date);
+    });
+
 </script>
 
 <script>

@@ -14,19 +14,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
-        AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
-        ArrayList<AppartamentoBean> appartamentoBeans = new ArrayList<>();
-        ArrayList<MultimediaBean> multimedia = new ArrayList<>();
-        try {
-            appartamentoBeans = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllAppartamento();
-            multimedia = multimediaModelDM.RetrieveAll(appartamentoBeans);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        AppartamentoBean bean = new AppartamentoBean();
 
-        for (MultimediaBean multimediaBean : multimedia) {
-            System.out.println(multimediaBean.getFotoString());
-        }
     }
 }

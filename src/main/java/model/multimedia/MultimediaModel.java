@@ -11,6 +11,8 @@ public interface MultimediaModel<T> {
     
     public void doSaveVideo(MultimediaBean multi) throws SQLException, IOException;
 
+    public void doSavePlanimetria(MultimediaBean multi) throws SQLException, IOException;
+
     public ArrayList<String> doRetrieveFoto(int idAppartamento) throws SQLException, IOException;
 
     public ArrayList<String> doRetrieveVideo(int idAppartamento) throws SQLException, IOException;
