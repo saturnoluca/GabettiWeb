@@ -39,7 +39,7 @@
             <span class="tooltip">Lista immobili</span>
         </li>
         <li>
-            <a href="aggiungi-immobile-admin.html">
+            <a href="aggiungi-immobile-admin.jsp">
                 <i class='bx bx-home-smile'></i>
                 <span class="links_name">Aggiungi immobile</span>
             </a>

@@ -46,67 +46,7 @@
 
 %>
 <body>
-<div class="sidebar">
-    <div class="logo-details">
-        <div class="logo_name">Gabetti</div>
-        <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul class="nav-list">
-        <li>
-            <a href="#">
-                <i class='bx bx-grid-alt'></i>
-                <span class="links_name">Dashboard</span>
-            </a>
-            <span class="tooltip">Dashboard</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-user'></i>
-                <span class="links_name">Il mio profilo</span>
-            </a>
-            <span class="tooltip">Il mio profilo</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-home'></i>
-                <span class="links_name">Lista immobili</span>
-            </a>
-            <span class="tooltip">Lista immobili</span>
-        </li>
-        <li>
-            <a href="aggiungi-immobile-admin.html">
-                <i class='bx bx-home-smile'></i>
-                <span class="links_name">Aggiungi immobile</span>
-            </a>
-            <span class="tooltip">Aggiungi immobile</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bxs-user-detail'></i>
-                <span class="links_name">Lista utenti</span>
-            </a>
-            <span class="tooltip">Lista utenti</span>
-        </li>
-        <li>
-            <a href="aggiungi-utente.html">
-                <i class='bx bx-user-plus'></i>
-                <span class="links_name">Aggiungi utente</span>
-            </a>
-            <span class="tooltip">Aggiungi utente</span>
-        </li>
-        <li class="profile">
-            <div class="profile-details">
-                <img src="images/agente.jpg" alt="profileImg">
-                <div class="name_job">
-                    <div class="name"><%=admin.getNome() + " " + admin.getCognome()%>
-                    </div>
-                    <div class="job">Amministratore</div>
-                </div>
-            </div>
-            <i class='bx bx-log-out' id="log_out"></i>
-        </li>
-    </ul>
-</div>
+<jsp:include page="sidebar.jsp" />
 <section class="home-section">
     <div class="div_addProperty_page">
         <div class="addProperty_page_head">
@@ -256,64 +196,6 @@
                                         %>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="property_multimedia">
-                                <h3 class="tab_title">Multimedia</h3>
-                                <div class="gallery_image_container" id="gallery_image_container"></div>
-                                <input id="fileDragName">
-                                <div class="content_gallery_images full_size">
-                                    <label class="label_property_title">Immagini</label>
-                                    <div class="drag_drop_container"
-                                         ondragover="this.style.borderColor='#0c0'; return false;"
-                                         ondragleave="this.style.borderColor='#ccc'"
-                                         ondrop="getTheFile(event); return false;">
-                                        <i class="icon-cloud-upload"></i>
-                                        <strong>Trascina e rilascia delle immagini</strong>
-                                        <span class="or">oppure</span>
-                                        <div class="button_browse">Sfoglia Immagine
-                                            <div class="input_file">
-                                                <input type="file" multiple id="upload-photo"
-                                                       onchange="readFile(event)">
-                                            </div>
-                                        </div>
-                                        <div id="reset-image" class="button_browse">Reset
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="gallery_image_container" id="planimetria_image_container"></div>
-                                <div class="content_gallery_images full_size">
-                                    <label class="label_property_title">Planimetria</label>
-                                    <div class="drag_drop_container">
-                                        <i class="icon-cloud-upload"></i>
-                                        <strong>Trascina e rilascia fino delle immagini</strong>
-                                        <span class="or">oppure</span>
-                                        <div class="button_browse">Sfoglia Immagine
-                                            <div class="input_file">
-                                                <input type="file" multiple id="upload-planimetria">
-                                            </div>
-                                        </div>
-                                        <div id="reset-planimetria" class="button_browse">Reset
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="content_gallery_images full_size">
-                                    <label class="label_property_title">Video</label>
-                                    <div class="drag_drop_container">
-                                        <i class="icon-cloud-upload"></i>
-                                        <strong>Trascina e rilascia un video</strong>
-                                        <span class="or">oppure</span>
-                                        <div class="button_browse">Sfoglia Video
-                                            <div class="input_file">
-                                                <input type="file" id="upload-video">
-                                            </div>
-                                        </div>
-                                        <div id="reset-video" class="button_browse">Reset
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                         <div class="div_button_submit">

@@ -2,6 +2,7 @@ package model.utente;
 
 import UtilityClass.UtilityBlob;
 import model.DriverManagerConnectionPool;
+import model.agente.AgenteBean;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -122,7 +123,39 @@ public class UtenteModelDM implements UtenteModel {
 
     @Override
     public UtenteBean doRetrieveUtenteByKey(int idUtente) throws SQLException {
-        return null;
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT * FROM utente WHERE idUtente=?";
+        UtenteBean bean = new UtenteBean();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setInt(1, idUtente);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bean.setIdUtente(rs.getInt("idUtente"));
+                bean.setUsername(rs.getString("username"));
+                bean.setPassword(rs.getString("password"));
+                bean.setNome(rs.getString("nome"));
+                bean.setCognome(rs.getString("cognome"));
+                bean.setEmail(rs.getString("email"));
+                if (rs.getBlob("foto") != null) {
+                    String fotoPart = null;
+                    fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
+                    bean.setFotoString(fotoPart);
+                }
+                bean.setRuolo(rs.getString("ruolo"));
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+            return bean;
+        }
     }
 
     @Override

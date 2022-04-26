@@ -140,27 +140,28 @@
                             <p>Informazioni utente</p>
                         </div>
                         <div class="user_settings_body">
-                            <form class="form_user_settings">
+                            <form class="form_user_settings" action="ServletCambiaInformazioniPersonali" method="post">
                                 <div class="user_settings_fields">
                                     <div class="user_field half_size">
+                                        <input type="hidden" name="idUtente" value="<%=admin.getIdUtente()%>">
                                         <label>Username</label>
-                                        <input type="text" placeholder="<%=admin.getUsername()%>">
+                                        <input type="text" placeholder="<%=admin.getUsername()%>" name="usernameUtente">
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Email</label>
-                                        <input type="email" placeholder="<%=admin.getEmail()%>">
+                                        <input type="email" placeholder="<%=admin.getEmail()%>" name="emailUtente">
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Nome</label>
-                                        <input type="text" placeholder="<%=admin.getNome()%>">
+                                        <input type="text" placeholder="<%=admin.getNome()%>" name="nomeUtente">
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Cognome</label>
-                                        <input type="email" placeholder="<%=admin.getCognome()%>">
+                                        <input type="email" placeholder="<%=admin.getCognome()%>" name="cognomeUtente">
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Password</label>
-                                        <input type="password" placeholder="********">
+                                        <input type="password" placeholder="********" name="passwordUtente">
                                     </div>
                                 </div>
                                 <div>
