@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
 <%
-    int idAppartamento = Integer.parseInt(request.getParameter("idAppartamento"));
+    int idAppartamento = (int) request.getAttribute("idAppartamento");
 %>
 <body>
 <div class="sidebar">
@@ -99,7 +99,7 @@
             </div>
         </div>
         <div class="addProperty_page_content">
-            <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post">
+            <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="idAppartamento" value="<%=idAppartamento%>">
                 <input type="hidden" name="azione" value="<%="video"%>">
                 <div class="addProperty_content">
@@ -115,7 +115,7 @@
                                         <span class="or">oppure</span>
                                         <div class="button_browse">Sfoglia Video
                                             <div class="input_file">
-                                                <input type="file" accept="video/mp4,video/x-m4v,video/*" id="upload-video">
+                                                <input type="file" id="upload-video" name="video" accept="video/*">
                                             </div>
                                         </div>
                                         <div id="reset-video" class="button_browse">Reset
@@ -135,63 +135,6 @@
         </div>
     </div>
 </section>
-
-<script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector(".bx-search");
-
-    closeBtn.addEventListener("click", ()=>{
-        sidebar.classList.toggle("open");
-        menuBtnChange();//calling the function(optional)
-    });
-
-    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
-        sidebar.classList.toggle("open");
-        menuBtnChange(); //calling the function(optional)
-    });
-
-    // following are the code to change sidebar button(optional)
-    function menuBtnChange() {
-        if(sidebar.classList.contains("open")){
-            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-        }else {
-            closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
-        }
-    }
-</script>
-
-
-
-<script>
-    function readFile(e) {
-        var files;
-        console.log("SIUM");
-        if (e.target.files) {
-            files=e.target.files
-        } else {
-            files=e.dataTransfer.files
-        }
-        if (files.length==0) {
-            alert('What you dropped is not a file.');
-            return;
-        }
-        var file=files[0];
-        document.getElementById('fileDragName').value = file.name
-        document.getElementById('fileDragSize').value = file.size
-        document.getElementById('fileDragType').value = file.type
-        reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('fileDragData').value = e.target.result;
-        }
-        reader.readAsDataURL(file);
-    }
-    function getTheFile(e) {
-        e.target.style.borderColor='#ccc';
-        readFile(e);
-    }
-</script>
-
 
 <script src="script/index.js"></script>
 <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
