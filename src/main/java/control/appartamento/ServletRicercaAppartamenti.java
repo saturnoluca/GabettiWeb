@@ -38,15 +38,11 @@ public class ServletRicercaAppartamenti extends HttpServlet {
             UtenteModelDM utenteModelDM = new UtenteModelDM();
             ArrayList<UtenteBean> utenteArray = new ArrayList<UtenteBean>();
             ArrayList<CompositeKeyAgenteCase> arrayComp = new ArrayList<CompositeKeyAgenteCase>();
-            try {
-                sizeArray = (int) Math.ceil((double) arrayList.size() / 10);
-                sizeArrayString = Integer.toString(sizeArray);
-                agenteArray = (ArrayList<AgenteBean>) agenteModelDM.RetrieveAgente();
-                utenteArray = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
-                arrayComp = (ArrayList<CompositeKeyAgenteCase>) agenteModelDM.RetrieveAgenteCase();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            sizeArray = (int) Math.ceil((double) arrayList.size() / 10);
+            sizeArrayString = Integer.toString(sizeArray);
+            agenteArray = (ArrayList<AgenteBean>) agenteModelDM.RetrieveAgente();
+            utenteArray = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
+            arrayComp = (ArrayList<CompositeKeyAgenteCase>) agenteModelDM.RetrieveAgenteCase();
             if (arrayList != null) {
                 if (arrayList.size() < 10) {
                     request.setAttribute("array", arrayList);

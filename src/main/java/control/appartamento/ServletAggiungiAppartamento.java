@@ -18,6 +18,7 @@ public class ServletAggiungiAppartamento extends HttpServlet {
 
     private static AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
     private static IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -25,7 +26,7 @@ public class ServletAggiungiAppartamento extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int key=0;
+        int key = 0;
         String ruolo = request.getParameter("ruolo");
         String zona = request.getParameter("zona");
         String titoloImmobile = request.getParameter("titoloImmobile");
@@ -65,11 +66,7 @@ public class ServletAggiungiAppartamento extends HttpServlet {
         bean.setClasseEnergetica(classeEnergetica);
         bean.setCategoria(tipoImmobile);
         bean.setData(date);
-        try {
-            key=appartamentoModelDM.doSave(bean);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+        key = appartamentoModelDM.doSave(bean);
         System.out.println(key);
         IndirizzoBean indirizzoBean = new IndirizzoBean();
         indirizzoBean.setProvincia(provincia);
@@ -81,11 +78,7 @@ public class ServletAggiungiAppartamento extends HttpServlet {
 
         indirizzoBean.setIdAppartamento(key);
 
-        try{
-            indirizzoModelDM.doSave(indirizzoBean);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+        indirizzoModelDM.doSave(indirizzoBean);
 
         request.setAttribute("idAppartamento", key);
         RequestDispatcher rd = request.getRequestDispatcher("/aggiungi-immobile-galleria.jsp");

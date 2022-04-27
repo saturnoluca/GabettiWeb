@@ -28,7 +28,7 @@ public class UtenteModelDM implements UtenteModel {
     }
 
     @Override
-    public void doSave(Object utente) throws SQLException, IOException {
+    public void doSave(Object utente) throws IOException {
         Connection connection = null;
         PreparedStatement ps = null;
         InputStream in = null;
@@ -67,19 +67,13 @@ public class UtenteModelDM implements UtenteModel {
             if (in != null) {
                 in.close();
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
-    public Collection<UtenteBean> doRetrieveAll() throws SQLException {
+    public Collection<UtenteBean> doRetrieveAll() {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<UtenteBean> array = new ArrayList<UtenteBean>();
@@ -104,14 +98,8 @@ public class UtenteModelDM implements UtenteModel {
                 bean.setRuolo(rs.getString("ruolo"));
                 array.add(bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return array;
     }
@@ -122,7 +110,7 @@ public class UtenteModelDM implements UtenteModel {
     }
 
     @Override
-    public UtenteBean doRetrieveUtenteByKey(int idUtente) throws SQLException {
+    public UtenteBean doRetrieveUtenteByKey(int idUtente) {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM utente WHERE idUtente=?";
@@ -146,20 +134,13 @@ public class UtenteModelDM implements UtenteModel {
                 }
                 bean.setRuolo(rs.getString("ruolo"));
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-            return bean;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return bean;
     }
-
     @Override
-    public void doDelete(int idUtente) throws SQLException {
+    public void doDelete(int idUtente) {
         Connection connection = null;
         PreparedStatement ps = null;
         String deleteSql = "DELETE FROM utente WHERE idUtente=?";
@@ -169,19 +150,13 @@ public class UtenteModelDM implements UtenteModel {
             ps.setInt(1, idUtente);
             ps.executeUpdate();
             connection.commit();
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 
     @Override
-    public UtenteBean doRetrieveUtenteByKeyAgente(int idUtente) throws SQLException {
+    public UtenteBean doRetrieveUtenteByKeyAgente(int idUtente) {
         Connection connection = null;
         PreparedStatement ps = null;
         UtenteBean bean = new UtenteBean();
@@ -205,26 +180,21 @@ public class UtenteModelDM implements UtenteModel {
                 }
                 bean.setRuolo(rs.getString("ruolo"));
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return bean;
     }
 
     @Override
-    public UtenteBean Login(String email, String password) throws SQLException {
+    public UtenteBean Login(String email, String password) {
         Connection conn = null;
         PreparedStatement ps = null;
-        conn = dmcp.getConnection();
+
         String selectSql = "SELECT * FROM utente where email=? AND password=?";
         UtenteBean bean = new UtenteBean();
         try {
+            conn = dmcp.getConnection();
             ps = conn.prepareStatement(selectSql);
             ps.setString(1, email);
             ps.setString(2, password);
@@ -243,14 +213,8 @@ public class UtenteModelDM implements UtenteModel {
                 }
                 bean.setRuolo(rs.getString("ruolo"));
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(conn);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return bean;
     }
@@ -292,7 +256,7 @@ public class UtenteModelDM implements UtenteModel {
     }
 
     @Override
-    public void doUpdate(UtenteBean utenteBean) throws SQLException, IOException {
+    public void doUpdate(UtenteBean utenteBean) throws IOException {
         Connection connection = null;
         PreparedStatement ps = null;
         InputStream in = null;
@@ -313,14 +277,8 @@ public class UtenteModelDM implements UtenteModel {
             ps.setInt(8, utenteBean.getIdUtente());
             ps.executeUpdate();
             connection.commit();
-        }finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 

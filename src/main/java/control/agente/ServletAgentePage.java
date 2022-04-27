@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 @WebServlet(name = "ServletAgentePage", value = "/ServletAgentePage")
 @MultipartConfig
-public class    ServletAgentePage extends HttpServlet {
+public class ServletAgentePage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static AgenteModelDM modelAgenti = new AgenteModelDM();
     private static UtenteModelDM modelUtente = new UtenteModelDM();
@@ -40,17 +40,13 @@ public class    ServletAgentePage extends HttpServlet {
         ArrayList<CompositeKeyAgenteCase> agenteCase = new ArrayList<CompositeKeyAgenteCase>();
         ArrayList<AppartamentoBean> inEvidenza = new ArrayList<AppartamentoBean>();
 
-        try {
-            agenteBean = modelAgenti.RetrieveAgenteById(id);
-            utenteBean = modelUtente.doRetrieveUtenteByKeyAgente(agenteBean.getIdUtente());
-            arrayAppartamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllByAgente(id);
-            arrayIndirizzo = (ArrayList<IndirizzoBean>) indirizzoModelDM.RetrieveAll();
-            arrayMultimedia = multimediaModelDM.RetrieveAll((ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllAppartamento());
-            agenteCase = (ArrayList<CompositeKeyAgenteCase>) modelAgenti.RetrieveAgenteCase();
-            inEvidenza = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByVisite();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        agenteBean = modelAgenti.RetrieveAgenteById(id);
+        utenteBean = modelUtente.doRetrieveUtenteByKeyAgente(agenteBean.getIdUtente());
+        arrayAppartamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllByAgente(id);
+        arrayIndirizzo = (ArrayList<IndirizzoBean>) indirizzoModelDM.RetrieveAll();
+        arrayMultimedia = multimediaModelDM.RetrieveAll((ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllAppartamento());
+        agenteCase = (ArrayList<CompositeKeyAgenteCase>) modelAgenti.RetrieveAgenteCase();
+        inEvidenza = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByVisite();
         //System.out.println(agenteCase);
         request.setAttribute("agente", agenteBean);
         request.setAttribute("utente", utenteBean);

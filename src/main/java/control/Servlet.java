@@ -27,7 +27,7 @@ public class Servlet extends HttpServlet {
         MultimediaBean bean = new MultimediaBean();
         String action=request.getParameter("action");
         try {
-            if(action.equals("img")) {
+            if (action.equals("img")) {
                 ArrayList<Part> array = new ArrayList<Part>();
                 System.out.println(request.getParts());
                 for (Part part : request.getParts()) {
@@ -36,7 +36,7 @@ public class Servlet extends HttpServlet {
                 bean.setFoto(array);
                 bean.setIdAppartamento(2);
                 model.doSaveFoto(bean);
-            }else if(action.equals("video")) {
+            } else if (action.equals("video")) {
                 ArrayList<Part> array = new ArrayList<Part>();
                 for (Part part : request.getParts()) {
                     array.add(part);
@@ -45,10 +45,8 @@ public class Servlet extends HttpServlet {
                 bean.setIdAppartamento(2);
                 model.doSaveVideo(bean);
             }
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
+        }
+            catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

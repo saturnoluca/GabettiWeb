@@ -21,12 +21,8 @@ public class ServletRetrieveMultimedia extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         MultimediaModelDM model = new MultimediaModelDM();
         MultimediaBean bean = new MultimediaBean();
-        try{
-            bean.setFotoString(model.doRetrieveFoto(2));
-            bean.setVideoString(model.doRetrieveVideo(2));
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+        bean.setFotoString(model.doRetrieveFoto(2));
+        bean.setVideoString(model.doRetrieveVideo(2));
         request.setAttribute("multimedia", bean);
         RequestDispatcher rd = request.getRequestDispatcher("/NewFile.jsp");
         rd.forward(request, response);

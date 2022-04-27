@@ -24,13 +24,9 @@ public class ServletEliminaImmobile extends HttpServlet {
         }
         int id = Integer.parseInt(request.getParameter("idImmobile"));
         ArrayList<AppartamentoBean> immobili = null;
-        try {
-            appartamentoModelDM.doDelete(id);
-            immobili = new ArrayList<AppartamentoBean>();
-            immobili = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByData();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        appartamentoModelDM.doDelete(id);
+        immobili = new ArrayList<AppartamentoBean>();
+        immobili = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByData();
         request.getSession().removeAttribute("lista-immobili");
         request.getSession().setAttribute("lista-immobilli", immobili);
         request.getSession().removeAttribute("entrato");

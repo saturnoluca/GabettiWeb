@@ -48,20 +48,16 @@ public class SalvaAppartamento extends HttpServlet {
         bean.setIdAgente(parseInt(request.getParameter("Agente")));
         bean.setCamereLetto(parseInt(request.getParameter("camereLetto")));
         bean.setPostoAuto(parseInt(request.getParameter("postiAuto")));
-        try{
-            model.doSave(bean);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+        model.doSave(bean);
         MultimediaBean multimediaBean = new MultimediaBean();
         MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
         ArrayList<Part> multi = new ArrayList<Part>();
-        for(Part part : request.getParts()){
+        for (Part part : request.getParts()) {
             multi.add(part);
         }
-        try{
+        try {
             multimediaBean.setFoto(multi);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

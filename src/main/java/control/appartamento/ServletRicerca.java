@@ -82,11 +82,8 @@ public class ServletRicerca extends HttpServlet {
             utenteBean = nomeCognome(agente);
             AgenteBean agenteBean = new AgenteBean();
             AgenteModelDM agenteModelDM = new AgenteModelDM();
-            try {
-                agenteBean = agenteModelDM.RetrieveAgenteByIdUtente(utenteBean.getIdUtente());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            agenteBean = agenteModelDM.RetrieveAgenteByIdUtente(utenteBean.getIdUtente());
+
             ricerca.setAgente(agenteBean.getIdAgente());
         }
         String minSuperfice = request.getParameter("minSuperficie_immobile");
@@ -104,11 +101,8 @@ public class ServletRicerca extends HttpServlet {
 
         AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
         ArrayList<AppartamentoBean> arrayApp = null;
-        try {
-            arrayApp = appartamentoModelDM.barraRicerca(ricerca);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        arrayApp = appartamentoModelDM.barraRicerca(ricerca);
+
         request.getSession().setAttribute("ricercaString", "ricerca");
         request.getSession().setAttribute("ricerca", arrayApp);
         response.sendRedirect("ServletRicercaAppartamenti");

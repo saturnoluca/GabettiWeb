@@ -29,12 +29,8 @@ public class ServletMail extends HttpServlet {
             String telefonoGuest = request.getParameter("telefonoGuest");
             String messaggioGuest = request.getParameter("messaggioGuest");
             String contenuto = "Nome Mittente: " + nomeGuest + "\nEmail Mittente: " + emailGuest + "\nTelefono Mittente: " + telefonoGuest + "\n\n" + messaggioGuest;
-            try {
                 agente = modelAgente.RetrieveAgenteById(Integer.parseInt(request.getParameter("agenteid")));
                 utenteBean = modelUtent.doRetrieveUtenteByKey(agente.getIdUtente());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             try {
                 Mail.sendMail(utenteBean.getEmail(), contenuto);
             } catch (Exception e) {

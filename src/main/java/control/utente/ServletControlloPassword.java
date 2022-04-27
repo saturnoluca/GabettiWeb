@@ -21,14 +21,11 @@ public class ServletControlloPassword extends HttpServlet {
         String password = request.getParameter("Password");
         UtenteBean utente = null;
             utente = model.RetrieveByEmail(email);
-            System.out.println("Controllo email inserita " + email);
-            System.out.println("Controllo password: " + utente);
-            if ((utente.getPassword()).equals(password)) {
-                out.print("true");
-            } else {
+            if(utente.getIdUtente() == 0){
                 out.print("false");
             }
-
+            else if ((utente.getPassword()).equals(password)) {
+                out.print("true");
+            }
     }
-
 }

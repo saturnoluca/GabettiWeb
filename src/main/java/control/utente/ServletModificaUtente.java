@@ -30,45 +30,30 @@ public class ServletModificaUtente extends HttpServlet {
         utenteBean.setRuolo(request.getParameter("ruolo"));
         utenteBean.setFoto(request.getPart("foto"));
 
-        try {
-            utenteAgente = utente.doRetrieveUtenteByKey(Integer.parseInt(request.getParameter("idUtente")));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if(utenteAgente != null) {
+        utenteAgente = utente.doRetrieveUtenteByKey(Integer.parseInt(request.getParameter("idUtente")));
+
+        if (utenteAgente != null) {
             if (!utenteBean.getRuolo().equals("Agente") && utenteAgente.getRuolo().equals("Agente")) {
-                try {
-                    agenteModel.doDelete(utenteAgente);
-                    utente.doUpdate(utenteBean);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                agenteModel.doDelete(utenteAgente);
+                utente.doUpdate(utenteBean);
             }
         }
         if (!request.getParameter("ruolo").equals("Agente") && !request.getParameter("ruolo").equals("Collaboratore")) {
-            try {
-                System.out.println(utenteBean);
-                utente.doUpdate(utenteBean);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }else if(request.getParameter("ruolo").equals("Agente") || request.getParameter("ruolo").equals("Collaboratore")){
+            System.out.println(utenteBean);
+            utente.doUpdate(utenteBean);
+        } else if (request.getParameter("ruolo").equals("Agente") || request.getParameter("ruolo").equals("Collaboratore")) {
             AgenteBean agenteBean = new AgenteBean();
-            try {
-                agenteBean.setIdAgente(agenteModel.RetrieveAgenteByIdUtente(Integer.parseInt(request.getParameter("idUtente"))).getIdAgente());
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
+            agenteBean.setIdAgente(agenteModel.RetrieveAgenteByIdUtente(Integer.parseInt(request.getParameter("idUtente"))).getIdAgente());
             agenteBean.setLinkFacebook(request.getParameter("linkFacebook"));
             agenteBean.setLinkInstagram(request.getParameter("linkInstagram"));
             agenteBean.setDescrizionePersonale(request.getParameter("descrizionePersonale"));
             agenteBean.setTelefonoCellulare(request.getParameter("telefono"));
             agenteBean.setIdUtente(Integer.parseInt(request.getParameter("idUtente")));
             System.out.println(agenteBean);
-            try{
+            try {
                 agenteModel.doUpdate(agenteBean);
                 utente.doUpdate(utenteBean);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

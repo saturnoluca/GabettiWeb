@@ -19,7 +19,7 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
     }
 
     @Override
-    public CollaboratoreBean doSave(CollaboratoreBean bean) throws SQLException {
+    public CollaboratoreBean doSave(CollaboratoreBean bean) {
         Connection connection = null;
         PreparedStatement ps = null;
         String insertSql = "INSERT INTO collaboratore(Agente_idAgente, Utente_idUtente, telefonoCellulare, linkFacebook, linkInstagram, descrizionePersonale) VALUES(?, ?, ?, ?, ?, ?)";
@@ -36,20 +36,14 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
                 connection.commit();
                 System.out.println("doSave: " + bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return bean;
     }
 
     @Override
-    public CollaboratoreBean RetrieveCollaboratore(int idUtente) throws SQLException {
+    public CollaboratoreBean RetrieveCollaboratore(int idUtente) {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM collaboratore WHERE idCollaboratore=? AND idUtente";
@@ -65,20 +59,14 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
             bean.setLinkFacebook(rs.getString("linkFacebook"));
             bean.setLinkInstagram(rs.getString("linkInstagram"));
             bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return bean;
     }
 
     @Override
-    public ArrayList<CollaboratoreBean> RetrieveCollaboratoreByAgente(int idAgente) throws SQLException {
+    public ArrayList<CollaboratoreBean> RetrieveCollaboratoreByAgente(int idAgente)  {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM collaboratore WHERE Agente_idAgente=?";
@@ -98,20 +86,14 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
                 bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
                 collaboratori.add(bean);
             }
-        }finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return collaboratori;
     }
 
     @Override
-    public ArrayList<CollaboratoreBean> RetrieveAllCollaboratore() throws SQLException {
+    public ArrayList<CollaboratoreBean> RetrieveAllCollaboratore() {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM collaboratore";
@@ -131,14 +113,8 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
                 bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
                 collaboratori.add(bean);
             }
-        }finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch(SQLException e){
+            e.printStackTrace();
         }
         return collaboratori;
     }

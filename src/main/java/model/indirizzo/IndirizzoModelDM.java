@@ -21,7 +21,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
     }
 
     @Override
-    public void doSave(IndirizzoBean indirizzo) throws SQLException {
+    public void doSave(IndirizzoBean indirizzo) {
         Connection connection = null;
         PreparedStatement ps = null;
         String insertSql = "INSERT INTO Indirizzo(via, numeroCivico, cap, città, provincia, Appartamento_idAppartamento, zona) VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -40,19 +40,13 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 connection.commit();
                 System.out.println("doSave: " + indirizzo);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 
     @Override
-    public IndirizzoBean RetrieveIndirizzoByAppId(int id) throws SQLException {
+    public IndirizzoBean RetrieveIndirizzoByAppId(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM indirizzo WHERE Appartamento_idAppartamento=?";
@@ -71,20 +65,14 @@ public class IndirizzoModelDM implements IndirizzoModel {
             bean.setProvincia(rs.getString("provincia"));
             bean.setIdAppartamento(rs.getInt("Appartamento_idAppartamento"));
             bean.setZona(rs.getString("zona"));
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return bean;
     }
 
     @Override
-    public Collection<IndirizzoBean> RetrieveAll() throws SQLException {
+    public Collection<IndirizzoBean> RetrieveAll(){
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM indirizzo";
@@ -105,19 +93,13 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 bean.setZona(rs.getString("zona"));
                 array.add(bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch(SQLException e){
+            e.printStackTrace();
         }
         return array;
     }
 
-    public ArrayList<String> RetrieveAllCittà() throws SQLException {
+    public ArrayList<String> RetrieveAllCittà() {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT DISTINCT città FROM indirizzo";
@@ -130,20 +112,14 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 String cittàString = rs.getString("città");
                 città.add(cittàString);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch(SQLException e){
+            e.printStackTrace();
         }
         return città;
     }
 
     @Override
-    public ArrayList<Città> RetrieveAllCittàZone(ArrayList città) throws SQLException {
+    public ArrayList<Città> RetrieveAllCittàZone(ArrayList città) {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSQL = "SELECT DISTINCT zona FROM indirizzo where città=?";
@@ -167,14 +143,8 @@ public class IndirizzoModelDM implements IndirizzoModel {
                     city.setZone(allZone);
                 }
                 allCittà.add(city);
-            } finally {
-                try {
-                    if (ps != null) {
-                        ps.close();
-                    }
-                } finally {
-                    dmcp.releaseConnection(connection);
-                }
+            }catch (SQLException e){
+                e.printStackTrace();
             }
         }
         return allCittà;

@@ -21,16 +21,12 @@ public class ServletValutazioneCampiRicerca extends HttpServlet {
         AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
         ArrayList<Città> allCittàZone = new ArrayList<Città>();
         ArrayList<String> categorie = new ArrayList<String>();
-        try {
-            allCittà = indirizzoModelDM.RetrieveAllCittà();
-            allCittàZone = indirizzoModelDM.RetrieveAllCittàZone(allCittà);
-            categorie = appartamentoModelDM.RetrieveAllTipoAppartamento();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        allCittà = indirizzoModelDM.RetrieveAllCittà();
+        allCittàZone = indirizzoModelDM.RetrieveAllCittàZone(allCittà);
+        categorie = appartamentoModelDM.RetrieveAllTipoAppartamento();
         request.getSession().setAttribute("categorie", categorie);
         request.getSession().setAttribute("allCittaZone", allCittàZone);
-        RequestDispatcher rd = request.getRequestDispatcher("/"+request.getSession().getAttribute("nomepagina"));
+        RequestDispatcher rd = request.getRequestDispatcher("/" + request.getSession().getAttribute("nomepagina"));
         rd.forward(request, response);
     }
 }

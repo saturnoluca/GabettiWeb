@@ -2,6 +2,7 @@ package model.appartamento;
 
 import UtilityClass.Città;
 import UtilityClass.Ricerca;
+import com.mysql.cj.result.SqlDateValueFactory;
 import model.DriverManagerConnectionPool;
 import model.indirizzo.IndirizzoModelDM;
 
@@ -20,7 +21,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
     }
 
     @Override
-    public Collection<AppartamentoBean> OrderByData() throws SQLException {
+    public Collection<AppartamentoBean> OrderByData() {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
@@ -49,20 +50,14 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setPostoAuto(rs.getInt("postoAuto"));
                 appartamento.add(bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return appartamento;
     }
 
     @Override
-    public Collection<AppartamentoBean> RetrieveByTipo(String tipo) throws SQLException {
+    public Collection<AppartamentoBean> RetrieveByTipo(String tipo) {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
@@ -94,20 +89,14 @@ public class AppartamentoModelDM implements AppartamentoModel {
                     appartamento.add(bean);
                 }
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return appartamento;
     }
 
     @Override
-    public Collection<AppartamentoBean> OrderByPrezzo() throws SQLException {
+    public Collection<AppartamentoBean> OrderByPrezzo() {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
@@ -136,20 +125,14 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setPostoAuto(rs.getInt("postoAuto"));
                 appartamento.add(bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return appartamento;
     }
 
     @Override
-    public Collection<AppartamentoBean> OrderByVisite() throws SQLException {
+    public Collection<AppartamentoBean> OrderByVisite() {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
@@ -178,23 +161,17 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setPostoAuto(rs.getInt("postoAuto"));
                 appartamento.add(bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return appartamento;
     }
 
     @Override
-    public int doSave(AppartamentoBean app) throws SQLException {
+    public int doSave(AppartamentoBean app) {
         Connection connection = null;
         PreparedStatement ps = null;
-        int key=0;
+        int key = 0;
         String insertSql = "INSERT into appartamento(nomeAppartamento, descrizioneAppartamento, superficie, locali, bagni, piano, riscaldamento, classeEnergetica, tipoVendita, prezzo, data, Agente_idAgente, categoria, camereLetto, postoAuto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = dmcp.getConnection();
@@ -217,24 +194,20 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 ps.setInt(15, app.getPostoAuto());
                 ps.executeUpdate();
                 ResultSet rs = ps.getGeneratedKeys();
-                while(rs.next()) {
-                    key=rs.getInt(1);
+                while (rs.next()) {
+                    key = rs.getInt(1);
                 }
                 connection.commit();
                 System.out.println("doSave: " + app);
             }
-        } finally {
-            try {
-                ps.close();
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return key;
     }
 
     @Override
-    public ArrayList<AppartamentoBean> barraRicerca(Ricerca ricerca) throws SQLException {
+    public ArrayList<AppartamentoBean> barraRicerca(Ricerca ricerca) {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<AppartamentoBean> array = new ArrayList<AppartamentoBean>();
@@ -252,55 +225,56 @@ public class AppartamentoModelDM implements AppartamentoModel {
         String maxSuperficie = "";
         String minGarage = "";
         String agente = "";
-        if (ricerca.getCittà() != null) {
-            IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
-            if (indirizzoModelDM.isCittà(ricerca.getCittà())) {
-                zona = " AND indirizzo.città=" + "'" + ricerca.getCittà() + "'";
-                selectSql = selectSql + zona;
-            } else {
-                zona = " AND indirizzo.zona=" + "'" + ricerca.getCittà() + "'";
-                selectSql = selectSql + zona;
-
-            }
-        }
-        if (ricerca.getVendita() != null) {
-            vendita = " AND appartamento.tipoVendita=" + "'" + ricerca.getVendita() + "'";
-            selectSql = selectSql + vendita;
-        }
-        if (ricerca.getCategoria() != null) {
-            categoria = " AND appartamento.categoria=" + ricerca.getCategoria();
-            selectSql = selectSql + categoria;
-        }
-        if (ricerca.getLetti() != -1) {
-            letti = " AND appartamento.camereLetto=" + ricerca.getLetti();
-            selectSql = selectSql + letti;
-        }
-        if (ricerca.getBagni() != null) {
-            bagni = " AND appartamento.bagni=" + ricerca.getBagni();
-            selectSql = selectSql + bagni;
-        }
-        if (ricerca.getMinPrezzo() != -1) {
-            minPrezzo = " AND appartamento.prezzo>" + ricerca.getMinPrezzo();
-            selectSql = selectSql + minPrezzo;
-        }
-        if (ricerca.getMaxPrezzo() != -1) {
-            maxPrezzo = " AND appartamento.prezzo<" + ricerca.getMaxPrezzo();
-            selectSql = selectSql + maxPrezzo;
-        }
-        if (ricerca.getMinSuperficie() != -1) {
-            minSuperficie = " AND appartamento.superficie>" + ricerca.getMinSuperficie();
-            selectSql = selectSql + minSuperficie;
-        }
-        if (ricerca.getMaxSuperficie() != -1) {
-            maxSuperficie = " AND appartamento.superficie<" + ricerca.getMaxSuperficie();
-            selectSql = selectSql + maxSuperficie;
-        }
-
-        if (ricerca.getAgente() != -1) {
-            agente = "AND appartamento.Agente_idAgente=" + ricerca.getAgente();
-            selectSql = selectSql + agente;
-        }
         try {
+            if (ricerca.getCittà() != null) {
+                IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
+                if (indirizzoModelDM.isCittà(ricerca.getCittà())) {
+                    zona = " AND indirizzo.città=" + "'" + ricerca.getCittà() + "'";
+                    selectSql = selectSql + zona;
+                } else {
+                    zona = " AND indirizzo.zona=" + "'" + ricerca.getCittà() + "'";
+                    selectSql = selectSql + zona;
+
+                }
+            }
+            if (ricerca.getVendita() != null) {
+                vendita = " AND appartamento.tipoVendita=" + "'" + ricerca.getVendita() + "'";
+                selectSql = selectSql + vendita;
+            }
+            if (ricerca.getCategoria() != null) {
+                categoria = " AND appartamento.categoria=" + ricerca.getCategoria();
+                selectSql = selectSql + categoria;
+            }
+            if (ricerca.getLetti() != -1) {
+                letti = " AND appartamento.camereLetto=" + ricerca.getLetti();
+                selectSql = selectSql + letti;
+            }
+            if (ricerca.getBagni() != null) {
+                bagni = " AND appartamento.bagni=" + ricerca.getBagni();
+                selectSql = selectSql + bagni;
+            }
+            if (ricerca.getMinPrezzo() != -1) {
+                minPrezzo = " AND appartamento.prezzo>" + ricerca.getMinPrezzo();
+                selectSql = selectSql + minPrezzo;
+            }
+            if (ricerca.getMaxPrezzo() != -1) {
+                maxPrezzo = " AND appartamento.prezzo<" + ricerca.getMaxPrezzo();
+                selectSql = selectSql + maxPrezzo;
+            }
+            if (ricerca.getMinSuperficie() != -1) {
+                minSuperficie = " AND appartamento.superficie>" + ricerca.getMinSuperficie();
+                selectSql = selectSql + minSuperficie;
+            }
+            if (ricerca.getMaxSuperficie() != -1) {
+                maxSuperficie = " AND appartamento.superficie<" + ricerca.getMaxSuperficie();
+                selectSql = selectSql + maxSuperficie;
+            }
+
+            if (ricerca.getAgente() != -1) {
+                agente = "AND appartamento.Agente_idAgente=" + ricerca.getAgente();
+                selectSql = selectSql + agente;
+            }
+
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(selectSql);
             ResultSet rs = ps.executeQuery();
@@ -324,20 +298,14 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setPostoAuto(rs.getInt("postoAuto"));
                 array.add(bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return array;
     }
 
     @Override
-    public void updateVisite(AppartamentoBean app) throws SQLException {
+    public void updateVisite(AppartamentoBean app) {
         Connection connection = null;
         PreparedStatement ps = null;
         String updateSql = "UPDATE `mydb`.`appartamento` SET `visualizzazioni` = ? WHERE (`idAppartamento` = ?)";
@@ -349,19 +317,13 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 ps.setInt(2, app.getVisualizzazioni() + 1);
                 connection.commit();
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
-    public AppartamentoBean RetrieveById(int id) throws SQLException {
+    public AppartamentoBean RetrieveById(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM appartamento where idAppartamento = ?";
@@ -388,20 +350,14 @@ public class AppartamentoModelDM implements AppartamentoModel {
             bean.setData(rs.getDate("data"));
             bean.setIdAgente(rs.getInt("Agente_idAgente"));
             bean.setPostoAuto(rs.getInt("postoAuto"));
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return bean;
     }
 
     @Override
-    public Collection<AppartamentoBean> RetrieveAllByAgente(int idAgente) throws SQLException {
+    public Collection<AppartamentoBean> RetrieveAllByAgente(int idAgente) {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
@@ -431,20 +387,14 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setPostoAuto(rs.getInt("postoAuto"));
                 appartamento.add(bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return appartamento;
     }
 
     @Override
-    public Collection<AppartamentoBean> RetrieveAllAppartamento() throws SQLException {
+    public Collection<AppartamentoBean> RetrieveAllAppartamento() {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
@@ -473,20 +423,14 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setPostoAuto(rs.getInt("postoAuto"));
                 appartamento.add(bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return appartamento;
     }
 
     @Override
-    public int RetrieveByBean(AppartamentoBean bean) throws SQLException {
+    public int RetrieveByBean(AppartamentoBean bean) {
         Connection conn = null;
         PreparedStatement ps = null;
         String selectSQL = "SELECT idAppartamento FROM appartamento WHERE nomeAppartamento=? AND descrizioneAppartamento=? AND Agente_idAgente=?";
@@ -501,18 +445,14 @@ public class AppartamentoModelDM implements AppartamentoModel {
             while (rs.next()) {
                 id = rs.getInt("idAppartamento");
             }
-        } finally {
-            try {
-                ps.close();
-            } finally {
-                dmcp.releaseConnection(conn);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return id;
     }
 
     @Override
-    public ArrayList<String> RetrieveAllTipoAppartamento() throws SQLException {
+    public ArrayList<String> RetrieveAllTipoAppartamento() {
         Connection conn = null;
         PreparedStatement ps = null;
         String selectSQL = "SELECT DISTINCT categoria FROM appartamento";
@@ -521,23 +461,17 @@ public class AppartamentoModelDM implements AppartamentoModel {
             conn = dmcp.getConnection();
             ps = conn.prepareStatement(selectSQL);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 allCategorie.add(rs.getString("categoria"));
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(conn);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return allCategorie;
     }
 
     @Override
-    public void doDelete(int idAppartamento) throws SQLException {
+    public void doDelete(int idAppartamento) {
         Connection connection = null;
         PreparedStatement ps = null;
         String deleteSql = "DELETE FROM appartamento WHERE idAppartamento=?";
@@ -547,14 +481,8 @@ public class AppartamentoModelDM implements AppartamentoModel {
             ps.setInt(1, idAppartamento);
             ps.executeUpdate();
             connection.commit();
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -14,14 +14,11 @@ public class ServletControlloModificaUtente extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int idUtente= Integer.parseInt(request.getParameter(("idUtente")));
+        int idUtente = Integer.parseInt(request.getParameter(("idUtente")));
         UtenteModelDM utenteModelDM = new UtenteModelDM();
         UtenteBean utenteBean = new UtenteBean();
-        try{
-         utenteBean = utenteModelDM.doRetrieveUtenteByKeyAgente(idUtente);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+        utenteBean = utenteModelDM.doRetrieveUtenteByKeyAgente(idUtente);
+
         request.setAttribute("utenteDaModificare", utenteBean);
         RequestDispatcher rd = request.getRequestDispatcher("/modifica-utente.jsp");
         rd.forward(request, response);

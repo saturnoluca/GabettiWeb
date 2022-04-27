@@ -20,12 +20,12 @@ import java.util.ArrayList;
 @MultipartConfig
 public class ServletAggiungiUtente extends HttpServlet {
     @Override
-    protected void doPost   (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String tipo = request.getParameter("ruolo");
         UtenteBean utenteBean = new UtenteBean();
         UtenteModelDM utenteModelDM = new UtenteModelDM();
         ArrayList<UtenteBean> utenti = null;
-        if(tipo.equals("Admin")){
+        if (tipo.equals("Admin")) {
             utenteBean.setNome(request.getParameter("nome"));
             utenteBean.setCognome(request.getParameter("cognome"));
             utenteBean.setEmail(request.getParameter("email"));
@@ -34,14 +34,10 @@ public class ServletAggiungiUtente extends HttpServlet {
             utenteBean.setRuolo(request.getParameter("ruolo"));
             utenteBean.setFoto(request.getPart("foto"));
 
-            try{
-                utenteModelDM.doSave(utenteBean);
-                utenti = new ArrayList<UtenteBean>();
-                utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }else if(tipo.equals("Segretario")){
+            utenteModelDM.doSave(utenteBean);
+            utenti = new ArrayList<UtenteBean>();
+            utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
+        } else if (tipo.equals("Segretario")) {
             utenteBean.setNome(request.getParameter("nome"));
             utenteBean.setCognome(request.getParameter("cognome"));
             utenteBean.setEmail(request.getParameter("email"));
@@ -49,14 +45,10 @@ public class ServletAggiungiUtente extends HttpServlet {
             utenteBean.setPassword(request.getParameter("password"));
             utenteBean.setRuolo(request.getParameter("ruolo"));
             utenteBean.setFoto(request.getPart("foto"));
-            try{
-                utenteModelDM.doSave(utenteBean);
-                utenti = new ArrayList<UtenteBean>();
-                utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }else if(tipo.equals("Agente")){
+            utenteModelDM.doSave(utenteBean);
+            utenti = new ArrayList<UtenteBean>();
+            utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
+        } else if (tipo.equals("Agente")) {
             AgenteBean agenteBean = new AgenteBean();
             AgenteModelDM agenteModelDM = new AgenteModelDM();
             UtenteBean u;
@@ -67,23 +59,19 @@ public class ServletAggiungiUtente extends HttpServlet {
             utenteBean.setPassword(request.getParameter("password"));
             utenteBean.setRuolo(request.getParameter("ruolo"));
             utenteBean.setFoto(request.getPart("foto"));
-            try{
-                utenteModelDM.doSave(utenteBean);
-                System.out.println(utenteModelDM.RetrieveByEmail(utenteBean.getEmail()).getIdUtente());
-                u = utenteModelDM.RetrieveByEmail(utenteBean.getEmail());
-                agenteBean.setIdUtente(u.getIdUtente());
-                agenteBean.setDescrizionePersonale(request.getParameter("descrizione"));
-                agenteBean.setTelefonoCellulare("telefonoCellulare");
-                agenteBean.setTelefonoFisso("telefonoFisso");
-                agenteBean.setLinkFacebook(request.getParameter("facebook"));
-                agenteBean.setLinkInstagram(request.getParameter("instagram"));
-                agenteModelDM.doSave(agenteBean);
-                utenti = new ArrayList<UtenteBean>();
-                utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }else if(tipo.equals("Collaboratore")){
+            utenteModelDM.doSave(utenteBean);
+            System.out.println(utenteModelDM.RetrieveByEmail(utenteBean.getEmail()).getIdUtente());
+            u = utenteModelDM.RetrieveByEmail(utenteBean.getEmail());
+            agenteBean.setIdUtente(u.getIdUtente());
+            agenteBean.setDescrizionePersonale(request.getParameter("descrizione"));
+            agenteBean.setTelefonoCellulare("telefonoCellulare");
+            agenteBean.setTelefonoFisso("telefonoFisso");
+            agenteBean.setLinkFacebook(request.getParameter("facebook"));
+            agenteBean.setLinkInstagram(request.getParameter("instagram"));
+            agenteModelDM.doSave(agenteBean);
+            utenti = new ArrayList<UtenteBean>();
+            utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
+        } else if (tipo.equals("Collaboratore")) {
             AgenteBean agenteBean = new AgenteBean();
             AgenteModelDM agenteModelDM = new AgenteModelDM();
             UtenteBean u = new UtenteBean();
@@ -96,23 +84,19 @@ public class ServletAggiungiUtente extends HttpServlet {
             utenteBean.setPassword(request.getParameter("ruolo"));
             utenteBean.setRuolo(request.getParameter("ruolo"));
             utenteBean.setFoto(request.getPart("foto"));
-            try{
-                u=utenteModelDM.RetrieveByEmail(utenteBean.getEmail());
-                agenteBean = agenteModelDM.RetrieveAgenteByIdUtente(Integer.parseInt(request.getParameter("agente")));
-                collaboratoreBean.setIdUtente(u.getIdUtente());
-                collaboratoreBean.setIdAgente(agenteBean.getIdAgente());
-                collaboratoreBean.setDescrizionePersonale(request.getParameter("descrizione"));
-                collaboratoreBean.setLinkFacebook(request.getParameter("facebook"));
-                collaboratoreBean.setLinkInstagram(request.getParameter("instagram"));
-                collaboratoreModelDM.doSave(collaboratoreBean);
-                utenti = new ArrayList<UtenteBean>();
-                utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
+            u = utenteModelDM.RetrieveByEmail(utenteBean.getEmail());
+            agenteBean = agenteModelDM.RetrieveAgenteByIdUtente(Integer.parseInt(request.getParameter("agente")));
+            collaboratoreBean.setIdUtente(u.getIdUtente());
+            collaboratoreBean.setIdAgente(agenteBean.getIdAgente());
+            collaboratoreBean.setDescrizionePersonale(request.getParameter("descrizione"));
+            collaboratoreBean.setLinkFacebook(request.getParameter("facebook"));
+            collaboratoreBean.setLinkInstagram(request.getParameter("instagram"));
+            collaboratoreModelDM.doSave(collaboratoreBean);
+            utenti = new ArrayList<UtenteBean>();
+            utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
         }
         request.getSession().removeAttribute("lista-utenti");
-        request.getSession().setAttribute("lista-utenti",utenti);
+        request.getSession().setAttribute("lista-utenti", utenti);
         response.sendRedirect("aggiungi-utente.jsp");
     }
 }

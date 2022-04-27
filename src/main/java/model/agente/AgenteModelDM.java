@@ -23,7 +23,7 @@ public class AgenteModelDM implements AgenteModel {
     }
 
     @Override
-    public void doSave(AgenteBean agent) throws SQLException {
+    public void doSave(AgenteBean agent){
         Connection connection = null;
         PreparedStatement ps = null;
         String insertSql = "INSERT INTO agente(linkFacebook, linkInternet, linkInstagram, linkTwitter, telefonoFisso, telefonoCellulare, descrizionePersonale, Utente_idUtente) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -43,19 +43,13 @@ public class AgenteModelDM implements AgenteModel {
                 connection.commit();
                 System.out.println("doSave: " + ps.toString());
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 
     @Override
-    public Collection<CompositeKeyAgenteCase> RetrieveAgenteCase() throws SQLException {
+    public Collection<CompositeKeyAgenteCase> RetrieveAgenteCase() {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT agente.*, (Select count(*) from appartamento where appartamento.Agente_idAgente=agente.idAgente) as contaCase FROM mydb.agente order by contaCase desc";
@@ -83,20 +77,14 @@ public class AgenteModelDM implements AgenteModel {
                 key.setTotvisite(TotaleVisite(bean.getIdAgente()));
                 array.add(key);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-            return array;
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+        return array;
     }
 
     @Override
-    public int TotaleVisite(int id) throws SQLException {
+    public int TotaleVisite(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT SUM(visualizzazioni) as totvisite FROM mydb.appartamento where Agente_idAgente=?";
@@ -109,20 +97,14 @@ public class AgenteModelDM implements AgenteModel {
             while (rs.next()){
                 totvisite=rs.getInt("totvisite");
             }
-        }finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-            return totvisite;
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+        return totvisite;
     }
 
     @Override
-    public Collection<AgenteBean> RetrieveAgente() throws SQLException {
+    public Collection<AgenteBean> RetrieveAgente(){
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM agente";
@@ -143,20 +125,14 @@ public class AgenteModelDM implements AgenteModel {
                 bean.setIdUtente(rs.getInt("Utente_idUtente"));
                 array.add(bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-            return array;
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+        return array;
     }
 
     @Override
-    public AgenteBean RetrieveAgenteById(int id) throws SQLException {
+    public AgenteBean RetrieveAgenteById(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM agente WHERE idAgente=?";
@@ -177,20 +153,15 @@ public class AgenteModelDM implements AgenteModel {
                 bean.setTelefonoCellulare(rs.getString("telefonoCellulare"));
                 bean.setIdUtente(rs.getInt("Utente_idUtente"));
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-            return bean;
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+        return bean;
+
     }
 
     @Override
-    public AgenteBean RetrieveAgenteByIdUtente(int id) throws SQLException {
+    public AgenteBean RetrieveAgenteByIdUtente(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM agente WHERE Utente_idUtente=?";
@@ -211,20 +182,15 @@ public class AgenteModelDM implements AgenteModel {
                 bean.setTelefonoCellulare(rs.getString("telefonoCellulare"));
                 bean.setIdUtente(rs.getInt("Utente_idUtente"));
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-            return bean;
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+        return bean;
+
     }
 
     @Override
-    public void doDelete(UtenteBean utenteAgente) throws SQLException{
+    public void doDelete(UtenteBean utenteAgente){
         Connection connection = null;
         PreparedStatement ps = null;
         String deleteSql="DELETE FROM utente WHERE idUtente=?";
@@ -234,26 +200,20 @@ public class AgenteModelDM implements AgenteModel {
             ps.setInt(1, utenteAgente.getIdUtente());
             ps.executeUpdate();
             connection.commit();
-        }finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void doUpdate(AgenteBean agenteBean) throws SQLException {
+    public void doUpdate(AgenteBean agenteBean) {
         Connection connection = null;
         PreparedStatement ps = null;
-        String updateSql="UPDATE agente SET linkFacebook=? , linkInstagram=? , telefonoCellulare=? , descrizionePersonale=? WHERE idAgente=?";
-        try{
+        String updateSql = "UPDATE agente SET linkFacebook=? , linkInstagram=? , telefonoCellulare=? , descrizionePersonale=? WHERE idAgente=?";
+        try {
             System.out.println("SIUM");
-            connection=dmcp.getConnection();
-            ps=connection.prepareStatement(updateSql);
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(updateSql);
             ps.setString(1, agenteBean.getLinkFacebook());
             ps.setString(2, agenteBean.getLinkInstagram());
             ps.setString(3, agenteBean.getTelefonoCellulare());
@@ -261,15 +221,8 @@ public class AgenteModelDM implements AgenteModel {
             ps.setInt(5, agenteBean.getIdAgente());
             ps.executeUpdate();
             connection.commit();
-        }finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-
 }

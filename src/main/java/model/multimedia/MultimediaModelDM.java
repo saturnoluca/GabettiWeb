@@ -23,7 +23,7 @@ public class MultimediaModelDM implements MultimediaModel {
     }
 
     @Override
-    public void doSaveFoto(MultimediaBean multi) throws SQLException, IOException {
+    public void doSaveFoto(MultimediaBean multi) throws IOException {
         Connection connection = null;
         PreparedStatement ps = null;
         InputStream in = null;
@@ -48,19 +48,13 @@ public class MultimediaModelDM implements MultimediaModel {
             if (in != null) {
                 in.close();
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void doSaveVideo(MultimediaBean multi) throws SQLException, IOException {
+    public void doSaveVideo(MultimediaBean multi) throws IOException {
         Connection connection = null;
         PreparedStatement ps = null;
         InputStream in = null;
@@ -85,20 +79,14 @@ public class MultimediaModelDM implements MultimediaModel {
             if (in != null) {
                 in.close();
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
 
     }
 
     @Override
-    public void doSavePlanimetria(MultimediaBean multi) throws SQLException, IOException {
+    public void doSavePlanimetria(MultimediaBean multi) throws IOException {
         Connection connection = null;
         PreparedStatement ps = null;
         InputStream in = null;
@@ -123,19 +111,13 @@ public class MultimediaModelDM implements MultimediaModel {
             if (in != null) {
                 in.close();
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 
     @Override
-    public ArrayList<String> doRetrieveFoto(int idAppartamento) throws SQLException, IOException {
+    public ArrayList<String> doRetrieveFoto(int idAppartamento) throws IOException {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<String> array = new ArrayList<String>();
@@ -152,20 +134,15 @@ public class MultimediaModelDM implements MultimediaModel {
                     array.add(fotoPart);
                 }
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-            return array;
         }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return array;
     }
 
     @Override
-    public ArrayList<String> doRetrieveVideo(int idAppartamento) throws SQLException, IOException {
+    public ArrayList<String> doRetrieveVideo(int idAppartamento) throws IOException {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<String> array = new ArrayList<String>();
@@ -182,20 +159,14 @@ public class MultimediaModelDM implements MultimediaModel {
                     array.add(partVideo);
                 }
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-            return array;
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+        return array;
     }
 
     @Override
-    public ArrayList<String> doRetrievePlanimetria(int idAppartamento) throws SQLException, IOException {
+    public ArrayList<String> doRetrievePlanimetria(int idAppartamento) throws IOException {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<String> array = new ArrayList<String>();
@@ -212,34 +183,33 @@ public class MultimediaModelDM implements MultimediaModel {
                     array.add(partPlanimetria);
                 }
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-            return array;
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+        return array;
     }
 
     @Override
-    public ArrayList<MultimediaBean> RetrieveAll(ArrayList arrayAppartamento) throws SQLException, IOException {
+    public ArrayList<MultimediaBean> RetrieveAll(ArrayList arrayAppartamento) throws IOException {
         ArrayList<AppartamentoBean> arrayList = (ArrayList<AppartamentoBean>) arrayAppartamento;
         ArrayList<MultimediaBean> arrayMultimedia = new ArrayList<MultimediaBean>();
         MultimediaModel model = new MultimediaModelDM();
         MultimediaBean multimediaBean = new MultimediaBean();
-        for(AppartamentoBean appartamentoBean : arrayList){
-            multimediaBean.setFotoString(model.doRetrieveFoto(appartamentoBean.getIdAppartamento()));
-            multimediaBean.setVideo(model.doRetrieveVideo(appartamentoBean.getIdAppartamento()));
-            multimediaBean.setPlanimetria(model.doRetrievePlanimetria(appartamentoBean.getIdAppartamento()));
-            arrayMultimedia.add(multimediaBean);
+        try{
+            for(AppartamentoBean appartamentoBean : arrayList){
+                multimediaBean.setFotoString(model.doRetrieveFoto(appartamentoBean.getIdAppartamento()));
+                multimediaBean.setVideo(model.doRetrieveVideo(appartamentoBean.getIdAppartamento()));
+                multimediaBean.setPlanimetria(model.doRetrievePlanimetria(appartamentoBean.getIdAppartamento()));
+                arrayMultimedia.add(multimediaBean);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
         }
         return arrayMultimedia;
     }
 
-    public ArrayList<MultimediaBean> RetrieveAllMultimedia() throws SQLException, IOException{
+    public ArrayList<MultimediaBean> RetrieveAllMultimedia() throws IOException{
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<MultimediaBean> array = new ArrayList<MultimediaBean>();
@@ -273,16 +243,10 @@ public class MultimediaModelDM implements MultimediaModel {
                 bean.setIdMultimedia(rs.getInt("idMultimedia"));
                 array.add(bean);
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-            return array;
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+        return array;
     }
 
 }
