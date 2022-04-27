@@ -157,7 +157,7 @@
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Cognome</label>
-                                        <input type="email" placeholder="<%=admin.getCognome()%>" name="cognomeUtente">
+                                        <input type="text" placeholder="<%=admin.getCognome()%>" name="cognomeUtente">
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Password</label>

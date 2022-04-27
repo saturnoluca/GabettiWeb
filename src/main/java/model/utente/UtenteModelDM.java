@@ -306,15 +306,44 @@ public class UtenteModelDM implements UtenteModel {
         try{
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(updateSql);
-            ps.setString(1, utenteBean.getCognome());
+            ps.setString(1, utenteBean.getUsername());
             ps.setString(2, utenteBean.getPassword());
             ps.setString(3, utenteBean.getNome());
             ps.setString(4, utenteBean.getCognome());
             ps.setString(5, utenteBean.getEmail());
             in = ((UtenteBean) utenteBean).getFoto().getInputStream();
-            ps.setBlob(6, in);
+            if (in != null) {
+                ps.setBlob(6, in);
+            }
             ps.setString(7, utenteBean.getRuolo());
             ps.setInt(8, utenteBean.getIdUtente());
+            ps.executeUpdate();
+            connection.commit();
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
+    }
+
+    public void doUpdateInformazioniUtente(UtenteBean utenteBean) throws SQLException, IOException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        InputStream in = null;
+        String updateSql="UPDATE utente SET username=? , password=? , nome=? , cognome=? , email=? WHERE idUtente=?";
+        try{
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(updateSql);
+            ps.setString(1, utenteBean.getCognome());
+            ps.setString(2, utenteBean.getPassword());
+            ps.setString(3, utenteBean.getNome());
+            ps.setString(4, utenteBean.getCognome());
+            ps.setString(5, utenteBean.getEmail());
+            ps.setInt(6, utenteBean.getIdUtente());
             ps.executeUpdate();
             connection.commit();
         }finally {

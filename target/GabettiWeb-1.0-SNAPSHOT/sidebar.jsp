@@ -5,11 +5,31 @@
   Time: 09:49
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="model.utente.UtenteBean" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.agente.AgenteBean" %>
+<%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
 </head>
+<%
+    ArrayList<CompositeKeyAgenteCase> agenteCase = null;
+    AgenteBean agente = null;
+    UtenteBean admin = (UtenteBean) session.getAttribute("utente");
+    if (admin == null) {
+        response.sendRedirect(response.encodeRedirectURL("login.jsp"));
+        return;
+    }
+    if (admin.getRuolo().equals("Admin")) {
+        ArrayList<UtenteBean> utenti = (ArrayList<UtenteBean>) session.getAttribute("array");
+    } else if (admin.getRuolo().equals("Agente")) {
+        agente = (AgenteBean) session.getAttribute("agente");
+        agenteCase = (ArrayList<CompositeKeyAgenteCase>) session.getAttribute("appartamenti");
+    }
+
+%>
 <body>
 <div class="sidebar">
     <div class="logo-details">
@@ -52,6 +72,7 @@
             </a>
             <span class="tooltip">Lista utenti</span>
         </li>
+        <%if(admin.getRuolo().equals("Admin") || admin.getRuolo().equals("Segretario")){%>
         <li>
             <a href="aggiungi-utente.jsp">
                 <i class='bx bx-user-plus'></i>
@@ -59,12 +80,13 @@
             </a>
             <span class="tooltip">Aggiungi utente</span>
         </li>
+        <%}%>
         <li class="profile">
             <div class="profile-details">
                 <img src="images/agente.jpg" alt="profileImg">
                 <div class="name_job">
-                    <div class="name">Gaetano De Filippo</div>
-                    <div class="job">Amministratore</div>
+                    <div class="name"><%=admin.getNome() + " " + admin.getCognome()%></div>
+                    <div class="job"><%=admin.getRuolo()%></div>
                 </div>
             </div>
             <a href="ServletLogout">
