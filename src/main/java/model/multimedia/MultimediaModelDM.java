@@ -70,13 +70,13 @@ public class MultimediaModelDM implements MultimediaModel {
                 int i = multi.getVideo().size();
                 if (i > 0) {
                     connection = dmcp.getConnection();
-                    for (int k = 1; k < i; k++) {
+                    for (int k = 0; k < i; k++) {
                         insertSql = "INSERT INTO multimedia(video, Appartamento_idAppartamento) VALUES(?, ?)";
                         ps = connection.prepareStatement(insertSql);
                         in = multi.getVideo().get(k).getInputStream();
                         ps.setBlob(1, in);
                         ps.setInt(2, multi.getIdAppartamento());
-                        System.out.println("doSaveFoto:" + ps.toString());
+                        System.out.println("doSaveVideo:" + ps.toString());
                         ps.executeUpdate();
                         connection.commit();
                     }
