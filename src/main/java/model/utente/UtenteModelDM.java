@@ -256,7 +256,7 @@ public class UtenteModelDM implements UtenteModel {
     }
 
     @Override
-    public UtenteBean RetrieveByEmail(String email) throws SQLException {
+    public UtenteBean RetrieveByEmail(String email) {
         Connection conn = null;
         PreparedStatement ps = null;
         String selectSql = "SELECT * FROM utente where email=?";
@@ -280,14 +280,8 @@ public class UtenteModelDM implements UtenteModel {
                 }
                 bean.setRuolo(rs.getString("ruolo"));
             }
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(conn);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return bean;
     }
@@ -330,7 +324,7 @@ public class UtenteModelDM implements UtenteModel {
         }
     }
 
-    public void doUpdateInformazioniUtente(UtenteBean utenteBean) throws SQLException, IOException {
+    public void doUpdateInformazioniUtente(UtenteBean utenteBean) throws IOException {
         Connection connection = null;
         PreparedStatement ps = null;
         InputStream in = null;
@@ -346,14 +340,8 @@ public class UtenteModelDM implements UtenteModel {
             ps.setInt(6, utenteBean.getIdUtente());
             ps.executeUpdate();
             connection.commit();
-        }finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 }

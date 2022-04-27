@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet(name = "ServletCambiaInformazioniPersonali", value = "/ServletCambiaInformazioniPersonali")
 public class ServletCambiaInformazioniPersonali extends HttpServlet {
@@ -21,6 +22,7 @@ public class ServletCambiaInformazioniPersonali extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UtenteBean utenteBean = new UtenteBean();
+        ArrayList<UtenteBean> listaUtenti = new ArrayList<UtenteBean>();
         int idUtente = Integer.parseInt(request.getParameter(("idUtente")));
         try {
             utenteBean = utente.doRetrieveUtenteByKey(idUtente);
@@ -57,11 +59,13 @@ public class ServletCambiaInformazioniPersonali extends HttpServlet {
             }
             System.out.println("Nuovo utente " + utenteBean);
             utente.doUpdateInformazioniUtente(utenteBean);
-
+            System.out.println("Check email " +  utente.RetrieveByEmail(utenteBean.getEmail()));
+            listaUtenti = (ArrayList<UtenteBean>) utente.doRetrieveAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        request.getSession().removeAttribute("lista-utenti");
+        request.getSession().setAttribute("lista-utenti", listaUtenti);
         request.getSession().removeAttribute("utente");
         request.getSession().setAttribute("utente", utenteBean);
         RequestDispatcher rd = request.getRequestDispatcher("/myprofile.jsp");
