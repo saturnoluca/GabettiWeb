@@ -48,7 +48,9 @@ public class LoginServlet extends HttpServlet {
                 redirect = "myprofile.jsp";
             } else if (bean.getRuolo().equals("Segretario")) {
                 request.getSession(true).setAttribute("utente", bean);
-                request.getSession(true).setAttribute("array", array);
+                redirect = "myprofile.jsp";
+            } else if (bean.getRuolo().equals("Collaboratore")) {
+                request.getSession(true).setAttribute("utente", bean);
                 redirect = "myprofile.jsp";
             }
         } else {

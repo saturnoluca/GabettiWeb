@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
-<html lang="en" dir="ltr">
+<html lang="it" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
@@ -43,17 +43,15 @@
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
-    if (admin.getRuolo().equals("Admin")) {
-        ArrayList<UtenteBean> utenti = (ArrayList<UtenteBean>) session.getAttribute("array");
-    } else if (admin.getRuolo().equals("Agente")) {
+    if (admin.getRuolo().equals("Agente")) {
         agente = (AgenteBean) session.getAttribute("agente");
         agenteCase = (ArrayList<CompositeKeyAgenteCase>) session.getAttribute("appartamenti");
     }
 
+
 %>
 <body>
-<input type="hidden" value="<%=admin.getRuolo()%>" name="ruolo" id="ruolo">
-<jsp:include page="sidebar.jsp" />
+<jsp:include page="sidebar.jsp"/>
 <section class="home-section">
     <div class="div_user_page">
         <div class="user_page_head">
@@ -66,29 +64,34 @@
                 <div class="user_col_left">
                     <div class="user_profile_pic">
                         <div class="picture_body">
-                            <%if(admin.getFotoString() == null){%>
-                                <img src="images/agente.jpg" height="160" width="160" alt="no photo">
-                            <%}else{%>
-                                <img src="data:image/png;base64,<%=admin.getFotoString()%>" id="file-ip-1-preview" height="160" width="160" alt="no photo">
+                            <%if (admin.getFotoString() == null) {%>
+                            <img src="images/agente.jpg" height="160" width="160" alt="no photo">
+                            <%} else {%>
+                            <img src="data:image/png;base64,<%=admin.getFotoString()%>" id="file-ip-1-preview"
+                                 height="160" width="160" alt="no photo">
                             <%}%>
                             <div class="change_pic">
                                 <p>
-                                    <a class="change_pic_button" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <a class="change_pic_button" data-toggle="collapse" href="#collapseExample"
+                                       role="button" aria-expanded="false" aria-controls="collapseExample">
                                         Cambia Foto
                                     </a>
                                 </p>
                                 <form action="ServletCambiaFotoProfilo" enctype="multipart/form-data" method="post">
-                                <div class="collapse" id="collapseExample">
-                                    <div class="card card-body">
-                                        <input name="foto" type="file" id="file-ip-1" accept="images/*" onchange="previewBeforeUpload(event);">
-                                        <input type="hidden" name="idUtente" value="<%=admin.getIdUtente()%>">
-                                        <label for="file-ip-1">Carica Immagine</label>
-                                        <div class="choices-foto">
-                                            <button type="submit" onclick="location.reload();" class="change_pic_button">Annulla</button>
-                                            <button type="submit" class="change_pic_button">Conferma</button>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="card card-body">
+                                            <input name="foto" type="file" id="file-ip-1" accept="images/*"
+                                                   onchange="previewBeforeUpload(event);">
+                                            <input type="hidden" name="idUtente" value="<%=admin.getIdUtente()%>">
+                                            <label for="file-ip-1">Carica Immagine</label>
+                                            <div class="choices-foto">
+                                                <button type="submit" onclick="location.reload();"
+                                                        class="change_pic_button">Annulla
+                                                </button>
+                                                <button type="submit" class="change_pic_button">Conferma</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 </form>
                             </div>
                         </div>
@@ -193,7 +196,9 @@
                         </div>
                         <div class="user_settings_body">
                             <form class="form_user_settings" action="ServletCambiaInformazioniAgente" method="post">
+                                <%if (admin.getRuolo().equals("Agente")) {%>
                                 <input type="hidden" name="idAgente" value="<%=agente.getIdAgente()%>">
+                                <%}%>
                                 <div class="user_settings_fields">
                                     <div class="user_field full_size">
                                         <label>Descrizione</label>
@@ -201,7 +206,8 @@
                                             if (admin.getRuolo().equals("Agente")) {
                                         %>
                                         <textarea rows="10"
-                                                  placeholder="<%=agente.getDescrizionePersonale()%>" name="descrizioneAgente"></textarea>
+                                                  placeholder="<%=agente.getDescrizionePersonale()%>"
+                                                  name="descrizioneAgente"></textarea>
                                         <%}%>
                                     </div>
                                     <div class="user_field half_size">
@@ -209,7 +215,8 @@
                                         <%
                                             if (admin.getRuolo().equals("Agente")) {
                                         %>
-                                        <input type="text" placeholder="<%=agente.getLinkFacebook()%>" name="linkFacebook">
+                                        <input type="text" placeholder="<%=agente.getLinkFacebook()%>"
+                                               name="linkFacebook">
                                         <%} else {%>
                                         <input type="text" placeholder="non è un agente">
                                         <%}%>
@@ -219,7 +226,8 @@
                                         <%
                                             if (admin.getRuolo().equals("Agente")) {
                                         %>
-                                        <input type="text" placeholder="<%=agente.getLinkInstagram()%>" name="linkInstagram">
+                                        <input type="text" placeholder="<%=agente.getLinkInstagram()%>"
+                                               name="linkInstagram">
                                         <%} else {%>
                                         <input type="text" placeholder="non è un agente">
                                         <%}%>
@@ -285,8 +293,8 @@
 </script>
 
 <script>
-    function previewBeforeUpload(event){
-        if(event.target.files.length >0){
+    function previewBeforeUpload(event) {
+        if (event.target.files.length > 0) {
             var src = URL.createObjectURL(event.target.files[0]);
             var preview = document.getElementById("file-ip-1-preview");
             preview.src = src;
