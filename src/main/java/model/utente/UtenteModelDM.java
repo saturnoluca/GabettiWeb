@@ -4,6 +4,7 @@ import UtilityClass.UtilityBlob;
 import model.DriverManagerConnectionPool;
 import model.agente.AgenteBean;
 
+import javax.servlet.http.Part;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -281,6 +282,28 @@ public class UtenteModelDM implements UtenteModel {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void doUpdateFoto(int idUtente, Part foto) throws SQLException, IOException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        InputStream in = null;
+        String updateSql="UPDATE utente SET foto=? WHERE idUtente=?";
+        try{
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(updateSql);
+            in = foto.getInputStream();
+            if (in != null) {
+                ps.setBlob(1, in);
+            }
+            ps.setInt(2, idUtente);
+            ps.executeUpdate();
+            connection.commit();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 
     public void doUpdateInformazioniUtente(UtenteBean utenteBean) throws IOException {
         Connection connection = null;

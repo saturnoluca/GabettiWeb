@@ -2,6 +2,7 @@ package model.utente;
 
 import model.DriverManagerConnectionPool;
 
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,5 +29,8 @@ public interface UtenteModel<T> {
 
     public UtenteBean RetrieveNomeCognome(String nome, String cognome);
 
-    void doUpdate(UtenteBean utenteBean) throws SQLException, IOException;
+    public void doUpdate(UtenteBean utenteBean) throws SQLException, IOException;
+
+    public void doUpdateFoto(int idUtente, Part foto) throws SQLException, IOException;
+
 }

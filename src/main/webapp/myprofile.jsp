@@ -77,9 +77,11 @@
                                         Cambia Foto
                                     </a>
                                 </p>
+                                <form action="ServletCambiaFotoProfilo" enctype="multipart/form-data" method="post">
                                 <div class="collapse" id="collapseExample">
                                     <div class="card card-body">
-                                        <input type="file" id="file-ip-1" accept="images/*" onchange="previewBeforeUpload(event);">
+                                        <input name="foto" type="file" id="file-ip-1" accept="images/*" onchange="previewBeforeUpload(event);">
+                                        <input type="hidden" name="idUtente" value="<%=admin.getIdUtente()%>">
                                         <label for="file-ip-1">Carica Immagine</label>
                                         <div class="choices-foto">
                                             <button type="submit" onclick="location.reload();" class="change_pic_button">Annulla</button>
@@ -87,6 +89,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>
