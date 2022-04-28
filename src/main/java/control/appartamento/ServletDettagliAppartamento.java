@@ -56,6 +56,7 @@ public class ServletDettagliAppartamento extends HttpServlet {
             multimediaBean.setPlanimetriaString(modelMultimedia.doRetrievePlanimetria(appBean.getIdAppartamento()));
             array =(ArrayList<AppartamentoBean>) modelApp.OrderByVisite();
             allMulti=modelMultimedia.RetrieveAllMultimedia();
+            modelApp.AggiungiVisualizzazione(id);
             request.setAttribute("appartamento", appBean);
             request.setAttribute("agente", agenteBean);
             request.setAttribute("utente", utenteBean);

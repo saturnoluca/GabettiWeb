@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="addProperty_page_content">
-            <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post">
+            <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="idAppartamento" value="<%=idAppartamento%>">
                 <input type="hidden" name="azione" value="<%="planimetria"%>">
                 <div class="addProperty_content">
@@ -126,7 +126,7 @@
                             </div>
                         </div>
                         <div class="div_button_submit">
-                            <input type="submit" value="Avanti">
+                            <input type="submit" value="Aggiungi">
                         </div>
                     </div>
                 </div>

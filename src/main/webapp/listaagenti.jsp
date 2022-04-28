@@ -516,6 +516,12 @@
         </form>
     </div>
     <section class="agents_section agents_section_flex agents_section_padding">
+        <%
+            if (utenteBeans.size() == 0) {
+        %><h3>Non è presente nessun agente</h3>
+        <%
+        } else {
+        %>
         <div class="page page_agents page_main">
             <div class="agents_listing">
                 <%for (UtenteBean u : utenteBeans) {%>
@@ -524,10 +530,10 @@
                         <div class="agent_card_head">
                             <figure class="agent_card_figure">
                                 <a href="">
-                                    <%if(u.getFotoString() == null){%>
-                                        <img src="images/agente.jpg">
-                                    <%}else{%>
-                                        <img src="data:image/png;base64,<%=u.getFotoString()%>">
+                                    <%if (u.getFotoString() == null) {%>
+                                    <img src="images/agente.jpg">
+                                    <%} else {%>
+                                    <img src="data:image/png;base64,<%=u.getFotoString()%>">
                                     <%}%>
 
                                 </a>
@@ -618,7 +624,8 @@
                                     if (u.getRuolo().equals("Agente")) {
                                         for (CompositeKeyAgenteCase ag : agenteBeans) {
                                             if (ag.getBean().getIdUtente() == u.getIdUtente()) {
-                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=ag.getBean().getIdAgente()%>"
+                                %><a
+                                    href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=ag.getBean().getIdAgente()%>"
                                     class="agent_card_link">
                                 <span>Visualizza le mie proprietà</span>
                                 <i class="icon-angle-right"></i>
@@ -647,6 +654,14 @@
                 <%}%>
             </div>
         </div>
+        <%
+            }
+        %>
+        <%
+            if (appartamentoBeans.size() == 0) {
+
+            } else {
+        %>
         <div class="page_right page_sidebar">
             <aside class="featured_sidebar">
                 <section class="widget">
@@ -662,17 +677,18 @@
                             </figure>
                             <div class="featured_card_details">
                                 <h3>
-                                    <a href=""><%=appartamentoBeans.get(0).getNomeAppartamento()%></a>
+                                    <a href=""><%=appartamentoBeans.get(0).getNomeAppartamento()%>
+                                    </a>
                                 </h3>
                                 <p class="featured_card_description">
                                     <%
-                                        if(appartamentoBeans.get(0).getDescrizioneAppartamento().length() > 30){
+                                        if (appartamentoBeans.get(0).getDescrizioneAppartamento().length() > 30) {
                                     %>
-                                        <%=appartamentoBeans.get(0).getDescrizioneAppartamento().substring(0,30) + "..."%>
+                                    <%=appartamentoBeans.get(0).getDescrizioneAppartamento().substring(0, 30) + "..."%>
                                     <%
-                                        }else{
+                                    } else {
                                     %>
-                                        <%=appartamentoBeans.get(0).getDescrizioneAppartamento()%>
+                                    <%=appartamentoBeans.get(0).getDescrizioneAppartamento()%>
                                     <%}%>
                                 </p>
                                 <div class="featured_card_features_wrap">
@@ -702,7 +718,8 @@
                                 <div class="featured_card_priceLabel">
                                     <div class="featured_card_price">
                                         <span class="status"><%=appartamentoBeans.get(0).getTipoVendita()%></span>
-                                        <p class="price"><%=appartamentoBeans.get(0).getPrezzo() + "€"%></p>
+                                        <p class="price"><%=appartamentoBeans.get(0).getPrezzo() + "€"%>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -712,8 +729,9 @@
                 </section>
             </aside>
         </div>
+        <%}%>
     </section>
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="footer.jsp"/>
 
 </div>
 

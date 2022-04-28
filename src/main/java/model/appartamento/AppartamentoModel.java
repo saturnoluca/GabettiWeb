@@ -33,4 +33,6 @@ public interface AppartamentoModel<T> {
     public ArrayList<String> RetrieveAllTipoAppartamento() throws SQLException;
 
     public void doDelete(int idUtente) throws SQLException;
+
+    public void AggiungiVisualizzazione(int idAppartamento) throws SQLException;
 }

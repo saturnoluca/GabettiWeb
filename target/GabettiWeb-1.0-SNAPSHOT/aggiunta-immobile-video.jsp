@@ -126,7 +126,7 @@
                             </div>
                         </div>
                         <div class="div_button_submit">
-                            <input type="submit" value="Aggiungi immobile">
+                            <input type="submit" value="Avanti">
                         </div>
                     </div>
                 </div>

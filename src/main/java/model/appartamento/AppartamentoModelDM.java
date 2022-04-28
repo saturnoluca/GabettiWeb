@@ -485,4 +485,36 @@ public class AppartamentoModelDM implements AppartamentoModel {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void AggiungiVisualizzazione(int idAppartamento) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT visualizzazioni FROM appartamento WHERE idAppartamento = ?";
+        int visualizzazioni = 0;
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setInt(1, idAppartamento);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                visualizzazioni = rs.getInt("visualizzazioni");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String updateSql = "UPDATE appartamento SET visualizzazioni = ? WHERE idAppartamento=?";
+        visualizzazioni = visualizzazioni + 1;
+        try{
+            connection=dmcp.getConnection();
+            ps=connection.prepareStatement(updateSql);
+            ps.setInt(1, visualizzazioni);
+            ps.setInt(2, idAppartamento);
+            ps.executeUpdate();
+            connection.commit();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
 }
