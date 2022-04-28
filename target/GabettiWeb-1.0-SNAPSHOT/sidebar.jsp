@@ -65,6 +65,7 @@
             </a>
             <span class="tooltip">Aggiungi immobile</span>
         </li>
+        <%if(admin.getRuolo().equals("Admin") || admin.getRuolo().equals("Segretario")){%>
         <li>
             <a href="lista-utenti.jsp">
                 <i class='bx bxs-user-detail'></i>
@@ -72,6 +73,7 @@
             </a>
             <span class="tooltip">Lista utenti</span>
         </li>
+        <%}%>
         <%if(admin.getRuolo().equals("Admin") || admin.getRuolo().equals("Segretario")){%>
         <li>
             <a href="aggiungi-utente.jsp">

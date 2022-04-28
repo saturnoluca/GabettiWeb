@@ -69,10 +69,24 @@
                             <%if(admin.getFotoString() == null){%>
                                 <img src="images/agente.jpg" height="160" width="160" alt="no photo">
                             <%}else{%>
-                                <img src="data:image/png;base64,<%=admin.getFotoString()%>" height="160" width="160" alt="no photo">
+                                <img src="data:image/png;base64,<%=admin.getFotoString()%>" id="file-ip-1-preview" height="160" width="160" alt="no photo">
                             <%}%>
                             <div class="change_pic">
-                                <button type="submit" class="change_pic_button">Cambia foto</button>
+                                <p>
+                                    <a class="change_pic_button" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Cambia Foto
+                                    </a>
+                                </p>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-body">
+                                        <input type="file" id="file-ip-1" accept="images/*" onchange="previewBeforeUpload(event);">
+                                        <label for="file-ip-1">Carica Immagine</label>
+                                        <div class="choices-foto">
+                                            <button type="submit" onclick="location.reload();" class="change_pic_button">Annulla</button>
+                                            <button type="submit" class="change_pic_button">Conferma</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -175,7 +189,8 @@
                             <p>Informazioni agente</p>
                         </div>
                         <div class="user_settings_body">
-                            <form class="form_user_settings">
+                            <form class="form_user_settings" action="ServletCambiaInformazioniAgente" method="post">
+                                <input type="hidden" name="idAgente" value="<%=agente.getIdAgente()%>">
                                 <div class="user_settings_fields">
                                     <div class="user_field full_size">
                                         <label>Descrizione</label>
@@ -183,10 +198,7 @@
                                             if (admin.getRuolo().equals("Agente")) {
                                         %>
                                         <textarea rows="10"
-                                                  placeholder="<%=agente.getDescrizionePersonale()%>"></textarea>
-                                        <%} else {%>
-                                        <textarea rows="10"
-                                                  placeholder="Non è un agente"></textarea>
+                                                  placeholder="<%=agente.getDescrizionePersonale()%>" name="descrizioneAgente"></textarea>
                                         <%}%>
                                     </div>
                                     <div class="user_field half_size">
@@ -194,7 +206,7 @@
                                         <%
                                             if (admin.getRuolo().equals("Agente")) {
                                         %>
-                                        <input type="text" placeholder="<%=agente.getLinkFacebook()%>" name="linkFb" value="">
+                                        <input type="text" placeholder="<%=agente.getLinkFacebook()%>" name="linkFacebook">
                                         <%} else {%>
                                         <input type="text" placeholder="non è un agente">
                                         <%}%>
@@ -204,7 +216,7 @@
                                         <%
                                             if (admin.getRuolo().equals("Agente")) {
                                         %>
-                                        <input type="text" placeholder="<%=agente.getLinkInstagram()%>" value="" name="linkInsta">
+                                        <input type="text" placeholder="<%=agente.getLinkInstagram()%>" name="linkInstagram">
                                         <%} else {%>
                                         <input type="text" placeholder="non è un agente">
                                         <%}%>
@@ -249,125 +261,6 @@
 </script>
 
 <script>
-    function previewImages() {
-
-        var preview = document.querySelector('#gallery_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function () {
-                var image = new Image();
-                image.height = 100;
-                image.title = file.name;
-                image.src = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-photo').addEventListener("change", previewImages);
-
-    $('#reset-image').click(function () {
-        $("#upload-photo").val('');
-        $("#gallery_image_container").empty();
-    });
-</script>
-
-<script>
-    function previewImages() {
-
-        var preview = document.querySelector('#planimetria_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function () {
-                var image = new Image();
-                image.height = 100;
-                image.title = file.name;
-                image.src = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-planimetria').addEventListener("change", previewImages);
-
-    $('#reset-planimetria').click(function () {
-        $("#upload-planimetria").val('');
-        $("#planimetria_image_container").empty();
-    });
-</script>
-
-<script>
-    function previewImages() {
-
-        var preview = document.querySelector('#video_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function () {
-                var image = new Image();
-                image.height = 100;
-                image.title = file.name;
-                image.src = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-video').addEventListener("change", previewImages);
-
-    $('#reset-video').click(function () {
-        $("#upload-video").val('');
-    });
-</script>
-
-<script>
     document.getElementById("Selector").onchange = changeListener;
 
     function changeListener() {
@@ -385,10 +278,17 @@
         } else {
             $('#div_agente').slideUp();
         }
-
-
     }
+</script>
 
+<script>
+    function previewBeforeUpload(event){
+        if(event.target.files.length >0){
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("file-ip-1-preview");
+            preview.src = src;
+        }
+    }
 </script>
 
 
