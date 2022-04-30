@@ -145,7 +145,7 @@
                                         <i class="icon-eye"></i>
                                         Visualizza
                                     </a>
-                                    <a href="">
+                                    <a href="ServletPaginaModificaAppartamento?idImmobile=<%=immobili.getIdAppartamento()%>">
                                         <i class="icon-mode_edit"></i>
                                         Modifica
                                     </a>

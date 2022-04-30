@@ -1,6 +1,7 @@
 <%@ page import="model.utente.UtenteBean" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.appartamento.AppartamentoBean" %><%--
+<%@ page import="model.appartamento.AppartamentoBean" %>
+<%@ page import="model.indirizzo.IndirizzoBean" %><%--
   Created by IntelliJ IDEA.
   User: gaeta
   Date: 28/04/2022
@@ -49,6 +50,12 @@
         return;
     }
 
+    IndirizzoBean indirizzoBean =(IndirizzoBean) request.getAttribute("modifica-indirizzo");
+    if(appartamentoBean==null){
+        response.sendRedirect(response.encodeRedirectURL("gestione-lista-immobili.jsp"));
+        return;
+    }
+
 %>
 <body>
 <jsp:include page="sidebar.jsp" />
@@ -70,48 +77,48 @@
                             <div class="property_title">
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Titolo immobile*</label>
-                                    <input type="text" required placeholder="Inserisci titolo immobile"
-                                           name="titoloImmobile">
+                                    <input type="text"  placeholder="<%=appartamentoBean.getNomeAppartamento()%>"
+                                           name="titoloImmobile" value="<%=appartamentoBean.getNomeAppartamento()%>">
                                 </div>
                             </div>
                             <div class="property_address">
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Città*</label>
-                                    <input type="text" required placeholder="Inserisci la città" name="citta">
+                                    <input type="text"  placeholder="<%=indirizzoBean.getCitta()%>" name="citta" value="<%=indirizzoBean.getCitta()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Provincia*</label>
-                                    <input type="text" required placeholder="Inserisci la provincia" name="provincia">
+                                    <input type="text"  placeholder="<%=indirizzoBean.getProvincia()%>" name="provincia" value="<%=indirizzoBean.getProvincia()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Indirizzo*</label>
-                                    <input type="text" required placeholder="Inserisci l'indirizzo" name="indirizzo">
+                                    <input type="text"  placeholder="<%=indirizzoBean.getVia()%>" name="indirizzo" value=""<%=indirizzoBean.getVia()%>>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero civico</label>
-                                    <input type="text" placeholder="Inserisci il numero civico" name="numeroCivico">
+                                    <input type="text" placeholder="<%=indirizzoBean.getNumeroCivico()%>" name="numeroCivico" value="<%=indirizzoBean.getNumeroCivico()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">CAP*</label>
-                                    <input type="text" required placeholder="Inserisci il CAP" name="cap">
+                                    <input type="text"  placeholder="<%=indirizzoBean.getCap()%>>" name="cap" value="<%=indirizzoBean.getCap()%>">
                                 </div>
                             </div>
                             <div class="property_description">
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Descrizione*</label>
-                                    <textarea rows="10" required placeholder="Scrivi una descrizione"
-                                              name="descrizione"></textarea>
+                                    <textarea rows="10"  placeholder="<%=appartamentoBean.getDescrizioneAppartamento()%>"
+                                              name="descrizione" value="<%=appartamentoBean.getDescrizioneAppartamento()%>"></textarea>
                                 </div>
                             </div>
                             <div class="property_features">
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Prezzo*</label>
-                                    <input type="text" required placeholder="Inserisci il prezzo" name="prezzo">
+                                    <input type="text"  placeholder="<%=appartamentoBean.getPrezzo()%>" name="prezzo" value="<%=appartamentoBean.getPrezzo()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Tipo immobile*</label>
-                                    <select required name="tipoImmobile">
-                                        <option value="" selected disabled>Seleziona tipo immobile</option>
+                                    <select  name="tipoImmobile">
+                                        <option value="<%=appartamentoBean.getCategoria()%>" selected disabled><%=appartamentoBean.getCategoria()%></option>
                                         <option value="Appartamento">Appartamento</option>
                                         <option value="Abitazione economica">Abitazione economica</option>
                                         <option value="Loft Open space ">Loft / Open Space</option>
@@ -125,25 +132,25 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Stato appartamento*</label>
-                                    <select required name="statoImmobile">
-                                        <option value="" selected disabled>Seleziona stato immobile</option>
+                                    <select  name="statoImmobile">
+                                        <option value="<%=appartamentoBean.getTipoVendita()%>" selected disabled><%=appartamentoBean.getTipoVendita()%></option>
                                         <option value="In Vendita">In Vendita</option>
                                         <option value="In Affitto">In Affitto</option>
                                     </select>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Superficie in mq</label>
-                                    <input type="text" required placeholder="Inserisci la superficie in mq"
-                                           name="superficie">
+                                    <input type="text" placeholder="<%=appartamentoBean.getSuperficie()%>"
+                                           name="superficie" value="<%=appartamentoBean.getSuperficie()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero Locali</label>
-                                    <input type="text" placeholder="Inserisci il numero dei locali" name="locali">
+                                    <input type="text" placeholder="<%=appartamentoBean.getLocali()%>" name="locali" value="<%=appartamentoBean.getLocali()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Piano</label>
                                     <select name="piano">
-                                        <option value="" selected disabled>Seleziona piano immobile</option>
+                                        <option value="<%=appartamentoBean.getPiano()%>" selected disabled><%=appartamentoBean.getPiano()%></option>
                                         <option value="Interrato Seminterrato">Interrato / Seminterrato</option>
                                         <option value="Piano terra">Piano terra</option>
                                         <option value="Piano rialzato">Piano rialzato</option>
@@ -156,23 +163,23 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Posti auto</label>
-                                    <input type="text" required placeholder="Inserisci il numero dei posti auto"
-                                           name="postiAuto">
+                                    <input type="text"  placeholder="<%=appartamentoBean.getPostoAuto()%>"
+                                           name="postiAuto" value="<%=appartamentoBean.getPostoAuto()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero Bagni</label>
-                                    <input type="text" required placeholder="Inserisci il numero dei bagni"
-                                           name="numeroBagni">
+                                    <input type="text"  placeholder="<%=appartamentoBean.getBagni()%>"
+                                           name="numeroBagni" value="<%=appartamentoBean.getBagni()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero Camere Da Letto</label>
-                                    <input type="text" required placeholder="Inserisci il numero delle camere da letto"
+                                    <input type="text"  placeholder="<%=appartamentoBean.getCamereLetto()%>"
                                            name="camereLetto">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Riscaldamento</label>
                                     <select name="riscaldamento">
-                                        <option value="" selected disabled>Seleziona tipo riscaldamento</option>
+                                        <option value="<%=appartamentoBean.getRiscaldamento()%>" selected disabled><%=appartamentoBean.getRiscaldamento()%></option>
                                         <option value="Non presente">Non presente</option>
                                         <option value="Autonomo">Autonomo</option>
                                         <option value="Condominiale">Condominiale</option>
@@ -181,12 +188,12 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Classe energetica</label>
-                                    <input type="text" required placeholder="Inserisci la classe energetica"
-                                           name="classeEnergetica">
+                                    <input type="text"  placeholder="<%=appartamentoBean.getClasseEnergetica()%>"
+                                           name="classeEnergetica" value="<%=appartamentoBean.getClasseEnergetica()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Agente</label>
-                                    <select name="Agente">
+                                    <select required name="Agente">
                                         <option value="" selected disabled>Seleziona l'agente</option>
                                         <%
                                             for (UtenteBean utenteBean : utenti) {
