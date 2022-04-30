@@ -53,6 +53,20 @@ public class MultimediaModelDM implements MultimediaModel {
         }
     }
 
+    public void doDeleteFoto(int idMultimedia) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String deleteSql = "DELETE FROM multimedia WHERE idMultimedia=?";
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(deleteSql);
+            ps.setInt(1, idMultimedia);
+            ps.executeUpdate();
+            connection.commit();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
     @Override
     public void doSaveVideo(MultimediaBean multi) throws IOException {
         Connection connection = null;

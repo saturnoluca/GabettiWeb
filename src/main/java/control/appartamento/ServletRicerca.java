@@ -29,7 +29,6 @@ public class ServletRicerca extends HttpServlet {
         if (città.equals("Qualsiasi")) {
             ricerca.setCittà(null);
         } else {
-            System.out.println(città);
             ricerca.setCittà(città);
         }
         String vendita = request.getParameter("stato_immobile");

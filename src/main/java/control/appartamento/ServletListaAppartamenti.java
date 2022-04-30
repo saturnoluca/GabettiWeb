@@ -1,10 +1,12 @@
 package control.appartamento;
 
 import UtilityClass.CompositeKeyAgenteCase;
+import UtilityClass.VisualizzazioneImmobile;
 import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.multimedia.MultimediaModelDM;
 import model.utente.UtenteBean;
 import model.utente.UtenteModelDM;
 
@@ -28,6 +30,7 @@ public class ServletListaAppartamenti extends HttpServlet {
         } else {
             num = Integer.parseInt(numeroString);
         }
+        MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
         AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
         ArrayList<AppartamentoBean> appArray = new ArrayList<AppartamentoBean>();
         ArrayList<AppartamentoBean> appArray2 = new ArrayList<AppartamentoBean>();
@@ -42,8 +45,21 @@ public class ServletListaAppartamenti extends HttpServlet {
         agenteArray = (ArrayList<AgenteBean>) agenteModelDM.RetrieveAgente();
         utenteArray = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
         arrayComp = (ArrayList<CompositeKeyAgenteCase>) agenteModelDM.RetrieveAgenteCase();
+        VisualizzazioneImmobile visualizzazione = new VisualizzazioneImmobile();
+        ArrayList<AppartamentoBean> ordinamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByVisite();
+        visualizzazione.setIdAppartamento(ordinamento.get(0).getIdAppartamento());
+        visualizzazione.setTipoVendita(ordinamento.get(0).getTipoVendita());
+        visualizzazione.setNomeAppartamento(ordinamento.get(0).getNomeAppartamento());
+        visualizzazione.setDescrizioneAppartamento(ordinamento.get(0).getDescrizioneAppartamento());
+        visualizzazione.setSuperficie(ordinamento.get(0).getSuperficie());
+        visualizzazione.setBagni(ordinamento.get(0).getBagni());
+        visualizzazione.setCamereLetto(ordinamento.get(0).getCamereLetto());
+        visualizzazione.setData(ordinamento.get(0).getData());
+        visualizzazione.setPrezzo(ordinamento.get(0).getPrezzo());
+        visualizzazione.setFoto(multimediaModelDM.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
         if (appArray != null) {
             if (appArray.size() < 10) {
+                request.setAttribute("featured",visualizzazione);
                 request.setAttribute("allCittaZone", request.getSession().getAttribute("allCittàZone"));
                 request.setAttribute("categorie", request.getSession().getAttribute("categorie"));
                 request.setAttribute("array", appArray);
@@ -57,6 +73,7 @@ public class ServletListaAppartamenti extends HttpServlet {
                 for (int i = (num - 1) * 10; i < appArray.size(); i++) {
                     appArray2.add(appArray.get(i));
                 }
+                request.setAttribute("featured",visualizzazione);
                 request.setAttribute("allCittaZone", request.getSession().getAttribute("allCittàZone"));
                 request.setAttribute("categorie", request.getSession().getAttribute("categorie"));
                 request.setAttribute("array", appArray2);
@@ -70,6 +87,7 @@ public class ServletListaAppartamenti extends HttpServlet {
                 for (int i = (num - 1) * 10; i < (num * 10); i++) {
                     appArray2.add(appArray.get(i));
                 }
+                request.setAttribute("featured",visualizzazione);
                 request.setAttribute("array", appArray2);
                 request.setAttribute("arrayAgente", agenteArray);
                 request.setAttribute("arrayUtente", utenteArray);

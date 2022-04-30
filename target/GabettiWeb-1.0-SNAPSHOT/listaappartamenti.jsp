@@ -3,7 +3,9 @@
 <%@ page import="model.agente.AgenteBean" %>
 <%@ page import="model.utente.UtenteBean" %>
 <%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
-<%@ page import="UtilityClass.Città" %><%--
+<%@ page import="UtilityClass.Città" %>
+<%@ page import="model.multimedia.MultimediaBean" %>
+<%@ page import="UtilityClass.VisualizzazioneImmobile" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 17/03/2022
@@ -47,6 +49,7 @@
         response.sendRedirect(response.encodeRedirectURL("ServletListaAppartamenti?numero=1"));
         return;
     }
+    VisualizzazioneImmobile visualizzazioneImmobile = (VisualizzazioneImmobile) request.getAttribute("featured");
     ArrayList<AgenteBean> agenteArray = (ArrayList<AgenteBean>) request.getAttribute("arrayAgente");
     ArrayList<UtenteBean> utenteArray = (ArrayList<UtenteBean>) request.getAttribute("arrayUtente");
     String sizeArrayString = (String) request.getAttribute("sizeArray");
@@ -541,43 +544,43 @@
                             <figure class="featured_card_figure">
                                 <div class="featured_card_picture">
                                     <a href="">
-                                        <img width="680" height="510" src="images/prova.jpg">
+                                        <img width="680" height="510" src="data:image/png;base64,<%=visualizzazioneImmobile.getFoto()%>">
                                     </a>
                                 </div>
                             </figure>
                             <div class="featured_card_details">
                                 <h3>
-                                    <a href=""> Villa on Grand Avenue</a>
+                                    <a href=""><%=visualizzazioneImmobile.getNomeAppartamento()%></a>
                                 </h3>
-                                <p class="featured_card_description">Spacious and fabulous home in a prime location. This executive…</p>
+                                <p class="featured_card_description"><%=visualizzazioneImmobile.getDescrizioneAppartamento()%></p>
                                 <div class="featured_card_features_wrap">
                                     <div class="featured_card_feature">
                                         <span class="features_title">Camere da letto</span>
                                         <div>
                                             <i class="feature_icon icon-bed"></i>
-                                            <span class="text_feature">3</span>
+                                            <span class="text_feature"><%=visualizzazioneImmobile.getCamereLetto()%></span>
                                         </div>
                                     </div>
                                     <div class="featured_card_feature">
                                         <span class="features_title">Bagni</span>
                                         <div>
                                             <i class="feature_icon icon-shower"></i>
-                                            <span class="text_feature">3</span>
+                                            <span class="text_feature"><%=visualizzazioneImmobile.getBagni()%></span>
                                         </div>
                                     </div>
                                     <div class="featured_card_feature">
                                         <span class="features_title">Superficie</span>
                                         <div>
                                             <i class="feature_icon icon-crop_square"></i>
-                                            <span class="text_feature">500</span>
+                                            <span class="text_feature"><%=visualizzazioneImmobile.getSuperficie()%></span>
                                             <span class="text_add">mq</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="featured_card_priceLabel">
                                     <div class="featured_card_price">
-                                        <span class="status">For Sale</span>
-                                        <p class="price">€800,000</p>
+                                        <span class="status"><%=visualizzazioneImmobile.getTipoVendita()%></span>
+                                        <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%></p>
                                     </div>
                                 </div>
                             </div>

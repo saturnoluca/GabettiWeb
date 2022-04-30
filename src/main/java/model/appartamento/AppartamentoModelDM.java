@@ -274,7 +274,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 agente = "AND appartamento.Agente_idAgente=" + ricerca.getAgente();
                 selectSql = selectSql + agente;
             }
-
+            System.out.println(selectSql);
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(selectSql);
             ResultSet rs = ps.executeQuery();
@@ -298,6 +298,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setPostoAuto(rs.getInt("postoAuto"));
                 array.add(bean);
             }
+            System.out.println(array);
         } catch (SQLException e) {
             e.printStackTrace();
         }

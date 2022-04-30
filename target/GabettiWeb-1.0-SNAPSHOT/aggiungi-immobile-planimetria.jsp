@@ -32,66 +32,7 @@
 
 %>
 <body>
-<div class="sidebar">
-    <div class="logo-details">
-        <div class="logo_name">Gabetti</div>
-        <i class='bx bx-menu' id="btn" ></i>
-    </div>
-    <ul class="nav-list">
-        <li>
-            <a href="#">
-                <i class='bx bx-grid-alt'></i>
-                <span class="links_name">Dashboard</span>
-            </a>
-            <span class="tooltip">Dashboard</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-user'></i>
-                <span class="links_name">Il mio profilo</span>
-            </a>
-            <span class="tooltip">Il mio profilo</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-home' ></i>
-                <span class="links_name">Lista immobili</span>
-            </a>
-            <span class="tooltip">Lista immobili</span>
-        </li>
-        <li>
-            <a href="aggiungi-immobile-admin.html">
-                <i class='bx bx-home-smile' ></i>
-                <span class="links_name">Aggiungi immobile</span>
-            </a>
-            <span class="tooltip">Aggiungi immobile</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bxs-user-detail' ></i>
-                <span class="links_name">Lista utenti</span>
-            </a>
-            <span class="tooltip">Lista utenti</span>
-        </li>
-        <li>
-            <a href="aggiungi-utente.html">
-                <i class='bx bx-user-plus' ></i>
-                <span class="links_name">Aggiungi utente</span>
-            </a>
-            <span class="tooltip">Aggiungi utente</span>
-        </li>
-        <li class="profile">
-            <div class="profile-details">
-                <img src="../java/model/utente/agente.jpg" alt="profileImg">
-                <div class="name_job">
-                    <div class="name">Gaetano De Filippo</div>
-                    <div class="job">Amministratore</div>
-                </div>
-            </div>
-            <i class='bx bx-log-out' id="log_out" ></i>
-        </li>
-    </ul>
-</div>
+<jsp:include page="sidebar.jsp" />
 <section class="home-section">
     <div class="div_addProperty_page">
         <div class="addProperty_page_head">
