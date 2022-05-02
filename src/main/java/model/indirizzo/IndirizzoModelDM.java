@@ -45,6 +45,31 @@ public class IndirizzoModelDM implements IndirizzoModel {
         }
     }
 
+    public void doUpdate(IndirizzoBean indirizzo) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String updateSql = "UPDATE appartamento SET nomeAppartamento=? , descrizioneAppartamento=? , superficie=? , locali=? , bagni=? , piano=? , riscaldamento=? , classeEnergetica=? , tipoVendita=? , prezzo=? , data=? , Agente_idAgente=? , categoria=? , camereLetto=? , postoAuto=? WHERE idAgente=?";
+
+        String insertSql = "UPDATE indirizzo SET via=? , numeroCivico=? , cap=? , città=? , provincia=? , zona=? WHERE Appartamento_idAppartamento=?;";
+        try {
+            connection = dmcp.getConnection();
+            if (indirizzo instanceof IndirizzoBean) {
+                ps = connection.prepareStatement(insertSql);
+                ps.setString(1, indirizzo.getVia());
+                ps.setString(2, indirizzo.getNumeroCivico());
+                ps.setString(3, indirizzo.getCap());
+                ps.setString(4, indirizzo.getCitta());
+                ps.setString(5, indirizzo.getProvincia());
+                ps.setString(6, indirizzo.getZona());
+                ps.setInt(7,indirizzo.getIdAppartamento());
+                ps.executeUpdate();
+                connection.commit();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public IndirizzoBean RetrieveIndirizzoByAppId(int id) {
         Connection connection = null;

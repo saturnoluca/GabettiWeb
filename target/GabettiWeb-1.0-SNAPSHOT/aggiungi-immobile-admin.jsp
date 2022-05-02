@@ -91,6 +91,10 @@
                                     <label class="label_property_title">CAP*</label>
                                     <input type="text" required placeholder="Inserisci il CAP" name="cap">
                                 </div>
+                                <div class="content_fields_column half_size">
+                                    <label class="label_property_title">Zona</label>
+                                    <input type="text" placeholder="Inserisci la zona" name="zona">
+                                </div>
                             </div>
                             <div class="property_description">
                                 <div class="content_fields_column full_size">

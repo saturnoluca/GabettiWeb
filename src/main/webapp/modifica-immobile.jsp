@@ -1,7 +1,8 @@
 <%@ page import="model.utente.UtenteBean" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.appartamento.AppartamentoBean" %>
-<%@ page import="model.indirizzo.IndirizzoBean" %><%--
+<%@ page import="model.indirizzo.IndirizzoBean" %>
+<%@ page import="model.agente.AgenteBean" %><%--
   Created by IntelliJ IDEA.
   User: gaeta
   Date: 28/04/2022
@@ -43,7 +44,7 @@
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
-
+    AgenteBean agente = (AgenteBean) request.getAttribute("agente");
     AppartamentoBean appartamentoBean = (AppartamentoBean) request.getAttribute("modifica-appartamento");
     if(appartamentoBean==null){
         response.sendRedirect(response.encodeRedirectURL("gestione-lista-immobili.jsp"));
@@ -92,7 +93,7 @@
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Indirizzo*</label>
-                                    <input type="text"  placeholder="<%=indirizzoBean.getVia()%>" name="indirizzo" value=""<%=indirizzoBean.getVia()%>>
+                                    <input type="text"  placeholder="<%=indirizzoBean.getVia()%>" name="indirizzo" value="<%=indirizzoBean.getVia()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero civico</label>
@@ -102,12 +103,15 @@
                                     <label class="label_property_title">CAP*</label>
                                     <input type="text"  placeholder="<%=indirizzoBean.getCap()%>>" name="cap" value="<%=indirizzoBean.getCap()%>">
                                 </div>
+                                <div class="content_fields_column half_size">
+                                    <label class="label_property_title">Zona</label>
+                                    <input type="text"  placeholder="<%=indirizzoBean.getZona()%>" name="zona" value="<%=indirizzoBean.getZona()%>">
+                                </div>
                             </div>
                             <div class="property_description">
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Descrizione*</label>
-                                    <textarea rows="10"  placeholder="<%=appartamentoBean.getDescrizioneAppartamento()%>"
-                                              name="descrizione" value="<%=appartamentoBean.getDescrizioneAppartamento()%>"></textarea>
+                                    <textarea rows="10"  placeholder="<%=appartamentoBean.getDescrizioneAppartamento()%>" value="<%=appartamentoBean.getDescrizioneAppartamento()%>" name="descrizione"></textarea>
                                 </div>
                             </div>
                             <div class="property_features">
@@ -174,7 +178,7 @@
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Numero Camere Da Letto</label>
                                     <input type="text"  placeholder="<%=appartamentoBean.getCamereLetto()%>"
-                                           name="camereLetto">
+                                           name="camereLetto" value="<%=appartamentoBean.getCamereLetto()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Riscaldamento</label>
@@ -198,10 +202,15 @@
                                         <%
                                             for (UtenteBean utenteBean : utenti) {
                                                 if (utenteBean.getRuolo().equals("Agente")) {
+                                                    if(agente.getIdAgente() == appartamentoBean.getIdAgente()){
                                         %>
-                                        <option value="<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
+                                        <option selected value="<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
                                         </option>
                                         <%
+                                                    }
+                                                    else{%>
+                                                        <option value="<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></option>
+                                                <%}
                                                 }
                                             }
                                         %>
@@ -210,7 +219,7 @@
                             </div>
                         </div>
                         <div class="div_button_submit">
-                            <input type="submit" value="Aggiungi immobile">
+                            <input type="submit" value="Modifica Immobile">
                         </div>
                     </div>
                 </div>

@@ -28,13 +28,13 @@ public class ServletAggiungiAppartamento extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int key = 0;
         String ruolo = request.getParameter("ruolo");
-        String zona = request.getParameter("zona");
         String titoloImmobile = request.getParameter("titoloImmobile");
         String citta = request.getParameter("citta");
         String provincia = request.getParameter("provincia");
         String indirizzo = request.getParameter("indirizzo");
         String numeroCivico = request.getParameter("numeroCivico");
         String cap = request.getParameter("cap");
+        String zona = request.getParameter("zona");
         String descrizione = request.getParameter("descrizione");
         float prezzo = Float.parseFloat(request.getParameter("prezzo"));
         String tipoImmobile = request.getParameter("tipoImmobile");
@@ -74,7 +74,7 @@ public class ServletAggiungiAppartamento extends HttpServlet {
         indirizzoBean.setVia(indirizzo);
         indirizzoBean.setNumeroCivico(numeroCivico);
         indirizzoBean.setCap(cap);
-        indirizzoBean.setZona("Foce");
+        indirizzoBean.setZona(zona);
 
         indirizzoBean.setIdAppartamento(key);
 

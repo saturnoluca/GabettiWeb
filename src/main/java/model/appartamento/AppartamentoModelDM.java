@@ -4,6 +4,7 @@ import UtilityClass.Città;
 import UtilityClass.Ricerca;
 import com.mysql.cj.result.SqlDateValueFactory;
 import model.DriverManagerConnectionPool;
+import model.agente.AgenteBean;
 import model.indirizzo.IndirizzoModelDM;
 
 import java.sql.*;
@@ -517,5 +518,38 @@ public class AppartamentoModelDM implements AppartamentoModel {
             e.printStackTrace();
         }
 
+    }
+
+    public int doUpdate(AppartamentoBean appartamentoBean) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        System.out.println(appartamentoBean);
+        int key = 0;
+        String updateSql = "UPDATE appartamento SET nomeAppartamento=? , descrizioneAppartamento=? , superficie=? , locali=? , bagni=? , piano=? , riscaldamento=? , classeEnergetica=? , tipoVendita=? , prezzo=? , data=? , Agente_idAgente=? , categoria=? , camereLetto=? , postoAuto=? WHERE idAppartamento=?";
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(updateSql);
+            ps.setString(1, appartamentoBean.getNomeAppartamento());
+            ps.setString(2, appartamentoBean.getDescrizioneAppartamento());
+            ps.setFloat(3, appartamentoBean.getSuperficie());
+            ps.setString(4, appartamentoBean.getLocali());
+            ps.setString(5, appartamentoBean.getBagni());
+            ps.setString(6, appartamentoBean.getPiano());
+            ps.setString(7,appartamentoBean.getRiscaldamento());
+            ps.setString(8, appartamentoBean.getClasseEnergetica());
+            ps.setString(9, appartamentoBean.getTipoVendita());
+            ps.setFloat(10,appartamentoBean.getPrezzo());
+            ps.setDate(11,appartamentoBean.getData());
+            ps.setInt(12, appartamentoBean.getIdAgente());
+            ps.setString(13,appartamentoBean.getCategoria());
+            ps.setInt(14,appartamentoBean.getCamereLetto());
+            ps.setInt(15,appartamentoBean.getPostoAuto());
+            ps.setInt(16, appartamentoBean.getIdAppartamento());
+            ps.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return appartamentoBean.getIdAppartamento();
     }
 }
