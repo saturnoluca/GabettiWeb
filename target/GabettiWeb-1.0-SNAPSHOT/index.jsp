@@ -496,7 +496,7 @@
                                                                                         if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><img src="data:image/png;base64,<%=utenteBean1.otoString()%>"><%
+                                                                                %><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
                                                                                             }
                                                                                         }
                                                                                     }

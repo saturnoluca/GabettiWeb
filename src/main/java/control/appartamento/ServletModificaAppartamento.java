@@ -85,19 +85,23 @@ public class ServletModificaAppartamento extends HttpServlet {
 
         indirizzoModelDM.doUpdate(indirizzoBean);
         ArrayList<MultimediaBean> listaFoto = new ArrayList<MultimediaBean>();
-        ArrayList<MultimediaBean> galleria = new ArrayList<MultimediaBean>();
+        MultimediaBean multimedia = new MultimediaBean();
+
         try {
-            listaFoto = multimediaModelDM.RetrieveAllMultimedia();
+            ArrayList<AppartamentoBean> appartamentoBeans = new ArrayList<AppartamentoBean>();
+            appartamentoBeans.add(bean);
+            listaFoto = multimediaModelDM.RetrieveAll(appartamentoBeans);
             for(MultimediaBean foto: listaFoto){
                 if(bean.getIdAppartamento() == foto.getIdAppartamento() && foto.getFotoString() != null){
-                    galleria.add(foto);
+                    multimedia.setIdMultimedia(foto.getIdMultimedia());
+                    multimedia.setIdAppartamento(foto.getIdAppartamento());
+                    multimedia.setFotoString(foto.getFotoString());
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("ciao " + galleria.size());
-        request.setAttribute("lista-foto", galleria);
+        request.setAttribute("lista-foto",multimedia);
         RequestDispatcher rd = request.getRequestDispatcher("modifica-immobile-galleria.jsp");
         rd.forward(request, response);
 

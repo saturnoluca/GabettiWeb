@@ -63,6 +63,5 @@ public class IndexServlet extends HttpServlet {
         request.setAttribute("multimedia", multimedia);
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
-
     }
 }

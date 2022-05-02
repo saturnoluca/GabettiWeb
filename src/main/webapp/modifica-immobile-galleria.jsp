@@ -39,7 +39,7 @@
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
-    ArrayList<MultimediaBean> listaFoto = (ArrayList<MultimediaBean>) request.getAttribute("lista-foto");
+    MultimediaBean listaFoto = (MultimediaBean) request.getAttribute("lista-foto");
     if(listaFoto==null){
         response.sendRedirect(response.encodeRedirectURL("gestione-lista-immobili.jsp"));
         return;
@@ -62,14 +62,15 @@
                         <div class="content_fields_row">
                             <div class="property_multimedia">
                                 <h3 class="tab_title">Galleria Immagini</h3>
+                                <input id="idAppartamento" type="hidden" name="idAppartamento" value="<%=listaFoto.getIdAppartamento()%>">
                                 <div class="content_gallery_images full_size">
                                     <label class="label_property_title">Rimuovi immagini</label>
                                         <div class="container-rimuovi">
-                                            <%for(MultimediaBean foto: listaFoto){
+                                            <%for(int i=0; i < listaFoto.getFotoString().size(); i++){
                                             %>
-                                                <div id="<%=foto.getIdAppartamento()%>" class="image">
-                                                    <img src="data:image/png;base64,<%=foto.getFotoString()%>" alt="image">
-                                                    <span onclick="delImage(<%=foto.getIdAppartamento()%>)">&times;</span>
+                                                <div id="<%=listaFoto.getIdMultimedia()%>" class="image">
+                                                    <img src="data:image/png;base64,<%=listaFoto.getFotoString().get(i)%>" alt="image">
+                                                    <span onclick="delImage(<%=listaFoto.getIdMultimedia()%>)">&times;</span>
                                                 </div>
                                             <%}%>
                                         </div>
@@ -262,15 +263,20 @@
 
 <script>
     function EliminaImmagini() {
-        var json = {}
+        var idAppartamento = document.getElementById("idAppartamento").value;
         var array = document.getElementsByClassName('eliminata');
         var eliminati = "";
         for(i=0; i < array.length; i++){
-            eliminati = eliminati + array[i].id;
+            if(eliminati == ""){
+                eliminati = eliminati + array[i].id;
+            }
+            else{
+                eliminati = eliminati +"-"+ array[i].id;
+            }
         }
         console.log(eliminati);
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET","ServletRimuoviImmagini?eliminati="+eliminati,true);
+        xhttp.open("GET","ServletRimuoviImmagini?idAppartamento="+idAppartamento +"&eliminati=" +eliminati,true);
         xhttp.send(null);
     }
 </script>
