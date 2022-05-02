@@ -483,7 +483,7 @@
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">
                                                 <div class="properties_pagination">
-                                                    <%for (int i = 0; i < 3 && i < 8; i++) {%>
+                                                    <%for (int i = 0; i < 3 && i < 8 && i < appartamenti.size(); i++) {%>
                                                     <div class="property_style">
                                                         <div class="property_card_style">
                                                             <div class="property_picture_wrapper">
@@ -491,7 +491,16 @@
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
                                                                             <a href="" class="agent_image">
-                                                                                <img src="images/agente.jpg">
+                                                                                    <%
+                                                                                    for (AgenteBean bean : agenti) {
+                                                                                        if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
+                                                                                            for (UtenteBean utenteBean1 : utente) {
+                                                                                                if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                %><img src="data:image/png;base64,<%=utenteBean1.otoString()%>"><%
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }%>
                                                                             </a>
                                                                             <div class="agent_info">
                                                                                 <a href="" class="agent_title"><%
@@ -655,7 +664,16 @@
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
                                                                             <a href="" class="agent_image">
-                                                                                <img src="images/agente.jpg">
+                                                                                <%
+                                                                                    for (AgenteBean bean : agenti) {
+                                                                                        if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
+                                                                                            for (UtenteBean utenteBean1 : utente) {
+                                                                                                if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                %><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }%>
                                                                             </a>
                                                                             <div class="agent_info">
                                                                                 <a href="" class="agent_title"><%
@@ -779,7 +797,16 @@
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
                                                                             <a href="" class="agent_image">
-                                                                                <img src="images/agente.jpg">
+                                                                                <%
+                                                                                    for (AgenteBean bean : agenti) {
+                                                                                        if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
+                                                                                            for (UtenteBean utenteBean1 : utente) {
+                                                                                                if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                %><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }%>
                                                                             </a>
                                                                             <div class="agent_info">
                                                                                 <a href="" class="agent_title"><%
@@ -950,7 +977,16 @@
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
                                                                             <a href="" class="agent_image">
-                                                                                <img src="images/agente.jpg">
+                                                                                <%
+                                                                                    for (AgenteBean bean : agenti) {
+                                                                                        if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
+                                                                                            for (UtenteBean utenteBean1 : utente) {
+                                                                                                if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                %><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }%>
                                                                             </a>
                                                                             <div class="agent_info">
                                                                                 <a href="" class="agent_title"><%
@@ -974,8 +1010,20 @@
                                                                     </div>
                                                                 </div>
                                                                 <a class="property_picture">
-                                                                    <img width="488" height="326"
-                                                                         src="images/prova.jpg">
+                                                                    <%
+                                                                        boolean p = false;
+                                                                        for (MultimediaBean multimediaBean : multimedia) {
+                                                                            if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
+                                                                    %>
+                                                                    <img
+                                                                            src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
+                                                                            alt="images/prova.jpg">
+                                                                    <%
+                                                                                p = true;
+                                                                                break;
+                                                                            }
+                                                                        }
+                                                                    %>
                                                                 </a>
                                                             </div>
                                                             <div class="property_detail_wrapper">
@@ -1095,7 +1143,7 @@
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
                                                                             <a href="" class="agent_image">
-                                                                                <img src="images/agente.jpg">
+                                                                                <img src="">
                                                                             </a>
                                                                             <div class="agent_info">
                                                                                 <a href="" class="agent_title"><%
@@ -1199,7 +1247,16 @@
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
                                                                             <a href="" class="agent_image">
-                                                                                <img src="images/agente.jpg">
+                                                                                <%
+                                                                                    for (AgenteBean bean : agenti) {
+                                                                                        if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
+                                                                                            for (UtenteBean utenteBean1 : utente) {
+                                                                                                if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                %><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }%>
                                                                             </a>
                                                                             <div class="agent_info">
                                                                                 <a href="" class="agent_title"><%
@@ -1332,201 +1389,247 @@
                                                         <%
                                                             for
                                                             (
-                                                            int
-                                                            j
-                                                            =
-                                                            0
-                                                            ;
-                                                            j
-                                                            <
-                                                            agenteCase
-                                                            .
-                                                            size
-                                                            (
-                                                            )
-                                                            ;
-                                                            j
-                                                            ++
-                                                            )
-                                                            {
+                                                                    int
+                                                                    j
+                                                                    =
+                                                                    0
+                                                                    ;
+                                                                    j
+                                                                            <
+                                                                            agenteCase
+                                                                                    .
+                                                                                    size
+                                                                                            (
+                                                                                            )
+                                                                    ;
+                                                                    j
+                                                                            ++
+                                                            ) {
                                                         %>
                                                         <article class="agent_content">
                                                             <div class="agent_content_wrap">
                                                                 <div class="agent_content_picture">
                                                                     <a href="">
-                                                                        <img src="images/agente.jpg" height="210"
-                                                                             width="210">
-                                                                    </a>
+                                                                        <%
+                                                                            for
+                                                                            (
+                                                                                    AgenteBean
+                                                                                            agenteBean
+                                                                                    :
+                                                                                    agenti
+                                                                            ) {
+                                                                                if
+                                                                                (
+                                                                                        agenteBean
+                                                                                                .
+                                                                                                getIdAgente
+                                                                                                        (
+                                                                                                        )
+                                                                                                ==
+                                                                                                agenteCase
+                                                                                                        .
+                                                                                                        get
+                                                                                                                (
+                                                                                                                        j
+                                                                                                                )
+                                                                                                                .
+                                                                                                        getBean
+                                                                                                                (
+                                                                                                                )
+                                                                                                                .
+                                                                                                        getIdAgente
+                                                                                                                (
+                                                                                                                )
+                                                                                ) {
+                                                                                    for
+                                                                                    (
+                                                                                            UtenteBean
+                                                                                                    utenteBean
+                                                                                            :
+                                                                                            utente
+                                                                                    ) {
+                                                                                        if
+                                                                                        (
+                                                                                                agenteBean
+                                                                                                        .
+                                                                                                        getIdUtente
+                                                                                                                (
+                                                                                                                )
+                                                                                                        ==
+                                                                                                        utenteBean
+                                                                                                                .
+                                                                                                                getIdUtente
+                                                                                                                        (
+                                                                                                                        )
+                                                                                        ) {
+                                                                        %><img src="data:image/png;base64,<%=utenteBean.getFotoString()%>"><%
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }%></a>
+                                                                    </h3>
                                                                 </div>
                                                                 <div class="agent_content_details">
                                                                     <h3>
                                                                         <a href=""><%
                                                                             for
                                                                             (
-                                                                            AgenteBean
-                                                                            agenteBean
-                                                                            :
-                                                                            agenti
-                                                                            )
-                                                                            {
-                                                                            if
-                                                                            (
-                                                                            agenteBean
-                                                                            .
-                                                                            getIdAgente
-                                                                            (
-                                                                            )
-                                                                            ==
-                                                                            agenteCase
-                                                                            .
-                                                                            get
-                                                                            (
-                                                                            j
-                                                                            )
-                                                                            .
-                                                                            getBean
-                                                                            (
-                                                                            )
-                                                                            .
-                                                                            getIdAgente
-                                                                            (
-                                                                            )
-                                                                            )
-                                                                            {
-                                                                            for
-                                                                            (
-                                                                            UtenteBean
-                                                                            utenteBean
-                                                                            :
-                                                                            utente
-                                                                            )
-                                                                            {
-                                                                            if
-                                                                            (
-                                                                            agenteBean
-                                                                            .
-                                                                            getIdUtente
-                                                                            (
-                                                                            )
-                                                                            ==
-                                                                            utenteBean
-                                                                            .
-                                                                            getIdUtente
-                                                                            (
-                                                                            )
-                                                                            )
-                                                                            {
+                                                                                    AgenteBean
+                                                                                            agenteBean
+                                                                                    :
+                                                                                    agenti
+                                                                            ) {
+                                                                                if
+                                                                                (
+                                                                                        agenteBean
+                                                                                                .
+                                                                                                getIdAgente
+                                                                                                        (
+                                                                                                        )
+                                                                                                ==
+                                                                                                agenteCase
+                                                                                                        .
+                                                                                                        get
+                                                                                                                (
+                                                                                                                        j
+                                                                                                                )
+                                                                                                                .
+                                                                                                        getBean
+                                                                                                                (
+                                                                                                                )
+                                                                                                                .
+                                                                                                        getIdAgente
+                                                                                                                (
+                                                                                                                )
+                                                                                ) {
+                                                                                    for
+                                                                                    (
+                                                                                            UtenteBean
+                                                                                                    utenteBean
+                                                                                            :
+                                                                                            utente
+                                                                                    ) {
+                                                                                        if
+                                                                                        (
+                                                                                                agenteBean
+                                                                                                        .
+                                                                                                        getIdUtente
+                                                                                                                (
+                                                                                                                )
+                                                                                                        ==
+                                                                                                        utenteBean
+                                                                                                                .
+                                                                                                                getIdUtente
+                                                                                                                        (
+                                                                                                                        )
+                                                                                        ) {
                                                                         %><%=utenteBean
-                                                                            .
-                                                                            getNome
-                                                                            (
-                                                                            )
-                                                                            +
-                                                                            " "
-                                                                            +
-                                                                            utenteBean
-                                                                            .
-                                                                            getCognome
-                                                                            (
-                                                                            )%><%
-                                                                            }
-                                                                            }
-                                                                            }
+                                                                                .
+                                                                                getNome
+                                                                                        (
+                                                                                        )
+                                                                                +
+                                                                                " "
+                                                                                +
+                                                                                utenteBean
+                                                                                        .
+                                                                                        getCognome
+                                                                                                (
+                                                                                                )%><%
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }%></a>
                                                                     </h3>
                                                                     <p class="agent_content_phone">
                                                                         <a href=""><%=agenteCase
-                                                                            .
-                                                                            get
-                                                                            (
-                                                                            j
-                                                                            )
-                                                                            .
-                                                                            getBean
-                                                                            (
-                                                                            )
-                                                                            .
-                                                                            getTelefonoCellulare
-                                                                            (
-                                                                            )%>
+                                                                                .
+                                                                                get
+                                                                                        (
+                                                                                                j
+                                                                                        )
+                                                                                        .
+                                                                                getBean
+                                                                                        (
+                                                                                        )
+                                                                                        .
+                                                                                getTelefonoCellulare
+                                                                                        (
+                                                                                        )%>
                                                                         </a>
                                                                     </p>
                                                                     <a href="" class="agent_content_email"><%
                                                                         for
                                                                         (
-                                                                        AgenteBean
-                                                                        agenteBean
-                                                                        :
-                                                                        agenti
-                                                                        )
-                                                                        {
-                                                                        if
-                                                                        (
-                                                                        agenteBean
-                                                                        .
-                                                                        getIdAgente
-                                                                        (
-                                                                        )
-                                                                        ==
-                                                                        agenteCase
-                                                                        .
-                                                                        get
-                                                                        (
-                                                                        j
-                                                                        )
-                                                                        .
-                                                                        getBean
-                                                                        (
-                                                                        )
-                                                                        .
-                                                                        getIdAgente
-                                                                        (
-                                                                        )
-                                                                        )
-                                                                        {
-                                                                        for
-                                                                        (
-                                                                        UtenteBean
-                                                                        utenteBean
-                                                                        :
-                                                                        utente
-                                                                        )
-                                                                        {
-                                                                        if
-                                                                        (
-                                                                        agenteBean
-                                                                        .
-                                                                        getIdUtente
-                                                                        (
-                                                                        )
-                                                                        ==
-                                                                        utenteBean
-                                                                        .
-                                                                        getIdUtente
-                                                                        (
-                                                                        )
-                                                                        )
-                                                                        {
+                                                                                AgenteBean
+                                                                                        agenteBean
+                                                                                :
+                                                                                agenti
+                                                                        ) {
+                                                                            if
+                                                                            (
+                                                                                    agenteBean
+                                                                                            .
+                                                                                            getIdAgente
+                                                                                                    (
+                                                                                                    )
+                                                                                            ==
+                                                                                            agenteCase
+                                                                                                    .
+                                                                                                    get
+                                                                                                            (
+                                                                                                                    j
+                                                                                                            )
+                                                                                                            .
+                                                                                                    getBean
+                                                                                                            (
+                                                                                                            )
+                                                                                                            .
+                                                                                                    getIdAgente
+                                                                                                            (
+                                                                                                            )
+                                                                            ) {
+                                                                                for
+                                                                                (
+                                                                                        UtenteBean
+                                                                                                utenteBean
+                                                                                        :
+                                                                                        utente
+                                                                                ) {
+                                                                                    if
+                                                                                    (
+                                                                                            agenteBean
+                                                                                                    .
+                                                                                                    getIdUtente
+                                                                                                            (
+                                                                                                            )
+                                                                                                    ==
+                                                                                                    utenteBean
+                                                                                                            .
+                                                                                                            getIdUtente
+                                                                                                                    (
+                                                                                                                    )
+                                                                                    ) {
                                                                     %><%=utenteBean
-                                                                        .
-                                                                        getEmail
-                                                                        (
-                                                                        )%><%
-                                                                        }
-                                                                        }
-                                                                        }
+                                                                            .
+                                                                            getEmail
+                                                                                    (
+                                                                                    )%><%
+                                                                                    }
+                                                                                }
+                                                                            }
                                                                         }%></a>
                                                                     <div class="agent_listed">
                                                                         <p class="figure"><%=agenteCase
-                                                                            .
-                                                                            get
-                                                                            (
-                                                                            j
-                                                                            )
-                                                                            .
-                                                                            getContaCase
-                                                                            (
-                                                                            )%>
+                                                                                .
+                                                                                get
+                                                                                        (
+                                                                                                j
+                                                                                        )
+                                                                                        .
+                                                                                getContaCase
+                                                                                        (
+                                                                                        )%>
                                                                         </p>
                                                                         <p class="heading">Immobili pubblicati</p>
                                                                     </div>
@@ -1541,23 +1644,22 @@
                                                         <%
                                                             for
                                                             (
-                                                            int
-                                                            j
-                                                            =
-                                                            0
-                                                            ;
-                                                            j
-                                                            <
-                                                            agenteCase
-                                                            .
-                                                            size
-                                                            (
-                                                            )
-                                                            ;
-                                                            j
-                                                            ++
-                                                            )
-                                                            {
+                                                                    int
+                                                                    j
+                                                                    =
+                                                                    0
+                                                                    ;
+                                                                    j
+                                                                            <
+                                                                            agenteCase
+                                                                                    .
+                                                                                    size
+                                                                                            (
+                                                                                            )
+                                                                    ;
+                                                                    j
+                                                                            ++
+                                                            ) {
                                                         %>
                                                         <article class="agent_content">
                                                             <div class="agent_content_wrap">
@@ -1572,170 +1674,162 @@
                                                                         <a href=""><%
                                                                             for
                                                                             (
-                                                                            AgenteBean
-                                                                            agenteBean
-                                                                            :
-                                                                            agenti
-                                                                            )
-                                                                            {
-                                                                            if
-                                                                            (
-                                                                            agenteBean
-                                                                            .
-                                                                            getIdAgente
-                                                                            (
-                                                                            )
-                                                                            ==
-                                                                            agenteCase
-                                                                            .
-                                                                            get
-                                                                            (
-                                                                            j
-                                                                            )
-                                                                            .
-                                                                            getBean
-                                                                            (
-                                                                            )
-                                                                            .
-                                                                            getIdAgente
-                                                                            (
-                                                                            )
-                                                                            )
-                                                                            {
-                                                                            for
-                                                                            (
-                                                                            UtenteBean
-                                                                            utenteBean
-                                                                            :
-                                                                            utente
-                                                                            )
-                                                                            {
-                                                                            if
-                                                                            (
-                                                                            agenteBean
-                                                                            .
-                                                                            getIdUtente
-                                                                            (
-                                                                            )
-                                                                            ==
-                                                                            utenteBean
-                                                                            .
-                                                                            getIdUtente
-                                                                            (
-                                                                            )
-                                                                            )
-                                                                            {
+                                                                                    AgenteBean
+                                                                                            agenteBean
+                                                                                    :
+                                                                                    agenti
+                                                                            ) {
+                                                                                if
+                                                                                (
+                                                                                        agenteBean
+                                                                                                .
+                                                                                                getIdAgente
+                                                                                                        (
+                                                                                                        )
+                                                                                                ==
+                                                                                                agenteCase
+                                                                                                        .
+                                                                                                        get
+                                                                                                                (
+                                                                                                                        j
+                                                                                                                )
+                                                                                                                .
+                                                                                                        getBean
+                                                                                                                (
+                                                                                                                )
+                                                                                                                .
+                                                                                                        getIdAgente
+                                                                                                                (
+                                                                                                                )
+                                                                                ) {
+                                                                                    for
+                                                                                    (
+                                                                                            UtenteBean
+                                                                                                    utenteBean
+                                                                                            :
+                                                                                            utente
+                                                                                    ) {
+                                                                                        if
+                                                                                        (
+                                                                                                agenteBean
+                                                                                                        .
+                                                                                                        getIdUtente
+                                                                                                                (
+                                                                                                                )
+                                                                                                        ==
+                                                                                                        utenteBean
+                                                                                                                .
+                                                                                                                getIdUtente
+                                                                                                                        (
+                                                                                                                        )
+                                                                                        ) {
                                                                         %><%=utenteBean
-                                                                            .
-                                                                            getNome
-                                                                            (
-                                                                            )
-                                                                            +
-                                                                            " "
-                                                                            +
-                                                                            utenteBean
-                                                                            .
-                                                                            getCognome
-                                                                            (
-                                                                            )%><%
-                                                                            }
-                                                                            }
-                                                                            }
+                                                                                .
+                                                                                getNome
+                                                                                        (
+                                                                                        )
+                                                                                +
+                                                                                " "
+                                                                                +
+                                                                                utenteBean
+                                                                                        .
+                                                                                        getCognome
+                                                                                                (
+                                                                                                )%><%
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }%></a>
                                                                     </h3>
                                                                     <p class="agent_content_phone">
                                                                         <a href=""><%=agenteCase
-                                                                            .
-                                                                            get
-                                                                            (
-                                                                            j
-                                                                            )
-                                                                            .
-                                                                            getBean
-                                                                            (
-                                                                            )
-                                                                            .
-                                                                            getTelefonoCellulare
-                                                                            (
-                                                                            )%>
+                                                                                .
+                                                                                get
+                                                                                        (
+                                                                                                j
+                                                                                        )
+                                                                                        .
+                                                                                getBean
+                                                                                        (
+                                                                                        )
+                                                                                        .
+                                                                                getTelefonoCellulare
+                                                                                        (
+                                                                                        )%>
                                                                         </a>
                                                                     </p>
                                                                     <a href="" class="agent_content_email"><%
                                                                         for
                                                                         (
-                                                                        AgenteBean
-                                                                        agenteBean
-                                                                        :
-                                                                        agenti
-                                                                        )
-                                                                        {
-                                                                        if
-                                                                        (
-                                                                        agenteBean
-                                                                        .
-                                                                        getIdAgente
-                                                                        (
-                                                                        )
-                                                                        ==
-                                                                        agenteCase
-                                                                        .
-                                                                        get
-                                                                        (
-                                                                        j
-                                                                        )
-                                                                        .
-                                                                        getBean
-                                                                        (
-                                                                        )
-                                                                        .
-                                                                        getIdAgente
-                                                                        (
-                                                                        )
-                                                                        )
-                                                                        {
-                                                                        for
-                                                                        (
-                                                                        UtenteBean
-                                                                        utenteBean
-                                                                        :
-                                                                        utente
-                                                                        )
-                                                                        {
-                                                                        if
-                                                                        (
-                                                                        agenteBean
-                                                                        .
-                                                                        getIdUtente
-                                                                        (
-                                                                        )
-                                                                        ==
-                                                                        utenteBean
-                                                                        .
-                                                                        getIdUtente
-                                                                        (
-                                                                        )
-                                                                        )
-                                                                        {
+                                                                                AgenteBean
+                                                                                        agenteBean
+                                                                                :
+                                                                                agenti
+                                                                        ) {
+                                                                            if
+                                                                            (
+                                                                                    agenteBean
+                                                                                            .
+                                                                                            getIdAgente
+                                                                                                    (
+                                                                                                    )
+                                                                                            ==
+                                                                                            agenteCase
+                                                                                                    .
+                                                                                                    get
+                                                                                                            (
+                                                                                                                    j
+                                                                                                            )
+                                                                                                            .
+                                                                                                    getBean
+                                                                                                            (
+                                                                                                            )
+                                                                                                            .
+                                                                                                    getIdAgente
+                                                                                                            (
+                                                                                                            )
+                                                                            ) {
+                                                                                for
+                                                                                (
+                                                                                        UtenteBean
+                                                                                                utenteBean
+                                                                                        :
+                                                                                        utente
+                                                                                ) {
+                                                                                    if
+                                                                                    (
+                                                                                            agenteBean
+                                                                                                    .
+                                                                                                    getIdUtente
+                                                                                                            (
+                                                                                                            )
+                                                                                                    ==
+                                                                                                    utenteBean
+                                                                                                            .
+                                                                                                            getIdUtente
+                                                                                                                    (
+                                                                                                                    )
+                                                                                    ) {
                                                                     %><%=utenteBean
-                                                                        .
-                                                                        getEmail
-                                                                        (
-                                                                        )%><%
-                                                                        }
-                                                                        }
-                                                                        }
+                                                                            .
+                                                                            getEmail
+                                                                                    (
+                                                                                    )%><%
+                                                                                    }
+                                                                                }
+                                                                            }
                                                                         }%></a>
                                                                     <div class="agent_listed">
                                                                         <p class="figure"><%=agenteCase
-                                                                            .
-                                                                            get
-                                                                            (
-                                                                            j
-                                                                            )
-                                                                            .
-                                                                            getContaCase
-                                                                            (
-                                                                            )%>
+                                                                                .
+                                                                                get
+                                                                                        (
+                                                                                                j
+                                                                                        )
+                                                                                        .
+                                                                                getContaCase
+                                                                                        (
+                                                                                        )%>
                                                                         </p>
                                                                         <p class="heading">Immobili pubblicati</p>
                                                                     </div>

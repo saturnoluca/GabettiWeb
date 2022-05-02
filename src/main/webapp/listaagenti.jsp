@@ -3,7 +3,8 @@
 <%@ page import="model.agente.AgenteBean" %>
 <%@ page import="model.appartamento.AppartamentoBean" %>
 <%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
-<%@ page import="model.collaboratore.CollaboratoreBean" %><%--
+<%@ page import="model.collaboratore.CollaboratoreBean" %>
+<%@ page import="model.multimedia.MultimediaBean" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 21/03/2022
@@ -50,6 +51,7 @@
     ArrayList<CompositeKeyAgenteCase> agenteBeans = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("agentiCase");
     ArrayList<AppartamentoBean> appartamentoBeans = (ArrayList<AppartamentoBean>) request.getAttribute("inEvidenza");
     ArrayList<CollaboratoreBean> collaboratoreBeans = (ArrayList<CollaboratoreBean>) request.getAttribute("collaboratori");
+    ArrayList<MultimediaBean> multimediaBeans = (ArrayList<MultimediaBean>) request.getAttribute("multimedia");
 %>
 <body>
 <nav id="navbar">
@@ -670,9 +672,16 @@
                         <div class="featured_card_wrap">
                             <figure class="featured_card_figure">
                                 <div class="featured_card_picture">
-                                    <a href="">
-                                        <img width="680" height="510" src="images/prova.jpg">
+                                    <%
+                                        for (MultimediaBean multi : multimediaBeans) {
+                                            if (multi.getIdAppartamento() == appartamentoBeans.get(0).getIdAppartamento() && multi.getFotoString()!=null) {
+                                    %>
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBeans.get(0).getIdAppartamento()%>">
+                                        <img src="data:image/png;base64,<%=multi.getFotoString().get(0)%>" style="width:100%">
                                     </a>
+                                    <%
+                                            }
+                                        }%>
                                 </div>
                             </figure>
                             <div class="featured_card_details">
