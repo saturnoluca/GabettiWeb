@@ -48,7 +48,7 @@ public class MultimediaModelDM implements MultimediaModel {
             if (in != null) {
                 in.close();
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -64,10 +64,11 @@ public class MultimediaModelDM implements MultimediaModel {
             ps.setInt(1, Integer.parseInt(idMultimedia));
             ps.executeUpdate();
             connection.commit();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     @Override
     public void doSaveVideo(MultimediaBean multi) throws IOException {
         Connection connection = null;
@@ -94,7 +95,7 @@ public class MultimediaModelDM implements MultimediaModel {
             if (in != null) {
                 in.close();
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -123,10 +124,7 @@ public class MultimediaModelDM implements MultimediaModel {
                     }
                 }
             }
-            if (in != null) {
-                in.close();
-            }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -149,8 +147,7 @@ public class MultimediaModelDM implements MultimediaModel {
                     array.add(fotoPart);
                 }
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return array;
@@ -178,12 +175,12 @@ public class MultimediaModelDM implements MultimediaModel {
                 multimediaBean.setFotoString(array);
                 multimediaBeans.add(multimediaBean);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return multimediaBeans;
     }
+
     @Override
     public ArrayList<String> doRetrieveVideo(int idAppartamento) throws IOException {
         Connection connection = null;
@@ -202,7 +199,7 @@ public class MultimediaModelDM implements MultimediaModel {
                     array.add(partVideo);
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return array;
@@ -226,7 +223,7 @@ public class MultimediaModelDM implements MultimediaModel {
                     array.add(partPlanimetria);
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return array;
@@ -238,21 +235,20 @@ public class MultimediaModelDM implements MultimediaModel {
         ArrayList<MultimediaBean> arrayMultimedia = new ArrayList<MultimediaBean>();
         MultimediaModel model = new MultimediaModelDM();
         MultimediaBean multimediaBean = new MultimediaBean();
-        try{
-            for(AppartamentoBean appartamentoBean : arrayList){
+        try {
+            for (AppartamentoBean appartamentoBean : arrayList) {
                 multimediaBean.setFotoString(model.doRetrieveFoto(appartamentoBean.getIdAppartamento()));
                 multimediaBean.setVideo(model.doRetrieveVideo(appartamentoBean.getIdAppartamento()));
                 multimediaBean.setPlanimetria(model.doRetrievePlanimetria(appartamentoBean.getIdAppartamento()));
                 arrayMultimedia.add(multimediaBean);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return arrayMultimedia;
     }
 
-    public ArrayList<MultimediaBean> RetrieveAllMultimedia() throws IOException{
+    public ArrayList<MultimediaBean> RetrieveAllMultimedia() throws IOException {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<MultimediaBean> array = new ArrayList<MultimediaBean>();
@@ -286,7 +282,7 @@ public class MultimediaModelDM implements MultimediaModel {
                 bean.setIdMultimedia(rs.getInt("idMultimedia"));
                 array.add(bean);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return array;

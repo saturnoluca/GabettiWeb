@@ -60,11 +60,13 @@ public class ServletRicercaAppartamenti extends HttpServlet {
             visualizzazione.setData(ordinamento.get(0).getData());
             visualizzazione.setPrezzo(ordinamento.get(0).getPrezzo());
             visualizzazione.setFoto(multimediaModelDM.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
-
+            ArrayList<MultimediaBean> multi = new ArrayList<MultimediaBean>();
+            multi = multimediaModelDM.RetrieveAllMultimedia();
 
 
             if (arrayList != null) {
                 if (arrayList.size() < 10) {
+                    request.setAttribute("multimedia", multi);
                     request.setAttribute("featured",visualizzazione);
                     request.setAttribute("array", arrayList);
                     request.setAttribute("arrayAgente", agenteArray);
@@ -77,6 +79,7 @@ public class ServletRicercaAppartamenti extends HttpServlet {
                     for (int i = (num - 1) * 10; i < arrayList.size(); i++) {
                         appArray2.add(arrayList.get(i));
                     }
+                    request.setAttribute("multimedia", multi);
                     request.setAttribute("featured",visualizzazione);
                     request.setAttribute("array", appArray2);
                     request.setAttribute("arrayAgente", agenteArray);
@@ -89,6 +92,7 @@ public class ServletRicercaAppartamenti extends HttpServlet {
                     for (int i = (num - 1) * 10; i < (num * 10); i++) {
                         appArray2.add(arrayList.get(i));
                     }
+                    request.setAttribute("multimedia", multi);
                     request.setAttribute("featured",visualizzazione);
                     request.setAttribute("array", appArray2);
                     request.setAttribute("arrayAgente", agenteArray);

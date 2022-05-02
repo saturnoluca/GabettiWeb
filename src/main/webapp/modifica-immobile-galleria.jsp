@@ -71,7 +71,6 @@
                                                 <div id="<%=listaFoto.getIdMultimedia()%>" class="image">
                                                     <img src="data:image/png;base64,<%=listaFoto.getFotoString().get(i)%>" alt="image">
                                                     <span onclick="delImage(<%=listaFoto.getIdMultimedia()%>)">&times;</span>
-                                                </div>
                                             <%}%>
                                         </div>
                                         <div class="div_button_submit">
