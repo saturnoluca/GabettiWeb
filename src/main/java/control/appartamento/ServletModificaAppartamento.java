@@ -6,18 +6,23 @@ import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
 import model.indirizzo.IndirizzoBean;
 import model.indirizzo.IndirizzoModelDM;
+import model.multimedia.MultimediaBean;
+import model.multimedia.MultimediaModelDM;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 
 @WebServlet(name = "ServletModificaAppartamento", value = "/ServletModificaAppartamento")
 public class ServletModificaAppartamento extends HttpServlet {
 
     private static AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
     private static IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
+
+    private static MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,9 +31,7 @@ public class ServletModificaAppartamento extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int key = 0;
-        String ruolo = request.getParameter("ruolo");
-
+        int idAppartamento = Integer.parseInt(request.getParameter("idAppartamento"));
         String titoloImmobile = request.getParameter("titoloImmobile");
         String citta = request.getParameter("citta");
         String provincia = request.getParameter("provincia");
@@ -52,6 +55,7 @@ public class ServletModificaAppartamento extends HttpServlet {
         Date date = Date.valueOf(request.getParameter("data"));
 
         AppartamentoBean bean = new AppartamentoBean();
+        bean.setIdAppartamento(idAppartamento);
         bean.setIdAgente(idAgente);
         bean.setNomeAppartamento(titoloImmobile);
         bean.setDescrizioneAppartamento(descrizione);
@@ -67,7 +71,7 @@ public class ServletModificaAppartamento extends HttpServlet {
         bean.setClasseEnergetica(classeEnergetica);
         bean.setCategoria(tipoImmobile);
         bean.setData(date);
-        key = appartamentoModelDM.doUpdate(bean);
+        appartamentoModelDM.doUpdate(bean);
 
         IndirizzoBean indirizzoBean = new IndirizzoBean();
         indirizzoBean.setProvincia(provincia);
@@ -77,11 +81,24 @@ public class ServletModificaAppartamento extends HttpServlet {
         indirizzoBean.setCap(cap);
         indirizzoBean.setZona(zona);
 
-        indirizzoBean.setIdAppartamento(key);
+        indirizzoBean.setIdAppartamento(bean.getIdAppartamento());
 
         indirizzoModelDM.doUpdate(indirizzoBean);
-        request.setAttribute("idAppartamento", key);
-        RequestDispatcher rd = request.getRequestDispatcher("/modifica-immobile-galleria.jsp");
+        ArrayList<MultimediaBean> listaFoto = new ArrayList<MultimediaBean>();
+        ArrayList<MultimediaBean> galleria = new ArrayList<MultimediaBean>();
+        try {
+            listaFoto = multimediaModelDM.RetrieveAllMultimedia();
+            for(MultimediaBean foto: listaFoto){
+                if(bean.getIdAppartamento() == foto.getIdAppartamento() && foto.getFotoString() != null){
+                    galleria.add(foto);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("ciao " + galleria.size());
+        request.setAttribute("lista-foto", galleria);
+        RequestDispatcher rd = request.getRequestDispatcher("modifica-immobile-galleria.jsp");
         rd.forward(request, response);
 
     }

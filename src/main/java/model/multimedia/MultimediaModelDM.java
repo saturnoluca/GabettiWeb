@@ -155,6 +155,34 @@ public class MultimediaModelDM implements MultimediaModel {
         return array;
     }
 
+    public ArrayList<MultimediaBean> doRetrieveFotoBean(int idAppartamento) throws IOException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ArrayList<String> array = new ArrayList<String>();
+        ArrayList<MultimediaBean> multimediaBeans = new ArrayList<MultimediaBean>();
+        String selectSQL = "SELECT multimedia.idMultimedia, multimedia.foto FROM multimedia WHERE Appartamento_idAppartamento=?";
+        try {
+            MultimediaBean multimediaBean = new MultimediaBean();
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSQL);
+            ps.setInt(1, idAppartamento);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.getBlob("foto") != null) {
+                    String fotoPart = null;
+                    fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
+                    array.add(fotoPart);
+                }
+                multimediaBean.setIdAppartamento(rs.getInt("idMultimedia"));
+                multimediaBean.setFotoString(array);
+                multimediaBeans.add(multimediaBean);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return multimediaBeans;
+    }
     @Override
     public ArrayList<String> doRetrieveVideo(int idAppartamento) throws IOException {
         Connection connection = null;

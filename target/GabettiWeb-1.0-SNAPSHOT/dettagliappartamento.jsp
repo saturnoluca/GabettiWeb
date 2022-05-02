@@ -637,7 +637,7 @@
                                         <div id="floor" class="floor_plan_content" style="display: block;">
                                             <div>
                                                 <a href="">
-                                                    <img src="data:image/png;base64,<%=multimediaBean.getPlanimetriaString().get(0)%>">
+
                                                 </a>
                                             </div>
                                         </div>

@@ -520,7 +520,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
 
     }
 
-    public int doUpdate(AppartamentoBean appartamentoBean) {
+    public void doUpdate(AppartamentoBean appartamentoBean) {
         Connection connection = null;
         PreparedStatement ps = null;
         System.out.println(appartamentoBean);
@@ -550,6 +550,5 @@ public class AppartamentoModelDM implements AppartamentoModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return appartamentoBean.getIdAppartamento();
     }
 }

@@ -69,6 +69,7 @@
         </div>
         <div class="addProperty_page_content">
             <form class="form_addProperty" action="ServletModificaAppartamento" method="post">
+                <input type="hidden" name="idAppartamento" value="<%=appartamentoBean.getIdAppartamento()%>">
                 <div class="addProperty_tab">
                     <h3 class="tab_title">Informazioni generali</h3>
                 </div>
@@ -111,7 +112,7 @@
                             <div class="property_description">
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Descrizione*</label>
-                                    <textarea rows="10"  placeholder="<%=appartamentoBean.getDescrizioneAppartamento()%>" value="<%=appartamentoBean.getDescrizioneAppartamento()%>" name="descrizione"></textarea>
+                                    <textarea rows="10"  placeholder="<%=appartamentoBean.getDescrizioneAppartamento()%>" name="descrizione"><%=appartamentoBean.getDescrizioneAppartamento()%></textarea>
                                 </div>
                             </div>
                             <div class="property_features">
@@ -122,24 +123,68 @@
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Tipo immobile*</label>
                                     <select  name="tipoImmobile">
-                                        <option value="<%=appartamentoBean.getCategoria()%>" selected disabled><%=appartamentoBean.getCategoria()%></option>
-                                        <option value="Appartamento">Appartamento</option>
-                                        <option value="Abitazione economica">Abitazione economica</option>
-                                        <option value="Loft Open space ">Loft / Open Space</option>
-                                        <option value="Mansarda">Mansarda</option>
-                                        <option value="Stabile Palazzo">Stabile / Palazzo</option>
-                                        <option value="Rustico Casale">Rustico / Casale</option>
-                                        <option value="Attico">Attico</option>
-                                        <option value="Villetta a schiera">Villetta a schiera</option>
-                                        <option value="Appartamento di lusso">Appartamento di lusso</option>
+                                        <option value="" selected disabled>Seleziona categoria immobile</option>
+                                        <%if(appartamentoBean.getCategoria().equals("Appartamento")){%>
+                                            <option selected value="Appartamento">Appartamento</option>
+                                        <%}else{%>
+                                            <option value="Appartamento">Appartamento</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getCategoria().equals("Abitazione economica")){%>
+                                            <option selected value="Abitazione economica">Abitazione economica</option>
+                                        <%}else{%>
+                                            <option value="Abitazione economica">Abitazione economica</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getCategoria().equals("Loft / Open space")){%>
+                                            <option selected value="Loft / Open space ">Loft / Open Space</option>
+                                        <%}else{%>
+                                            <option value="Loft / Open space ">Loft / Open Space</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getCategoria().equals("Mansarda")){%>
+                                            <option selected value="Mansarda">Mansarda</option>
+                                        <%}else{%>
+                                            <option value="Mansarda">Mansarda</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getCategoria().equals("Stabile / Palazzo")){%>
+                                            <option selected value="Stabile / Palazzo">Stabile / Palazzo</option>
+                                        <%}else{%>
+                                            <option value="Stabile / Palazzo">Stabile / Palazzo</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getCategoria().equals("Rustico / Casale")){%>
+                                            <option selected value="Rustico / Casale">Rustico / Casale</option>
+                                        <%}else{%>
+                                            <option value="Rustico / Casale">Rustico / Casale</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getCategoria().equals("Attico")){%>
+                                            <option selected value="Attico">Attico</option>
+                                        <%}else{%>
+                                            <option value="Attico">Attico</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getCategoria().equals("Villetta a schiera")){%>
+                                            <option selected value="Villetta a schiera">Villetta a schiera</option>
+                                        <%}else{%>
+                                            <option value="Villetta a schiera">Villetta a schiera</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getCategoria().equals("Appartamento di lusso")){%>
+                                            <option selected value="Appartamento di lusso">Appartamento di lusso</option>
+                                        <%}else{%>
+                                            <option value="Appartamento di lusso">Appartamento di lusso</option>
+                                        <%}%>
                                     </select>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Stato appartamento*</label>
                                     <select  name="statoImmobile">
-                                        <option value="<%=appartamentoBean.getTipoVendita()%>" selected disabled><%=appartamentoBean.getTipoVendita()%></option>
-                                        <option value="In Vendita">In Vendita</option>
+                                        <option value="" selected disabled>Seleziona stato immobile</option>
+                                        <%if(appartamentoBean.getTipoVendita().equals("In Vendita")){%>
+                                            <option selected value="In Vendita">In Vendita</option>
+                                        <%}else{%>
+                                            <option value="In Vendita">In Vendita</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getTipoVendita().equals("In Affitto")){%>
+                                        <option selected value="In Affitto">In Affitto</option>
+                                        <%}else{%>
                                         <option value="In Affitto">In Affitto</option>
+                                        <%}%>
                                     </select>
                                 </div>
                                 <div class="content_fields_column half_size">
@@ -154,15 +199,47 @@
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Piano</label>
                                     <select name="piano">
-                                        <option value="<%=appartamentoBean.getPiano()%>" selected disabled><%=appartamentoBean.getPiano()%></option>
+                                        <option value="" selected disabled>Seleziona Piano</option>
+                                        <%if(appartamentoBean.getPiano().equals("Interrato Seminterrato")){%>
+                                            <option selected value="Interrato Seminterrato">Interrato / Seminterrato</option>
+                                        <%}else{%>
                                         <option value="Interrato Seminterrato">Interrato / Seminterrato</option>
-                                        <option value="Piano terra">Piano terra</option>
-                                        <option value="Piano rialzato">Piano rialzato</option>
-                                        <option value="1 piano">1° Piano</option>
-                                        <option value="2 piano">2° Piano</option>
-                                        <option value="3 piano">3° Piano</option>
-                                        <option value="4 piano">4° Piano</option>
-                                        <option value="5 piano e oltre">5° Piano e oltre</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getPiano().equals("Piano terra")){%>
+                                            <option selected value="Piano terra">Piano terra</option>
+                                        <%}else{%>
+                                            <option value="Piano terra">Piano terra</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getPiano().equals("Piano rialzato")){%>
+                                            <option selected value="Piano rialzato">Piano rialzato</option>
+                                        <%}else{%>
+                                            <option value="Piano rialzato">Piano rialzato</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getPiano().equals("1 piano")){%>
+                                            <option selected value="1 piano">1° Piano</option>
+                                        <%}else{%>
+                                            <option value="1 piano">1° Piano</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getPiano().equals("2 piano")){%>
+                                            <option selected value="2 piano">2° Piano</option>
+                                        <%}else{%>
+                                            <option value="2 piano">2° Piano</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getPiano().equals("3 piano")){%>
+                                            <option selected value="3 piano">3° Piano</option>
+                                        <%}else{%>
+                                            <option value="3 piano">3° Piano</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getPiano().equals("4 piano")){%>
+                                            <option selected value="4 piano">4° Piano</option>
+                                        <%}else{%>
+                                            <option value="4 piano">4° Piano</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getPiano().equals("5 piano e oltre")){%>
+                                            <option selected value="5 piano e oltre">5° Piano e oltre</option>
+                                        <%}else{%>
+                                            <option value="5 piano e oltre">5° Piano e oltre</option>
+                                        <%}%>
                                     </select>
                                 </div>
                                 <div class="content_fields_column half_size">
@@ -183,11 +260,27 @@
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Riscaldamento</label>
                                     <select name="riscaldamento">
-                                        <option value="<%=appartamentoBean.getRiscaldamento()%>" selected disabled><%=appartamentoBean.getRiscaldamento()%></option>
-                                        <option value="Non presente">Non presente</option>
-                                        <option value="Autonomo">Autonomo</option>
-                                        <option value="Condominiale">Condominiale</option>
+                                        <option value="" selected disabled>Seleziona tipo riscaldamento</option>
+                                        <%if(appartamentoBean.getRiscaldamento().equals("Non presente")){%>
+                                            <option selected value="Non presente">Non presente</option>
+                                        <%}else{%>
+                                            <option value="Non presente">Non presente</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getRiscaldamento().equals("Autonomo")){%>
+                                            <option selected value="Autonomo">Autonomo</option>
+                                        <%}else{%>
+                                            <option value="Autonomo">Autonomo</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getRiscaldamento().equals("Condominiale")){%>
+                                            <option selected value="Condominiale">Condominiale</option>
+                                        <%}else{%>
+                                            <option value="Condominiale">Condominiale</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getRiscaldamento().equals("Pompe di calore")){%>
+                                        <option selected value="Pompe di calore">Pompe di calore</option>
+                                        <%}else{%>
                                         <option value="Pompe di calore">Pompe di calore</option>
+                                        <%}%>
                                     </select>
                                 </div>
                                 <div class="content_fields_column half_size">

@@ -5,6 +5,12 @@
   Time: 11:20
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="model.utente.UtenteBean" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.appartamento.AppartamentoBean" %>
+<%@ page import="model.indirizzo.IndirizzoBean" %>
+<%@ page import="model.agente.AgenteBean" %>
+<%@ page import="model.multimedia.MultimediaBean" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="it" dir="ltr">
 <head>
@@ -27,6 +33,19 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
+<%
+    UtenteBean admin = (UtenteBean) session.getAttribute("utente");
+    if (admin == null || !admin.getRuolo().equals("Admin")) {
+        response.sendRedirect(response.encodeRedirectURL("login.jsp"));
+        return;
+    }
+    ArrayList<MultimediaBean> listaFoto = (ArrayList<MultimediaBean>) request.getAttribute("lista-foto");
+    if(listaFoto==null){
+        response.sendRedirect(response.encodeRedirectURL("gestione-lista-immobili.jsp"));
+        return;
+    }
+
+%>
 <body>
 <jsp:include page="sidebar.jsp" />
 <section class="home-section">
@@ -37,78 +56,47 @@
             </div>
         </div>
         <div class="addProperty_page_content">
-            <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post" enctype="multipart/form-data">
+
                 <div class="addProperty_content">
                     <div class="form_content_fields">
                         <div class="content_fields_row">
                             <div class="property_multimedia">
                                 <h3 class="tab_title">Galleria Immagini</h3>
-                                <div class="content_gallery_images full_size" >
+                                <div class="content_gallery_images full_size">
                                     <label class="label_property_title">Rimuovi immagini</label>
-                                    <div class="container-rimuovi">
-                                        <div id="0" class="image">
-                                            <img src="images/casa.jpg" alt="image">
-                                            <span onclick="delImage(0)">&times;</span>
+                                        <div class="container-rimuovi">
+                                            <%for(MultimediaBean foto: listaFoto){
+                                            %>
+                                                <div id="<%=foto.getIdAppartamento()%>" class="image">
+                                                    <img src="data:image/png;base64,<%=foto.getFotoString()%>" alt="image">
+                                                    <span onclick="delImage(<%=foto.getIdAppartamento()%>)">&times;</span>
+                                                </div>
+                                            <%}%>
                                         </div>
-                                        <div id="1" class="image">
-                                            <img src="images/casa.jpg" alt="image">
-                                            <span onclick="delImage(1)">&times;</span>
+                                        <div class="div_button_submit">
+                                            <input type="button" value="Conferma" onclick="EliminaImmagini()">
                                         </div>
-                                        <div id="2" class="image">
-                                            <img src="images/casa.jpg" alt="image">
-                                            <span onclick="delImage(2)">&times;</span>
-                                        </div>
-                                        <div id="3" href=""  class="image">
-                                            <img src="images/casa.jpg" alt="image">
-                                            <span onclick="delImage(3)">&times;</span>
-                                        </div>
-                                        <div id="4" class="image">
-                                            <img src="images/casa.jpg" alt="image">
-                                            <span onclick="delImage(4)">&times;</span>
-                                        </div>
-                                        <div id="5" class="image">
-                                            <img src="images/casa.jpg" alt="image">
-                                            <span onclick="delImage(5)">&times;</span>
-                                        </div>
-                                        <div id="6" class="image">
-                                            <img src="images/casa.jpg" alt="image">
-                                            <span onclick="delImage(6)">&times;</span>
-                                        </div>
-                                        <div id="7" class="image">
-                                            <img src="images/casa.jpg" alt="image">
-                                            <span onclick="delImage(7)">&times;</span>
-                                        </div>
-                                        <div id="8" class="image">
-                                            <img src="images/casa.jpg" alt="image">
-                                            <span onclick="delImage(8)">&times;</span>
-                                        </div>
-                                        <div id="9" class="image">
-                                            <img src="images/casa.jpg" alt="image">
-                                            <span onclick="delImage(9)">&times;</span>
-                                        </div>
-                                    </div>
-                                    <div class="div_button_submit">
-                                        <input type="button" value="Conferma" onclick="EliminaImmagini()">
-                                    </div>
                                 </div>
                             </div>
                             <div class="property_multimedia">
-                                <h3 class="tab_title">Aggiungi Nuove Immagini</h3>
-                                <div class="gallery_image_container" id="gallery_image_container"></div>
-                                <div class="content_gallery_images full_size" >
-                                    <label class="label_property_title">Preview</label>
-                                    <div class="drag_drop_container">
-                                        <i class="icon-cloud-upload"></i>
-                                        <strong>Seleziona delle immagini</strong>
-                                        <div class="button_browse">Sfoglia Immagine
-                                            <div class="input_file">
-                                                <input type="file" multiple id="upload-photo" onchange="readFile(event)" name="immagine">
+                                <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="azione" value="<%="foto"%>">
+                                    <h3 class="tab_title">Aggiungi Nuove Immagini</h3>
+                                        <div class="gallery_image_container" id="gallery_image_container"></div>
+                                        <div class="content_gallery_images full_size">
+                                            <label class="label_property_title">Preview</label>
+                                            <div class="drag_drop_container">
+                                                <i class="icon-cloud-upload"></i>
+                                                <strong>Seleziona delle immagini</strong>
+                                                <div class="button_browse">Sfoglia Immagine
+                                                    <div class="input_file">
+                                                    <input type="file" multiple id="upload-photo" onchange="readFile(event)" name="immagine">
+                                                </div>
+                                            </div>
+                                            <div id="reset-image" class="button_browse">Reset</div>
                                             </div>
                                         </div>
-                                        <div id="reset-image" class="button_browse">Reset
-                                        </div>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                         <div class="div_button_submit">
@@ -116,8 +104,6 @@
                         </div>
                     </div>
                 </div>
-
-            </form>
         </div>
     </div>
 </section>
