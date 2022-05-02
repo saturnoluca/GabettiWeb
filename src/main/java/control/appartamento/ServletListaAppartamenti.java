@@ -6,6 +6,7 @@ import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.multimedia.MultimediaBean;
 import model.multimedia.MultimediaModelDM;
 import model.utente.UtenteBean;
 import model.utente.UtenteModelDM;
@@ -39,7 +40,9 @@ public class ServletListaAppartamenti extends HttpServlet {
         UtenteModelDM utenteModelDM = new UtenteModelDM();
         ArrayList<UtenteBean> utenteArray = new ArrayList<UtenteBean>();
         ArrayList<CompositeKeyAgenteCase> arrayComp = new ArrayList<CompositeKeyAgenteCase>();
+        ArrayList<MultimediaBean> multimediaBeans = new ArrayList<MultimediaBean>();
         appArray = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllAppartamento();
+        multimediaBeans = multimediaModelDM.RetrieveAllMultimedia();
         sizeArray = (int) Math.ceil((double) appArray.size() / 10);
         sizeArrayString = Integer.toString(sizeArray);
         agenteArray = (ArrayList<AgenteBean>) agenteModelDM.RetrieveAgente();
@@ -59,6 +62,7 @@ public class ServletListaAppartamenti extends HttpServlet {
         visualizzazione.setFoto(multimediaModelDM.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
         if (appArray != null) {
             if (appArray.size() < 10) {
+                request.setAttribute("multimedia", multimediaBeans);
                 request.setAttribute("featured",visualizzazione);
                 request.setAttribute("allCittaZone", request.getSession().getAttribute("allCittàZone"));
                 request.setAttribute("categorie", request.getSession().getAttribute("categorie"));
@@ -73,6 +77,7 @@ public class ServletListaAppartamenti extends HttpServlet {
                 for (int i = (num - 1) * 10; i < appArray.size(); i++) {
                     appArray2.add(appArray.get(i));
                 }
+                request.setAttribute("multimedia", multimediaBeans);
                 request.setAttribute("featured",visualizzazione);
                 request.setAttribute("allCittaZone", request.getSession().getAttribute("allCittàZone"));
                 request.setAttribute("categorie", request.getSession().getAttribute("categorie"));
@@ -87,6 +92,7 @@ public class ServletListaAppartamenti extends HttpServlet {
                 for (int i = (num - 1) * 10; i < (num * 10); i++) {
                     appArray2.add(appArray.get(i));
                 }
+                request.setAttribute("multimedia", multimediaBeans);
                 request.setAttribute("featured",visualizzazione);
                 request.setAttribute("array", appArray2);
                 request.setAttribute("arrayAgente", agenteArray);

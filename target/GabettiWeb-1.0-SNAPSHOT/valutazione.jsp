@@ -401,21 +401,23 @@
                                 <span>Compila questi campi per scoprire quanto vale la tua casa!</span>
                             </p>
                         </div>
-                        <div class="div_valutazione_form">
+                        <form action="ServletMail" method="post">
+                            <input type="hidden" name="action" value="valutazione">
+                            <div class="div_valutazione_form">
                             <section class="section_valutazione_form">
                                 <form class="valutazione_form">
                                     <div class="valutazione_form_field half_size">
                                         <label>Indirizzo</label>
                                         <input type="text"
-                                               placeholder="Indirizzo del tuo immobile compreso di numero civico">
+                                               placeholder="Indirizzo del tuo immobile compreso di numero civico" name="indirizzo">
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Comune</label>
-                                        <input type="text" placeholder="Inserisci il comune">
+                                        <input type="text" placeholder="Inserisci il comune" name="comune">
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Tipo immobile</label>
-                                        <select>
+                                        <select name="tipoImmobile">
                                             <option value="" selected disabled>Seleziona tipo immobile</option>
                                             <option value="Appartamento">Appartamento</option>
                                             <option value="Abitazione economica">Abitazione economica</option>
@@ -430,11 +432,11 @@
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Superficie in mq</label>
-                                        <input type="text" placeholder="Inserisci la superficie">
+                                        <input type="text" placeholder="Inserisci la superficie" name="superficie">
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Piano</label>
-                                        <select>
+                                        <select name="piano">
                                             <option value="" selected disabled>Seleziona piano immobile</option>
                                             <option value="Interrato Seminterrato">Interrato / Seminterrato</option>
                                             <option value="Piano terra">Piano terra</option>
@@ -448,26 +450,26 @@
                                     </div>
                                     <div class="form_piano half_size">
                                         <label>Ultimo piano?</label>
-                                        <div class="choice-piano">
-                                            <input type="radio" value="choice">
-                                            <label class="choice">Si.</label>
+                                        <div>
+                                            <input type="radio" name="ultimoPiano" value="Si">
+                                            <label>Si.</label>
                                         </div>
-                                        <div class="choice-piano">
-                                            <input type="radio" name="choice">
-                                            <label class="choice">No.</label>
+                                        <div>
+                                            <input type="radio" name="ultimoPiano" value="No">
+                                            <label>No.</label>
                                         </div>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Locali</label>
-                                        <input type="text" placeholder="Inserisci il numero dei locali">
+                                        <input type="text" placeholder="Inserisci il numero dei locali" name="locali">
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Bagni</label>
-                                        <input type="text" placeholder="Inserisci il numero dei bagni">
+                                        <input type="text" placeholder="Inserisci il numero dei bagni"name="bagni">
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Stato dell'appartamento</label>
-                                        <select>
+                                        <select name="statoAppartamento">
                                             <option value="" selected disabled>Seleziona stato appartamento</option>
                                             <option value="Da ristrutturare">Da ristrutturare</option>
                                             <option value="Abitabile">Abitabile</option>
@@ -477,7 +479,7 @@
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Riscaldamento</label>
-                                        <select>
+                                        <select name="riscaldamento">
                                             <option value="" selected disabled>Seleziona tipo riscaldamento</option>
                                             <option value="Non presente">Non presente</option>
                                             <option value="Autonomo">Autonomo</option>
@@ -487,7 +489,7 @@
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Anno costruzione immobile</label>
-                                        <input type="text" placeholder="Inserisci l'anno costruzione immobile">
+                                        <input type="text" placeholder="Inserisci l'anno costruzione immobile" name="annoDiCostruzione">
                                     </div>
                                     <div class="form_features full_size">
                                         <label>L'immobile dispone di</label>
@@ -526,19 +528,19 @@
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Nome</label>
-                                        <input type="text" placeholder="Inserisci il tuo nome">
+                                        <input type="text" placeholder="Inserisci il tuo nome" name="nome" required>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Cognome</label>
-                                        <input type="text" placeholder="Inserisci il tuo cognome">
+                                        <input type="text" placeholder="Inserisci il tuo cognome" name="cognome" required>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Telefono</label>
-                                        <input type="text" placeholder="Inserisci il tuo numero di telefono">
+                                        <input type="text" placeholder="Inserisci il tuo numero di telefono" name="telefono" required>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Email</label>
-                                        <input type="text" placeholder="Inserisci la tua email">
+                                        <input type="text" placeholder="Inserisci la tua email" name="email" required>
                                     </div>
                                     <div class="valutazione_form_submit">
                                         <input type="submit" class="submit_button" value="Invia Richiesta Valutazione">
@@ -546,6 +548,7 @@
                                 </form>
                             </section>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!-- Created By CodingLab - www.codinglabweb.com -->
-<html lang="en" dir="ltr">
+<html lang="it" dir="ltr">
 <head>
     <meta charset="utf-8">
     <!--------- <title>Responsive Navigation Menu</title>------>
@@ -37,8 +37,8 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
 <%
-    ArrayList<Città> allCittàZone =(ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
-    if(allCittàZone==null){
+    ArrayList<Città> allCittàZone = (ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
+    if (allCittàZone == null) {
         request.getSession().setAttribute("nomepagina", "listaappartamenti.jsp");
         response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
         return;
@@ -49,12 +49,14 @@
         response.sendRedirect(response.encodeRedirectURL("ServletListaAppartamenti?numero=1"));
         return;
     }
+    ArrayList<MultimediaBean> multimediaBeans = (ArrayList<MultimediaBean>) request.getAttribute("multimedia");
     VisualizzazioneImmobile visualizzazioneImmobile = (VisualizzazioneImmobile) request.getAttribute("featured");
     ArrayList<AgenteBean> agenteArray = (ArrayList<AgenteBean>) request.getAttribute("arrayAgente");
     ArrayList<UtenteBean> utenteArray = (ArrayList<UtenteBean>) request.getAttribute("arrayUtente");
     String sizeArrayString = (String) request.getAttribute("sizeArray");
     ArrayList<CompositeKeyAgenteCase> arrayComp = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("arrayComp");
     int sizeArray = Integer.parseInt(sizeArrayString);
+    System.out.println(multimediaBeans);
 %>
 <body>
 <nav id="navbar">
@@ -70,7 +72,7 @@
         <li><a class="active" href="listaappartamenti.jsp">Lista Immobili</a></li>
         <li><a href="valutazione.jsp">Valutazione Immobile</a></li>
         <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
-        <li><a  href="contact.html">Contattaci</a></li>
+        <li><a href="contact.html">Contattaci</a></li>
     </ul>
 </nav>
 <div class="content">
@@ -196,7 +198,7 @@
 									  <span class="text">Qualsiasi</span>
 									</a>
 								  </li>
-                                    <%for(String s : categorie){%>
+                                    <%for (String s : categorie) {%>
 								  <li>
 									  <a onclick="cambiaTipo(this)" role="option" href="#">
 										<span class="icon-check check_mark"></span>
@@ -430,10 +432,16 @@
                     <div class="list_card_wrap">
                         <figure class="list_card_picture">
                             <div class="figure_property">
-                                <a href="">
-                                    <div class="post_picture"
-                                         style="background:url(images/prova.jpg) 50% 50% no-repeat; background-size: cover;"></div>
-                                </a>
+                                <%
+                                    for (MultimediaBean multi : multimediaBeans) {
+                                        if (multi.getIdAppartamento() == appartamentoBean.getIdAppartamento() && multi.getFotoString()!=null) {
+                                %>
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
+                                        <img src="data:image/png;base64,<%=multi.getFotoString().get(0)%>" style="width:100%">
+                                    </a>
+                                <%
+                                        }
+                                    }%>
                             </div>
                         </figure>
                         <div class="list_card_details_wrap">
@@ -524,16 +532,19 @@
                             </figure>
                             <div class="agent_widget_content">
                                 <h4 class="agent_name">
-                                    <a href=""><%=utenteBean.getNome()+" "+utenteBean.getCognome()%></a>
+                                    <a href=""><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
+                                    </a>
                                 </h4>
-                                <a href="" class="agent_email"><%=utenteBean.getEmail()%></a>
+                                <a href="" class="agent_email"><%=utenteBean.getEmail()%>
+                                </a>
                                 <div class="agent_number">
-                                    <a href=""><%=arrayComp.get(k).getBean().getTelefonoCellulare()%></a>
+                                    <a href=""><%=arrayComp.get(k).getBean().getTelefonoCellulare()%>
+                                    </a>
                                 </div>
                             </div>
                         </article>
-                        <%  }
-                          }
+                        <% }
+                        }
                         }%>
                     </div>
                 </section>
@@ -544,15 +555,18 @@
                             <figure class="featured_card_figure">
                                 <div class="featured_card_picture">
                                     <a href="">
-                                        <img width="680" height="510" src="data:image/png;base64,<%=visualizzazioneImmobile.getFoto()%>">
+                                        <img width="680" height="510"
+                                             src="data:image/png;base64,<%=visualizzazioneImmobile.getFoto()%>">
                                     </a>
                                 </div>
                             </figure>
                             <div class="featured_card_details">
                                 <h3>
-                                    <a href=""><%=visualizzazioneImmobile.getNomeAppartamento()%></a>
+                                    <a href=""><%=visualizzazioneImmobile.getNomeAppartamento()%>
+                                    </a>
                                 </h3>
-                                <p class="featured_card_description"><%=visualizzazioneImmobile.getDescrizioneAppartamento()%></p>
+                                <p class="featured_card_description"><%=visualizzazioneImmobile.getDescrizioneAppartamento()%>
+                                </p>
                                 <div class="featured_card_features_wrap">
                                     <div class="featured_card_feature">
                                         <span class="features_title">Camere da letto</span>
@@ -580,7 +594,8 @@
                                 <div class="featured_card_priceLabel">
                                     <div class="featured_card_price">
                                         <span class="status"><%=visualizzazioneImmobile.getTipoVendita()%></span>
-                                        <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%></p>
+                                        <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -591,7 +606,7 @@
             </div>
         </div>
     </section>
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="footer.jsp"/>
 </div>
 
 <script>
