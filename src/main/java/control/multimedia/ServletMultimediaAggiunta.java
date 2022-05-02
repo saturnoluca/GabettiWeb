@@ -53,11 +53,13 @@ public class ServletMultimediaAggiunta extends HttpServlet {
             request.setAttribute("idAppartamento", idAppartamento);
             redirect="/aggiungi-immobile-planimetria.jsp";
         }else if(azione.equals("planimetria")){
-            ArrayList<Part> planimetria = new ArrayList<Part>();
-            planimetria = (ArrayList<Part>) request.getParts();
+            Part planimetria =  request.getPart("planimetria");
+            ArrayList<Part> plani = new ArrayList<Part>();
+            plani.add(planimetria);
             MultimediaBean multi = new MultimediaBean();
             multi.setIdAppartamento(idAppartamento);
-            multi.setPlanimetria(planimetria);
+            multi.setPlanimetria(plani);
+            System.out.println(planimetria);
             try{
                 multimediaModelDM.doSavePlanimetria(multi);
             }catch (Exception e){

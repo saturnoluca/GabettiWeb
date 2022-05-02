@@ -56,7 +56,6 @@
     String sizeArrayString = (String) request.getAttribute("sizeArray");
     ArrayList<CompositeKeyAgenteCase> arrayComp = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("arrayComp");
     int sizeArray = Integer.parseInt(sizeArrayString);
-    System.out.println(multimediaBeans);
 %>
 <body>
 <nav id="navbar">
@@ -436,7 +435,8 @@
                                     for (MultimediaBean multi : multimediaBeans) {
                                         if (multi.getIdAppartamento() == appartamentoBean.getIdAppartamento() && multi.getFotoString()!=null) {
                                 %>
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
+                                    <a href="
+">
                                         <img src="data:image/png;base64,<%=multi.getFotoString().get(0)%>" style="width:100%">
                                     </a>
                                 <%
@@ -447,7 +447,7 @@
                         <div class="list_card_details_wrap">
                             <div class="list_card_details">
                                 <h3>
-                                    <a href=""><%=appartamentoBean.getNomeAppartamento()%>
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>"><%=appartamentoBean.getNomeAppartamento()%>
                                     </a>
                                 </h3>
                                 <p class="list_card_description"><%
@@ -528,11 +528,11 @@
                         %>
                         <article class="agent_list_item clearfix">
                             <figure class="agent_picture">
-                                <a href=""><img src="data:image/png;base64,<%=utenteBean.getFotoString()%>"></a>
+                                <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><img src="data:image/png;base64,<%=utenteBean.getFotoString()%>"></a>
                             </figure>
                             <div class="agent_widget_content">
                                 <h4 class="agent_name">
-                                    <a href=""><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
+                                    <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
                                     </a>
                                 </h4>
                                 <a href="" class="agent_email"><%=utenteBean.getEmail()%>

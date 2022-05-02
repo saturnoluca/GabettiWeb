@@ -68,7 +68,7 @@
                                             <%for(MultimediaBean foto: listaFoto){
                                             %>
                                                 <div id="<%=foto.getIdAppartamento()%>" class="image">
-                                                    <img src="data:image/png;base64,<%=foto.getFotoString()%>" alt="image">
+                                                    <img src="data:image/png;base64,<%=foto.getFotoString()%>">
                                                     <span onclick="delImage(<%=foto.getIdAppartamento()%>)">&times;</span>
                                                 </div>
                                             <%}%>

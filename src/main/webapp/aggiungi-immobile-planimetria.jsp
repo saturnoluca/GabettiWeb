@@ -57,7 +57,7 @@
                                         <strong>Seleziona delle immagini</strong>
                                         <div class="button_browse">Sfoglia Immagine
                                             <div class="input_file">
-                                                <input type="file" multiple id="upload-planimetria">
+                                                <input type="file" id="upload-planimetria" name="planimetria">
                                             </div>
                                         </div>
                                         <div id="reset-planimetria" class="button_browse">Reset

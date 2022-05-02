@@ -493,10 +493,10 @@
                                                                             <a href="" class="agent_image">
                                                                                     <%
                                                                                     for (AgenteBean bean : agenti) {
-                                                                                        if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
+                                                                                        if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><img src="data:image/png;base64,<%=utenteBean1.otoString()%>"><%
+                                                                                %><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
                                                                                             }
                                                                                         }
                                                                                     }
