@@ -11,6 +11,8 @@
 <%@ page import="model.indirizzo.IndirizzoBean" %>
 <%@ page import="model.agente.AgenteBean" %>
 <%@ page import="model.multimedia.MultimediaBean" %>
+<%@ page import="UtilityClass.VisualizzazioneMultimedia" %>
+<%@ page import="UtilityClass.VisualizzazioneImmobile" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="it" dir="ltr">
 <head>
@@ -39,7 +41,8 @@
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
-    MultimediaBean listaFoto = (MultimediaBean) request.getAttribute("lista-foto");
+    int idAppartamento = (int) request.getAttribute("idAppartamento");
+    ArrayList<VisualizzazioneMultimedia> listaFoto = (ArrayList<VisualizzazioneMultimedia>) request.getAttribute("lista-foto");
     if(listaFoto==null){
         response.sendRedirect(response.encodeRedirectURL("gestione-lista-immobili.jsp"));
         return;
@@ -62,17 +65,18 @@
                         <div class="content_fields_row">
                             <div class="property_multimedia">
                                 <h3 class="tab_title">Galleria Immagini</h3>
-                                <input id="idAppartamento" type="hidden" name="idAppartamento" value="<%=listaFoto.getIdAppartamento()%>">
+                                <input id="idAppartamento" type="hidden" name="idAppartamento" value="<%=idAppartamento%>">
                                 <div class="content_gallery_images full_size">
                                     <label class="label_property_title">Rimuovi immagini</label>
                                         <div class="container-rimuovi">
-                                            <%for(int i=0; i < listaFoto.getFotoString().size(); i++){
+                                            <%for(int i=0; i < listaFoto.size(); i++){
                                             %>
-                                                <div id="<%=listaFoto.getIdMultimedia()%>" class="image">
-                                                    <img src="data:image/png;base64,<%=listaFoto.getFotoString().get(i)%>" alt="image">
-                                                    <span onclick="delImage(<%=listaFoto.getIdMultimedia()%>)">&times;</span>
+                                                <div id="<%=listaFoto.get(i).getIdMultimedia()%>" class="image">
+                                                    <img src="data:image/png;base64,<%=listaFoto.get(i).getFotoString()%>" alt="image">
+                                                    <span onclick="delImage(<%=listaFoto.get(i).getIdMultimedia()%>)">&times;</span>
+                                                </div>
                                             <%}%>
-                                        </div>
+
                                         <div class="div_button_submit">
                                             <input type="button" value="Conferma" onclick="EliminaImmagini()">
                                         </div>

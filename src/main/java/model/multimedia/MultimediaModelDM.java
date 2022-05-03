@@ -1,5 +1,6 @@
 package model.multimedia;
 
+import UtilityClass.VisualizzazioneMultimedia;
 import model.DriverManagerConnectionPool;
 import UtilityClass.UtilityBlob;
 import model.appartamento.AppartamentoBean;
@@ -54,11 +55,11 @@ public class MultimediaModelDM implements MultimediaModel {
     }
 
     public void doDeleteFoto(String idMultimedia) {
-        System.out.println("AOOOO " + Integer.parseInt(idMultimedia));
         Connection connection = null;
         PreparedStatement ps = null;
         String deleteSql = "DELETE FROM multimedia WHERE idMultimedia=?";
         try {
+            System.out.println("voglio eliminare la foto con id" + idMultimedia);
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(deleteSql);
             ps.setInt(1, Integer.parseInt(idMultimedia));
@@ -146,6 +147,33 @@ public class MultimediaModelDM implements MultimediaModel {
                     fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
                     array.add(fotoPart);
                 }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return array;
+    }
+
+    public ArrayList<VisualizzazioneMultimedia> doRetrieveVisualizzazioneMultimedia(int idAppartamento) throws IOException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ArrayList<VisualizzazioneMultimedia> array = new ArrayList<VisualizzazioneMultimedia>();
+        String selectSQL = "SELECT multimedia.idMultimedia, multimedia.foto FROM multimedia WHERE Appartamento_idAppartamento=?";
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSQL);
+            ps.setInt(1, idAppartamento);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                VisualizzazioneMultimedia visualizzazioneMultimedia = new VisualizzazioneMultimedia();
+                visualizzazioneMultimedia.setIdMultimedia(rs.getInt("idMultimedia"));
+                if (rs.getBlob("foto") != null) {
+                    String fotoPart = null;
+                    fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
+                    visualizzazioneMultimedia.setFotoString(fotoPart);
+                    array.add(visualizzazioneMultimedia);
+                }
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
