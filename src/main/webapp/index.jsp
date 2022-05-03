@@ -1822,6 +1822,7 @@
                     </section>
                     <%}%>
                     <%
+                        
                         if (appInAffitto == 0) {
 
                         } else if (appInAffitto > 0 && appInAffitto < 4) {%>
