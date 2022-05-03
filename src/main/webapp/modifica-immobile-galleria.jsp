@@ -55,7 +55,7 @@
     <div class="div_addProperty_page">
         <div class="addProperty_page_head">
             <div class="addProperty_head_title">
-                <h1 class="head_title">Aggiungi immobile</h1>
+                <h1 class="head_title">Modifica Immagini</h1>
             </div>
         </div>
         <div class="addProperty_page_content">
@@ -64,11 +64,13 @@
                     <div class="form_content_fields">
                         <div class="content_fields_row">
                             <div class="property_multimedia">
-                                <h3 class="tab_title">Galleria Immagini</h3>
-                                <input id="idAppartamento" type="hidden" name="idAppartamento" value="<%=idAppartamento%>">
+                                <h3 class="tab_title">Lista immagini</h3>
+
                                 <div class="content_gallery_images full_size">
                                     <label class="label_property_title">Rimuovi immagini</label>
+                                    <form action="javascript:EliminaImmagini()">
                                         <div class="container-rimuovi">
+                                            <input id="idAppartamento" type="hidden" name="idAppartamento" value="<%=idAppartamento%>">
                                             <%for(int i=0; i < listaFoto.size(); i++){
                                             %>
                                                 <div id="<%=listaFoto.get(i).getIdMultimedia()%>" class="image">
@@ -76,11 +78,11 @@
                                                     <span onclick="delImage(<%=listaFoto.get(i).getIdMultimedia()%>)">&times;</span>
                                                 </div>
                                             <%}%>
-
-                                        <div class="div_button_submit">
-                                            <input type="button" value="Conferma" onclick="EliminaImmagini()">
+                                            <div class="div_button_submit">
+                                                <input type="submit" value="Conferma">
+                                            </div>
                                         </div>
-                                </div>
+                                    </form>
                             </div>
                             <div class="property_multimedia">
                                 <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post" enctype="multipart/form-data">
@@ -277,10 +279,23 @@
                 eliminati = eliminati +"-"+ array[i].id;
             }
         }
-        console.log(eliminati);
+        console.log("idAppartamento " + idAppartamento);
+        console.log("selezionati " + eliminati);
         var xhttp = new XMLHttpRequest();
         xhttp.open("GET","ServletRimuoviImmagini?idAppartamento="+idAppartamento +"&eliminati=" +eliminati,true);
-        xhttp.send(null);
+
+        xhttp.onreadystatechange = function (){
+            if(xhttp.readyState == 4 && xhttp.status == 200){
+                if(xhttp.responseText === "true"){
+                    alert("Foto eliminate correttamente");
+                }
+                else{
+                    alert("Nessuna foto eliminata");
+                }
+            }
+        }
+        xhttp.send();
+        return false;
     }
 </script>
 
