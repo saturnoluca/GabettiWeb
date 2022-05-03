@@ -967,7 +967,7 @@
                                             <div class="carousel-item active">
                                                 <div class="properties_pagination">
                                                     <%
-                                                        for (int i = 0; i < appartamentiVendita.size() && i < 8; i++) {
+                                                        for (int i = 0; i<3 && i < appartamentiVendita.size() && i < 8; i++) {
                                                     %>
                                                     <div class="property_style">
                                                         <div class="property_card_style">
@@ -1027,7 +1027,7 @@
                                                             </div>
                                                             <div class="property_detail_wrapper">
                                                                 <h3 class="property_heading">
-                                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentiVendita.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%>
+                                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentiVendita.get(i).getIdAppartamento()%>"><%=appartamentiVendita.get(i).getNomeAppartamento()%>
                                                                     </a>
                                                                 </h3>
                                                                 <div class="property_address">
@@ -1109,7 +1109,7 @@
                             </div>
                         </div>
                     </section>
-                    <%} else {%>
+                    <%} else if(appInVendita>3 && appInVendita<7){%>
                     <section class="section_principalProperties section_principalProperties_stretched">
                         <div class="title_container">
                             <div class="title_row">
@@ -1132,7 +1132,7 @@
                                             <div class="carousel-item active">
                                                 <div class="properties_pagination">
                                                     <%
-                                                        for (int i = 0; i < 3 && i < 8 && i<appartamentiVendita.size(); i++) {
+                                                        for (int i = 0; i < 3 && i<appartamentiVendita.size(); i++) {
                                                     %>
                                                     <div class="property_style">
                                                         <div class="property_card_style">
@@ -1171,7 +1171,7 @@
                                                             </div>
                                                             <div class="property_detail_wrapper">
                                                                 <h3 class="property_heading">
-                                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentiVendita.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%>
+                                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentiVendita.get(i).getIdAppartamento()%>"><%=appartamentiVendita.get(i).getNomeAppartamento()%>
                                                                     </a>
                                                                 </h3>
                                                                 <div class="property_address">
@@ -1236,7 +1236,7 @@
                                             <div class="carousel-item">
                                                 <div class="properties_pagination">
                                                     <%
-                                                        for (int i = 3; i < 6 && i < 8 && i<appartamentiVendita.size(); i++) {
+                                                        for (int i = 3;i < 6 && i<appartamentiVendita.size(); i++) {
                                                     %>
                                                     <div class="property_style">
                                                         <div class="property_card_style">
@@ -1284,7 +1284,7 @@
                                                             </div>
                                                             <div class="property_detail_wrapper">
                                                                 <h3 class="property_heading">
-                                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentiVendita.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%>
+                                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentiVendita.get(i).getIdAppartamento()%>"><%=appartamentiVendita.get(i).getNomeAppartamento()%>
                                                                     </a>
                                                                 </h3>
                                                                 <div class="property_address">
