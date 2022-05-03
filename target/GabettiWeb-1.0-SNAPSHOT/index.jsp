@@ -799,7 +799,7 @@
                                                                             <a href="" class="agent_image">
                                                                                 <%
                                                                                     for (AgenteBean bean : agenti) {
-                                                                                        if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
+                                                                                        if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
                                                                                 %><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
@@ -1238,7 +1238,7 @@
                                             <div class="carousel-item">
                                                 <div class="properties_pagination">
                                                     <%
-                                                        for (int i = 3; i < 6 && i < 8; i++) {
+                                                        for (int i = 3; i < 6 && i < 8 && i<appartamentiVendita.size(); i++) {
                                                     %>
                                                     <div class="property_style">
                                                         <div class="property_card_style">
