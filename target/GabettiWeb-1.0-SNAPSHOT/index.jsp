@@ -538,9 +538,7 @@
                                                                         for (MultimediaBean multimediaBean : multimedia) {
                                                                             if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
                                                                     %>
-                                                                    <img
-                                                                            src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
-                                                                            alt="images/prova.jpg">
+                                                                    <img src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="images/prova.jpg">
                                                                     <%
                                                                                 p = true;
                                                                                 break;
@@ -557,8 +555,7 @@
                                                                 <div class="property_address">
                                                                     <% for (IndirizzoBean linkIndirizzo : indirizzi) {
                                                                         if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
-                                                                    <a href="https://www.google.it/maps/place/
-                                                                    <%=linkIndirizzo.toString()%>"
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
                                                                     <%
                                                                             }
                                                                         }
@@ -709,9 +706,7 @@
                                                                         for (MultimediaBean multimediaBean : multimedia) {
                                                                             if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
                                                                     %>
-                                                                    <img
-                                                                            src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
-                                                                            alt="images/prova.jpg">
+                                                                    <img src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="images/prova.jpg">
                                                                     <%
                                                                                 p = true;
                                                                                 break;
@@ -728,8 +723,7 @@
                                                                 <div class="property_address">
                                                                     <% for (IndirizzoBean linkIndirizzo : indirizzi) {
                                                                         if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
-                                                                    <a href="https://www.google.it/maps/place/
-                                                                    <%=linkIndirizzo.toString()%>"
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
                                                                     <%
                                                                             }
                                                                         }
@@ -803,33 +797,29 @@
                                                                 <div class="property_tags_bot">
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
-                                                                            <a href="" class="agent_image">
+
                                                                                 <%
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><img
-                                                                                    src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"></a><%
                                                                                             }
                                                                                         }
                                                                                     }
                                                                                 }%>
-                                                                            </a>
                                                                             <div class="agent_info">
-                                                                                <a href="" class="agent_title"><%
+                                                                                <%
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                                 }
                                                                                             }
                                                                                         }
-                                                                                    }%></a>
-                                                                                <a href="" class="agent_agency">Gabetti
-                                                                                    Nocera
-                                                                                    Inferiore</a>
+                                                                                    }%>
+                                                                                <a href="contact.html" class="agent_agency">Gabetti Nocera Inferiore</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -837,15 +827,13 @@
                                                                         <span class="property_status_text"><%=appartamenti.get(i).getTipoVendita()%></span>
                                                                     </div>
                                                                 </div>
-                                                                <a class="property_picture">
+                                                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>" class="property_picture">
                                                                     <%
                                                                         boolean p = false;
                                                                         for (MultimediaBean multimediaBean : multimedia) {
                                                                             if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
                                                                     %>
-                                                                    <img
-                                                                            src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
-                                                                            alt="images/prova.jpg" style="width: 100%">
+                                                                    <img src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="images/prova.jpg" style="width: 100%">
                                                                     <%
                                                                                 p = true;
                                                                                 break;
@@ -977,33 +965,29 @@
                                                                 <div class="property_tags_bot">
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
-                                                                            <a href="" class="agent_image">
+
                                                                                 <%
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><img
-                                                                                    src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"></a><%
                                                                                             }
                                                                                         }
                                                                                     }
                                                                                 }%>
-                                                                            </a>
                                                                             <div class="agent_info">
-                                                                                <a href="" class="agent_title"><%
+                                                                                <%
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                                 }
                                                                                             }
                                                                                         }
-                                                                                    }%></a>
-                                                                                <a href="" class="agent_agency">Gabetti
-                                                                                    Nocera
-                                                                                    Inferiore</a>
+                                                                                    }%>
+                                                                                <a href="contact.html" class="agent_agency">Gabetti Nocera Inferiore</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1017,9 +1001,7 @@
                                                                         for (MultimediaBean multimediaBean : multimedia) {
                                                                             if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
                                                                     %>
-                                                                    <img
-                                                                            src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
-                                                                            alt="images/prova.jpg">
+                                                                    <img src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="images/prova.jpg">
                                                                     <%
                                                                                 p = true;
                                                                                 break;
@@ -1036,8 +1018,7 @@
                                                                 <div class="property_address">
                                                                     <% for (IndirizzoBean linkIndirizzo : indirizzi) {
                                                                         if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
-                                                                    <a href="https://www.google.it/maps/place/
-                                                                    <%=linkIndirizzo.toString()%>"
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
                                                                     <%
                                                                             }
                                                                         }
@@ -1111,33 +1092,28 @@
                                                                 <div class="property_tags_bot">
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
-                                                                            <a href="" class="agent_image">
                                                                                 <%
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><img
-                                                                                    src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"></a><%
                                                                                             }
                                                                                         }
                                                                                     }
                                                                                 }%>
-                                                                            </a>
                                                                             <div class="agent_info">
-                                                                                <a href="" class="agent_title"><%
+                                                                                <%
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                                 }
                                                                                             }
                                                                                         }
-                                                                                    }%></a>
-                                                                                <a href="" class="agent_agency">Gabetti
-                                                                                    Nocera
-                                                                                    Inferiore</a>
+                                                                                    }%>
+                                                                                <a href="contact.html" class="agent_agency">Gabetti Nocera Inferiore</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1145,15 +1121,13 @@
                                                                         <span class="property_status_text"><%=appartamenti.get(i).getTipoVendita()%></span>
                                                                     </div>
                                                                 </div>
-                                                                <a class="property_picture">
+                                                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>" class="property_picture">
                                                                     <%
                                                                         boolean p = false;
                                                                         for (MultimediaBean multimediaBean : multimedia) {
                                                                             if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
                                                                     %>
-                                                                    <img
-                                                                            src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
-                                                                            alt="images/prova.jpg" style="width: 100%">
+                                                                    <img src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="images/prova.jpg" style="width: 100%">
                                                                     <%
                                                                                 p = true;
                                                                                 break;
@@ -1170,8 +1144,7 @@
                                                                 <div class="property_address">
                                                                     <% for (IndirizzoBean linkIndirizzo : indirizzi) {
                                                                         if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
-                                                                    <a href="https://www.google.it/maps/place/
-                                                                    <%=linkIndirizzo.toString()%>"
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
                                                                     <%
                                                                             }
                                                                         }
@@ -1245,33 +1218,28 @@
                                                                 <div class="property_tags_bot">
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
-                                                                            <a href="" class="agent_image">
                                                                                 <%
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><img
-                                                                                    src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"></a><%
                                                                                             }
                                                                                         }
                                                                                     }
                                                                                 }%>
-                                                                            </a>
                                                                             <div class="agent_info">
-                                                                                <a href="" class="agent_title"><%
+                                                                                <%
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                                 }
                                                                                             }
                                                                                         }
-                                                                                    }%></a>
-                                                                                <a href="" class="agent_agency">Gabetti
-                                                                                    Nocera
-                                                                                    Inferiore</a>
+                                                                                    }%>
+                                                                                <a href="contact.html" class="agent_agency">Gabetti Nocera Inferiore</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1279,15 +1247,13 @@
                                                                         <span class="property_status_text"><%=appartamenti.get(i).getTipoVendita()%></span>
                                                                     </div>
                                                                 </div>
-                                                                <a class="property_picture">
+                                                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>" class="property_picture">
                                                                     <%
                                                                         boolean p = false;
                                                                         for (MultimediaBean multimediaBean : multimedia) {
                                                                             if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
                                                                     %>
-                                                                    <img
-                                                                            src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
-                                                                            alt="images/prova.jpg" style="width: 100%">
+                                                                    <img src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="images/prova.jpg" style="width: 100%">
                                                                     <%
                                                                                 p = true;
                                                                                 break;
@@ -1298,14 +1264,12 @@
                                                             </div>
                                                             <div class="property_detail_wrapper">
                                                                 <h3 class="property_heading">
-                                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%>
-                                                                    </a>
+                                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%></a>
                                                                 </h3>
                                                                 <div class="property_address">
                                                                     <% for (IndirizzoBean linkIndirizzo : indirizzi) {
                                                                         if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
-                                                                    <a href="https://www.google.it/maps/place/
-                                                                    <%=linkIndirizzo.toString()%>"
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
                                                                     <%
                                                                             }
                                                                         }
@@ -1425,33 +1389,28 @@
                                                                 <div class="property_tags_bot">
                                                                     <div class="agent_wrapper">
                                                                         <div class="agent_list">
-                                                                            <a href="" class="agent_image">
                                                                                 <%
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><img
-                                                                                    src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"></a><%
                                                                                             }
                                                                                         }
                                                                                     }
                                                                                 }%>
-                                                                            </a>
                                                                             <div class="agent_info">
-                                                                                <a href="" class="agent_title"><%
+                                                                                <%
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                                 }
                                                                                             }
                                                                                         }
-                                                                                    }%></a>
-                                                                                <a href="" class="agent_agency">Gabetti
-                                                                                    Nocera
-                                                                                    Inferiore</a>
+                                                                                    }%>
+                                                                                <a href="contact.html" class="agent_agency">Gabetti Nocera Inferiore</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1459,15 +1418,13 @@
                                                                         <span class="property_status_text"><%=appartamentiVendita.get(i).getTipoVendita()%></span>
                                                                     </div>
                                                                 </div>
-                                                                <a class="property_picture">
+                                                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>" class="property_picture">
                                                                     <%
                                                                         boolean p = false;
                                                                         for (MultimediaBean multimediaBean : multimedia) {
                                                                             if (multimediaBean.getIdAppartamento() == appartamentiVendita.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
                                                                     %>
-                                                                    <img
-                                                                            src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
-                                                                            alt="images/prova.jpg">
+                                                                    <img src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="images/prova.jpg">
                                                                     <%
                                                                                 p = true;
                                                                                 break;
@@ -1482,17 +1439,28 @@
                                                                     </a>
                                                                 </h3>
                                                                 <div class="property_address">
-                                                                    <a href="">
-																<span class="address">
-																	<i class="icon-map-marker"></i>
-																</span>
-                                                                        <%
-                                                                            for (IndirizzoBean indirizzoBean : indirizzi) {
-                                                                                if (indirizzoBean.getIdAppartamento() == appartamentiVendita.get(i).getIdAppartamento()) {
-                                                                        %><%=indirizzoBean.getVia() + ", " + indirizzoBean.getCitta() + ", " + indirizzoBean.getProvincia()%><%
+                                                                    <% for (IndirizzoBean linkIndirizzo : indirizzi) {
+                                                                        if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
+                                                                    <%
                                                                             }
                                                                         }
                                                                     %>
+                                                                    <span class="address">
+																	<i class="icon-map-marker"></i>
+																</span>
+                                                                    <%
+                                                                        for (IndirizzoBean indirizzoBean : indirizzi) {
+                                                                            if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                                                if (indirizzoBean.toString().length() > 42) {%>
+                                                                    <%=indirizzoBean.toString().substring(0, 42) + "..."%><%
+                                                                } else { %>
+
+                                                                    <%=indirizzoBean.toString()%><%
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                %>
                                                                     </a>
                                                                 </div>
                                                                 <div class="prorperty_added">
@@ -1626,6 +1594,30 @@
                                                                     </a>
                                                                 </h3>
                                                                 <div class="property_address">
+                                                                    <% for (IndirizzoBean linkIndirizzo : indirizzi) {
+                                                                        if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
+                                                                    <%
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                    <span class="address">
+																	<i class="icon-map-marker"></i>
+																</span>
+                                                                    <%
+                                                                        for (IndirizzoBean indirizzoBean : indirizzi) {
+                                                                            if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                                                if (indirizzoBean.toString().length() > 42) {%>
+                                                                    <%=indirizzoBean.toString().substring(0, 42) + "..."%><%
+                                                                } else { %>
+
+                                                                    <%=indirizzoBean.toString()%><%
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                %>
+                                                                    </a>
+                                                                </div>>
                                                                     <a href="">
 																<span class="address">
 																	<i class="icon-map-marker"></i>
@@ -1701,8 +1693,7 @@
                                                                                         if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><img
-                                                                                    src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                %><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
                                                                                             }
                                                                                         }
                                                                                     }
@@ -1740,17 +1731,28 @@
                                                                     </a>
                                                                 </h3>
                                                                 <div class="property_address">
-                                                                    <a href="">
-																<span class="address">
-																	<i class="icon-map-marker"></i>
-																</span>
-                                                                        <%
-                                                                            for (IndirizzoBean indirizzoBean : indirizzi) {
-                                                                                if (indirizzoBean.getIdAppartamento() == appartamentiVendita.get(i).getIdAppartamento()) {
-                                                                        %><%=indirizzoBean.getVia() + ", " + indirizzoBean.getCitta() + ", " + indirizzoBean.getProvincia()%><%
+                                                                    <% for (IndirizzoBean linkIndirizzo : indirizzi) {
+                                                                        if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
+                                                                    <%
                                                                             }
                                                                         }
                                                                     %>
+                                                                    <span class="address">
+																	<i class="icon-map-marker"></i>
+																</span>
+                                                                    <%
+                                                                        for (IndirizzoBean indirizzoBean : indirizzi) {
+                                                                            if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                                                if (indirizzoBean.toString().length() > 42) {%>
+                                                                    <%=indirizzoBean.toString().substring(0, 42) + "..."%><%
+                                                                } else { %>
+
+                                                                    <%=indirizzoBean.toString()%><%
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                %>
                                                                     </a>
                                                                 </div>
                                                                 <div class="prorperty_added">
@@ -1910,19 +1912,30 @@
                                                                     </a>
                                                                 </h3>
                                                                 <div class="property_address">
-                                                                    <a href="">
-																<span class="address">
-																	<i class="icon-map-marker"></i>
-																</span>
-                                                                        <%
-                                                                            for (IndirizzoBean indirizzoBean : indirizzi) {
-                                                                                if (indirizzoBean.getIdAppartamento() == appartamentiAffitto.get(i).getIdAppartamento()) {
-                                                                        %><%=indirizzoBean.getVia() + ", " + indirizzoBean.getCitta() + ", " + indirizzoBean.getProvincia()%><%
+                                                                    <% for (IndirizzoBean linkIndirizzo : indirizzi) {
+                                                                        if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
+                                                                    <%
                                                                             }
                                                                         }
                                                                     %>
+                                                                    <span class="address">
+																	<i class="icon-map-marker"></i>
+																</span>
+                                                                    <%
+                                                                        for (IndirizzoBean indirizzoBean : indirizzi) {
+                                                                            if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                                                if (indirizzoBean.toString().length() > 42) {%>
+                                                                    <%=indirizzoBean.toString().substring(0, 42) + "..."%><%
+                                                                } else { %>
+
+                                                                    <%=indirizzoBean.toString()%><%
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                %>
                                                                     </a>
-                                                                </div>
+                                                                </div>>
                                                                 <div class="prorperty_added">
                                                                     <span>Aggiunto il: </span>
                                                                     <%=appartamenti.get(i).getData()%>
@@ -2054,17 +2067,28 @@
                                                                     </a>
                                                                 </h3>
                                                                 <div class="property_address">
-                                                                    <a href="">
-																<span class="address">
-																	<i class="icon-map-marker"></i>
-																</span>
-                                                                        <%
-                                                                            for (IndirizzoBean indirizzoBean : indirizzi) {
-                                                                                if (indirizzoBean.getIdAppartamento() == appartamentiAffitto.get(i).getIdAppartamento()) {
-                                                                        %><%=indirizzoBean.getVia() + ", " + indirizzoBean.getCitta() + ", " + indirizzoBean.getProvincia()%><%
+                                                                    <% for (IndirizzoBean linkIndirizzo : indirizzi) {
+                                                                        if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
+                                                                    <%
                                                                             }
                                                                         }
                                                                     %>
+                                                                    <span class="address">
+																	<i class="icon-map-marker"></i>
+																</span>
+                                                                    <%
+                                                                        for (IndirizzoBean indirizzoBean : indirizzi) {
+                                                                            if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                                                if (indirizzoBean.toString().length() > 42) {%>
+                                                                    <%=indirizzoBean.toString().substring(0, 42) + "..."%><%
+                                                                } else { %>
+
+                                                                    <%=indirizzoBean.toString()%><%
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                %>
                                                                     </a>
                                                                 </div>
                                                                 <div class="prorperty_added">
@@ -2168,17 +2192,28 @@
                                                                     </a>
                                                                 </h3>
                                                                 <div class="property_address">
-                                                                    <a href="">
-																<span class="address">
-																	<i class="icon-map-marker"></i>
-																</span>
-                                                                        <%
-                                                                            for (IndirizzoBean indirizzoBean : indirizzi) {
-                                                                                if (indirizzoBean.getIdAppartamento() == appartamentiAffitto.get(i).getIdAppartamento()) {
-                                                                        %><%=indirizzoBean.getVia() + ", " + indirizzoBean.getCitta() + ", " + indirizzoBean.getProvincia()%><%
+                                                                    <% for (IndirizzoBean linkIndirizzo : indirizzi) {
+                                                                        if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
+                                                                    <%
                                                                             }
                                                                         }
                                                                     %>
+                                                                    <span class="address">
+																	<i class="icon-map-marker"></i>
+																</span>
+                                                                    <%
+                                                                        for (IndirizzoBean indirizzoBean : indirizzi) {
+                                                                            if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                                                if (indirizzoBean.toString().length() > 42) {%>
+                                                                    <%=indirizzoBean.toString().substring(0, 42) + "..."%><%
+                                                                } else { %>
+
+                                                                    <%=indirizzoBean.toString()%><%
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                %>
                                                                     </a>
                                                                 </div>
                                                                 <div class="prorperty_added">
