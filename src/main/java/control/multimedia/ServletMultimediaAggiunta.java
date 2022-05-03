@@ -26,6 +26,8 @@ public class ServletMultimediaAggiunta extends HttpServlet {
         String azione = request.getParameter("azione");
         String redirect="";
         if(azione.equals("foto")){
+            String modifica = null;
+            modifica = request.getParameter("modifica-Img");
             ArrayList<Part> foto = (ArrayList<Part>) request.getParts();
             MultimediaBean multi = new MultimediaBean();
             multi.setIdAppartamento(idAppartamento);
@@ -37,7 +39,11 @@ public class ServletMultimediaAggiunta extends HttpServlet {
                 e.printStackTrace();
             }
             request.setAttribute("idAppartamento", idAppartamento);
-            redirect = "/aggiunta-immobile-video.jsp";
+            if(modifica!=null){
+                redirect = "/modifica-immobile-video.jsp";
+            }else{
+                redirect = "/aggiunta-immobile-video.jsp";
+            }
         }else if(azione.equals("video")){
             ArrayList<Part> video = new ArrayList<Part>();
             System.out.println(request.getPart("video"));

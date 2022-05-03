@@ -113,7 +113,7 @@ public class MultimediaModelDM implements MultimediaModel {
                 int i = multi.getPlanimetria().size();
                 if (i > 0) {
                     connection = dmcp.getConnection();
-                    for (int k = 1; k < i; k++) {
+                    for (int k = 0; k < i; k++) {
                         insertSql = "INSERT INTO multimedia(planimetria, Appartamento_idAppartamento) VALUES(?, ?)";
                         ps = connection.prepareStatement(insertSql);
                         in = multi.getPlanimetria().get(k).getInputStream();

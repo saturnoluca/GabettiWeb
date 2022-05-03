@@ -1,5 +1,6 @@
 package control.appartamento;
 
+import UtilityClass.VisualizzazioneImmobile;
 import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
@@ -56,6 +57,18 @@ public class ServletDettagliAppartamento extends HttpServlet {
             multimediaBean.setPlanimetriaString(modelMultimedia.doRetrievePlanimetria(appBean.getIdAppartamento()));
             array =(ArrayList<AppartamentoBean>) modelApp.OrderByVisite();
             allMulti=modelMultimedia.RetrieveAllMultimedia();
+            VisualizzazioneImmobile visualizzazione = new VisualizzazioneImmobile();
+            ArrayList<AppartamentoBean> ordinamento = (ArrayList<AppartamentoBean>) modelApp.OrderByVisite();
+            visualizzazione.setIdAppartamento(ordinamento.get(0).getIdAppartamento());
+            visualizzazione.setTipoVendita(ordinamento.get(0).getTipoVendita());
+            visualizzazione.setNomeAppartamento(ordinamento.get(0).getNomeAppartamento());
+            visualizzazione.setDescrizioneAppartamento(ordinamento.get(0).getDescrizioneAppartamento());
+            visualizzazione.setSuperficie(ordinamento.get(0).getSuperficie());
+            visualizzazione.setBagni(ordinamento.get(0).getBagni());
+            visualizzazione.setCamereLetto(ordinamento.get(0).getCamereLetto());
+            visualizzazione.setData(ordinamento.get(0).getData());
+            visualizzazione.setPrezzo(ordinamento.get(0).getPrezzo());
+            visualizzazione.setFoto(modelMultimedia.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
             modelApp.AggiungiVisualizzazione(id);
             request.setAttribute("appartamento", appBean);
             request.setAttribute("agente", agenteBean);
@@ -64,6 +77,7 @@ public class ServletDettagliAppartamento extends HttpServlet {
             request.setAttribute("multimedia", multimediaBean);
             request.setAttribute("visite", array);
             request.setAttribute("allMulti", allMulti);
+            request.setAttribute("featured",visualizzazione);
             System.out.println(multimediaBean.getFotoString().size());
             RequestDispatcher rd = request.getRequestDispatcher("/dettagliappartamento.jsp");
             rd.forward(request, response);
