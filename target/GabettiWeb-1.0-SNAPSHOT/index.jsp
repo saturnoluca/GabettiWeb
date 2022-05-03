@@ -656,7 +656,7 @@
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">
                                                 <div class="properties_pagination">
-                                                    <%for (int i = 0; i < 3 && i < 8; i++) {%>
+                                                    <%for (int i = 0; i < 3 && i < 8 && i<appartamenti.size(); i++) {%>
                                                     <div class="property_style">
                                                         <div class="property_card_style">
                                                             <div class="property_picture_wrapper">
@@ -666,7 +666,7 @@
                                                                             <a href="" class="agent_image">
                                                                                 <%
                                                                                     for (AgenteBean bean : agenti) {
-                                                                                        if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
+                                                                                        if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
                                                                                 %><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
@@ -967,8 +967,7 @@
                                             <div class="carousel-item active">
                                                 <div class="properties_pagination">
                                                     <%
-                                                        for (int i = 0; i < appartamenti.size() && i < 8; i++) {
-                                                            if (appartamenti.get(i).getTipoVendita().equals("In Vendita")) {
+                                                        for (int i = 0; i < appartamentiVendita.size() && i < 8; i++) {
                                                     %>
                                                     <div class="property_style">
                                                         <div class="property_card_style">
@@ -991,7 +990,7 @@
                                                                             <div class="agent_info">
                                                                                 <a href="" class="agent_title"><%
                                                                                     for (AgenteBean bean : agenti) {
-                                                                                        if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
+                                                                                        if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
                                                                                 %><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%><%
@@ -1006,14 +1005,14 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="property_status">
-                                                                        <span class="property_status_text"><%=appartamenti.get(i).getTipoVendita()%></span>
+                                                                        <span class="property_status_text"><%=appartamentiVendita.get(i).getTipoVendita()%></span>
                                                                     </div>
                                                                 </div>
                                                                 <a class="property_picture">
                                                                     <%
                                                                         boolean p = false;
                                                                         for (MultimediaBean multimediaBean : multimedia) {
-                                                                            if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
+                                                                            if (multimediaBean.getIdAppartamento() == appartamentiVendita.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
                                                                     %>
                                                                     <img
                                                                             src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
@@ -1028,7 +1027,7 @@
                                                             </div>
                                                             <div class="property_detail_wrapper">
                                                                 <h3 class="property_heading">
-                                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamenti.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%>
+                                                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentiVendita.get(i).getIdAppartamento()%>"><%=appartamenti.get(i).getNomeAppartamento()%>
                                                                     </a>
                                                                 </h3>
                                                                 <div class="property_address">
@@ -1038,7 +1037,7 @@
 																</span>
                                                                         <%
                                                                             for (IndirizzoBean indirizzoBean : indirizzi) {
-                                                                                if (indirizzoBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {
+                                                                                if (indirizzoBean.getIdAppartamento() == appartamentiVendita.get(i).getIdAppartamento()) {
                                                                         %><%=indirizzoBean.getVia() + ", " + indirizzoBean.getCitta() + ", " + indirizzoBean.getProvincia()%><%
                                                                             }
                                                                         }
@@ -1054,30 +1053,30 @@
                                                                         <span class="property_feature_title">Camere</span>
                                                                         <div class="feature_icon_wrapper">
                                                                             <i class="icon-bed"></i>
-                                                                            <span class="figure"><%=appartamenti.get(i).getCamereLetto()%></span>
+                                                                            <span class="figure"><%=appartamentiVendita.get(i).getCamereLetto()%></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="property_feature">
                                                                         <span class="property_feature_title">Bagni</span>
                                                                         <div class="feature_icon_wrapper">
                                                                             <i class="icon-shower"></i>
-                                                                            <span class="figure"><%=appartamenti.get(i).getBagni()%></span>
+                                                                            <span class="figure"><%=appartamentiVendita.get(i).getBagni()%></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="property_feature">
                                                                         <span class="property_feature_title">Superficie</span>
                                                                         <div class="feature_icon_wrapper">
                                                                             <i class="icon-square-o"></i>
-                                                                            <span class="figure"><%=appartamenti.get(i).getSuperficie()%></span>
+                                                                            <span class="figure"><%=appartamentiVendita.get(i).getSuperficie()%></span>
                                                                             <span>mq</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="property_price">
                                                                     <div class="property_price_box">
-                                                                        <span class="property_card_status"><%=appartamenti.get(i).getTipoVendita()%></span>
+                                                                        <span class="property_card_status"><%=appartamentiVendita.get(i).getTipoVendita()%></span>
                                                                         <p class="property_card_price">
-                                                                            €<%=appartamenti.get(i).getPrezzo()%>
+                                                                            €<%=appartamentiVendita.get(i).getPrezzo()%>
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -1086,7 +1085,6 @@
                                                         </div>
                                                     </div>
                                                     <%
-                                                            }
                                                         }
                                                     %>
                                                 </div>
@@ -1134,7 +1132,7 @@
                                             <div class="carousel-item active">
                                                 <div class="properties_pagination">
                                                     <%
-                                                        for (int i = 0; i < 3 && i < 8; i++) {
+                                                        for (int i = 0; i < 3 && i < 8 && i<appartamentiVendita.size(); i++) {
                                                     %>
                                                     <div class="property_style">
                                                         <div class="property_card_style">
