@@ -14,13 +14,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="it">
 <%
-    ArrayList<AppartamentoBean> arrayAppartamento = (ArrayList<AppartamentoBean>) request.getAttribute("arrayAppartamento");
+    if (request.getAttribute("utente") == null) {
+        response.sendRedirect(response.encodeRedirectURL("IndexServlet"));
+        return;
+    }
     AgenteBean agenteBean = (AgenteBean) request.getAttribute("agente");
     UtenteBean utenteBean = (UtenteBean) request.getAttribute("utente");
+    ArrayList<AppartamentoBean> arrayAppartamento = (ArrayList<AppartamentoBean>) request.getAttribute("arrayAppartamento");
     ArrayList<IndirizzoBean> arrayIndirizzo = (ArrayList<IndirizzoBean>) request.getAttribute("arrayIndirizzo");
     ArrayList<MultimediaBean> arrayMultimedia = (ArrayList<MultimediaBean>) request.getAttribute("arrayMultimedia");
     ArrayList<CompositeKeyAgenteCase> agenteCase = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("agenteCase");
-    ArrayList<AppartamentoBean> inEvidenza=(ArrayList<AppartamentoBean>) request.getAttribute("inEvidenza");
+    ArrayList<AppartamentoBean> inEvidenza = (ArrayList<AppartamentoBean>) request.getAttribute("inEvidenza");
 %>
 
 <head>
@@ -517,7 +521,8 @@
                         <div class="agent_card_head">
                             <figure class="agent_card_figure">
                                 <a href="">
-                                    <img width="210" height="210" src="images/agente.jpg">
+                                    <img width="210" height="210"
+                                         src="data:image/png;base64,<%=utenteBean.getFotoString()%>">
                                 </a>
                             </figure>
                             <div class="agent_card_name">
@@ -549,7 +554,6 @@
                                 <div class="agent_card_contact_wrap">
                                     <p class="contact">Cellulare: <a href=""><%=agenteBean.getTelefonoCellulare()%>
                                     </a></p>
-                                    <p class="contact">Telefono: <a href=""><%=agenteBean.getTelefonoFisso()%>
                                     </a></p>
                                     <p class="contact">Whatsapp: <a
                                             href="https://wa.me/39<%=agenteBean.getTelefonoCellulare()%>">Chatta su
@@ -577,7 +581,8 @@
                                     </div>
                                     <div class="agent_form_field agent_form_textarea">
                                         <label>Messaggio</label>
-                                        <textarea rows="6" placeholder="Il tuo messaggio" id="messaggioGuest"></textarea>
+                                        <textarea rows="6" placeholder="Il tuo messaggio"
+                                                  id="messaggioGuest"></textarea>
                                     </div>
                                     <input type="hidden" id="agenteid" value="<%=agenteBean.getIdAgente()%>">
                                     <div class="form_privacy">
@@ -585,7 +590,8 @@
                             Consenso sulla privacy
                           </span>
                                         <input type="checkbox">
-                                        <label>I consent to having this website store my submitted information so they can
+                                        <label>I consent to having this website store my submitted information so they
+                                            can
                                             respond to my inquiry.</label>
                                     </div>
                                     <div class="agent_form_submit">
@@ -608,11 +614,20 @@
                     <div class="list_card_wrap">
                         <figure class="list_card_figure">
                             <div class="figure_property">
-                                <a href="">
-                                    <div class="post_property"
-                                         style="background: url(images/prova.jpg) 50% 50% no-repeat; background-size: cover;">
-                                    </div>
-                                </a>
+                                <%
+                                    boolean p = false;
+                                    for (MultimediaBean multi : arrayMultimedia) {
+                                        if (multi.getIdAppartamento() == arrayAppartamento.get(i).getIdAppartamento() && multi.getFotoString() != null && !p) {
+                                %><a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=arrayAppartamento.get(i).getIdAppartamento()%>">
+                                <img class="post_property" src="data:image/png;base64,<%=multi.getFotoString().get(0)%>"
+                                     style="background-size: cover;">
+
+                            </a><%
+                                        p = true;
+                                        break;
+                                    }
+                                }
+                            %>
                                 <div class="overlay_property"></div>
                                 <div class="overlay_contents overlay_fadeIn_bottom">
                                     <a href="">Visualizza Proprietà</a>
@@ -621,8 +636,9 @@
                         </figure>
                         <div class="list_card_details_wrap">
                             <div class="list_card_details">
-                                <h3><a href=""><%=arrayAppartamento.get(i).getNomeAppartamento()%>
-                                </a></h3>
+                                <h3>
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=arrayAppartamento.get(i).getIdAppartamento()%>"><%=arrayAppartamento.get(i).getNomeAppartamento()%>
+                                    </a></h3>
                                 <p class="list_card_description"><%
                                     if (arrayAppartamento.get(i).getDescrizioneAppartamento().length() > 30) {
                                 %><%=arrayAppartamento.get(i).getDescrizioneAppartamento().substring(0, 30) + ".."%><%
@@ -676,68 +692,82 @@
             <aside class="featured_sidebar">
                 <section class="widget">
                     <h3 class="title">Proprietà in evidenza</h3>
-                    <%for(AppartamentoBean appBean : inEvidenza){
-                        if(appBean.getIdAgente()==agenteBean.getIdAgente()){
-                    %><article class="featured_card featured_card_block">
-                    <div class="featured_card_wrap">
-                        <figure class="featured_card_figure">
-                            <div class="featured_card_picture">
-                                <a href="">
-                                    <img width="680" height="510" src="images/prova.jpg">
-                                </a>
-                            </div>
-                        </figure>
-                        <div class="featured_card_details">
-                            <h3>
-                                <a href=""><%=appBean.getNomeAppartamento()%></a>
-                            </h3>
-                            <p class="featured_card_description"><%
-                                if (appBean.getDescrizioneAppartamento().length() > 30) {
-                            %><%=appBean.getDescrizioneAppartamento().substring(0, 30) + ".."%><%
-                            } else {
-                            %><%=appBean.getDescrizioneAppartamento()%><%
-                                }%></p>
-                            <div class="featured_card_features_wrap">
-                                <div class="featured_card_feature">
-                                    <span class="features_title">Camere da letto</span>
-                                    <div>
-                                        <i class="feature_icon icon-bed"></i>
-                                        <span class="text"><%=appBean.getCamereLetto()%></span>
+                    <%
+                        boolean p = false;
+                        for (int i = 0; i < 1; i++) {
+                            if (inEvidenza.get(0).getIdAgente() == agenteBean.getIdAgente()) {
+                    %>
+                    <article class="featured_card featured_card_block">
+                        <div class="featured_card_wrap">
+                            <figure class="featured_card_figure">
+                                <div class="featured_card_picture">
+                                    <%
+                                        for (MultimediaBean multi : arrayMultimedia) {
+                                            if (multi.getIdAppartamento() == inEvidenza.get(0).getIdAppartamento() && multi.getFotoString() != null && !p) {
+                                    %><a href="">
+                                    <img width="680" height="510"
+                                         src="data:image/png;base64,<%=multi.getFotoString().get(0)%>">
+                                </a><%
+                                            p = true;
+                                            break;
+                                        }
+                                    }%>
+                                </div>
+                            </figure>
+                            <div class="featured_card_details">
+                                <h3>
+                                    <a href=""><%=inEvidenza.get(0).getNomeAppartamento()%>
+                                    </a>
+                                </h3>
+                                <p class="featured_card_description"><%
+                                    if (inEvidenza.get(0).getDescrizioneAppartamento().length() > 30) {
+                                %><%=inEvidenza.get(0).getDescrizioneAppartamento().substring(0, 30) + ".."%><%
+                                } else {
+                                %><%=inEvidenza.get(0).getDescrizioneAppartamento()%><%
+                                    }%></p>
+                                <div class="featured_card_features_wrap">
+                                    <div class="featured_card_feature">
+                                        <span class="features_title">Camere da letto</span>
+                                        <div>
+                                            <i class="feature_icon icon-bed"></i>
+                                            <span class="text"><%=inEvidenza.get(0).getCamereLetto()%></span>
+                                        </div>
+                                    </div>
+                                    <div class="featured_card_feature">
+                                        <span class="features_title">Bagni</span>
+                                        <div>
+                                            <i class="feature_icon icon-shower"></i>
+                                            <span class="text"><%=inEvidenza.get(0).getBagni()%></span>
+                                        </div>
+                                    </div>
+                                    <div class="featured_card_feature">
+                                        <span class="features_title">Superficie</span>
+                                        <div>
+                                            <i class="feature_icon icon-crop_square"></i>
+                                            <span class="text"><%=inEvidenza.get(0).getSuperficie()%></span>
+                                            <span class=>mq</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="featured_card_feature">
-                                    <span class="features_title">Bagni</span>
-                                    <div>
-                                        <i class="feature_icon icon-shower"></i>
-                                        <span class="text"><%=appBean.getBagni()%></span>
-                                    </div>
-                                </div>
-                                <div class="featured_card_feature">
-                                    <span class="features_title">Superficie</span>
-                                    <div>
-                                        <i class="feature_icon icon-crop_square"></i>
-                                        <span class="text"><%=appBean.getSuperficie()%></span>
-                                        <span class=>mq</span>
+                                <div class="featured_card_priceLabel">
+                                    <div class="featured_card_price">
+                                        <span class="status"><%=inEvidenza.get(0).getTipoVendita()%></span>
+                                        <p class="price">€<%=inEvidenza.get(0).getPrezzo()%>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="featured_card_priceLabel">
-                                <div class="featured_card_price">
-                                    <span class="status"><%=appBean.getTipoVendita()%></span>
-                                    <p class="price">€<%=appBean.getPrezzo()%></p>
-                                </div>
-                            </div>
-                        </div>
 
-                    </div>
-                </article><%
-                        }
-                    }%>
+                        </div>
+                    </article>
+                    <%
+                            }
+                        }%>
                 </section>
             </aside>
         </div>
     </section>
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="footer.jsp"/>
 </div>
 
 </body>

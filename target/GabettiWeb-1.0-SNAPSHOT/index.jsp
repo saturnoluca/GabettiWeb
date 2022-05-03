@@ -709,9 +709,7 @@
                                                                         for (MultimediaBean multimediaBean : multimedia) {
                                                                             if (multimediaBean.getIdAppartamento() == appartamenti.get(i).getIdAppartamento() && multimediaBean.getFotoString() != null && !p) {
                                                                     %>
-                                                                    <img
-                                                                            src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
-                                                                            alt="images/prova.jpg">
+                                                                    <img src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="images/prova.jpg">
                                                                     <%
                                                                                 p = true;
                                                                                 break;
@@ -728,8 +726,7 @@
                                                                 <div class="property_address">
                                                                     <% for (IndirizzoBean linkIndirizzo : indirizzi) {
                                                                         if (linkIndirizzo.getIdAppartamento() == appartamenti.get(i).getIdAppartamento()) {%>
-                                                                    <a href="https://www.google.it/maps/place/
-                                                                    <%=linkIndirizzo.toString()%>"
+                                                                    <a href="https://www.google.it/maps/place/<%=linkIndirizzo.toString()%>"
                                                                     <%
                                                                             }
                                                                         }
@@ -809,8 +806,7 @@
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><img
-                                                                                    src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                                %><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
                                                                                             }
                                                                                         }
                                                                                     }
