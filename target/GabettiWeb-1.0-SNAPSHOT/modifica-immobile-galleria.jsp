@@ -86,6 +86,8 @@
                             </div>
                             <div class="property_multimedia">
                                 <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="idAppartamento" value="<%=idAppartamento%>">
+                                    <input type="hidden" name="modifica-Img" value="<%="modifica-Img"%>">
                                     <input type="hidden" name="azione" value="<%="foto"%>">
                                     <h3 class="tab_title">Aggiungi Nuove Immagini</h3>
                                         <div class="gallery_image_container" id="gallery_image_container"></div>
@@ -102,11 +104,11 @@
                                             <div id="reset-image" class="button_browse">Reset</div>
                                             </div>
                                         </div>
-                                </form>
+                                <div class="div_button_submit">
+                                    <input type="submit" value="Avanti">
+                                </div>
+                            </form>
                             </div>
-                        </div>
-                        <div class="div_button_submit">
-                            <input type="submit" value="Avanti">
                         </div>
                     </div>
                 </div>

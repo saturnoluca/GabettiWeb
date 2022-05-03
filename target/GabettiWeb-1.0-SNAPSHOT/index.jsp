@@ -1935,7 +1935,7 @@
                                                                     }
                                                                 %>
                                                                     </a>
-                                                                </div>>
+                                                                </div>
                                                                 <div class="prorperty_added">
                                                                     <span>Aggiunto il: </span>
                                                                     <%=appartamenti.get(i).getData()%>

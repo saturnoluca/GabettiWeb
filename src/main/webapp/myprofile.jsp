@@ -53,6 +53,7 @@
 <body>
 <jsp:include page="sidebar.jsp"/>
 <section class="home-section">
+    <input type="hidden" id="ruolo" value="<%=admin.getRuolo()%>">
     <div class="div_user_page">
         <div class="user_page_head">
             <div class="user_head_title">
@@ -311,7 +312,6 @@
 <script>
     $(document).ready(function () {
         var ruolo = $('#ruolo').val();
-        console.log("porcodio")
         if (ruolo != "Agente") {
             $('#divruolo').hide();
             $('#divInformazioniAgente').hide();

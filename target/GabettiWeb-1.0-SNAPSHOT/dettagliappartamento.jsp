@@ -3,7 +3,8 @@
 <%@ page import="model.utente.UtenteBean" %>
 <%@ page import="model.indirizzo.IndirizzoBean" %>
 <%@ page import="model.multimedia.MultimediaBean" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="UtilityClass.VisualizzazioneImmobile" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 14/03/2022
@@ -50,7 +51,9 @@
     IndirizzoBean indirizzoBean = (IndirizzoBean) request.getAttribute("indirizzo");
     MultimediaBean multimediaBean = (MultimediaBean) request.getAttribute("multimedia");
     ArrayList<AppartamentoBean> array = (ArrayList<AppartamentoBean>) request.getAttribute("visite");
+    VisualizzazioneImmobile visualizzazioneImmobile = (VisualizzazioneImmobile) request.getAttribute("featured");
     ArrayList<MultimediaBean> allMulti = (ArrayList<MultimediaBean>) request.getAttribute("allMulti");
+
 %>
 
 <body>
@@ -67,7 +70,7 @@
         <li><a href="listaappartamenti.jsp">Lista Immobili</a></li>
         <li><a class="active" href="valutazione.jsp">Valutazione Immobile</a></li>
         <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
-        <li><a  href="contact.html">Contattaci</a></li>
+        <li><a href="contact.html">Contattaci</a></li>
     </ul>
 </nav>
 <div class="content">
@@ -93,7 +96,8 @@
 									<div id="valore_localita" class="filter-option-text">
 									  Qualsiasi
 									</div>
-									  <input type="hidden" name="localita_immobile"id="localita_immobile" value="Qualsiasi">
+									  <input type="hidden" name="localita_immobile" id="localita_immobile"
+                                             value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -173,10 +177,10 @@
 							  <button type="button" onclick="apriScegliStato()" class="btn dropdown-toggle">
 								<div class="filter-option">
 								  <div class="filter-option-inner">
-									<div  id="valore_stato" class="filter-option-text">
+									<div id="valore_stato" class="filter-option-text">
 									  Qualsiasi
 									</div>
-									<input type="hidden" name="stato_immobile"id="stato_immobile" value="Qualsiasi">
+									<input type="hidden" name="stato_immobile" id="stato_immobile" value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -212,10 +216,10 @@
 							  <button type="button" onclick="apriScegliTipo()" class="btn dropdown-toggle">
 								<div class="filter-option">
 								  <div class="filter-option-inner">
-									<div  id="valore_tipo" class="filter-option-text">
+									<div id="valore_tipo" class="filter-option-text">
 									  Qualsiasi
 									</div>
-									<input type="hidden" name="tipo_immobile"id="tipo_immobile" value="Qualsiasi">
+									<input type="hidden" name="tipo_immobile" id="tipo_immobile" value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -257,7 +261,7 @@
 						  </span>
                         </div>
                     </div>
-                    <div id="advanced_option_div"class="form_collapsed_field_wrapper" style="display: none;">
+                    <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
                         <div class="collapsed_field_container search_advanced_fields">
                             <div class="search_option search_select search_beds">
                                 <label>Min camere da letto</label>
@@ -265,10 +269,11 @@
                                     <button type="button" onclick="apriScegliMinCamere()" class="btn dropdown-toggle">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
-                                                <div id="valore_minCamere"class="filter-option-text">
+                                                <div id="valore_minCamere" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="camere_immobile"id="camere_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="camere_immobile" id="camere_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -302,10 +307,11 @@
                                     <button type="button" onclick="apriScegliMinBagni()" class="btn dropdown-toggle">
                                         <div class="filter-option">
                                             <div class="filter-option-inner">
-                                                <div id="valore_minBagni"class="filter-option-text">
+                                                <div id="valore_minBagni" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="bagni_immobile"id="bagni_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="bagni_immobile" id="bagni_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -342,7 +348,8 @@
                                                 <div id="valore_minPrezzo" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="minPrezzo_immobile"id="minPrezzo_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="minPrezzo_immobile" id="minPrezzo_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -379,7 +386,8 @@
                                                 <div id="valore_maxPrezzo" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="maxPrezzo_immobile"id="maxPrezzo_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="maxPrezzo_immobile" id="maxPrezzo_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -416,7 +424,8 @@
                                                 <div id="valore_minAuto" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="auto_immobile"id="auto_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="auto_immobile" id="auto_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -453,7 +462,8 @@
                                                 <div id="valore_agente" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="agente_immobile"id="agente_immobile" value="Qualsiasi">
+                                                <input type="hidden" name="agente_immobile" id="agente_immobile"
+                                                       value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
@@ -496,7 +506,8 @@
             <div class="search_button noPrint">
                 <div class="search_buttonwrap noPrint">
                     <div class="search_advance noPrint">
-                        <button type="button" onclick="advancedOption()" id="advanced_options"class="search_advance_button noPrint">
+                        <button type="button" onclick="advancedOption()" id="advanced_options"
+                                class="search_advance_button noPrint">
                             <i class="icon-search-plus noPrint"></i>
                         </button>
                     </div>
@@ -530,11 +541,14 @@
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="d-block w-100" src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>" alt="First slide">
+                            <img class="d-block w-100"
+                                 src="data:image/png;base64,<%=multimediaBean.getFotoString().get(0)%>"
+                                 alt="First slide">
                         </div>
-                        <%for(int i=1;i<multimediaBean.getFotoString().size() && i<=2;i++){%>
+                        <%for (int i = 1; i < multimediaBean.getFotoString().size() && i <= 2; i++) {%>
                         <div class="carousel-item">
-                            <img class="d-block w-100" src="data:image/png;base64,<%=multimediaBean.getFotoString().get(i)%>">
+                            <img class="d-block w-100"
+                                 src="data:image/png;base64,<%=multimediaBean.getFotoString().get(i)%>">
                         </div>
                         <%}%>
                     </div>
@@ -637,7 +651,7 @@
                                         <div id="floor" class="floor_plan_content" style="display: block;">
                                             <div>
                                                 <a href="">
-
+                                                    <img src=data:image/png;base64,<%=multimediaBean.getPlanimetriaString()%>">
                                                 </a>
                                             </div>
                                         </div>
@@ -652,9 +666,12 @@
                                 </video>
                             </div>
                             <div class="property_map">
-                                <input type="hidden" name="indirizzoAppartamento" value="<%=indirizzoBean.getCitta()+", "+indirizzoBean.getProvincia()+", "+ indirizzoBean.getNumeroCivico()%>">
+                                <input type="hidden" name="indirizzoAppartamento"
+                                       value="<%=indirizzoBean.getCitta()+", "+indirizzoBean.getProvincia()+", "+ indirizzoBean.getNumeroCivico()%>">
                                 <h4 class="property_heading_h4">Mappa</h4>
-                                <iframe allowfullscreen frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCghlu8qhmsmptec4eSidg5APpA57lCPlU&q=<%=indirizzoBean.getVia()+"+"+indirizzoBean.getProvincia()+"+"+indirizzoBean.getNumeroCivico()%>&zoom=17" width="100%" height="450"></iframe>
+                                <iframe allowfullscreen frameborder="0" loading="lazy"
+                                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCghlu8qhmsmptec4eSidg5APpA57lCPlU&q=<%=indirizzoBean.getVia()+"+"+indirizzoBean.getProvincia()+"+"+indirizzoBean.getNumeroCivico()%>&zoom=17"
+                                        width="100%" height="450"></iframe>
                             </div>
                         </div>
 
@@ -712,7 +729,8 @@
                                         <div class="privacy_agreement">
                                             <span class="privacy_checkboxLabel">Consenso sulla privacy</span>
                                             <input type="checkbox">
-                                            <label>I consent to having this website store my submitted information so they
+                                            <label>I consent to having this website store my submitted information so
+                                                they
                                                 can respond to my inquiry.</label>
                                         </div>
                                         <div class="agent_call">
@@ -736,79 +754,58 @@
                             </section>
                             <section class="widget">
                                 <h3 class="title">Immobile in evidenza</h3>
-                                <%
-                                    int i = 0;
-                                    for (AppartamentoBean appartamentoBean : array) {
-                                        if (appartamentoBean.getIdAgente() == agenteBean.getIdAgente()) {
-                                            i++;%>
                                 <article class="featured_card featured_card_block">
                                     <div class="featured_card_wrap">
                                         <figure class="featured_card_figure">
                                             <div class="featured_card_picture">
-                                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
-                                                    <%
-                                                        int p = 0;
-                                                        for (MultimediaBean multimediaBean1 : allMulti) {
-                                                            if (multimediaBean1.getIdAppartamento() == appartamentoBean.getIdAppartamento()) {
-                                                                i++;
-                                                    %><img width="680" height="510" src="data:image/png;base64,<%=multimediaBean1.getFotoString().get(0)%>"><%
-                                                        }
-                                                        if(p!=0) break;
-                                                    }
-                                                %>
+                                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>">
+                                                    <img width="680" height="510"
+                                                         src="data:image/png;base64,<%=visualizzazioneImmobile.getFoto()%>">
                                                 </a>
                                             </div>
                                         </figure>
                                         <div class="featured_card_details">
                                             <h3>
-                                                <a href=""><%=appartamentoBean.getNomeAppartamento()%></a>
+                                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>"><%=visualizzazioneImmobile.getNomeAppartamento()%>
+                                                </a>
                                             </h3>
-                                            <p class="featured_card_description"><%if (appartamentoBean.getDescrizioneAppartamento().length() > 30) {
-                                            %><%=appartamentoBean.getDescrizioneAppartamento().substring(0, 30) + ".."%><%
-                                            } else {
-                                            %><%=appartamentoBean.getDescrizioneAppartamento()%><%
-                                                }%> </p>
+                                            <p class="featured_card_description"><%=visualizzazioneImmobile.getDescrizioneAppartamento()%>
+                                            </p>
                                             <div class="featured_card_features_wrap">
                                                 <div class="featured_card_feature">
                                                     <span class="features_title">Camere da letto</span>
                                                     <div>
                                                         <i class="feature_icon icon-bed"></i>
-                                                        <span class="text_feature"><%=appartamentoBean.getCamereLetto()%></span>
+                                                        <span class="text_feature"><%=visualizzazioneImmobile.getCamereLetto()%></span>
                                                     </div>
                                                 </div>
                                                 <div class="featured_card_feature">
                                                     <span class="features_title">Bagni</span>
                                                     <div>
                                                         <i class="feature_icon icon-shower"></i>
-                                                        <span class="text_feature"><%=appartamentoBean.getBagni()%></span>
+                                                        <span class="text_feature"><%=visualizzazioneImmobile.getBagni()%></span>
                                                     </div>
                                                 </div>
                                                 <div class="featured_card_feature">
                                                     <span class="features_title">Superficie</span>
                                                     <div>
                                                         <i class="feature_icon icon-crop_square"></i>
-                                                        <span class="text_feature"><%=appartamentoBean.getSuperficie()%></span>
+                                                        <span class="text_feature"><%=visualizzazioneImmobile.getSuperficie()%></span>
                                                         <span class="text_add">mq</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="featured_card_priceLabel">
                                                 <div class="featured_card_price">
-                                                    <span class="status"><%=appartamentoBean.getTipoVendita()%></span>
-                                                    <p class="price">€<%=appartamentoBean.getPrezzo()%></p>
+                                                    <span class="status"><%=visualizzazioneImmobile.getTipoVendita()%></span>
+                                                    <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
                                 </article>
-                                <%
-                                        }
-                                        if (i != 0) {
-                                            break;
-                                        }
-                                    }
-                                %>
                             </section>
                         </aside>
                     </div>
@@ -816,11 +813,12 @@
             </div>
         </div>
     </section>
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="footer.jsp"/>
 </div>
 
 
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDjdvGlwSrEXd5rBJNTvPCtmACuc29-HiU"></script>
+<script type="text/javascript"
+        src="https://maps.google.com/maps/api/js?key=AIzaSyDjdvGlwSrEXd5rBJNTvPCtmACuc29-HiU"></script>
 <script src="script/index.js"></script>
 
 <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
@@ -849,7 +847,7 @@
         if (geocoder) {
             geocoder.geocode({
                 'address': address
-            }, function(results, status) {
+            }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
                         map.setCenter(results[0].geometry.location);
@@ -864,7 +862,7 @@
                             map: map,
                             title: address
                         });
-                        google.maps.event.addListener(marker, 'click', function() {
+                        google.maps.event.addListener(marker, 'click', function () {
                             infowindow.open(map, marker);
                         });
 
@@ -877,6 +875,7 @@
             });
         }
     }
+
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
