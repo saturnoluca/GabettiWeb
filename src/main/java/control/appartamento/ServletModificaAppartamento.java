@@ -1,5 +1,7 @@
 package control.appartamento;
 
+import UtilityClass.VisualizzazioneImmobile;
+import UtilityClass.VisualizzazioneMultimedia;
 import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
@@ -84,24 +86,22 @@ public class ServletModificaAppartamento extends HttpServlet {
         indirizzoBean.setIdAppartamento(bean.getIdAppartamento());
 
         indirizzoModelDM.doUpdate(indirizzoBean);
-        ArrayList<MultimediaBean> listaFoto = new ArrayList<MultimediaBean>();
-        MultimediaBean multimedia = new MultimediaBean();
-
+        ArrayList<VisualizzazioneMultimedia> listaFoto = new ArrayList<VisualizzazioneMultimedia>();
+        ArrayList<VisualizzazioneMultimedia> multimedia = new ArrayList<VisualizzazioneMultimedia>();
         try {
-            ArrayList<AppartamentoBean> appartamentoBeans = new ArrayList<AppartamentoBean>();
-            appartamentoBeans.add(bean);
-            listaFoto = multimediaModelDM.RetrieveAll(appartamentoBeans);
-            for(MultimediaBean foto: listaFoto){
-                if(bean.getIdAppartamento() == foto.getIdAppartamento() && foto.getFotoString() != null){
-                    multimedia.setIdMultimedia(foto.getIdMultimedia());
-                    multimedia.setIdAppartamento(foto.getIdAppartamento());
-                    multimedia.setFotoString(foto.getFotoString());
+            listaFoto = multimediaModelDM.doRetrieveVisualizzazioneMultimedia(bean.getIdAppartamento());
+            for(int i=0; i<listaFoto.size(); i++){
+                if(listaFoto.get(i).fotoString != null){
+                    multimedia.add(listaFoto.get(0));
                 }
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        request.setAttribute("lista-foto",multimedia);
+        request.setAttribute("idAppartamento",bean.getIdAppartamento());
+        request.setAttribute("lista-foto",listaFoto);
         RequestDispatcher rd = request.getRequestDispatcher("modifica-immobile-galleria.jsp");
         rd.forward(request, response);
 
