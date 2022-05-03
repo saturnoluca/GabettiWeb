@@ -436,6 +436,7 @@ input{
   position: relative;
   display: flex;
   flex-direction: column;
+  height: 220px;
 }
 
 .property_tags_bot{
@@ -455,7 +456,8 @@ input{
 }
 
 .agent_wrapper .agent_list .agent_image{
-  width: 50px;
+  width: 60px;
+  height: 60px;
   display: inline;
   border: 3px solid #fff;
   border-radius: 50px;
@@ -468,8 +470,9 @@ input{
 .agent_wrapper .agent_list .agent_image img{
   width: 100%;
   max-width: none;
-  height: auto;
+  height: 100%;
   border: none;
+  object-fit: cover;
 
 }
 
@@ -897,10 +900,11 @@ h3.property_heading a{
 }
 
 .agent_content_picture img{
-  height: auto;
+  height: 128px;
   max-width: 100%;
   border: none;
   vertical-align: bottom;
+  object-fit: cover;
 }
 
 .agent_content_details{
