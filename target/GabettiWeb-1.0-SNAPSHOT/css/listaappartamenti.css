@@ -582,7 +582,8 @@
 .agent_picture img{
     border-radius: 100%;
     max-width: 100%;
-    height: auto;
+    height: 90px;
+    object-fit: cover;
     transition: all .3s ease-in-out;
 }
 

@@ -401,11 +401,10 @@
                                 <span>Compila questi campi per scoprire quanto vale la tua casa!</span>
                             </p>
                         </div>
-                        <form action="ServletMail" method="post">
-                            <input type="hidden" name="action" value="valutazione">
                             <div class="div_valutazione_form">
                             <section class="section_valutazione_form">
-                                <form class="valutazione_form">
+                                <form action="ServletMail" class="valutazione_form">
+                                    <input type="hidden" name="action" value="valutazione">
                                     <div class="valutazione_form_field half_size">
                                         <label>Indirizzo</label>
                                         <input type="text"
@@ -548,7 +547,6 @@
                                 </form>
                             </section>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>

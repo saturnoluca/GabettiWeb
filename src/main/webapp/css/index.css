@@ -397,6 +397,22 @@ input{
   position: relative;
   max-width: 1240px;
 }
+@media(max-width: 1450px){
+  .properties_list_container{
+    max-width: 1240px;
+  }
+}
+@media(min-width: 400px)  and (max-width: 1449px){
+  .properties_list_container{
+    max-width: 400px;
+  }
+}
+
+@media(min-width: 1023px) and (max-width:1139px){
+  .wrap{
+    margin-top: 70px;
+  }
+}
 
 .properties_list_row{
   width: 100%;
