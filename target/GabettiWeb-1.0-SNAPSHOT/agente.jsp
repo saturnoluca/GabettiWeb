@@ -694,8 +694,8 @@
                     <h3 class="title">Proprietà in evidenza</h3>
                     <%
                         boolean p = false;
-                        for (int i = 0; i < 1; i++) {
-                            if (inEvidenza.get(0).getIdAgente() == agenteBean.getIdAgente()) {
+                        for (int i = 0; i < inEvidenza.size(); i++) {
+                            if (inEvidenza.get(i).getIdAgente() == agenteBean.getIdAgente()) {
                     %>
                     <article class="featured_card featured_card_block">
                         <div class="featured_card_wrap">
@@ -703,7 +703,7 @@
                                 <div class="featured_card_picture">
                                     <%
                                         for (MultimediaBean multi : arrayMultimedia) {
-                                            if (multi.getIdAppartamento() == inEvidenza.get(0).getIdAppartamento() && multi.getFotoString() != null && !p) {
+                                            if (multi.getIdAppartamento() == inEvidenza.get(i).getIdAppartamento() && multi.getFotoString() != null && !p) {
                                     %><a href="">
                                     <img width="680" height="510"
                                          src="data:image/png;base64,<%=multi.getFotoString().get(0)%>">
@@ -757,7 +757,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </article>
                     <%
