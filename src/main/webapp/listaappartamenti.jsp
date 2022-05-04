@@ -435,8 +435,7 @@
                                     for (MultimediaBean multi : multimediaBeans) {
                                         if (multi.getIdAppartamento() == appartamentoBean.getIdAppartamento() && multi.getFotoString()!=null) {
                                 %>
-                                    <a href="
-">
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
                                         <img src="data:image/png;base64,<%=multi.getFotoString().get(0)%>" style="width:100%">
                                     </a>
                                 <%
@@ -554,7 +553,7 @@
                         <div class="featured_card_wrap">
                             <figure class="featured_card_figure">
                                 <div class="featured_card_picture">
-                                    <a href="">
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>">
                                         <img width="680" height="510"
                                              src="data:image/png;base64,<%=visualizzazioneImmobile.getFoto()%>">
                                     </a>
@@ -562,7 +561,7 @@
                             </figure>
                             <div class="featured_card_details">
                                 <h3>
-                                    <a href=""><%=visualizzazioneImmobile.getNomeAppartamento()%>
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>"><%=visualizzazioneImmobile.getNomeAppartamento()%>
                                     </a>
                                 </h3>
                                 <p class="featured_card_description"><%=visualizzazioneImmobile.getDescrizioneAppartamento()%>

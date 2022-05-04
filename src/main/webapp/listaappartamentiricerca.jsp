@@ -434,7 +434,7 @@
                     <div class="list_card_wrap">
                         <figure class="list_card_picture">
                             <div class="figure_property">
-                                <a href="">
+                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
                                     <div class="post_picture"
                                          style="background:url(images/prova.jpg) 50% 50% no-repeat; background-size: cover;"></div>
                                 </a>
@@ -443,7 +443,7 @@
                         <div class="list_card_details_wrap">
                             <div class="list_card_details">
                                 <h3>
-                                    <a href=""><%=appartamentoBean.getNomeAppartamento()%>
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>"><%=appartamentoBean.getNomeAppartamento()%>
                                     </a>
                                 </h3>
                                 <p class="list_card_description"><%
