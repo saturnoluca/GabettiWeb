@@ -630,7 +630,7 @@
                             %>
                                 <div class="overlay_property"></div>
                                 <div class="overlay_contents overlay_fadeIn_bottom">
-                                    <a href="">Visualizza Proprietà</a>
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=arrayAppartamento.get(i).getIdAppartamento()%>">Visualizza Proprietà</a>
                                 </div>
                             </div>
                         </figure>
@@ -693,9 +693,10 @@
                 <section class="widget">
                     <h3 class="title">Proprietà in evidenza</h3>
                     <%
+                        int k=0;
                         boolean p = false;
                         for (int i = 0; i < inEvidenza.size(); i++) {
-                            if (inEvidenza.get(i).getIdAgente() == agenteBean.getIdAgente()) {
+                            if (inEvidenza.get(i).getIdAgente() == agenteBean.getIdAgente() && k==0) {
                     %>
                     <article class="featured_card featured_card_block">
                         <div class="featured_card_wrap">
@@ -704,7 +705,7 @@
                                     <%
                                         for (MultimediaBean multi : arrayMultimedia) {
                                             if (multi.getIdAppartamento() == inEvidenza.get(i).getIdAppartamento() && multi.getFotoString() != null && !p) {
-                                    %><a href="">
+                                    %><a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=inEvidenza.get(i).getIdAppartamento()%>">
                                     <img width="680" height="510"
                                          src="data:image/png;base64,<%=multi.getFotoString().get(0)%>">
                                 </a><%
@@ -716,43 +717,43 @@
                             </figure>
                             <div class="featured_card_details">
                                 <h3>
-                                    <a href=""><%=inEvidenza.get(0).getNomeAppartamento()%>
+                                    <a href=""><%=inEvidenza.get(i).getNomeAppartamento()%>
                                     </a>
                                 </h3>
                                 <p class="featured_card_description"><%
-                                    if (inEvidenza.get(0).getDescrizioneAppartamento().length() > 30) {
-                                %><%=inEvidenza.get(0).getDescrizioneAppartamento().substring(0, 30) + ".."%><%
+                                    if (inEvidenza.get(i).getDescrizioneAppartamento().length() > 30) {
+                                %><%=inEvidenza.get(i).getDescrizioneAppartamento().substring(0, 30) + ".."%><%
                                 } else {
-                                %><%=inEvidenza.get(0).getDescrizioneAppartamento()%><%
+                                %><%=inEvidenza.get(i).getDescrizioneAppartamento()%><%
                                     }%></p>
                                 <div class="featured_card_features_wrap">
                                     <div class="featured_card_feature">
                                         <span class="features_title">Camere da letto</span>
                                         <div>
                                             <i class="feature_icon icon-bed"></i>
-                                            <span class="text"><%=inEvidenza.get(0).getCamereLetto()%></span>
+                                            <span class="text"><%=inEvidenza.get(i).getCamereLetto()%></span>
                                         </div>
                                     </div>
                                     <div class="featured_card_feature">
                                         <span class="features_title">Bagni</span>
                                         <div>
                                             <i class="feature_icon icon-shower"></i>
-                                            <span class="text"><%=inEvidenza.get(0).getBagni()%></span>
+                                            <span class="text"><%=inEvidenza.get(i).getBagni()%></span>
                                         </div>
                                     </div>
                                     <div class="featured_card_feature">
                                         <span class="features_title">Superficie</span>
                                         <div>
                                             <i class="feature_icon icon-crop_square"></i>
-                                            <span class="text"><%=inEvidenza.get(0).getSuperficie()%></span>
+                                            <span class="text"><%=inEvidenza.get(i).getSuperficie()%></span>
                                             <span class=>mq</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="featured_card_priceLabel">
                                     <div class="featured_card_price">
-                                        <span class="status"><%=inEvidenza.get(0).getTipoVendita()%></span>
-                                        <p class="price">€<%=inEvidenza.get(0).getPrezzo()%>
+                                        <span class="status"><%=inEvidenza.get(i).getTipoVendita()%></span>
+                                        <p class="price">€<%=inEvidenza.get(i).getPrezzo()%>
                                         </p>
                                     </div>
                                 </div>
@@ -761,6 +762,7 @@
                     </article>
                     <%
                             }
+                            k++;
                         }%>
                 </section>
             </aside>
