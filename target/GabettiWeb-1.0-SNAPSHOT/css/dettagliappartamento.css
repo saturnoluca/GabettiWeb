@@ -933,3 +933,8 @@ body {
 h1{
     color:#f6f6;
 }
+
+.carousel-control-prev, .carousel-control-next {
+    width: 10%;
+    position: absolute !important;
+}

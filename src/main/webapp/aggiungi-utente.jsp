@@ -116,6 +116,10 @@
                                               name="descrizione"></textarea>
                                 </div>
                                 <div class="content_fields_column half_size">
+                                    <label class="label_user_title">Telefono</label>
+                                    <input type="text" placeholder="Inserisci il numero di telefono" name="telefono">
+                                </div>
+                                <div class="content_fields_column half_size">
                                     <label class="label_user_title">Link Facebook</label>
                                     <input type="text" placeholder="Inserisci link profilo facebook" name="facebook">
                                 </div>

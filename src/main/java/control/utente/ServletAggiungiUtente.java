@@ -64,8 +64,7 @@ public class ServletAggiungiUtente extends HttpServlet {
             u = utenteModelDM.RetrieveByEmail(utenteBean.getEmail());
             agenteBean.setIdUtente(u.getIdUtente());
             agenteBean.setDescrizionePersonale(request.getParameter("descrizione"));
-            agenteBean.setTelefonoCellulare("telefonoCellulare");
-            agenteBean.setTelefonoFisso("telefonoFisso");
+            agenteBean.setTelefonoCellulare(request.getParameter("telefono"));
             agenteBean.setLinkFacebook(request.getParameter("facebook"));
             agenteBean.setLinkInstagram(request.getParameter("instagram"));
             agenteModelDM.doSave(agenteBean);
@@ -81,14 +80,16 @@ public class ServletAggiungiUtente extends HttpServlet {
             utenteBean.setCognome(request.getParameter("cognome"));
             utenteBean.setEmail(request.getParameter("email"));
             utenteBean.setUsername(request.getParameter("username"));
-            utenteBean.setPassword(request.getParameter("ruolo"));
+            utenteBean.setPassword(request.getParameter("password"));
             utenteBean.setRuolo(request.getParameter("ruolo"));
             utenteBean.setFoto(request.getPart("foto"));
+            utenteModelDM.doSave(utenteBean);
             u = utenteModelDM.RetrieveByEmail(utenteBean.getEmail());
             agenteBean = agenteModelDM.RetrieveAgenteByIdUtente(Integer.parseInt(request.getParameter("agente")));
             collaboratoreBean.setIdUtente(u.getIdUtente());
             collaboratoreBean.setIdAgente(agenteBean.getIdAgente());
             collaboratoreBean.setDescrizionePersonale(request.getParameter("descrizione"));
+            collaboratoreBean.setTelefonoCellulare(request.getParameter("telefono"));
             collaboratoreBean.setLinkFacebook(request.getParameter("facebook"));
             collaboratoreBean.setLinkInstagram(request.getParameter("instagram"));
             collaboratoreModelDM.doSave(collaboratoreBean);
@@ -97,6 +98,6 @@ public class ServletAggiungiUtente extends HttpServlet {
         }
         request.getSession().removeAttribute("lista-utenti");
         request.getSession().setAttribute("lista-utenti", utenti);
-        response.sendRedirect("aggiungi-utente.jsp");
+        response.sendRedirect("lista-utenti.jsp");
     }
 }

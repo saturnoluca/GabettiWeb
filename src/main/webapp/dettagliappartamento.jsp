@@ -603,13 +603,6 @@
                                     </div>
                                 </div>
                                 <div class="property_feature">
-                                    <span class="feature_title">Anno di costruzione</span>
-                                    <div class="feature_content">
-                                        <i class="icon-calendar"></i>
-                                        <span class="text">2013</span>
-                                    </div>
-                                </div>
-                                <div class="property_feature">
                                     <span class="feature_title">Superficie</span>
                                     <div class="feature_content">
                                         <i class="icon-square-o"></i>

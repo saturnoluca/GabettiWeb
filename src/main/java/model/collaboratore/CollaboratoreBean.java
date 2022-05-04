@@ -79,6 +79,19 @@ public class CollaboratoreBean implements Serializable {
     public void setTelefonoCellulare(String telefonoCellulare) {
         this.telefonoCellulare = telefonoCellulare;
     }
+
+    @Override
+    public String toString() {
+        return "CollaboratoreBean{" +
+                "idCollaboratore=" + idCollaboratore +
+                ", idAgente=" + idAgente +
+                ", idUtente=" + idUtente +
+                ", descrizionePersonale='" + descrizionePersonale + '\'' +
+                ", linkFacebook='" + linkFacebook + '\'' +
+                ", linkInstagram='" + linkInstagram + '\'' +
+                ", telefonoCellulare='" + telefonoCellulare + '\'' +
+                '}';
+    }
 }
 
 

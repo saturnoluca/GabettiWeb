@@ -23,6 +23,7 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
         Connection connection = null;
         PreparedStatement ps = null;
         String insertSql = "INSERT INTO collaboratore(Agente_idAgente, Utente_idUtente, telefonoCellulare, linkFacebook, linkInstagram, descrizionePersonale) VALUES(?, ?, ?, ?, ?, ?)";
+        System.out.println("doSave: " + bean);
         try {
             connection = dmcp.getConnection();
             if (bean instanceof CollaboratoreBean) {
@@ -33,8 +34,8 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
                 ps.setString(4, bean.getLinkFacebook());
                 ps.setString(5, bean.getLinkInstagram());
                 ps.setString(6, bean.getDescrizionePersonale());
+                ps.executeUpdate();
                 connection.commit();
-                System.out.println("doSave: " + bean);
             }
         }catch (SQLException e){
             e.printStackTrace();
