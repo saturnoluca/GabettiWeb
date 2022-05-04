@@ -55,7 +55,6 @@ public class ServletAgentePage extends HttpServlet {
         request.setAttribute("arrayMultimedia", arrayMultimedia);
         request.setAttribute("agenteCase", agenteCase);
         request.setAttribute("inEvidenza", inEvidenza);
-        System.out.println(arrayAppartamento.get(0));
         RequestDispatcher rd = request.getRequestDispatcher("/agente.jsp");
         rd.forward(request, response);
     }

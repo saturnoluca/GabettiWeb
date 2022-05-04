@@ -531,7 +531,7 @@
                     <div class="agent_card_wrap">
                         <div class="agent_card_head">
                             <figure class="agent_card_figure">
-                                <a href="">
+                                <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=u.getIdUtente()%>">
                                     <%if (u.getFotoString() == null) {%>
                                     <img src="images/agente.jpg">
                                     <%} else {%>
@@ -542,7 +542,7 @@
                             </figure>
                             <div class="agent_card_name">
                                 <h4 class="name">
-                                    <a href=""><%=u.getNome() + " " + u.getCognome()%>
+                                    <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=u.getIdUtente()%>"><%=u.getNome() + " " + u.getCognome()%>
                                     </a>
                                 </h4>
                                 <%if (u.getRuolo().equals("Collaboratore")) {%>
