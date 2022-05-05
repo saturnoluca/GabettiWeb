@@ -172,6 +172,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
     public int doSave(AppartamentoBean app) {
         Connection connection = null;
         PreparedStatement ps = null;
+        System.out.println("appartamento da salvare: " + app);
         int key = 0;
         String insertSql = "INSERT into appartamento(nomeAppartamento, descrizioneAppartamento, superficie, locali, bagni, piano, riscaldamento, classeEnergetica, tipoVendita, prezzo, data, Agente_idAgente, categoria, camereLetto, postoAuto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
