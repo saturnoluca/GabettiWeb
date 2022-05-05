@@ -1,5 +1,6 @@
 package control.appartamento;
 
+import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
 import model.indirizzo.IndirizzoBean;
@@ -18,6 +19,7 @@ public class ServletAggiungiAppartamento extends HttpServlet {
 
     private static AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
     private static IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
+    private static AgenteModelDM agenteModelDM = new AgenteModelDM();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,10 +50,11 @@ public class ServletAggiungiAppartamento extends HttpServlet {
         String riscaldamento = request.getParameter("riscaldamento");
         String classeEnergetica = request.getParameter("classeEnergetica");
         int idAgente = Integer.parseInt(request.getParameter("Agente"));
+
         Date date = Date.valueOf(request.getParameter("data"));
 
         AppartamentoBean bean = new AppartamentoBean();
-        bean.setIdAgente(idAgente);
+        bean.setIdAgente(agenteModelDM.RetrieveAgenteByIdUtente(idAgente).getIdAgente());
         bean.setNomeAppartamento(titoloImmobile);
         bean.setDescrizioneAppartamento(descrizione);
         bean.setPrezzo(prezzo);

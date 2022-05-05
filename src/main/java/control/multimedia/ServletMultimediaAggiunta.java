@@ -15,10 +15,6 @@ import java.util.Collection;
 @MultipartConfig
 public class ServletMultimediaAggiunta extends HttpServlet {
     private static MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
