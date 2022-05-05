@@ -29,9 +29,11 @@ public class ServletMultimediaAggiunta extends HttpServlet {
             String modifica = null;
             modifica = request.getParameter("modifica-Img");
             ArrayList<Part> foto = (ArrayList<Part>) request.getParts();
+            for(Part part : foto){
+                System.out.println(part.getSize());
+            }
             MultimediaBean multi = new MultimediaBean();
             multi.setIdAppartamento(idAppartamento);
-            foto.remove(0);
             multi.setFoto(foto);
             try{
                 multimediaModelDM.doSaveFoto(multi);
@@ -46,7 +48,6 @@ public class ServletMultimediaAggiunta extends HttpServlet {
             }
         }else if(azione.equals("video")){
             ArrayList<Part> video = new ArrayList<Part>();
-            System.out.println(request.getPart("video"));
             video.add(request.getPart("video"));
             MultimediaBean multi = new MultimediaBean();
             multi.setIdAppartamento(idAppartamento);

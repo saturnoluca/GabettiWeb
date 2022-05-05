@@ -31,18 +31,19 @@ public class MultimediaModelDM implements MultimediaModel {
         String insertSql = null;
         try {
             if (multi instanceof MultimediaBean) {
-                int i = multi.getFoto().size();
-                if (i > 0) {
+                if (multi.getFoto().size() > 0) {
                     connection = dmcp.getConnection();
-                    for (int k = 1; k < i; k++) {
+                    for (int k = 0; k < multi.getFoto().size(); k++) {
                         insertSql = "INSERT INTO multimedia(foto, Appartamento_idAppartamento) VALUES(?, ?)";
                         ps = connection.prepareStatement(insertSql);
-                        in = multi.getFoto().get(k).getInputStream();
-                        ps.setBlob(1, in);
-                        ps.setInt(2, multi.getIdAppartamento());
-                        System.out.println("doSaveFoto:" + ps.toString());
-                        ps.executeUpdate();
-                        connection.commit();
+                        if(multi.getFoto().get(k).getSize()>1000){
+                            in = multi.getFoto().get(k).getInputStream();
+                            ps.setBlob(1, in);
+                            ps.setInt(2, multi.getIdAppartamento());
+                            System.out.println("doSaveFoto:" + ps.toString());
+                            ps.executeUpdate();
+                            connection.commit();
+                        }
                     }
                 }
             }
@@ -84,12 +85,14 @@ public class MultimediaModelDM implements MultimediaModel {
                     for (int k = 0; k < i; k++) {
                         insertSql = "INSERT INTO multimedia(video, Appartamento_idAppartamento) VALUES(?, ?)";
                         ps = connection.prepareStatement(insertSql);
-                        in = multi.getVideo().get(k).getInputStream();
-                        ps.setBlob(1, in);
-                        ps.setInt(2, multi.getIdAppartamento());
-                        System.out.println("doSaveVideo:" + ps.toString());
-                        ps.executeUpdate();
-                        connection.commit();
+                        if(multi.getFoto().get(k).getSize()>1000) {
+                            in = multi.getVideo().get(k).getInputStream();
+                            ps.setBlob(1, in);
+                            ps.setInt(2, multi.getIdAppartamento());
+                            System.out.println("doSaveVideo:" + ps.toString());
+                            ps.executeUpdate();
+                            connection.commit();
+                        }
                     }
                 }
             }
