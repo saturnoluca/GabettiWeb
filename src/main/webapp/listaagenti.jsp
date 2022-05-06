@@ -54,6 +54,7 @@
     ArrayList<MultimediaBean> multimediaBeans = (ArrayList<MultimediaBean>) request.getAttribute("multimedia");
 %>
 <body>
+<%@ include file="loader.html"%>
 <nav id="navbar">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">
@@ -546,20 +547,19 @@
                                     </a>
                                 </h4>
                                 <%if (u.getRuolo().equals("Collaboratore")) {%>
-                                <h4 class="name">
-                                    Collaboratore associato all'agente:<a href=""><%
+                                <div class="collaboratore">Collaboratore associato all'agente:<a href=""><%
                                     for (CollaboratoreBean c : collaboratoreBeans) {
                                         for (CompositeKeyAgenteCase agenteCase : agenteBeans) {
                                             if (c.getIdAgente() == agenteCase.getBean().getIdAgente()) {
                                                 for (UtenteBean utente : utenteBeans) {
                                                     if (utente.getIdUtente() == agenteCase.getBean().getIdUtente()) {
-                                %><%=utente.getNome() + " " + utente.getCognome()%><%
+                                %><%=" " +utente.getNome() + " " + utente.getCognome()%><%
                                                     }
                                                 }
                                             }
                                         }
                                     }%></a>
-                                </h4>
+                                </div>
                                 <%}%>
                             </div>
                             <div class="agent_card_listings">
@@ -578,7 +578,7 @@
                                             for(CompositeKeyAgenteCase ag : agenteBeans){
                                                 if(ag.getBean().getIdAgente()==c.getIdAgente()){
                                                      %>
-                                        <%=ag.getContaCase()%>
+                                                    <%=ag.getContaCase()%>
                                         <%
                                                 }
                                             }

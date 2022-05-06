@@ -372,6 +372,11 @@
     margin-bottom: 20px;
 }
 
+.change_pic a:hover{
+    color: #fff;
+    text-decoration: none;
+}
+
 .change_pic_button{
     position: relative;
     z-index: 1;

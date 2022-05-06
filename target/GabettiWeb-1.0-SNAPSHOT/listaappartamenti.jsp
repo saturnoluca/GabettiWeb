@@ -32,7 +32,10 @@
     <link rel="stylesheet" href="icomoon/style.css">
 
     <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
-
+    <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/jquery.sticky.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
@@ -58,6 +61,7 @@
     int sizeArray = Integer.parseInt(sizeArrayString);
 %>
 <body>
+<%@ include file="loader.html"%>
 <nav id="navbar">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">
@@ -534,10 +538,10 @@
                                     <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
                                     </a>
                                 </h4>
-                                <a href="" class="agent_email"><%=utenteBean.getEmail()%>
+                                <a href="mailto:<%=utenteBean.getEmail()%>" class="agent_email"><%=utenteBean.getEmail()%>
                                 </a>
                                 <div class="agent_number">
-                                    <a href=""><%=arrayComp.get(k).getBean().getTelefonoCellulare()%>
+                                    <a href="tel:+39<%=arrayComp.get(k).getBean().getTelefonoCellulare()%>"><%=arrayComp.get(k).getBean().getTelefonoCellulare()%>
                                     </a>
                                 </div>
                             </div>

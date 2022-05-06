@@ -971,36 +971,3 @@ h3.property_heading a{
 .slick-slide{
   height: auto !important;
 }
-
-#wrapper{
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  place-items: center;
-  background: #000000;
-
-}
-
-#loader{
-  width: 40px;
-  height: 40px;
-  border: 2px solid;
-  border-color: crimson;
-  border-radius: 50%;
-  border-top-color: transparent;
-  animation: loader 1s linear infinite;
-}
-
-@keyframes loader {
-  20% {
-    border-color: purple;
-    border-top-color: transparent;
-  }
-  60% {
-    border-color: orangered;
-    border-top-color: transparent;
-  }
-  100%{
-    transform: rotate(360deg);
-  }
-}

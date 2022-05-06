@@ -106,11 +106,7 @@
     <script type="text/javascript" src="slick/slick/slick.min.js"></script>
 
 </head>
-<div id="wrapper">
-    <div id="loader"></div>
-</div>
-
-
+<%@ include file="loader.html"%>
 <nav id="navbar">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">
@@ -133,7 +129,7 @@
             <div class="wrapper_homepage_sfondo">
                 <div class="wrapper_content">
                     <p class="sfondo_title">Compra o vendi</p>
-                    <h3 class="sfondo_slogan">Vuoi acquistare una nuovo immobile o venderne uno esistente? Gabetti ti
+                    <h3 class="sfondo_slogan">Vuoi acquistare un nuovo immobile o venderne uno esistente? Gabetti ti
                         offre
                         una soluzione fantastica!</h3>
                     <div class="sfondo_choice_button">
@@ -1260,7 +1256,6 @@
         ]
     });
 </script>
-
 
 <script src="script/index.js"></script>
 </body>

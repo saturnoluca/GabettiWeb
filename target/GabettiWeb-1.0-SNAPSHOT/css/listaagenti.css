@@ -3,6 +3,7 @@ body{
     color: #808080;
 }
 
+
 .banner{
     height: 300px;
     background-repeat: no-repeat;
@@ -294,8 +295,27 @@ body{
     margin: 0 0 8px;
 }
 
+.agent_card_wrap .agent_card_head .agent_card_name .collaboratore{
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 0 0 8px;
+}
+
 .agent_card_wrap .agent_card_head .agent_card_name .name a{
     color: #b20135;
+}
+
+.agent_card_wrap .agent_card_head .agent_card_name .name a:hover{
+    text-decoration: none;
+}
+
+.agent_card_wrap .agent_card_head .agent_card_name .collaboratore a{
+    color: #b20135;
+}
+
+.agent_card_wrap .agent_card_head .agent_card_name .collaboratore a:hover{
+    text-decoration: none;
 }
 
 .agent_card_wrap .agent_card_head .social a{

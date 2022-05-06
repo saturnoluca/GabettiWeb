@@ -15,7 +15,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-
+    <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/jquery.sticky.js"></script>
     <link rel="stylesheet" href="icomoon/style.css">
 
     <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
@@ -41,6 +44,7 @@
     ArrayList<String> categorie = (ArrayList<String>) request.getSession().getAttribute("categorie");
 %>
 <body>
+<%@ include file="loader.html"%>
 <nav id="navbar">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">

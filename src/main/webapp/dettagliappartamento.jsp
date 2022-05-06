@@ -34,7 +34,10 @@
     <link rel="stylesheet" href="css/aggiunte.css">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"/>
-
+    <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/jquery.sticky.js"></script>
     <script src="script/dettagliappartamento.js"></script>
 
     <title>Gabetti Nocera | Homepage</title>
@@ -57,6 +60,7 @@
 %>
 
 <body>
+<%@ include file="loader.html"%>
 <nav id="navbar" class="noPrint">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">

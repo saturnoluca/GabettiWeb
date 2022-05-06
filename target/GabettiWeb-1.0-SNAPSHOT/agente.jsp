@@ -43,12 +43,16 @@
     <link rel="stylesheet" href="fonts/icomoon/style.css">
 
     <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
-
+    <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/jquery.sticky.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
 
 <body>
+<%@ include file="loader.html"%>
 <nav id="navbar">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">
