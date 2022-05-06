@@ -78,10 +78,8 @@ public class ServletDettagliAppartamento extends HttpServlet {
             request.setAttribute("visite", array);
             request.setAttribute("allMulti", allMulti);
             request.setAttribute("featured",visualizzazione);
-            System.out.println(multimediaBean.getFotoString().size());
             RequestDispatcher rd = request.getRequestDispatcher("/dettagliappartamento.jsp");
             rd.forward(request, response);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

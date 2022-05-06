@@ -436,13 +436,16 @@
                         <figure class="list_card_picture">
                             <div class="figure_property">
                                 <%
+                                    boolean p=false;
                                     for (MultimediaBean multi : multimediaBeans) {
-                                        if (multi.getIdAppartamento() == appartamentoBean.getIdAppartamento() && multi.getFotoString()!=null) {
+                                        if (multi.getIdAppartamento() == appartamentoBean.getIdAppartamento() && multi.getFotoString()!=null && !p) {
                                 %>
                                     <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
                                         <img src="data:image/png;base64,<%=multi.getFotoString().get(0)%>" style="width:100%">
                                     </a>
                                 <%
+                                            p = true;
+                                            break;
                                         }
                                     }%>
                             </div>
