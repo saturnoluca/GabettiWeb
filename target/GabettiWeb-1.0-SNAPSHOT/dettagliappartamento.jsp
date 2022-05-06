@@ -652,7 +652,7 @@
                                                         if (bean.getIdAppartamento() == appBean.getIdAppartamento() && bean.getPlanimetriaString() != null) {
                                                 %>
                                                 <a href="">
-                                                    <img src=data:image/png;base64,<%=bean.getPlanimetriaString().get(0)%>">
+                                                    <img src="data:image/png;base64,<%=bean.getPlanimetriaString().get(0)%>">
                                                 </a>
                                                 <%
                                                         }
