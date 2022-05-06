@@ -24,10 +24,15 @@ public class ServletMultimediaAggiunta extends HttpServlet {
         if(azione.equals("foto")){
             String modifica = null;
             modifica = request.getParameter("modifica-Img");
-            ArrayList<Part> foto = (ArrayList<Part>) request.getParts();
-            for(Part part : foto){
-                System.out.println(part.getSize());
+            ArrayList<Part> foto = new ArrayList<Part>();
+            for(Part part : request.getParts()){
+                if(part.getContentType() == null) {
+                    continue;
+                }else {
+                    foto.add(part);
+                }
             }
+            System.out.println(foto.size());
             MultimediaBean multi = new MultimediaBean();
             multi.setIdAppartamento(idAppartamento);
             multi.setFoto(foto);

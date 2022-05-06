@@ -85,7 +85,7 @@ public class MultimediaModelDM implements MultimediaModel {
                     for (int k = 0; k < i; k++) {
                         insertSql = "INSERT INTO multimedia(video, Appartamento_idAppartamento) VALUES(?, ?)";
                         ps = connection.prepareStatement(insertSql);
-                        if(multi.getFoto().get(k).getSize()>1000) {
+                        if(multi.getVideo().get(k).getSize()>1000) {
                             in = multi.getVideo().get(k).getInputStream();
                             ps.setBlob(1, in);
                             ps.setInt(2, multi.getIdAppartamento());

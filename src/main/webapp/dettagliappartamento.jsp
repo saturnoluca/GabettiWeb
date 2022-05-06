@@ -60,7 +60,7 @@
 %>
 
 <body>
-<%@ include file="loader.html"%>
+<%@ include file="loader.html" %>
 <nav id="navbar" class="noPrint">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">
@@ -647,9 +647,13 @@
                                         </div>
                                         <div id="floor" class="floor_plan_content" style="display: block;">
                                             <div>
+                                                <%for (MultimediaBean bean : allMulti) {
+                                                    if(bean.getIdAppartamento() == appBean.getIdAppartamento() && bean.getPlanimetriaString() != null){
+                                                %>
                                                 <a href="">
-                                                    <img src=data:image/png;base64,<%=multimediaBean.getPlanimetriaString()%>">
+                                                    <img src=data:image/png;base64,<%=bean.getPlanimetriaString()%>">
                                                 </a>
+                                                <%}}%>
                                             </div>
                                         </div>
                                     </div>
