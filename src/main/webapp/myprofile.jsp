@@ -215,23 +215,34 @@
                                         <label>Link Facebook</label>
                                         <%
                                             if (admin.getRuolo().equals("Agente")) {
+                                                if(agente.getTelefonoCellulare() != null || agente.getTelefonoCellulare().equals("")){
                                         %>
-                                        <input type="text" placeholder="<%=agente.getLinkFacebook()%>"
-                                               name="linkFacebook">
-                                        <%} else {%>
-                                        <input type="text" placeholder="non è un agente">
-                                        <%}%>
+                                                    <input type="text" placeholder="<%=agente.getLinkFacebook()%>" name="linkFacebook">
+                                                <%} else {%>
+                                                    <input type="text" placeholder="Inserisci link Facebook" name="linkFacebook">
+                                        <%}}%>
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Link Instagram</label>
                                         <%
                                             if (admin.getRuolo().equals("Agente")) {
+                                                if(agente.getTelefonoCellulare() != null || agente.getTelefonoCellulare().equals("")){
                                         %>
-                                        <input type="text" placeholder="<%=agente.getLinkInstagram()%>"
-                                               name="linkInstagram">
-                                        <%} else {%>
-                                        <input type="text" placeholder="non è un agente">
-                                        <%}%>
+                                                    <input type="text" placeholder="<%=agente.getLinkInstagram()%>" name="linkInstagram">
+                                                <%} else {%>
+                                                    <input type="text" placeholder="Inserisci link Instagram" name="linkInstagram">
+                                        <%}}%>
+                                    </div>
+                                    <div class="user_field half_size">
+                                        <label>Numero Cellulare</label>
+                                        <%
+                                            if (admin.getRuolo().equals("Agente")) {
+                                                if(agente.getTelefonoCellulare() != null || agente.getTelefonoCellulare().equals("")){
+                                        %>
+                                                    <input type="text" placeholder="<%=agente.getTelefonoCellulare()%>" name="numeroCellulare">
+                                                <%} else {%>
+                                                    <input type="text" placeholder="Inserisci numero di cellulare" name="numeroCellulare">
+                                        <%}}%>
                                     </div>
                                 </div>
                                 <div>

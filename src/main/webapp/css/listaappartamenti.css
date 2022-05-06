@@ -477,6 +477,16 @@
     margin-top: 5px;
 }
 
+.list_card_agent .agent a{
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.list_card_agent .agent a:hover{
+    color: #b20135;
+    text-decoration: none;
+}
+
 .pagination{
     display: flex;
     flex-wrap: wrap;
@@ -777,3 +787,4 @@
     font-size: 22px;
     margin-bottom: 0;
 }
+

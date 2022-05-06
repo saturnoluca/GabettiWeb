@@ -135,7 +135,7 @@ public class AgenteModelDM implements AgenteModel {
     public AgenteBean RetrieveAgenteById(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
-        String selectSql = "SELECT * FROM agente WHERE idAgente=?";
+        String selectSql = "SELECT * FROM agente WHERE Utente_idUtente=?";
         AgenteBean bean = new AgenteBean();
         try {
             connection = dmcp.getConnection();
@@ -211,7 +211,6 @@ public class AgenteModelDM implements AgenteModel {
         PreparedStatement ps = null;
         String updateSql = "UPDATE agente SET linkFacebook=? , linkInstagram=? , telefonoCellulare=? , descrizionePersonale=? WHERE idAgente=?";
         try {
-            System.out.println("SIUM");
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(updateSql);
             ps.setString(1, agenteBean.getLinkFacebook());

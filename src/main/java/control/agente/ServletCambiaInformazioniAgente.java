@@ -42,6 +42,11 @@ public class ServletCambiaInformazioniAgente extends HttpServlet {
         } else {
             agenteBean.setLinkInstagram(request.getParameter("linkInstagram"));
         }
+        if (request.getParameter("numeroCellulare").length() == 0) {
+            agenteBean.setTelefonoCellulare(agenteBean.getTelefonoCellulare());
+        } else {
+            agenteBean.setTelefonoCellulare(request.getParameter("numeroCellulare"));
+        }
         agenteModelDM.doUpdate(agenteBean);
         request.getSession().removeAttribute("agente");
         request.getSession().setAttribute("agente",agenteBean);

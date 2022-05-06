@@ -613,14 +613,27 @@
                                                 if (ag.getBean().getIdUtente() == u.getIdUtente()) {
                                     %> <p class="contact">Cellulare: <a href=""><%=ag.getBean().getTelefonoCellulare()%>
                                 </a></p>
-                                    <a href="https://wa.me/39<%=ag.getBean().getTelefonoCellulare()%>"><p
-                                            class="contact">Whatsapp</p></a>
-                                    <p class="contact">Email: <a href=""><%=u.getEmail()%>
-                                    </a></p><%
-                                        }
-                                    }
-                                %>
-                                    <%}%>
+                                    <p class="contact">
+                                        <a href="https://wa.me/39<%=ag.getBean().getTelefonoCellulare()%>">Whatsapp</a>
+                                    </p>
+                                    <p class="contact">Email:
+                                        <a href=""><%=u.getEmail()%></a>
+                                    </p><%
+                                                }
+                                            }
+                                        }else{
+                                                    for (CollaboratoreBean c : collaboratoreBeans) {
+                                                        if (u.getIdUtente() == c.getIdUtente()) {
+                                                            %>
+                                                            <p class="contact">Cellulare: <a href=""><%=c.getTelefonoCellulare()%></a></p>
+                                                            <p class="contact">
+                                                                <a href="https://wa.me/+39<%=c.getTelefonoCellulare()%>">Whatsapp</a>
+                                                            </p>
+                                                            <p class="contact">Email:
+                                                                <a href="mailto:"><%=u.getEmail()%></a>
+                                                            </p>
+                                                        <%}
+                                                    }}%>
                                 </div>
                                 <%
                                     if (u.getRuolo().equals("Agente")) {

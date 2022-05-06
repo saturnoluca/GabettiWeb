@@ -502,7 +502,7 @@
                                             if (bean.getIdAgente() == appartamentoBean.getIdAgente()) {
                                                 for (UtenteBean utenteBean : utenteArray) {
                                                     if (utenteBean.getIdUtente() == bean.getIdAgente()) {
-                                    %><%=utenteBean.getNome() + " " + utenteBean.getCognome()%><%
+                                    %><a href=""><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></a><%
                                                     }
                                                 }
                                             }
