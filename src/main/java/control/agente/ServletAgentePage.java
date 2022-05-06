@@ -46,7 +46,7 @@ public class ServletAgentePage extends HttpServlet {
         arrayIndirizzo = (ArrayList<IndirizzoBean>) indirizzoModelDM.RetrieveAll();
         arrayMultimedia = multimediaModelDM.RetrieveAllMultimedia();
         agenteCase = (ArrayList<CompositeKeyAgenteCase>) modelAgenti.RetrieveAgenteCase();
-        inEvidenza = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByVisite();
+        inEvidenza = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByVisiteByAgente(agenteBean.getIdAgente());
         //System.out.println(agenteCase);
         request.setAttribute("agente", agenteBean);
         request.setAttribute("utente", utenteBean);

@@ -100,7 +100,7 @@
                         <div class="large_column_wrap">
                             <div class="column column_picture">
                                 <figure>
-                                    <a href="">
+                                    <a>
                                         <%if (bean.getFotoString() == null) {%>
                                         <img src="images/agente.jpg">
                                         <%} else {%>
@@ -113,7 +113,7 @@
                             <div class="column column-info">
                                 <div class="user_info_wrap">
                                     <h3 class="user_title">
-                                        <a href=""><%=bean.getNome() + " " + bean.getCognome()%>
+                                        <a><%=bean.getNome() + " " + bean.getCognome()%>
                                         </a>
                                     </h3>
                                     <p class="user_description">bravo agente</p>
@@ -132,10 +132,12 @@
                             </div>
                             <div class="column column_actions">
                                 <div class="user_actions">
-                                    <a href="">
+                                    <%if(bean.getRuolo().equals("Agente") || bean.getRuolo().equals("Collaboratore")){%>
+                                    <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>">
                                         <i class="icon-eye"></i>
                                         Visualizza
                                     </a>
+                                    <%}%>
                                     <a href="${pageContext.request.contextPath}/ServletControlloModificaUtente?idUtente=<%=bean.getIdUtente()%>">
                                         <i class="icon-mode_edit"></i>
                                         Modifica

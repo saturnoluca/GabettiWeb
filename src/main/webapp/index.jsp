@@ -503,7 +503,7 @@
                                                                                     if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                         for (UtenteBean utenteBean1 : utente) {
                                                                                             if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                            %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                            %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
                                                                                         }
                                                                                     }
                                                                                 }
@@ -515,7 +515,7 @@
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
                                                                                                 if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
+                                                                                %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                             }
                                                                                         }
                                                                                     }
@@ -672,7 +672,7 @@
                                                                                 if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
                                                                                     for (UtenteBean utenteBean1 : utente) {
                                                                                         if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                        %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                        %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
                                                                                     }
                                                                                 }
                                                                             }
@@ -684,7 +684,7 @@
                                                                                     if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
                                                                                         for (UtenteBean utenteBean1 : utente) {
                                                                                             if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                            %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
+                                                                            %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                         }
                                                                                     }
                                                                                 }
@@ -841,7 +841,7 @@
                                                                                 if (bean.getIdAgente() == appartamentiAffitto.get(i).getIdAgente()) {
                                                                                     for (UtenteBean utenteBean1 : utente) {
                                                                                         if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                        %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
+                                                                        %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
                                                                                     }
                                                                                 }
                                                                             }
@@ -853,7 +853,7 @@
                                                                                     if (bean.getIdAgente() == appartamentiAffitto.get(i).getIdAgente()) {
                                                                                         for (UtenteBean utenteBean1 : utente) {
                                                                                             if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
-                                                                            %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdAgente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
+                                                                            %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                         }
                                                                                     }
                                                                                 }
@@ -999,7 +999,7 @@
                                                                                 if (agenteBean.getIdAgente() == agenteCase.get(j).getBean().getIdAgente()) {
                                                                                     for (UtenteBean utenteBean : utente) {
                                                                                         if (agenteBean.getIdUtente() == utenteBean.getIdUtente()
-                                                                                        ) {%><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=agenteCase.get(j).getBean().getIdAgente()%>"><img src="data:image/png;base64,<%=utenteBean.getFotoString()%>"></a>
+                                                                                        ) {%><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=agenteCase.get(j).getBean().getIdUtente()%>"><img src="data:image/png;base64,<%=utenteBean.getFotoString()%>"></a>
                                                                         <%}}}}%>
                                                                     </h3>
                                                                 </div>
@@ -1010,7 +1010,7 @@
                                                                                 if (agenteBean.getIdAgente() == agenteCase.get(j).getBean().getIdAgente()) {
                                                                                     for (UtenteBean utenteBean : utente) {
                                                                                         if (agenteBean.getIdUtente() == utenteBean.getIdUtente()) {%>
-                                                                                            <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=agenteCase.get(j).getBean().getIdAgente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></a><%
+                                                                                            <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=agenteCase.get(j).getBean().getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></a><%
                                                                                         }
                                                                                     }
                                                                                 }

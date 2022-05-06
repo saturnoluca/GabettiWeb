@@ -168,6 +168,41 @@ public class AppartamentoModelDM implements AppartamentoModel {
         return appartamento;
     }
 
+    public Collection<AppartamentoBean> OrderByVisiteByAgente(int id) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
+        String selectSql = "SELECT * FROM appartamento WHERE Agente_idAgente=? ORDER BY appartamento.visualizzazioni DESC "; //restituisce la lista delle case ordinata per visite in modo crescente
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AppartamentoBean bean = new AppartamentoBean();
+                bean.setCamereLetto(rs.getInt("camereLetto"));
+                bean.setCategoria(rs.getString("categoria"));
+                bean.setIdAppartamento(rs.getInt("idAppartamento"));
+                bean.setNomeAppartamento(rs.getString("nomeAppartamento"));
+                bean.setDescrizioneAppartamento(rs.getString("descrizioneAppartamento"));
+                bean.setSuperficie(rs.getFloat("superficie"));
+                bean.setLocali(rs.getString("locali"));
+                bean.setBagni(rs.getString("bagni"));
+                bean.setPiano(rs.getString("piano"));
+                bean.setRiscaldamento(rs.getString("riscaldamento"));
+                bean.setClasseEnergetica(rs.getString("classeEnergetica"));
+                bean.setTipoVendita(rs.getString("tipoVendita"));
+                bean.setPrezzo(rs.getFloat("prezzo"));
+                bean.setData(rs.getDate("data"));
+                bean.setIdAgente(rs.getInt("Agente_idAgente"));
+                bean.setPostoAuto(rs.getInt("postoAuto"));
+                appartamento.add(bean);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return appartamento;
+    }
     @Override
     public int doSave(AppartamentoBean app) {
         Connection connection = null;

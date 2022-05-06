@@ -27,7 +27,6 @@ public class ServletCambiaInformazioniPersonali extends HttpServlet {
         ArrayList<UtenteBean> listaUtenti = new ArrayList<UtenteBean>();
         int idUtente = Integer.parseInt(request.getParameter(("idUtente")));
         utenteBean = utente.doRetrieveUtenteByKey(idUtente);
-        System.out.println("Vecchio utente " + utenteBean);
         if (request.getParameter("usernameUtente").length() == 0) {
             utenteBean.setUsername(utenteBean.getUsername());
         } else {
@@ -53,9 +52,7 @@ public class ServletCambiaInformazioniPersonali extends HttpServlet {
         } else {
             utenteBean.setPassword(request.getParameter("passwordUtente"));
         }
-        System.out.println("Nuovo utente " + utenteBean);
         utente.doUpdateInformazioniUtente(utenteBean);
-        System.out.println("Check email " + utente.RetrieveByEmail(utenteBean.getEmail()));
         listaUtenti = (ArrayList<UtenteBean>) utente.doRetrieveAll();
 
         request.getSession().removeAttribute("lista-utenti");

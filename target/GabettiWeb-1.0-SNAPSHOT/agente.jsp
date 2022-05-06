@@ -543,9 +543,12 @@
                                 </div>
                             </div>
                             <div class="social">
-                                <a href=""><i class="icon_social icon-facebook"></i></a>
-                                <a href=""><i class="icon_social icon-twitter"></i></a>
-                                <a href=""><i class="icon_social icon-instagram"></i></a>
+                                <%if(agenteBean.getLinkFacebook()!= null){%>
+                                    <a href=""><i class="icon_social icon-facebook"></i></a>
+                                <%}%>
+                                <%if(agenteBean.getLinkInstagram()!= null){%>
+                                    <a href=""><i class="icon_social icon-instagram"></i></a>
+                                <%}%>
                             </div>
                         </div>
                         <div class="agent_profile_content">
@@ -559,7 +562,7 @@
                                     <p class="contact">Cellulare: <a href=""><%=agenteBean.getTelefonoCellulare()%>
                                     </a></p>
                                     </a></p>
-                                    <p class="contact">Whatsapp: <a
+                                    <p class="contact"><a
                                             href="https://wa.me/39<%=agenteBean.getTelefonoCellulare()%>">Chatta su
                                         whatsapp</a></p>
                                     <p class="contact">Email: <a href=""><%=utenteBean.getEmail()%>
@@ -594,9 +597,7 @@
                             Consenso sulla privacy
                           </span>
                                         <input type="checkbox">
-                                        <label>I consent to having this website store my submitted information so they
-                                            can
-                                            respond to my inquiry.</label>
+                                        <label>Acconsento che questo sito Web memorizzi le informazioni inviate in modo che possano rispondere alla mia richiesta.</label>
                                     </div>
                                     <div class="agent_form_submit">
                                         <input type="submit" class="submit_button" value="Invia Messaggio">
@@ -695,12 +696,13 @@
         <div class="page_right page_sidebar">
             <aside class="featured_sidebar">
                 <section class="widget">
-                    <h3 class="title">Proprietà in evidenza</h3>
+                    <%if(inEvidenza.size() != 0){%>
+                        <h3 class="title">Proprietà in evidenza</h3>
+                    <%}%>
                     <%
                         int k=0;
                         boolean p = false;
-                        for (int i = 0; i < inEvidenza.size(); i++) {
-                            if (inEvidenza.get(i).getIdAgente() == agenteBean.getIdAgente() && k==0) {
+                        for (int i = 0; i < 1; i++) {
                     %>
                     <article class="featured_card featured_card_block">
                         <div class="featured_card_wrap">
@@ -764,10 +766,7 @@
                             </div>
                         </div>
                     </article>
-                    <%
-                            }
-                            k++;
-                        }%>
+                    <%}%>
                 </section>
             </aside>
         </div>
