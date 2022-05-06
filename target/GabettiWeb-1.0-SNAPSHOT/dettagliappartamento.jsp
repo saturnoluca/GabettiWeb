@@ -647,13 +647,17 @@
                                         </div>
                                         <div id="floor" class="floor_plan_content" style="display: block;">
                                             <div>
-                                                <%for (MultimediaBean bean : allMulti) {
-                                                    if(bean.getIdAppartamento() == appBean.getIdAppartamento() && bean.getPlanimetriaString() != null){
+                                                <%
+                                                    for (MultimediaBean bean : allMulti) {
+                                                        if (bean.getIdAppartamento() == appBean.getIdAppartamento() && bean.getPlanimetriaString() != null) {
                                                 %>
                                                 <a href="">
-                                                    <img src=data:image/png;base64,<%=bean.getPlanimetriaString()%>">
+                                                    <img src=data:image/png;base64,<%=bean.getPlanimetriaString().get(0)%>">
                                                 </a>
-                                                <%}}%>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
                                             </div>
                                         </div>
                                     </div>
