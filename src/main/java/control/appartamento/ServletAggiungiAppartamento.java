@@ -3,6 +3,9 @@ package control.appartamento;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.collaboratore.CollaboratoreBean;
+import model.collaboratore.CollaboratoreModel;
+import model.collaboratore.CollaboratoreModelDM;
 import model.indirizzo.IndirizzoBean;
 import model.indirizzo.IndirizzoModelDM;
 
@@ -20,6 +23,7 @@ public class ServletAggiungiAppartamento extends HttpServlet {
     private static AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
     private static IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
     private static AgenteModelDM agenteModelDM = new AgenteModelDM();
+    private static CollaboratoreModel collabModelDM = new CollaboratoreModelDM();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,6 +32,7 @@ public class ServletAggiungiAppartamento extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        CollaboratoreBean collab = new CollaboratoreBean();
         int key = 0;
         String ruolo = request.getParameter("ruolo");
         String titoloImmobile = request.getParameter("titoloImmobile");
@@ -50,7 +55,19 @@ public class ServletAggiungiAppartamento extends HttpServlet {
         int camereLetto = Integer.parseInt(request.getParameter("camereLetto"));
         String riscaldamento = request.getParameter("riscaldamento");
         String classeEnergetica = request.getParameter("classeEnergetica");
-        int idAgente = Integer.parseInt(request.getParameter("Agente"));
+        int idAgente = 0;
+        if (request.getParameter("Agente") != null) {
+            idAgente = Integer.parseInt(request.getParameter("Agente"));
+        } else {
+            idAgente = Integer.parseInt(request.getParameter("AgenteCollab"));
+            try {
+                collab = collabModelDM.RetrieveCollaboratore(idAgente);
+                idAgente = collab.getIdAgente();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         Date date = Date.valueOf(request.getParameter("data"));
 
@@ -59,10 +76,9 @@ public class ServletAggiungiAppartamento extends HttpServlet {
         bean.setNomeAppartamento(titoloImmobile);
         bean.setDescrizioneAppartamento(descrizione);
         bean.setPrezzo(prezzo);
-        if(visualizzazionePrezzo.equals("Si")){
+        if (visualizzazionePrezzo.equals("Si")) {
             bean.setVisualizzaPrezzo(1);
-        }
-        else if(visualizzazionePrezzo.equals("No")){
+        } else if (visualizzazionePrezzo.equals("No")) {
             bean.setVisualizzaPrezzo(0);
         }
         bean.setTipoVendita(statoAppartamento);

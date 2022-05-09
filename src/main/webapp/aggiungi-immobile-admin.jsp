@@ -33,7 +33,7 @@
 
 <%
     UtenteBean admin = (UtenteBean) session.getAttribute("utente");
-    if (admin == null || !admin.getRuolo().equals("Admin")) {
+    if (admin == null) {
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
@@ -46,7 +46,7 @@
 
 %>
 <body>
-<jsp:include page="sidebar.jsp" />
+<jsp:include page="sidebar.jsp"/>
 <section class="home-section">
     <div class="div_addProperty_page">
         <div class="addProperty_page_head">
@@ -192,6 +192,12 @@
                                     <input type="text" required placeholder="Inserisci la classe energetica"
                                            name="classeEnergetica">
                                 </div>
+                                <%
+                                    if (admin.getRuolo().equals("Agente")) {
+                                %><input type="hidden" name="Agente" value="<%=admin.getIdUtente()%>"><%
+                            } else if (admin.getRuolo().equals("Collaboratore")) {
+                            %><input type="hidden" name="AgenteCollab" value="<%=admin.getIdUtente()%>"><%
+                            } else {%>
                                 <div class="content_fields_column half_size">
                                     <label class="label_property_title">Agente</label>
                                     <select name="Agente">
@@ -209,6 +215,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <%}%>
                         </div>
                         <div class="div_button_submit">
                             <input type="submit" value="Aggiungi immobile">
@@ -368,13 +375,13 @@
 </script>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         var today = new Date();
-        var month = today.getMonth()+1;
-        if(month<10){
-            month='0'+month;
+        var month = today.getMonth() + 1;
+        if (month < 10) {
+            month = '0' + month;
         }
-        var date = today.getFullYear()+'-'+month+'-'+today.getDate();
+        var date = today.getFullYear() + '-' + month + '-' + today.getDate();
         $("#data").val(date);
     });
 
@@ -411,7 +418,7 @@
 
     function getDate() {
         var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         return date;
     }
 

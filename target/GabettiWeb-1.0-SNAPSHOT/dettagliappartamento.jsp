@@ -429,6 +429,10 @@
                                     </p>
                                 </div>
                                 <div class="property_functions">
+                                    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus.">
+                                        Popover on bottom
+                                    </button>
                                     <a href="">
                                         <i class="icon-share"></i>
                                     </a>
