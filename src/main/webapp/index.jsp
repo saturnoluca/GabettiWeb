@@ -120,7 +120,7 @@
         <li><a href="listaappartamenti.jsp">Lista Immobili</a></li>
         <li><a href="valutazione.jsp">Valutazione Immobile</a></li>
         <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
-        <li><a href="contact.html">Contattaci</a></li>
+        <li><a href="contact.jsp">Contattaci</a></li>
     </ul>
 </nav>
 <div class="content">
@@ -396,44 +396,6 @@
                                 </div>
                             </div>
                             <div class="search_option search_select search_beds">
-                                <label>Agenti</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliAgente()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_agente" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="agente_immobile" id="agente_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <div id="selezionaAgente" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaAgente(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaAgente(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaAgente(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="search_option search_select search_beds">
                                 <label>Superificie minima (mq)</label>
                                 <input name="minSuperficie_immobile" type="text" placeholder="Qualsiasi">
                             </div>
@@ -502,7 +464,7 @@
                                                                                 for (AgenteBean bean : agenti) {
                                                                                     if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                         for (UtenteBean utenteBean1 : utente) {
-                                                                                            if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                            if (utenteBean1.getIdUtente() == bean.getIdUtente()) {
                                                                             %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
                                                                                         }
                                                                                     }
@@ -514,13 +476,13 @@
                                                                                     for (AgenteBean bean : agenti) {
                                                                                         if (bean.getIdAgente() == appartamenti.get(i).getIdAgente()) {
                                                                                             for (UtenteBean utenteBean1 : utente) {
-                                                                                                if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                                if (utenteBean1.getIdUtente() == bean.getIdUtente()) {
                                                                                 %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                             }
                                                                                         }
                                                                                     }
                                                                                 }%>
-                                                                                <a href="contact.html" class="agent_agency">Gabetti Nocera Inferiore</a>
+                                                                                <a href="contact.jsp" class="agent_agency">Gabetti Nocera Inferiore</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -604,9 +566,15 @@
                                                                 <div class="property_price">
                                                                     <div class="property_price_box">
                                                                         <span class="property_card_status"><%=appartamenti.get(i).getTipoVendita()%></span>
+                                                                        <%if(appartamenti.get(i).getVisualizzaPrezzo() == 1){%>
                                                                         <p class="property_card_price">
                                                                             €<%=appartamenti.get(i).getPrezzo()%>
                                                                         </p>
+                                                                        <%}else{%>
+                                                                        <p class="property_card_price">
+                                                                            Contattare l'agente per il prezzo
+                                                                        </p>
+                                                                        <%}%>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -671,7 +639,7 @@
                                                                             for (AgenteBean bean : agenti) {
                                                                                 if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
                                                                                     for (UtenteBean utenteBean1 : utente) {
-                                                                                        if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                        if (utenteBean1.getIdUtente() == bean.getIdUtente()) {
                                                                         %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
                                                                                     }
                                                                                 }
@@ -683,13 +651,13 @@
                                                                                 for (AgenteBean bean : agenti) {
                                                                                     if (bean.getIdAgente() == appartamentiVendita.get(i).getIdAgente()) {
                                                                                         for (UtenteBean utenteBean1 : utente) {
-                                                                                            if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                            if (utenteBean1.getIdUtente() == bean.getIdUtente()) {
                                                                             %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             }%>
-                                                                            <a href="contact.html" class="agent_agency">Gabetti Nocera Inferiore</a>
+                                                                            <a href="contact.jsp" class="agent_agency">Gabetti Nocera Inferiore</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -773,9 +741,15 @@
                                                             <div class="property_price">
                                                                 <div class="property_price_box">
                                                                     <span class="property_card_status"><%=appartamentiVendita.get(i).getTipoVendita()%></span>
+                                                                    <%if(appartamentiVendita.get(i).getVisualizzaPrezzo() == 1){%>
                                                                     <p class="property_card_price">
                                                                         €<%=appartamentiVendita.get(i).getPrezzo()%>
                                                                     </p>
+                                                                    <%}else{%>
+                                                                    <p class="property_card_price">
+                                                                        Contattare l'agente per il prezzo
+                                                                    </p>
+                                                                    <%}%>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -788,13 +762,11 @@
                                     </div>
                                     <div class="pagination_wrapper">
                                         <div class="pagination">
-                                            <a
-                                                    class="btn_real prevSale" >
+                                            <a class="btn_real prevSale" >
                                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                 <span class="sr-only">Previous</span>
                                             </a>
-                                            <a
-                                                    class="btn_real nextSale">
+                                            <a class="btn_real nextSale">
                                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                 <span class="sr-only">Next</span>
                                             </a>
@@ -840,7 +812,7 @@
                                                                             for (AgenteBean bean : agenti) {
                                                                                 if (bean.getIdAgente() == appartamentiAffitto.get(i).getIdAgente()) {
                                                                                     for (UtenteBean utenteBean1 : utente) {
-                                                                                        if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                        if (utenteBean1.getIdUtente() == bean.getIdUtente()) {
                                                                         %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_image"><img src="data:image/png;base64,<%=utenteBean1.getFotoString()%>"><%
                                                                                     }
                                                                                 }
@@ -852,13 +824,13 @@
                                                                                 for (AgenteBean bean : agenti) {
                                                                                     if (bean.getIdAgente() == appartamentiAffitto.get(i).getIdAgente()) {
                                                                                         for (UtenteBean utenteBean1 : utente) {
-                                                                                            if (utenteBean1.getIdUtente() == bean.getIdAgente()) {
+                                                                                            if (utenteBean1.getIdUtente() == bean.getIdUtente()) {
                                                                             %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>" class="agent_title"><%=utenteBean1.getNome() + " " + utenteBean1.getCognome()%></a><%
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             }%>
-                                                                            <a href="contact.html" class="agent_agency">Gabetti Nocera Inferiore</a>
+                                                                            <a href="contact.jsp" class="agent_agency">Gabetti Nocera Inferiore</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -942,9 +914,15 @@
                                                             <div class="property_price">
                                                                 <div class="property_price_box">
                                                                     <span class="property_card_status"><%=appartamentiAffitto.get(i).getTipoVendita()%></span>
+                                                                    <%if(appartamentiAffitto.get(i).getVisualizzaPrezzo() == 1){%>
                                                                     <p class="property_card_price">
                                                                         €<%=appartamentiAffitto.get(i).getPrezzo()%>
                                                                     </p>
+                                                                    <%}else{%>
+                                                                    <p class="property_card_price">
+                                                                        Contattare l'agente per il prezzo
+                                                                    </p>
+                                                                    <%}%>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -957,13 +935,11 @@
                                     </div>
                                     <div class="pagination_wrapper">
                                         <div class="pagination">
-                                            <a
-                                                    class="btn_real prevRent" >
+                                            <a class="btn_real prevRent" >
                                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                 <span class="sr-only">Previous</span>
                                             </a>
-                                            <a
-                                                    class="btn_real nextRent">
+                                            <a class="btn_real nextRent">
                                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                 <span class="sr-only">Next</span>
                                             </a>
@@ -998,9 +974,13 @@
                                                                             for (AgenteBean agenteBean : agenti) {
                                                                                 if (agenteBean.getIdAgente() == agenteCase.get(j).getBean().getIdAgente()) {
                                                                                     for (UtenteBean utenteBean : utente) {
-                                                                                        if (agenteBean.getIdUtente() == utenteBean.getIdUtente()
-                                                                                        ) {%><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=agenteCase.get(j).getBean().getIdUtente()%>"><img src="data:image/png;base64,<%=utenteBean.getFotoString()%>"></a>
-                                                                        <%}}}}%>
+                                                                                        if (agenteBean.getIdUtente() == utenteBean.getIdUtente()) {%>
+                                                                                            <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=agenteCase.get(j).getBean().getIdUtente()%>"><img src="data:image/png;base64,<%=utenteBean.getFotoString()%>"></a>
+                                                                        <%
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }%>
                                                                     </h3>
                                                                 </div>
                                                                 <div class="agent_content_details">

@@ -59,6 +59,7 @@ public class ServletRicercaAppartamenti extends HttpServlet {
             visualizzazione.setCamereLetto(ordinamento.get(0).getCamereLetto());
             visualizzazione.setData(ordinamento.get(0).getData());
             visualizzazione.setPrezzo(ordinamento.get(0).getPrezzo());
+            visualizzazione.setVisualizzaPrezzo(ordinamento.get(0).getVisualizzaPrezzo());
             visualizzazione.setFoto(multimediaModelDM.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
             ArrayList<MultimediaBean> multi = new ArrayList<MultimediaBean>();
             multi = multimediaModelDM.RetrieveAllMultimedia();
@@ -99,7 +100,7 @@ public class ServletRicercaAppartamenti extends HttpServlet {
                     request.setAttribute("arrayUtente", utenteArray);
                     request.setAttribute("sizeArray", sizeArrayString);
                     request.setAttribute("arrayComp", arrayComp);
-                    RequestDispatcher rd = request.getRequestDispatcher("/listaappartamentiricerca.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/listaappartamenti.jsp");
                     rd.forward(request, response);
                 }
             }

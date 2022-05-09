@@ -59,6 +59,7 @@ public class ServletListaAppartamenti extends HttpServlet {
         visualizzazione.setCamereLetto(ordinamento.get(0).getCamereLetto());
         visualizzazione.setData(ordinamento.get(0).getData());
         visualizzazione.setPrezzo(ordinamento.get(0).getPrezzo());
+        visualizzazione.setVisualizzaPrezzo(ordinamento.get(0).getVisualizzaPrezzo());
         visualizzazione.setFoto(multimediaModelDM.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
         if (appArray != null) {
             if (appArray.size() < 10) {

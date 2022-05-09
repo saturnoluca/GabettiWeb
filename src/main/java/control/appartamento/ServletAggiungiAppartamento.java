@@ -39,6 +39,7 @@ public class ServletAggiungiAppartamento extends HttpServlet {
         String zona = request.getParameter("zona");
         String descrizione = request.getParameter("descrizione");
         float prezzo = Float.parseFloat(request.getParameter("prezzo"));
+        String visualizzazionePrezzo = request.getParameter("visualizzazionePrezzo");
         String tipoImmobile = request.getParameter("tipoImmobile");
         String statoAppartamento = request.getParameter("statoImmobile");
         float superficie = Float.parseFloat(request.getParameter("superficie"));
@@ -58,6 +59,12 @@ public class ServletAggiungiAppartamento extends HttpServlet {
         bean.setNomeAppartamento(titoloImmobile);
         bean.setDescrizioneAppartamento(descrizione);
         bean.setPrezzo(prezzo);
+        if(visualizzazionePrezzo.equals("Si")){
+            bean.setVisualizzaPrezzo(1);
+        }
+        else if(visualizzazionePrezzo.equals("No")){
+            bean.setVisualizzaPrezzo(0);
+        }
         bean.setTipoVendita(statoAppartamento);
         bean.setSuperficie(superficie);
         bean.setLocali(locali);

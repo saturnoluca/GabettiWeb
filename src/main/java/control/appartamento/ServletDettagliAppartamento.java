@@ -68,6 +68,7 @@ public class ServletDettagliAppartamento extends HttpServlet {
             visualizzazione.setCamereLetto(ordinamento.get(0).getCamereLetto());
             visualizzazione.setData(ordinamento.get(0).getData());
             visualizzazione.setPrezzo(ordinamento.get(0).getPrezzo());
+            visualizzazione.setVisualizzaPrezzo(ordinamento.get(0).getVisualizzaPrezzo());
             visualizzazione.setFoto(modelMultimedia.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
             modelApp.AggiungiVisualizzazione(id);
             request.setAttribute("appartamento", appBean);

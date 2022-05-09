@@ -28,7 +28,6 @@ public class ServletPaginaModificaAppartamento extends HttpServlet {
         try{
             appartamentoBean = appartamentoModelDM.RetrieveById(idImmobile);
             indirizzoBean = indirizzoModelDM.RetrieveIndirizzoByAppId(idImmobile);
-
             agente = agenteModelDM.RetrieveAgenteById(appartamentoBean.getIdAgente());
         }catch (Exception e){
             e.printStackTrace();

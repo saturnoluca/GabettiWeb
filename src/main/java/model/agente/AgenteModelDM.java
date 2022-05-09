@@ -135,7 +135,7 @@ public class AgenteModelDM implements AgenteModel {
     public AgenteBean RetrieveAgenteById(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
-        String selectSql = "SELECT * FROM agente WHERE Utente_idUtente=?";
+        String selectSql = "SELECT * FROM agente WHERE idAgente=?";
         AgenteBean bean = new AgenteBean();
         try {
             connection = dmcp.getConnection();

@@ -14,8 +14,9 @@ public class VisualizzazioneImmobile {
     private Date data;
     private Float prezzo;
     private String foto;
-
     private String tipoVendita;
+
+    private int visualizzaPrezzo;
     public VisualizzazioneImmobile(){
         super();
     }
@@ -26,6 +27,14 @@ public class VisualizzazioneImmobile {
 
     public void setIdAppartamento(int idAppartamento) {
         this.idAppartamento = idAppartamento;
+    }
+
+    public int getVisualizzaPrezzo() {
+        return visualizzaPrezzo;
+    }
+
+    public void setVisualizzaPrezzo(int visualizzaPrezzo) {
+        this.visualizzaPrezzo = visualizzaPrezzo;
     }
 
     public String getTipoVendita() {
@@ -122,6 +131,7 @@ public class VisualizzazioneImmobile {
                 ", prezzo=" + prezzo +
                 ", foto='" + foto + '\'' +
                 ", tipoVendita='" + tipoVendita + '\'' +
+                ", visualizzazionePrezzo=" + visualizzaPrezzo +
                 '}';
     }
 }

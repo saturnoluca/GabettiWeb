@@ -74,7 +74,7 @@ public class ServletRicerca extends HttpServlet {
             ricerca.setMinGarage(Integer.parseInt(posti));
         }
         String agente = request.getParameter("agente_immobile");
-        if (agente.equals("Qualsiasi")) {
+        if (agente == null || agente.equals("Qualsiasi")) {
             ricerca.setAgente(-1);
         } else {
             UtenteBean utenteBean;

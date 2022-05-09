@@ -48,7 +48,7 @@
                                     <a href="listaagenti.jsp">I Nostri Agenti</a>
                                 </li>
                                 <li class="menu_item">
-                                    <a href="contact.html">Contattaci</a>
+                                    <a href="contact.jsp">Contattaci</a>
                                 </li>
                             </ul>
                         </div>

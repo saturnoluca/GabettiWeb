@@ -109,6 +109,14 @@
                                     <input type="text" required placeholder="Inserisci il prezzo" name="prezzo">
                                 </div>
                                 <div class="content_fields_column half_size">
+                                    <label class="label_property_title">Mostare il prezzo</label>
+                                    <select name="visualizzazionePrezzo">
+                                        <option value="" selected disabled>Seleziona se mostrare il prezzo</option>
+                                        <option value="Si">SI</option>
+                                        <option value="No">NO</option>
+                                    </select>
+                                </div>
+                                <div class="content_fields_column half_size">
                                     <label class="label_property_title">Tipo immobile*</label>
                                     <select required name="tipoImmobile">
                                         <option value="" selected disabled>Seleziona tipo immobile</option>

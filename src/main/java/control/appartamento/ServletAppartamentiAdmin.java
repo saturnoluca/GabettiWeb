@@ -50,6 +50,7 @@ public class ServletAppartamentiAdmin extends HttpServlet {
             visualizzazioneImmobile.setData(appartamento.get(i).getData());
             visualizzazioneImmobile.setCategoria(appartamento.get(i).getCategoria());
             visualizzazioneImmobile.setPrezzo(appartamento.get(i).getPrezzo());
+            visualizzazioneImmobile.setVisualizzaPrezzo(appartamento.get(i).getVisualizzaPrezzo());
             immobili.add(visualizzazioneImmobile);
         }
 

@@ -58,7 +58,7 @@
         <li><a href="listaappartamenti.jsp">Lista Immobili</a></li>
         <li><a class="active" href="valutazione.jsp">Valutazione Immobile</a></li>
         <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
-        <li><a href="contact.html">Contattaci</a></li>
+        <li><a href="contact.jsp">Contattaci</a></li>
     </ul>
 </nav>
 <div class="content">
@@ -185,7 +185,7 @@
 									  <span class="text">Qualsiasi</span>
 									</a>
 								  </li>
-                                    <%for(String s : categorie){%>
+                                    <%for (String s : categorie) {%>
 								  <li>
 									  <a onclick="cambiaTipo(this)" role="option" href="#">
 										<span class="icon-check check_mark"></span>
@@ -315,44 +315,6 @@
                                             </li>
                                             <li>
                                                 <a onclick="cambiaMinAuto(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="search_option search_select search_beds">
-                                <label>Agenti</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliAgente()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_agente" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="agente_immobile" id="agente_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <div id="selezionaAgente" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaAgente(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaAgente(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaAgente(this)" role="option" href="#">
                                                     <span class="icon-check check_mark"></span>
                                                     <span class="text">2</span>
                                                 </a>

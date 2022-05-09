@@ -87,6 +87,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                     bean.setData(rs.getDate("data"));
                     bean.setIdAgente(rs.getInt("Agente_idAgente"));
                     bean.setPostoAuto(rs.getInt("postoAuto"));
+                    bean.setVisualizzaPrezzo(rs.getInt("visualizzaPrezzo"));
                     appartamento.add(bean);
                 }
             }
@@ -124,6 +125,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setData(rs.getDate("data"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
                 bean.setPostoAuto(rs.getInt("postoAuto"));
+                bean.setVisualizzaPrezzo(rs.getInt("visualizzaPrezzo"));
                 appartamento.add(bean);
             }
         } catch (SQLException e) {
@@ -160,6 +162,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setData(rs.getDate("data"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
                 bean.setPostoAuto(rs.getInt("postoAuto"));
+                bean.setVisualizzaPrezzo(rs.getInt("visualizzaPrezzo"));
                 appartamento.add(bean);
             }
         } catch (SQLException e) {
@@ -196,6 +199,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setData(rs.getDate("data"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
                 bean.setPostoAuto(rs.getInt("postoAuto"));
+                bean.setVisualizzaPrezzo(rs.getInt("visualizzaPrezzo"));
                 appartamento.add(bean);
             }
         } catch (SQLException e) {
@@ -209,7 +213,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
         PreparedStatement ps = null;
         System.out.println("appartamento da salvare: " + app);
         int key = 0;
-        String insertSql = "INSERT into appartamento(nomeAppartamento, descrizioneAppartamento, superficie, locali, bagni, piano, riscaldamento, classeEnergetica, tipoVendita, prezzo, data, Agente_idAgente, categoria, camereLetto, postoAuto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertSql = "INSERT into appartamento(nomeAppartamento, descrizioneAppartamento, superficie, locali, bagni, piano, riscaldamento, classeEnergetica, tipoVendita, prezzo, data, Agente_idAgente, categoria, camereLetto, postoAuto, visualizzaPrezzo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = dmcp.getConnection();
             if (app instanceof AppartamentoBean) {
@@ -229,6 +233,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 ps.setString(13, app.getCategoria());
                 ps.setInt(14, app.getCamereLetto());
                 ps.setInt(15, app.getPostoAuto());
+                ps.setInt(16, app.getVisualizzaPrezzo());
                 ps.executeUpdate();
                 ResultSet rs = ps.getGeneratedKeys();
                 while (rs.next()) {
@@ -250,7 +255,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
         ArrayList<AppartamentoBean> array = new ArrayList<AppartamentoBean>();
         String selectSql = "select appartamento.idAppartamento, appartamento.categoria, appartamento.nomeAppartamento, appartamento.descrizioneAppartamento, appartamento.superficie," +
                 "appartamento.locali, appartamento.bagni, appartamento.piano, appartamento.riscaldamento, appartamento.classeEnergetica, appartamento.tipoVendita, appartamento.prezzo, " +
-                "appartamento.data, appartamento.Agente_idAgente, appartamento.visualizzazioni, appartamento.camereLetto, appartamento.postoAuto from appartamento inner join indirizzo on appartamento.idAppartamento=indirizzo.Appartamento_idAppartamento";
+                "appartamento.data, appartamento.Agente_idAgente, appartamento.visualizzazioni, appartamento.camereLetto, appartamento.postoAuto, appartamento.visualizzaPrezzo from appartamento inner join indirizzo on appartamento.idAppartamento=indirizzo.Appartamento_idAppartamento";
         String zona = "";
         String vendita = "";
         String categoria = "";
@@ -333,6 +338,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setData(rs.getDate("data"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
                 bean.setPostoAuto(rs.getInt("postoAuto"));
+                bean.setVisualizzaPrezzo(rs.getInt("visualizzaPrezzo"));
                 array.add(bean);
             }
             System.out.println(array);
@@ -388,6 +394,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
             bean.setData(rs.getDate("data"));
             bean.setIdAgente(rs.getInt("Agente_idAgente"));
             bean.setPostoAuto(rs.getInt("postoAuto"));
+            bean.setVisualizzaPrezzo(rs.getInt("visualizzaPrezzo"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -423,6 +430,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setData(rs.getDate("data"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
                 bean.setPostoAuto(rs.getInt("postoAuto"));
+                bean.setVisualizzaPrezzo(rs.getInt("visualizzaPrezzo"));
                 appartamento.add(bean);
             }
         } catch (SQLException e) {
@@ -459,6 +467,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setData(rs.getDate("data"));
                 bean.setIdAgente(rs.getInt("Agente_idAgente"));
                 bean.setPostoAuto(rs.getInt("postoAuto"));
+                bean.setVisualizzaPrezzo(rs.getInt("visualizzaPrezzo"));
                 appartamento.add(bean);
             }
         } catch (SQLException e) {
@@ -559,9 +568,8 @@ public class AppartamentoModelDM implements AppartamentoModel {
     public void doUpdate(AppartamentoBean appartamentoBean) {
         Connection connection = null;
         PreparedStatement ps = null;
-        System.out.println(appartamentoBean);
         int key = 0;
-        String updateSql = "UPDATE appartamento SET nomeAppartamento=? , descrizioneAppartamento=? , superficie=? , locali=? , bagni=? , piano=? , riscaldamento=? , classeEnergetica=? , tipoVendita=? , prezzo=? , data=? , Agente_idAgente=? , categoria=? , camereLetto=? , postoAuto=? WHERE idAppartamento=?";
+        String updateSql = "UPDATE appartamento SET nomeAppartamento=? , descrizioneAppartamento=? , superficie=? , locali=? , bagni=? , piano=? , riscaldamento=? , classeEnergetica=? , tipoVendita=? , prezzo=? , data=? , Agente_idAgente=? , categoria=? , camereLetto=? , postoAuto=?, visualizzaPrezzo=? WHERE idAppartamento=?";
         try {
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(updateSql);
@@ -580,7 +588,9 @@ public class AppartamentoModelDM implements AppartamentoModel {
             ps.setString(13,appartamentoBean.getCategoria());
             ps.setInt(14,appartamentoBean.getCamereLetto());
             ps.setInt(15,appartamentoBean.getPostoAuto());
-            ps.setInt(16, appartamentoBean.getIdAppartamento());
+            ps.setInt(16, appartamentoBean.getVisualizzaPrezzo());
+            ps.setInt(17, appartamentoBean.getIdAppartamento());
+
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {

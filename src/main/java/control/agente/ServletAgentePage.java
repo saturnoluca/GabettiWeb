@@ -40,7 +40,7 @@ public class ServletAgentePage extends HttpServlet {
         ArrayList<CompositeKeyAgenteCase> agenteCase = new ArrayList<CompositeKeyAgenteCase>();
         ArrayList<AppartamentoBean> inEvidenza = new ArrayList<AppartamentoBean>();
 
-        agenteBean = modelAgenti.RetrieveAgenteById(id);
+        agenteBean = modelAgenti.RetrieveAgenteByIdUtente(id);
         utenteBean = modelUtente.doRetrieveUtenteByKeyAgente(agenteBean.getIdUtente());
         arrayAppartamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllByAgente(id);
         arrayIndirizzo = (ArrayList<IndirizzoBean>) indirizzoModelDM.RetrieveAll();

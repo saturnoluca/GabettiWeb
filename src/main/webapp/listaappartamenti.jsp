@@ -75,13 +75,13 @@
         <li><a class="active" href="listaappartamenti.jsp">Lista Immobili</a></li>
         <li><a href="valutazione.jsp">Valutazione Immobile</a></li>
         <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
-        <li><a href="contact.html">Contattaci</a></li>
+        <li><a href="contact.jsp">Contattaci</a></li>
     </ul>
 </nav>
 <div class="content">
     <section class="banner" style="background-image: url(images/banner.jpg); background-position: center 0%;">
         <div class="banner_wrap">
-            <h1 class="banner_title">Valutazione immobile</h1>
+            <h1 class="banner_title">Lista Immobili</h1>
         </div>
     </section>
     <div class="div_search div_search_init">
@@ -340,44 +340,6 @@
                                 </div>
                             </div>
                             <div class="search_option search_select search_beds">
-                                <label>Agenti</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliAgente()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_agente" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="agente_immobile" id="agente_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <div id="selezionaAgente" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaAgente(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaAgente(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaAgente(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="search_option search_select search_beds">
                                 <label>Superificie minima (mq)</label>
                                 <input name="minSuperficie_immobile" type="text" placeholder="Qualsiasi">
                             </div>
@@ -492,7 +454,11 @@
                             <div class="list_card_priceLabel">
                                 <div class="list_card_price">
                                     <span class="status"><%=appartamentoBean.getTipoVendita()%></span>
-                                    <p class="price">€<%=appartamentoBean.getPrezzo()%>
+                                    <%if(appartamentoBean.getVisualizzaPrezzo() == 1){%>
+                                        <p class="price">€<%=appartamentoBean.getPrezzo()%></p>
+                                    <%}else{%>
+                                    <p class="price" style="font-size: 17px">Contattare l'agente per il prezzo</p>
+                                    <%}%>
                                     </p>
                                 </div>
                                 <p class="list_card_agent">
@@ -501,8 +467,8 @@
                                         for (AgenteBean bean : agenteArray) {
                                             if (bean.getIdAgente() == appartamentoBean.getIdAgente()) {
                                                 for (UtenteBean utenteBean : utenteArray) {
-                                                    if (utenteBean.getIdUtente() == bean.getIdAgente()) {
-                                    %><a href=""><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></a><%
+                                                    if (utenteBean.getIdUtente() == bean.getIdUtente()) {%>
+                                                        <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></a><%
                                                     }
                                                 }
                                             }
@@ -600,7 +566,11 @@
                                 <div class="featured_card_priceLabel">
                                     <div class="featured_card_price">
                                         <span class="status"><%=visualizzazioneImmobile.getTipoVendita()%></span>
-                                        <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%>
+                                        <%if(visualizzazioneImmobile.getVisualizzaPrezzo() == 1){%>
+                                            <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%></p>
+                                        <%}else{%>
+                                            <p class="price" style="font-size: 17px">Contattare l'agente per il prezzo</p>
+                                        <%}%>
                                         </p>
                                     </div>
                                 </div>

@@ -1,9 +1,9 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="UtilityClass.Città" %><%--
+<%@ page import="UtilityClass.Città" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
-  User: Luca
-  Date: 18/03/2022
-  Time: 15:40
+  User: gaeta
+  Date: 06/05/2022
+  Time: 17:39
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,36 +15,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
-    <script src="bootstrap/js/popper.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="bootstrap/js/jquery.sticky.js"></script>
+
     <link rel="stylesheet" href="icomoon/style.css">
 
     <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="script/index.js"></script>
     <!-- Style -->
-    <link rel="stylesheet" href="css/valutazione.css">
+    <link rel="stylesheet" href="css/contact.css">
     <link rel="stylesheet" href="css/aggiunte.css">
-    <title>Gabetti Nocera | Valutazione Immobile</title>
-    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
+
+
+    <title>Gabetti Nocera | Contattaci</title>
 
 </head>
-
 <%
     ArrayList<Città> allCittàZone = (ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
     if (allCittàZone == null) {
-        session.setAttribute("nomepagina", "valutazione.jsp");
+        session.setAttribute("nomepagina", "contact.jsp");
         response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
         return;
     }
     ArrayList<String> categorie = (ArrayList<String>) request.getSession().getAttribute("categorie");
 %>
 <body>
-<%@ include file="loader.html"%>
 <nav id="navbar">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">
@@ -56,16 +53,16 @@
     <ul>
         <li><a href="index.jsp">Home</a></li>
         <li><a href="listaappartamenti.jsp">Lista Immobili</a></li>
-        <li><a class="active" href="valutazione.jsp">Valutazione Immobile</a></li>
+        <li><a href="valutazione.jsp">Valutazione Immobile</a></li>
         <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
-        <li><a href="contact.jsp">Contattaci</a></li>
+        <li><a class="active" href="contact.jsp">Contattaci</a></li>
     </ul>
 </nav>
 <div class="content">
     <section class="banner" style="background-image: url(images/banner.jpg); background-position: center 0%;">
         <div class="banner_cover"></div>
         <div class="banner_wrap">
-            <h1 class="banner_title">Valutazione immobile</h1>
+            <h1 class="banner_title">Contattaci</h1>
         </div>
     </section>
     <div class="div_search div_search_init">
@@ -353,165 +350,82 @@
             </div>
         </form>
     </div>
-    <section class="section_valutazione">
-        <div class="div_page_valutazione">
-            <div class="page_valutazione">
-                <div class="valutazione">
-                    <div class="valutazione_wrap">
-                        <div class="valutazione_heading">
-                            <p class="valutazione_quote">
-                                <span>Vuoi vendere la tua casa?</span>
-                            </p>
-                            <h2 class="valutazione_title">Richiedi una valutazione gratuita</h2>
-                            <p class="valutazione_subtitle">
-                                <span>Compila questi campi per scoprire quanto vale la tua casa!</span>
-                            </p>
-                        </div>
-                            <div class="div_valutazione_form">
-                            <section class="section_valutazione_form">
-                                <form action="ServletMail" class="valutazione_form">
-                                    <input type="hidden" name="action" value="valutazione">
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Indirizzo</label>
-                                        <input type="text"
-                                               placeholder="Indirizzo del tuo immobile compreso di numero civico" name="indirizzo">
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Comune</label>
-                                        <input type="text" placeholder="Inserisci il comune" name="comune">
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Tipo immobile</label>
-                                        <select name="tipoImmobile">
-                                            <option value="" selected disabled>Seleziona tipo immobile</option>
-                                            <option value="Appartamento">Appartamento</option>
-                                            <option value="Abitazione economica">Abitazione economica</option>
-                                            <option value="Loft Open space ">Loft / Open Space</option>
-                                            <option value="Mansarda">Mansarda</option>
-                                            <option value="Stabile Palazzo">Stabile / Palazzo</option>
-                                            <option value="Rustico Casale">Rustico / Casale</option>
-                                            <option value="Attico">Attico</option>
-                                            <option value="Villetta a schiera">Villetta a schiera</option>
-                                            <option value="Appartamento di lusso">Appartamento di lusso</option>
-                                        </select>
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Superficie in mq</label>
-                                        <input type="text" placeholder="Inserisci la superficie" name="superficie">
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Piano</label>
-                                        <select name="piano">
-                                            <option value="" selected disabled>Seleziona piano immobile</option>
-                                            <option value="Interrato Seminterrato">Interrato / Seminterrato</option>
-                                            <option value="Piano terra">Piano terra</option>
-                                            <option value="Piano rialzato">Piano rialzato</option>
-                                            <option value="1 piano">1° Piano</option>
-                                            <option value="2 piano">2° Piano</option>
-                                            <option value="3 piano">3° Piano</option>
-                                            <option value="4 piano">4° Piano</option>
-                                            <option value="5 piano e oltre">5° Piano e oltre</option>
-                                        </select>
-                                    </div>
-                                    <div class="form_piano half_size">
-                                        <label>Ultimo piano?</label>
-                                        <div>
-                                            <input type="radio" name="ultimoPiano" value="Si">
-                                            <label>Si.</label>
-                                        </div>
-                                        <div>
-                                            <input type="radio" name="ultimoPiano" value="No">
-                                            <label>No.</label>
-                                        </div>
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Locali</label>
-                                        <input type="text" placeholder="Inserisci il numero dei locali" name="locali">
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Bagni</label>
-                                        <input type="text" placeholder="Inserisci il numero dei bagni"name="bagni">
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Stato dell'appartamento</label>
-                                        <select name="statoAppartamento">
-                                            <option value="" selected disabled>Seleziona stato appartamento</option>
-                                            <option value="Da ristrutturare">Da ristrutturare</option>
-                                            <option value="Abitabile">Abitabile</option>
-                                            <option value="Ristrutturato">Ristrutturato</option>
-                                            <option value="Nuova costruzione">Nuova costruzione</option>
-                                        </select>
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Riscaldamento</label>
-                                        <select name="riscaldamento">
-                                            <option value="" selected disabled>Seleziona tipo riscaldamento</option>
-                                            <option value="Non presente">Non presente</option>
-                                            <option value="Autonomo">Autonomo</option>
-                                            <option value="Condominiale">Condominiale</option>
-                                            <option value="Pompe di calore">Pompe di calore</option>
-                                        </select>
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Anno costruzione immobile</label>
-                                        <input type="text" placeholder="Inserisci l'anno costruzione immobile" name="annoDiCostruzione">
-                                    </div>
-                                    <div class="form_features full_size">
-                                        <label>L'immobile dispone di</label>
-                                        <div class="choice-features">
-                                            <input type="checkbox" value="Ascensore">
-                                            <label class="choice">Ascensore</label>
-                                        </div>
-                                        <div class="choice-piano">
-                                            <input type="checkbox" value="Posto auto garage">
-                                            <label class="choice">Posto auto / garage</label>
-                                        </div>
-                                        <div class="choice-features">
-                                            <input type="checkbox" value="Posto moto">
-                                            <label class="choice">Posto moto</label>
-                                        </div>
-                                        <div class="choice-piano">
-                                            <input type="checkbox" value="Balcone">
-                                            <label class="choice">Balcone</label>
-                                        </div>
-                                        <div class="choice-features">
-                                            <input type="checkbox" value="Terrazzo">
-                                            <label class="choice">Terrazzo</label>
-                                        </div>
-                                        <div class="choice-piano">
-                                            <input type="checkbox" value="Giardino">
-                                            <label class="choice">Giardino</label>
-                                        </div>
-                                        <div class="choice-features">
-                                            <input type="checkbox" value="Cantina">
-                                            <label class="choice">Cantina</label>
-                                        </div>
-                                        <div class="choice-piano">
-                                            <input type="checkbox" value="Soffitta">
-                                            <label class="choice">Soffitta</label>
-                                        </div>
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
+    <section class="section_contact">
+        <div class="div_page_contact">
+            <div class="page_contact">
+                <div class="contact">
+                    <div class="contact_wrap">
+                        <div class="div_contact_form">
+                            <section class="section_contact_form">
+                                <form class="contact_form" method="post" action="ServletMail">
+                                    <input type="hidden" name="action" id="action" value="contattaci">
+                                    <p class="contact_input">
                                         <label>Nome</label>
-                                        <input type="text" placeholder="Inserisci il tuo nome" name="nome" required>
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Cognome</label>
-                                        <input type="text" placeholder="Inserisci il tuo cognome" name="cognome" required>
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
-                                        <label>Telefono</label>
-                                        <input type="text" placeholder="Inserisci il tuo numero di telefono" name="telefono" required>
-                                    </div>
-                                    <div class="valutazione_form_field half_size">
+                                        <input type="text" placeholder="Il tuo nome" id="nome" name="nome">
+                                    </p>
+                                    <p class="contact_input">
                                         <label>Email</label>
-                                        <input type="text" placeholder="Inserisci la tua email" name="email" required>
-                                    </div>
-                                    <div class="valutazione_form_submit">
-                                        <input type="submit" class="submit_button" value="Invia Richiesta Valutazione">
-                                    </div>
+                                        <input type="email" placeholder="La tua email" id="email" name="email">
+                                    </p>
+                                    <p class="contact_input">
+                                        <label>Telefono</label>
+                                        <input type="text" placeholder="Il tuo numero di telefono" id="telefono" name="telefono">
+                                    </p>
+                                    <p class="contact_input_textarea">
+                                        <label>Messaggio</label>
+                                        <textarea cols="40" rows="6" placeholder="Scrivi il tuo messaggio" id="messaggio" name="messaggio"></textarea>
+                                    </p>
+                                    <p class="privacy_agreement">
+                                        <span class="privacy_checkbox_label">Consenso sulla privacy</span>
+                                        <input type="checkbox">
+                                        <label>Acconsento che questo sito Web memorizzi le informazioni inviate in modo che possano rispondere alla mia richiesta.</label>
+                                    </p>
+                                    <p class="contact_submit">
+                                        <input type="submit" value="Invia Messaggio">
+                                    </p>
                                 </form>
                             </section>
+                        </div>
+                        <div class="contact_details">
+                            <div class="contact_item">
+                                <div class="icon">
+                                    <i class="icon-phone"></i>
+                                </div>
+                                <p>
+                                    <span class="label">Telefono</span>
+                                    <a href="">3312294330</a>
+                                </p>
+                            </div>
+                            <div class="contact_item">
+                                <div class="icon">
+                                    <i class="icon-mobile"></i>
+                                </div>
+                                <p>
+                                    <span class="label">Cellulare</span>
+                                    <a href="">3312294330</a>
+                                </p>
+                            </div>
+                            <div class="contact_item">
+                                <div class="icon">
+                                    <i class="icon-mail_outline"></i>
+                                </div>
+                                <p>
+                                    <span class="label">Email</span>
+                                    <a href="">nocera@gabetti.it</a>
+                                </p>
+                            </div>
+                            <div class="contact_item">
+                                <div class="icon">
+                                    <i class="icon-map-marker"></i>
+                                </div>
+                                <p>
+                                    <span class="label">Indirizzo</span>
+                                    <a href="">Via Roma Nocera Inferiore (SA)</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="contact_map">
+                            <iframe allowfullscreen frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCghlu8qhmsmptec4eSidg5APpA57lCPlU&q=Gabetti+nocera+inferiore&zoom=17" width="100%" height="450"></iframe>
                         </div>
                     </div>
                 </div>
@@ -522,9 +436,6 @@
 </div>
 
 
-<script src="script/valutazione.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="script/index.js"></script>
 <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
 <script src="bootstrap/js/popper.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>

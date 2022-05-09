@@ -44,6 +44,12 @@ public class SalvaAppartamento extends HttpServlet {
         bean.setClasseEnergetica(request.getParameter("classeEnergetica"));
         bean.setTipoVendita(request.getParameter("tipoVendita"));
         bean.setPrezzo(parseFloat(request.getParameter("prezzo")));
+        if(request.getParameter("visualizzazionePrezzo").equals("Si")){
+            bean.setVisualizzaPrezzo(1);
+        }
+        else if(request.getParameter("visualizzazionePrezzo").equals("No")){
+            bean.setVisualizzaPrezzo(0);
+        }
         bean.setData(Date.valueOf(request.getParameter("data")));
         bean.setIdAgente(parseInt(request.getParameter("Agente")));
         bean.setCamereLetto(parseInt(request.getParameter("camereLetto")));

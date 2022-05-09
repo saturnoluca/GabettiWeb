@@ -121,6 +121,22 @@
                                     <input type="text"  placeholder="<%=appartamentoBean.getPrezzo()%>" name="prezzo" value="<%=appartamentoBean.getPrezzo()%>">
                                 </div>
                                 <div class="content_fields_column half_size">
+                                    <label class="label_property_title">Visualizza Prezzo</label>
+                                    <select name="visualizzazionePrezzo">
+                                        <option value="" selected disabled>Seleziona se mostrare il prezzo</option>
+                                        <%if(appartamentoBean.getVisualizzaPrezzo() == 1){%>
+                                        <option selected value="Si">SI</option>
+                                        <%}else{%>
+                                        <option value="Si">SI</option>
+                                        <%}%>
+                                        <%if(appartamentoBean.getVisualizzaPrezzo() == 0){%>
+                                        <option selected value="No">NO</option>
+                                        <%}else{%>
+                                        <option value="No">NO</option>
+                                        <%}%>
+                                    </select>
+                                </div>
+                                <div class="content_fields_column half_size">
                                     <label class="label_property_title">Tipo immobile*</label>
                                     <select  name="tipoImmobile">
                                         <option value="" selected disabled>Seleziona categoria immobile</option>
@@ -296,13 +312,12 @@
                                             for (UtenteBean utenteBean : utenti) {
                                                 if (utenteBean.getRuolo().equals("Agente")) {
                                                     if(agente.getIdAgente() == appartamentoBean.getIdAgente()){
-                                        %>
-                                        <option selected value="<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
-                                        </option>
-                                        <%
+                                                    %>
+                                                        <option selected value="<%=agente.getIdAgente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></option>
+                                                    <%
                                                     }
                                                     else{%>
-                                                        <option value="<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></option>
+                                                        <option value="<%=agente.getIdAgente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></option>
                                                 <%}
                                                 }
                                             }

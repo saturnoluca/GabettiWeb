@@ -21,6 +21,8 @@ public class AppartamentoBean implements Serializable {
     private int visualizzazioni;
     private int camereLetto;
     private int postoAuto;
+
+	private int visualizzaPrezzo;
     
 	public AppartamentoBean() {
 		super();
@@ -29,7 +31,7 @@ public class AppartamentoBean implements Serializable {
 	public AppartamentoBean(int idAppartamento, String categoria, String nomeAppartamento,
 			String descrizioneAppartamento, float superficie, String locali, String bagni, String piano,
 			String riscaldamento, String classeEnergetica, String tipoVendita, Float prezzo, Date data, int idAgente,
-			int visualizzazioni, int camereLetto, int postoAuto) {
+			int visualizzazioni, int camereLetto, int postoAuto, int visualizzaPrezzo) {
 		super();
 		this.idAppartamento = idAppartamento;
 		this.categoria = categoria;
@@ -48,6 +50,7 @@ public class AppartamentoBean implements Serializable {
 		this.visualizzazioni = visualizzazioni;
 		this.camereLetto = camereLetto;
 		this.postoAuto = postoAuto;
+		this.visualizzaPrezzo = visualizzaPrezzo;
 	}
 
 	public int getIdAppartamento() {
@@ -108,6 +111,14 @@ public class AppartamentoBean implements Serializable {
 
 	public String getPiano() {
 		return piano;
+	}
+
+	public int getVisualizzaPrezzo() {
+		return visualizzaPrezzo;
+	}
+
+	public void setVisualizzaPrezzo(int visualizzaPrezzo) {
+		this.visualizzaPrezzo = visualizzaPrezzo;
 	}
 
 	public void setPiano(String piano) {
@@ -206,6 +217,7 @@ public class AppartamentoBean implements Serializable {
 				", visualizzazioni=" + visualizzazioni +
 				", camereLetto=" + camereLetto +
 				", postoAuto=" + postoAuto +
+				", visualizzaPrezzo=" + visualizzaPrezzo +
 				'}';
 	}
 }
