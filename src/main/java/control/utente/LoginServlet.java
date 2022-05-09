@@ -45,12 +45,15 @@ public class LoginServlet extends HttpServlet {
 
                 request.getSession(true).setAttribute("appartamenti", appartamenti);
                 request.getSession(true).setAttribute("agente", agente);
+                request.getSession(true).setAttribute("array", array);
                 redirect = "myprofile.jsp";
             } else if (bean.getRuolo().equals("Segretario")) {
                 request.getSession(true).setAttribute("utente", bean);
+                request.getSession(true).setAttribute("array", array);
                 redirect = "myprofile.jsp";
             } else if (bean.getRuolo().equals("Collaboratore")) {
                 request.getSession(true).setAttribute("utente", bean);
+                request.getSession(true).setAttribute("array", array);
                 redirect = "myprofile.jsp";
             }
         } else {
