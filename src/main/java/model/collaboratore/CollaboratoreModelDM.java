@@ -47,19 +47,22 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
     public CollaboratoreBean RetrieveCollaboratore(int idUtente) {
         Connection connection = null;
         PreparedStatement ps = null;
-        String selectSql = "SELECT * FROM collaboratore WHERE idCollaboratore=? AND idUtente";
+        String selectSql = "SELECT * FROM collaboratore WHERE Utente_idUtente=?";
         CollaboratoreBean bean = new CollaboratoreBean();
         try {
+            connection=dmcp.getConnection();
             ps = connection.prepareStatement(selectSql);
             ps.setInt(1, idUtente);
             ResultSet rs = ps.executeQuery();
-            bean.setIdCollaboratore(rs.getInt("idCollaboratore"));
-            bean.setIdAgente(rs.getInt("Agente_idAgente"));
-            bean.setIdUtente(rs.getInt("Utente_idUtente"));
-            bean.setTelefonoCellulare(rs.getString("telefonoCellulare"));
-            bean.setLinkFacebook(rs.getString("linkFacebook"));
-            bean.setLinkInstagram(rs.getString("linkInstagram"));
-            bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
+            while (rs.next()) {
+                bean.setIdCollaboratore(rs.getInt("idCollaboratore"));
+                bean.setIdAgente(rs.getInt("Agente_idAgente"));
+                bean.setIdUtente(rs.getInt("Utente_idUtente"));
+                bean.setTelefonoCellulare(rs.getString("telefonoCellulare"));
+                bean.setLinkFacebook(rs.getString("linkFacebook"));
+                bean.setLinkInstagram(rs.getString("linkInstagram"));
+                bean.setDescrizionePersonale(rs.getString("descrizionePersonale"));
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -73,6 +76,7 @@ public class CollaboratoreModelDM implements CollaboratoreModel {
         String selectSql = "SELECT * FROM collaboratore WHERE Agente_idAgente=?";
         ArrayList<CollaboratoreBean> collaboratori = new ArrayList<CollaboratoreBean>();
         try {
+            connection=dmcp.getConnection();
             ps = connection.prepareStatement(selectSql);
             ps.setInt(1, idAgente);
             ResultSet rs = ps.executeQuery();
