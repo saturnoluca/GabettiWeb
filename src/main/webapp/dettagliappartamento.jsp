@@ -429,13 +429,24 @@
                                     </p>
                                 </div>
                                 <div class="property_functions">
-                                    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
-sagittis lacus vel augue laoreet rutrum faucibus.">
-                                        Popover on bottom
-                                    </button>
                                     <a href="">
                                         <i class="icon-share"></i>
                                     </a>
+                                    <div class="property_share">
+                                        <div class="social_list">
+                                            <ul>
+                                                <li class="choice_facebook">
+                                                    <i class="icon-facebook"></i>
+                                                </li>
+                                                <li class="choice_telegram">
+                                                    <i class="icon-telegram"></i>
+                                                </li>
+                                                <li class="choice_whatsapp">
+                                                    <i class="icon-whatsapp"></i>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                     <button type="button" onclick="window.print();">
                                         <i class="icon-print"></i>
                                     </button>
@@ -509,7 +520,7 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
                                                         if (bean.getIdAppartamento() == appBean.getIdAppartamento() && bean.getPlanimetriaString() != null) {
                                                 %>
                                                 <a href="">
-                                                    <img src="data:image/png;base64,<%=bean.getPlanimetriaString().get(0)%>">
+                                                    <img src=data:image/png;base64,<%=bean.getPlanimetriaString().get(0)%>">
                                                 </a>
                                                 <%
                                                         }
