@@ -1,6 +1,8 @@
 package control.appartamento;
 
 import UtilityClass.CompositeKeyAgenteCase;
+import UtilityClass.PrezzoCrescenteImmobileComparator;
+import UtilityClass.PrezzoDecrescenteImmobileComparator;
 import UtilityClass.VisualizzazioneImmobile;
 import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
@@ -15,13 +17,14 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 @WebServlet(name = "ServletListaAppartamenti", value = "/ServletListaAppartamenti")
 public class ServletListaAppartamenti extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String ordina = request.getParameter("ordina");
         String numeroString = request.getParameter("numero");
         int num = 0;
         int sizeArray = 0;
@@ -50,6 +53,12 @@ public class ServletListaAppartamenti extends HttpServlet {
         arrayComp = (ArrayList<CompositeKeyAgenteCase>) agenteModelDM.RetrieveAgenteCase();
         VisualizzazioneImmobile visualizzazione = new VisualizzazioneImmobile();
         ArrayList<AppartamentoBean> ordinamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByVisite();
+        if(ordina.equals("prezzoCrescente")){
+            Collections.sort(appArray, new PrezzoCrescenteImmobileComparator());
+        }
+        if(ordina.equals("prezzoDecrescente")){
+            Collections.sort(appArray, new PrezzoDecrescenteImmobileComparator());
+        }
         visualizzazione.setIdAppartamento(ordinamento.get(0).getIdAppartamento());
         visualizzazione.setTipoVendita(ordinamento.get(0).getTipoVendita());
         visualizzazione.setNomeAppartamento(ordinamento.get(0).getNomeAppartamento());
@@ -93,6 +102,7 @@ public class ServletListaAppartamenti extends HttpServlet {
                 for (int i = (num - 1) * 10; i < (num * 10); i++) {
                     appArray2.add(appArray.get(i));
                 }
+                request.setAttribute("ordinamento", ordina);
                 request.setAttribute("multimedia", multimediaBeans);
                 request.setAttribute("featured",visualizzazione);
                 request.setAttribute("array", appArray2);

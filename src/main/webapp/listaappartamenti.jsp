@@ -7,7 +7,7 @@
 <%@ page import="model.multimedia.MultimediaBean" %>
 <%@ page import="UtilityClass.VisualizzazioneImmobile" %>
 <%@ page import="java.util.Collections" %>
-<%@ page import="UtilityClass.PrezzoImmobileComparator" %><%--
+<%@ page import="UtilityClass.PrezzoCrescenteImmobileComparator" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 17/03/2022
@@ -51,10 +51,10 @@
     ArrayList<String> categorie = (ArrayList<String>) request.getSession().getAttribute("categorie");
     ArrayList<AppartamentoBean> appArray = (ArrayList<AppartamentoBean>) request.getAttribute("array");
     if (appArray == null) {
-        response.sendRedirect(response.encodeRedirectURL("ServletListaAppartamenti?numero=1"));
+        response.sendRedirect(response.encodeRedirectURL("ServletListaAppartamenti?ordina=default&numero=1"));
         return;
     }
-    Collections.sort(appArray, new PrezzoImmobileComparator());
+    String ordinamento = (String) request.getAttribute("ordinamento");
     ArrayList<MultimediaBean> multimediaBeans = (ArrayList<MultimediaBean>) request.getAttribute("multimedia");
     VisualizzazioneImmobile visualizzazioneImmobile = (VisualizzazioneImmobile) request.getAttribute("featured");
     ArrayList<AgenteBean> agenteArray = (ArrayList<AgenteBean>) request.getAttribute("arrayAgente");
@@ -386,8 +386,9 @@
                     <div class="sort_controls">
                         <button id="ordinamento_button" class="ordinamento_button">Ordina per</button>
                         <div id="ordinamento" class="ordinamento" style="display: none">
-                            <a>Prezzo Crescente</a>
-                            <a>Prezzo Decrescente</a>
+                            <a href="ServletListaAppartamenti?ordina=default&numero=1">Default</a>
+                            <a href="ServletListaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
+                            <a href="ServletListaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo Decrescente</a>
                         </div>
                     </div>
                 </div>
@@ -483,7 +484,7 @@
             </div>
             <div class="pagination">
                 <%for (int i = 1; i <= sizeArray; i++) {%>
-                <a href="${pageContext.request.contextPath}/ServletListaAppartamenti?numero=<%=i%>"
+                <a href="${pageContext.request.contextPath}/ServletListaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>"
                    class="pagination_btn"><%=i%>
                 </a>
                 <%}%>
