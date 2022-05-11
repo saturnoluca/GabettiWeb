@@ -547,7 +547,7 @@
                             </div>
                             <div class="property_video">
                                 <h4 class="property_heading_h4">Video</h4>
-                                <%if(multimediaBean.getVideoString().get(0) != null){%>
+                                <%if(multimediaBean.getVideoString().size() != 0){%>
                                 <video controls>
                                     <source type="video/mp4"
                                             src="data:video/mp4;base64,<%=multimediaBean.getVideoString().get(0)%>">
