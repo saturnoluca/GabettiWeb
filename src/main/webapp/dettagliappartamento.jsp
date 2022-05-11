@@ -68,12 +68,11 @@
 %>
 
 <script>
-    $(document).ready(function(){
-        $("#share").click(function(){
-            if(document.getElementById("div_share").style.display == "none"){
+    $(document).ready(function () {
+        $("#share").click(function () {
+            if (document.getElementById("div_share").style.display == "none") {
                 $("#div_share").fadeIn();
-            }
-            else{
+            } else {
                 $("#div_share").fadeOut();
             }
         });
@@ -545,15 +544,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <%if (multimediaBean.getVideoString().size() != 0) {%>
                             <div class="property_video">
                                 <h4 class="property_heading_h4">Video</h4>
-                                <%if(multimediaBean.getVideoString().size() != 0){%>
                                 <video controls>
                                     <source type="video/mp4"
                                             src="data:video/mp4;base64,<%=multimediaBean.getVideoString().get(0)%>">
                                 </video>
-                                <%}%>
                             </div>
+                            <%}%>
                             <div class="property_map">
                                 <input type="hidden" name="indirizzoAppartamento"
                                        value="<%=indirizzoBean.getCitta()+", "+indirizzoBean.getProvincia()+", "+ indirizzoBean.getNumeroCivico()%>">
