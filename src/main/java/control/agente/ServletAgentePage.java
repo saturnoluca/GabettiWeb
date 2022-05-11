@@ -1,6 +1,7 @@
 package control.agente;
 
 import UtilityClass.CompositeKeyAgenteCase;
+import UtilityClass.VisualizzazioneImmobile;
 import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
@@ -39,15 +40,28 @@ public class ServletAgentePage extends HttpServlet {
         ArrayList<MultimediaBean> arrayMultimedia = new ArrayList<MultimediaBean>();
         ArrayList<CompositeKeyAgenteCase> agenteCase = new ArrayList<CompositeKeyAgenteCase>();
         ArrayList<AppartamentoBean> inEvidenza = new ArrayList<AppartamentoBean>();
-
+        VisualizzazioneImmobile visualizzazione = new VisualizzazioneImmobile();
         agenteBean = modelAgenti.RetrieveAgenteByIdUtente(id);
         utenteBean = modelUtente.doRetrieveUtenteByKeyAgente(agenteBean.getIdUtente());
-        arrayAppartamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllByAgente(id);
+        arrayAppartamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllByAgente(agenteBean.getIdAgente());
         arrayIndirizzo = (ArrayList<IndirizzoBean>) indirizzoModelDM.RetrieveAll();
         arrayMultimedia = multimediaModelDM.RetrieveAllMultimedia();
         agenteCase = (ArrayList<CompositeKeyAgenteCase>) modelAgenti.RetrieveAgenteCase();
         inEvidenza = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByVisiteByAgente(agenteBean.getIdAgente());
-        //System.out.println(agenteCase);
+        ArrayList<AppartamentoBean> ordinamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByVisite();
+        visualizzazione.setIdAppartamento(ordinamento.get(0).getIdAppartamento());
+        visualizzazione.setTipoVendita(ordinamento.get(0).getTipoVendita());
+        visualizzazione.setNomeAppartamento(ordinamento.get(0).getNomeAppartamento());
+        visualizzazione.setDescrizioneAppartamento(ordinamento.get(0).getDescrizioneAppartamento());
+        visualizzazione.setSuperficie(ordinamento.get(0).getSuperficie());
+        visualizzazione.setBagni(ordinamento.get(0).getBagni());
+        visualizzazione.setCamereLetto(ordinamento.get(0).getCamereLetto());
+        visualizzazione.setData(ordinamento.get(0).getData());
+        visualizzazione.setPrezzo(ordinamento.get(0).getPrezzo());
+        visualizzazione.setVisualizzaPrezzo(ordinamento.get(0).getVisualizzaPrezzo());
+        visualizzazione.setFoto(multimediaModelDM.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
+
+        request.setAttribute("featured",visualizzazione);
         request.setAttribute("agente", agenteBean);
         request.setAttribute("utente", utenteBean);
         request.setAttribute("arrayAppartamento", arrayAppartamento);

@@ -300,7 +300,7 @@ body {
     position: relative;
 }
 
-.property_functions a{
+.property_functions .share{
     display: inline-block;
     width: 24px;
     height: 24px;

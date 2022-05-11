@@ -5,7 +5,9 @@
 <%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
 <%@ page import="UtilityClass.Città" %>
 <%@ page import="model.multimedia.MultimediaBean" %>
-<%@ page import="UtilityClass.VisualizzazioneImmobile" %><%--
+<%@ page import="UtilityClass.VisualizzazioneImmobile" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="UtilityClass.PrezzoImmobileComparator" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 17/03/2022
@@ -37,6 +39,12 @@
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="bootstrap/js/jquery.sticky.js"></script>
     <!-- Bootstrap CSS -->
+    <script src="script/valutazione.js"></script>
+    <script src="script/index.js"></script>
+    <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/jquery.sticky.js"></script>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
 <%
@@ -52,6 +60,7 @@
         response.sendRedirect(response.encodeRedirectURL("ServletListaAppartamenti?numero=1"));
         return;
     }
+    Collections.sort(appArray, new PrezzoImmobileComparator());
     ArrayList<MultimediaBean> multimediaBeans = (ArrayList<MultimediaBean>) request.getAttribute("multimedia");
     VisualizzazioneImmobile visualizzazioneImmobile = (VisualizzazioneImmobile) request.getAttribute("featured");
     ArrayList<AgenteBean> agenteArray = (ArrayList<AgenteBean>) request.getAttribute("arrayAgente");
@@ -381,13 +390,6 @@
             <div class="list_properties_head">
                 <div class="list_properties_controls">
                     <div class="sort_controls">
-                        <select>
-                            <option>Default</option>
-                            <option>Prezzo Crescente</option>
-                            <option>Prezzo Decrescente</option>
-                            <option>Vecchio a Nuovo</option>
-                            <option>Nuovo a Vecchio</option>
-                        </select>
                     </div>
                 </div>
             </div>
@@ -571,7 +573,6 @@
                                         <%}else{%>
                                             <p class="price" style="font-size: 17px">Contattare l'agente per il prezzo</p>
                                         <%}%>
-                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -625,13 +626,6 @@
 
 
 </script>
-
-<script src="script/valutazione.js"></script>
-<script src="script/index.js"></script>
-<script src="bootstrap/js/jquery-3.3.1.min.js"></script>
-<script src="bootstrap/js/popper.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="bootstrap/js/jquery.sticky.js"></script>
 </body>
 </html>
 

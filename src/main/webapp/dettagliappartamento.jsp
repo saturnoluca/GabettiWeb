@@ -67,6 +67,20 @@
 
 %>
 
+<script>
+    $(document).ready(function(){
+        $("#share").click(function(){
+            if(document.getElementById("div_share").style.display == "none"){
+                $("#div_share").fadeIn();
+            }
+            else{
+                $("#div_share").fadeOut();
+            }
+        });
+    });
+</script>
+
+
 <body>
 <%@ include file="loader.html" %>
 <nav id="navbar" class="noPrint">
@@ -429,10 +443,10 @@
                                     </p>
                                 </div>
                                 <div class="property_functions">
-                                    <a href="">
+                                    <button class="share" id="share">
                                         <i class="icon-share"></i>
-                                    </a>
-                                    <div class="property_share">
+                                    </button>
+                                    <div id="div_share" class="property_share" style="display: none">
                                         <div class="social_list">
                                             <ul>
                                                 <li class="choice_facebook">
@@ -533,10 +547,12 @@
                             </div>
                             <div class="property_video">
                                 <h4 class="property_heading_h4">Video</h4>
+                                <%if(multimediaBean.getVideoString().get(0) != null){%>
                                 <video controls>
                                     <source type="video/mp4"
                                             src="data:video/mp4;base64,<%=multimediaBean.getVideoString().get(0)%>">
                                 </video>
+                                <%}%>
                             </div>
                             <div class="property_map">
                                 <input type="hidden" name="indirizzoAppartamento"
@@ -751,7 +767,6 @@
 
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-
 
 </body>
 </html>

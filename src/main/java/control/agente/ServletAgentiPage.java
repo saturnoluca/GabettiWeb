@@ -1,6 +1,7 @@
 package control.agente;
 
 import UtilityClass.CompositeKeyAgenteCase;
+import UtilityClass.VisualizzazioneImmobile;
 import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
@@ -26,7 +27,7 @@ public class ServletAgentiPage extends HttpServlet {
     private static AppartamentoModelDM modelAppartamento = new AppartamentoModelDM();
     private static CollaboratoreModelDM modelCollaboratore = new CollaboratoreModelDM();
     private static MultimediaModelDM modelMultimedia = new MultimediaModelDM();
-
+    private static AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<UtenteBean> utente = new ArrayList<UtenteBean>();
@@ -34,6 +35,7 @@ public class ServletAgentiPage extends HttpServlet {
         ArrayList<AppartamentoBean> inEvidenza = new ArrayList<AppartamentoBean>();
         ArrayList<CollaboratoreBean> collaboratoreBeans = new ArrayList<CollaboratoreBean>();
         ArrayList<MultimediaBean> multimediaBeans = new ArrayList<MultimediaBean>();
+        VisualizzazioneImmobile visualizzazione = new VisualizzazioneImmobile();
         try {
             if (request.getSession().getAttribute("NoDbConnection") != null) {
                 modelAgenti = null;
@@ -47,6 +49,18 @@ public class ServletAgentiPage extends HttpServlet {
             inEvidenza = (ArrayList<AppartamentoBean>) modelAppartamento.OrderByVisite();
             collaboratoreBeans = (ArrayList<CollaboratoreBean>) modelCollaboratore.RetrieveAllCollaboratore();
             multimediaBeans=modelMultimedia.RetrieveAllMultimedia();
+            ArrayList<AppartamentoBean> ordinamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByVisite();
+            visualizzazione.setIdAppartamento(ordinamento.get(0).getIdAppartamento());
+            visualizzazione.setTipoVendita(ordinamento.get(0).getTipoVendita());
+            visualizzazione.setNomeAppartamento(ordinamento.get(0).getNomeAppartamento());
+            visualizzazione.setDescrizioneAppartamento(ordinamento.get(0).getDescrizioneAppartamento());
+            visualizzazione.setSuperficie(ordinamento.get(0).getSuperficie());
+            visualizzazione.setBagni(ordinamento.get(0).getBagni());
+            visualizzazione.setCamereLetto(ordinamento.get(0).getCamereLetto());
+            visualizzazione.setData(ordinamento.get(0).getData());
+            visualizzazione.setPrezzo(ordinamento.get(0).getPrezzo());
+            visualizzazione.setVisualizzaPrezzo(ordinamento.get(0).getVisualizzaPrezzo());
+            visualizzazione.setFoto(modelMultimedia.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,6 +70,7 @@ public class ServletAgentiPage extends HttpServlet {
                 utenti.add(u);
             }
         }
+        request.setAttribute("featured",visualizzazione);
         request.setAttribute("multimedia", multimediaBeans);
         request.setAttribute("utenti", utenti);
         request.setAttribute("agentiCase", agentiCase);

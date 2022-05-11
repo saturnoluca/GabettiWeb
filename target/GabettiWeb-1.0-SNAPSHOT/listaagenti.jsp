@@ -5,7 +5,8 @@
 <%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
 <%@ page import="model.collaboratore.CollaboratoreBean" %>
 <%@ page import="model.multimedia.MultimediaBean" %>
-<%@ page import="UtilityClass.Città" %><%--
+<%@ page import="UtilityClass.Città" %>
+<%@ page import="UtilityClass.VisualizzazioneImmobile" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 21/03/2022
@@ -56,6 +57,7 @@
         response.sendRedirect("ServletAgentiPage");
         return;
     }
+    VisualizzazioneImmobile visualizzazioneImmobile = (VisualizzazioneImmobile) request.getAttribute("featured");
     ArrayList<CompositeKeyAgenteCase> agenteBeans = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("agentiCase");
     ArrayList<AppartamentoBean> appartamentoBeans = (ArrayList<AppartamentoBean>) request.getAttribute("inEvidenza");
     ArrayList<CollaboratoreBean> collaboratoreBeans = (ArrayList<CollaboratoreBean>) request.getAttribute("collaboratori");
@@ -416,7 +418,7 @@
                                 <%}%>
                             </div>
                             <div class="agent_card_listings">
-                                <p class="head">Proprietà possedute</p>
+                                <p class="head">Immobili posseduti</p>
                                 <%if (u.getRuolo().equals("Agente")) {%>
                                 <p class="count"><%
                                     for (CompositeKeyAgenteCase ag : agenteBeans) {
@@ -493,9 +495,9 @@
                                         for (CompositeKeyAgenteCase ag : agenteBeans) {
                                             if (ag.getBean().getIdUtente() == u.getIdUtente()) {
                                 %><a
-                                    href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=ag.getBean().getIdAgente()%>"
+                                    href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=ag.getBean().getIdUtente()%>"
                                     class="agent_card_link">
-                                <span>Visualizza le mie proprietà</span>
+                                <span>Visualizza i miei immobili</span>
                                 <i class="icon-angle-right"></i>
                             </a><%
                                     }
@@ -505,9 +507,9 @@
                                     if (c.getIdUtente() == u.getIdUtente()) {
                                         for (CompositeKeyAgenteCase ag : agenteBeans) {
                                             if (ag.getBean().getIdAgente() == c.getIdAgente()) {
-                            %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=ag.getBean().getIdAgente()%>"
+                            %><a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=ag.getBean().getIdUtente()%>"
                                  class="agent_card_link">
-                                <span>Visualizza le mie proprietà</span>
+                                <span>Visualizza i miei immobili</span>
                                 <i class="icon-angle-right"></i>
                             </a><%
                                                 }
@@ -533,37 +535,30 @@
         <div class="page_right page_sidebar">
             <aside class="featured_sidebar">
                 <section class="widget">
-                    <h3 class="title">Proprietà in evidenza</h3>
+                    <h3 class="title">Immobile in evidenza</h3>
                     <article class="featured_card featured_card_block">
                         <div class="featured_card_wrap">
                             <figure class="featured_card_figure">
                                 <div class="featured_card_picture">
-                                    <%
-                                        for (MultimediaBean multi : multimediaBeans) {
-                                            if (multi.getIdAppartamento() == appartamentoBeans.get(0).getIdAppartamento() && multi.getFotoString()!=null) {
-                                    %>
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBeans.get(0).getIdAppartamento()%>">
-                                        <img src="data:image/png;base64,<%=multi.getFotoString().get(0)%>" style="width:100%">
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>">
+                                        <img src="data:image/png;base64,<%=visualizzazioneImmobile.getFoto()%>" style="width:100%">
                                     </a>
-                                    <%
-                                            }
-                                        }%>
                                 </div>
                             </figure>
                             <div class="featured_card_details">
                                 <h3>
-                                    <a href=""><%=appartamentoBeans.get(0).getNomeAppartamento()%>
+                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>"><%=visualizzazioneImmobile.getNomeAppartamento()%>
                                     </a>
                                 </h3>
                                 <p class="featured_card_description">
                                     <%
-                                        if (appartamentoBeans.get(0).getDescrizioneAppartamento().length() > 30) {
+                                        if (visualizzazioneImmobile.getDescrizioneAppartamento().length() > 30) {
                                     %>
-                                    <%=appartamentoBeans.get(0).getDescrizioneAppartamento().substring(0, 30) + "..."%>
+                                    <%=visualizzazioneImmobile.getDescrizioneAppartamento().substring(0, 30) + "..."%>
                                     <%
                                     } else {
                                     %>
-                                    <%=appartamentoBeans.get(0).getDescrizioneAppartamento()%>
+                                    <%=visualizzazioneImmobile.getDescrizioneAppartamento()%>
                                     <%}%>
                                 </p>
                                 <div class="featured_card_features_wrap">
@@ -571,30 +566,33 @@
                                         <span class="features_title">Camere da letto</span>
                                         <div>
                                             <i class="feature_icon icon-bed"></i>
-                                            <span class="text"><%=appartamentoBeans.get(0).getCamereLetto()%></span>
+                                            <span class="text"><%=visualizzazioneImmobile.getCamereLetto()%></span>
                                         </div>
                                     </div>
                                     <div class="featured_card_feature">
                                         <span class="features_title">Bagni</span>
                                         <div>
                                             <i class="feature_icon icon-shower"></i>
-                                            <span class="text"><%=appartamentoBeans.get(0).getBagni()%></span>
+                                            <span class="text"><%=visualizzazioneImmobile.getBagni()%></span>
                                         </div>
                                     </div>
                                     <div class="featured_card_feature">
                                         <span class="features_title">Superficie</span>
                                         <div>
                                             <i class="feature_icon icon-crop_square"></i>
-                                            <span class="text"><%=appartamentoBeans.get(0).getSuperficie()%></span>
+                                            <span class="text"><%=visualizzazioneImmobile.getSuperficie()%></span>
                                             <span class=>mq</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="featured_card_priceLabel">
                                     <div class="featured_card_price">
-                                        <span class="status"><%=appartamentoBeans.get(0).getTipoVendita()%></span>
-                                        <p class="price"><%=appartamentoBeans.get(0).getPrezzo() + "€"%>
-                                        </p>
+                                        <span class="status"><%=visualizzazioneImmobile.getTipoVendita()%></span>
+                                        <%if(visualizzazioneImmobile.getVisualizzaPrezzo() == 1){%>
+                                            <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%></p>
+                                        <%}else{%>
+                                            <p class="price" style="font-size: 17px">Contattare l'agente per il prezzo</p>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>
