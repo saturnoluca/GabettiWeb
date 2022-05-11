@@ -788,3 +788,36 @@
     margin-bottom: 0;
 }
 
+.ordinamento{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    position: absolute;
+    background: #b20135;
+    width: 170px;
+    color: #FFFFFF;
+}
+
+
+.ordinamento_button{
+    border: none;
+    background: #b20135;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170px;
+    height: 40px;
+    margin: 0;
+    padding: 10px;
+}
+.ordinamento_button:focus{
+    border: none;
+    text-decoration: none;
+}
+
+.ordinamento a{
+    height: 40px;
+    padding: 10px;
+
+}

@@ -39,12 +39,6 @@
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="bootstrap/js/jquery.sticky.js"></script>
     <!-- Bootstrap CSS -->
-    <script src="script/valutazione.js"></script>
-    <script src="script/index.js"></script>
-    <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
-    <script src="bootstrap/js/popper.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="bootstrap/js/jquery.sticky.js"></script>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
 <%
@@ -390,6 +384,11 @@
             <div class="list_properties_head">
                 <div class="list_properties_controls">
                     <div class="sort_controls">
+                        <button id="ordinamento_button" class="ordinamento_button">Ordina per</button>
+                        <div id="ordinamento" class="ordinamento" style="display: none">
+                            <a>Prezzo Crescente</a>
+                            <a>Prezzo Decrescente</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -623,9 +622,26 @@
             }
         }
     }
-
-
 </script>
+<script>
+    $(document).ready(function(){
+        $("#ordinamento_button").click(function(){
+            if(document.getElementById("ordinamento").style.display == "none"){
+                $("#ordinamento").slideDown();
+            }
+            else{
+                $("#ordinamento").slideUp();
+            }
+        });
+    });
+</script>
+
+<script src="script/valutazione.js"></script>
+<script src="script/index.js"></script>
+<script src="bootstrap/js/jquery-3.3.1.min.js"></script>
+<script src="bootstrap/js/popper.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/jquery.sticky.js"></script>
 </body>
 </html>
 
