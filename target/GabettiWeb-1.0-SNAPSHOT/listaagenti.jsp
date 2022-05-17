@@ -591,7 +591,7 @@
                                         <%if(visualizzazioneImmobile.getVisualizzaPrezzo() == 1){%>
                                             <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%></p>
                                         <%}else{%>
-                                            <p class="price" style="font-size: 17px">Contattare l'agente per il prezzo</p>
+                                            <p class="price" style="font-size: 17px">Contatta l'agente</p>
                                         <%}%>
                                     </div>
                                 </div>

@@ -30,7 +30,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly" defer></script>
     <link rel="stylesheet" href="icomoon/style.css">
 
     <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
@@ -55,6 +55,7 @@
         return;
     }
     String ordinamento = (String) request.getAttribute("ordinamento");
+    String pagina = (String) request.getAttribute("pagina");
     ArrayList<MultimediaBean> multimediaBeans = (ArrayList<MultimediaBean>) request.getAttribute("multimedia");
     VisualizzazioneImmobile visualizzazioneImmobile = (VisualizzazioneImmobile) request.getAttribute("featured");
     ArrayList<AgenteBean> agenteArray = (ArrayList<AgenteBean>) request.getAttribute("arrayAgente");
@@ -99,11 +100,8 @@
 							  <button type="button" onclick="apriScegliLocalita()" class="btn dropdown-toggle">
 								<div class="filter-option">
 								  <div class="filter-option-inner">
-									<div id="valore_localita" class="filter-option-text">
-									  Qualsiasi
-									</div>
-									  <input type="hidden" name="localita_immobile" id="localita_immobile"
-                                             value="Qualsiasi">
+									<div id="valore_localita" class="filter-option-text">Qualsiasi</div>
+                                    <input type="hidden" name="localita_immobile" id="localita_immobile" value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -374,9 +372,7 @@
     </div>
     <div class="section_map">
         <div id="map_head">
-            <iframe id="map" allowfullscreen frameborder="0" loading="lazy"
-                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCghlu8qhmsmptec4eSidg5APpA57lCPlU&q=Gabetti+nocera+inferiore&zoom=17"
-                    width="100%" height="600px"></iframe>
+            <div id="map"></div>
         </div>
     </div>
     <section class="section_properties_search">
@@ -386,9 +382,15 @@
                     <div class="sort_controls">
                         <button id="ordinamento_button" class="ordinamento_button">Ordina per</button>
                         <div id="ordinamento" class="ordinamento" style="display: none">
-                            <a href="ServletListaAppartamenti?ordina=default&numero=1">Default</a>
-                            <a href="ServletListaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
-                            <a href="ServletListaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo Decrescente</a>
+                            <%if(pagina.equals("listaAppartamenti")){%>
+                                <a href="ServletListaAppartamenti?ordina=default&numero=1">Visualizzazioni</a>
+                                <a href="ServletListaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
+                                <a href="ServletListaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo Decrescente</a>
+                            <%}else if(pagina.equals("ricercaAppartamenti")){%>
+                                <a href="ServletRicercaAppartamenti?ordina=default&numero=1">Visualizzazioni</a>
+                                <a href="ServletRicercaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
+                                <a href="ServletRicercaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo Decrescente</a>
+                            <%}%>
                         </div>
                     </div>
                 </div>
@@ -459,7 +461,7 @@
                                     <%if(appartamentoBean.getVisualizzaPrezzo() == 1){%>
                                         <p class="price">€<%=appartamentoBean.getPrezzo()%></p>
                                     <%}else{%>
-                                    <p class="price" style="font-size: 17px">Contattare l'agente per il prezzo</p>
+                                    <p class="price" style="font-size: 17px">Contatta l'agente</p>
                                     <%}%>
                                     </p>
                                 </div>
@@ -483,11 +485,13 @@
                 <%}%>
             </div>
             <div class="pagination">
-                <%for (int i = 1; i <= sizeArray; i++) {%>
-                <a href="${pageContext.request.contextPath}/ServletListaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>"
-                   class="pagination_btn"><%=i%>
-                </a>
-                <%}%>
+                <%for (int i = 1; i <= sizeArray; i++) {
+                    if(pagina.equals("listaAppartamenti")){
+                %>
+                        <a href="${pageContext.request.contextPath}/ServletListaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>" class="pagination_btn"><%=i%></a>
+                <%}else if(pagina.equals("ricercaAppartamenti")){%>
+                    <a href="${pageContext.request.contextPath}/ServletRicercaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>" class="pagination_btn"><%=i%></a>
+                <%}}%>
             </div>
         </div>
         <div class="page_sidebar">
@@ -571,7 +575,7 @@
                                         <%if(visualizzazioneImmobile.getVisualizzaPrezzo() == 1){%>
                                             <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%></p>
                                         <%}else{%>
-                                            <p class="price" style="font-size: 17px">Contattare l'agente per il prezzo</p>
+                                            <p class="price" style="font-size: 17px">Contatta l'agente</p>
                                         <%}%>
                                     </div>
                                 </div>
@@ -636,6 +640,99 @@
         });
     });
 </script>
+<script>
+    // This example displays a marker at the center of Australia.
+    // When the user clicks the marker, an info window opens.
+    function initMap() {
+        const uluru = { lat: 40.7472133, lng: 14.6433202};
+        const sium = { lat: 40.8085412, lng: 14.5810059};
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 10,
+            center: uluru,
+        });
+        const contentString =
+            '<div class="property_map">' +
+            '<article class="featured_card featured_card_block">' +
+                '<div class="featured_card_wrap">' +
+                    '<figure class=featured_card_figure>' +
+                        '<div class="featured_card_picture">' +
+                            '<a href="">' +
+                                '<img src="images/casa.jpg">' +
+                                    '</a>' +
+                            '</div>' +
+                        '</figure>' +
+                    '<div class=featured_card_details>' +
+                        '<h3>' +
+                            '<a>Villone</a>' +
+                            '</h3>' +
+                        '<p class=featured_card_description>Bellissimo villone</p>' +
+                        '<div class="featured_card_features_wrap">' +
+                            '<div class="featured_card_feature">' +
+                                '<span class="features_title">Camere da letto</span>' +
+                                '<div>' +
+                                    '<i class="feature_icon icon-bed"></i>' +
+                                    '<span class="text_feature">1</span>' +
+                                    '</div>' +
+                                '</div>' +
+                            '<div class="featured_card_feature">' +
+                                '<span class="features_title">Camere da letto</span>' +
+                                '<div>' +
+                                    '<i class="feature_icon icon-bed"></i>' +
+                                    '<span class="text_feature">1</span>' +
+                                    '</div>' +
+                                '</div>' +
+                            '<div class="featured_card_feature">' +
+                                '<span class="features_title">Camere da letto</span>' +
+                                '<div>' +
+                                    '<i class="feature_icon icon-bed"></i>' +
+                                    '<span class="text_feature">1</span>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '<div class="featured_card_priceLabel">' +
+                            '<div class="featured_card_price">' +
+                                '<span class=status>In Vendita</span>' +
+                                '<p class="price">€ 500000</p>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</article>' +
+            '</div>';
+
+       const infowindow = new google.maps.InfoWindow({
+            content: contentString,
+            maxWidth: 450,
+        });
+
+        const marker = new google.maps.Marker({
+            position: uluru,
+            map,
+        });
+        const marker2 = new google.maps.Marker({
+            position: sium,
+            map,
+        });
+
+        marker.addListener("click", () => {
+            infowindow.open({
+                anchor: marker,
+                map,
+                shouldFocus: false,
+            });
+        });
+
+        marker2.addListener("click", () => {
+            infowindow.open({
+                anchor: marker2,
+                map,
+                shouldFocus: false,
+            });
+        });
+    }
+
+    window.initMap = initMap;
+</script>
+
 
 <script src="script/valutazione.js"></script>
 <script src="script/index.js"></script>

@@ -1,6 +1,8 @@
 package control.appartamento;
 
 import UtilityClass.CompositeKeyAgenteCase;
+import UtilityClass.PrezzoCrescenteImmobileComparator;
+import UtilityClass.PrezzoDecrescenteImmobileComparator;
 import UtilityClass.VisualizzazioneImmobile;
 import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
@@ -17,6 +19,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 @WebServlet(name = "ServletRicercaAppartamenti", value = "/ServletRicercaAppartamenti")
 public class ServletRicercaAppartamenti extends HttpServlet {
@@ -25,7 +28,7 @@ public class ServletRicercaAppartamenti extends HttpServlet {
         if (request.getSession().getAttribute("ricercaString").equals("ricerca")) {
             ArrayList<AppartamentoBean> arrayList = (ArrayList<AppartamentoBean>) request.getSession().getAttribute("ricerca");
             String numeroString = request.getParameter("numero");
-
+            String ordina = request.getParameter("ordina");
             int num = 0;
             int sizeArray = 0;
             String sizeArrayString = null;
@@ -33,6 +36,13 @@ public class ServletRicercaAppartamenti extends HttpServlet {
                 num = 1;
             } else {
                 num = Integer.parseInt(numeroString);
+            }
+            System.out.println("ordinamento " + ordina);
+            if(ordina.equals("prezzoCrescente")){
+                Collections.sort(arrayList, new PrezzoCrescenteImmobileComparator());
+            }
+            if(ordina.equals("prezzoDecrescente")){
+                Collections.sort(arrayList, new PrezzoDecrescenteImmobileComparator());
             }
             MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
             AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
@@ -64,9 +74,10 @@ public class ServletRicercaAppartamenti extends HttpServlet {
             ArrayList<MultimediaBean> multi = new ArrayList<MultimediaBean>();
             multi = multimediaModelDM.RetrieveAllMultimedia();
 
-
             if (arrayList != null) {
                 if (arrayList.size() < 10) {
+                    request.setAttribute("pagina","ricercaAppartamenti");
+                    request.setAttribute("ordinamento", ordina);
                     request.setAttribute("multimedia", multi);
                     request.setAttribute("featured",visualizzazione);
                     request.setAttribute("array", arrayList);
@@ -80,6 +91,8 @@ public class ServletRicercaAppartamenti extends HttpServlet {
                     for (int i = (num - 1) * 10; i < arrayList.size(); i++) {
                         appArray2.add(arrayList.get(i));
                     }
+                    request.setAttribute("pagina","ricercaAppartamenti");
+                    request.setAttribute("ordinamento", ordina);
                     request.setAttribute("multimedia", multi);
                     request.setAttribute("featured",visualizzazione);
                     request.setAttribute("array", appArray2);
@@ -93,6 +106,8 @@ public class ServletRicercaAppartamenti extends HttpServlet {
                     for (int i = (num - 1) * 10; i < (num * 10); i++) {
                         appArray2.add(arrayList.get(i));
                     }
+                    request.setAttribute("pagina","ricercaAppartamenti");
+                    request.setAttribute("ordinamento", ordina);
                     request.setAttribute("multimedia", multi);
                     request.setAttribute("featured",visualizzazione);
                     request.setAttribute("array", appArray2);

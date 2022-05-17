@@ -106,11 +106,11 @@
             </h1>
         </div>
     </section>
-    <div class="div_search div_search_init">
-        <form class="search_form search_form_header advance_search_form" action="ServletRicerca" method="post">
-            <div class="search_fields">
-                <div class="search_wrap search_data">
-                    <div class="top_fields">
+    <div class="div_search div_search_init noPrint">
+        <form class="search_form search_form_header advance_search_form noPrint" action="ServletRicerca" method="post">
+            <div class="search_fields noPrint">
+                <div class="search_wrap search_data noPrint">
+                    <div class="top_fields noPrint">
                         <div class="search_select search_option">
                             <label>Località</label>
                             <span class="search_selectwrap">
@@ -237,8 +237,8 @@
 						  </span>
                         </div>
                     </div>
-                    <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
-                        <div class="collapsed_field_container search_advanced_fields">
+                    <div id="advanced_option_div" class="form_collapsed_field_wrapper noPrint" style="display: none;">
+                        <div class="collapsed_field_container search_advanced_fields noPrint">
                             <div class="search_option search_select search_beds">
                                 <label>Min camere da letto</label>
                                 <div class="bootstrap-select picker trigger" style="width: 100%;">
@@ -417,16 +417,15 @@
                         </div>
                         <%for (int i = 1; i < multimediaBean.getFotoString().size() && i <= 2; i++) {%>
                         <div class="carousel-item">
-                            <img class="d-block w-100"
-                                 src="data:image/png;base64,<%=multimediaBean.getFotoString().get(i)%>">
+                            <img class="d-block w-100" src="data:image/png;base64,<%=multimediaBean.getFotoString().get(i)%>">
                         </div>
                         <%}%>
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <a class="carousel-control-prev noPrint" href="#carouselExampleControls" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <a class="carousel-control-next noPrint" href="#carouselExampleControls" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
@@ -437,11 +436,11 @@
                         <div class="property_content">
                             <div class="property_content_head">
                                 <div class="property_name">
-                                    <p class="name">Nome: </p>
+                                    <p class="name">Nome:&nbsp;</p>
                                     <p class="id"><%=appBean.getNomeAppartamento()%>
                                     </p>
                                 </div>
-                                <div class="property_functions">
+                                <div class="property_functions noPrint">
                                     <button class="share" id="share">
                                         <i class="icon-share"></i>
                                     </button>
@@ -485,6 +484,7 @@
                                     <div class="feature_content">
                                         <i class="icon-car"></i>
                                         <span class="text"><%=appBean.getPostoAuto()%></span>
+                                        <span class="text">posti auto</span>
                                     </div>
                                 </div>
                                 <div class="property_feature">
@@ -516,7 +516,7 @@
                                     <span class="value"><%=appBean.getRiscaldamento()%></span>
                                 </li>
                             </ul>
-                            <div class="property_floor_plans">
+                            <div class="property_floor_plans noPrint">
                                 <h4 class="property_heading_h4">Planimetria</h4>
                                 <div class="floor_plans_accordions">
                                     <div class="floor_plan">
@@ -545,7 +545,7 @@
                                 </div>
                             </div>
                             <%if (multimediaBean.getVideoString().size() != 0) {%>
-                            <div class="property_video">
+                            <div class="property_video noPrint">
                                 <h4 class="property_heading_h4">Video</h4>
                                 <video controls>
                                     <source type="video/mp4"
@@ -564,10 +564,10 @@
                         </div>
 
                     </div>
-                    <div class="property_sidebar">
+                    <div class="property_sidebar noPrint">
                         <aside class="sidebar">
                             <section class="property_agent">
-                                <a href="" class="agent_image">
+                                <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>" class="agent_image">
                                     <img src="data:image/png;base64,<%=utenteBean.getFotoString()%>">
                                 </a>
                                 <h3 class="property_agent_title">
@@ -576,24 +576,25 @@
                                 <div class=property_agent_info>
                                     <p class="contact">
                                         <span>Cellulare:&nbsp;</span>
-                                        <a href=""><%=agenteBean.getTelefonoCellulare()%>
+                                        <a href="tel:+39<%=agenteBean.getTelefonoCellulare()%>"><%=agenteBean.getTelefonoCellulare()%>
                                         </a>
                                     </p>
                                     <p class="contact">
                                         <span>Whatsapp:&nbsp;</span>
-                                        <a href="https://wa.me/39<%=agenteBean.getTelefonoCellulare()%>"></a>
+                                        <a href="https://wa.me/<%=agenteBean.getTelefonoCellulare()%>"></a>
                                     </p>
                                     <p class="contact">
                                         <span>Email:&nbsp;</span>
-                                        <a href=""><%=utenteBean.getEmail()%>
+                                        <a href="mailto:<%=utenteBean.getEmail()%>"><%=utenteBean.getEmail()%>
                                         </a>
                                     </p>
                                 </div>
-                                <a class="agent_property_listing" href="">Visualizza i miei immobili</a>
+                                <a class="agent_property_listing" href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>">Visualizza i miei immobili</a>
                                 <div class="agent_property_contact_form">
-                                    <form class="contact_form">
-                                        <input type="hidden" name="action" value="agente">
+                                    <form class="contact_form" action="ServletMail" METHOD="post">
+                                        <input type="hidden" name="action" value="immobile">
                                         <input type="hidden" name="agenteid" value="<%=agenteBean.getIdAgente()%>">
+                                        <input type="hidden" name="idAppartamento" value="<%=appBean.getIdAppartamento()%>">
                                         <p class="contact_form_row">
                                             <label>Nome e cognome</label>
                                             <input type="text" placeholder="Inserisci il tuo nome e cognome"
@@ -617,25 +618,23 @@
                                         <div class="privacy_agreement">
                                             <span class="privacy_checkboxLabel">Consenso sulla privacy</span>
                                             <input type="checkbox">
-                                            <label>I consent to having this website store my submitted information so
-                                                they
-                                                can respond to my inquiry.</label>
+                                            <label>Acconsento che questo sito Web memorizzi le informazioni inviate in modo che possano rispondere alla mia richiesta.</label>
                                         </div>
                                         <div class="agent_call">
-                                            <a href="https://wa.me/393662545295" class="agent_link">
+                                            <a href="https://wa.me/<%=agenteBean.getTelefonoCellulare()%>" class="agent_link">
                                                 <i class="icon-whatsapp"></i>
                                                 <span>Whatsapp</span>
                                             </a>
-                                            <a href="" class="agent_link">
+                                            <a href="tel:+39<%=agenteBean.getTelefonoCellulare()%>" class="agent_link">
                                                 <i class="icon-phone"></i>
                                                 <span>Chiama ora</span>
                                             </a>
                                         </div>
                                         <div class="agent_message">
-                                            <a href="" class="agent_link">
+                                            <button class="send_message" type="submit" class="agent_link">
                                                 <i class="icon-mail_outline"></i>
                                                 <span>Invia messaggio</span>
-                                            </a>
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
@@ -701,7 +700,9 @@
             </div>
         </div>
     </section>
-    <jsp:include page="footer.jsp"/>
+    <div class="noPrint">
+        <jsp:include page="footer.jsp"/>
+    </div>
 </div>
 
 

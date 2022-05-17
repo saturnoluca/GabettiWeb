@@ -104,7 +104,7 @@ public class ServletRicerca extends HttpServlet {
 
         request.getSession().setAttribute("ricercaString", "ricerca");
         request.getSession().setAttribute("ricerca", arrayApp);
-        response.sendRedirect("ServletRicercaAppartamenti");
+        response.sendRedirect("ServletRicercaAppartamenti?ordina=default");
     }
 
     public UtenteBean nomeCognome(String agente) {

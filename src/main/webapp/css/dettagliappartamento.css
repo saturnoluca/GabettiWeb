@@ -755,7 +755,7 @@ body {
     margin-right: 4px;
 }
 
-.agent_message a{
+.agent_message .send_message{
     color: #fff;
     background: #b20135;
     display: block;

@@ -430,7 +430,6 @@ input{
   padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 30px;
-  min-width: 423.33px;
 }
 
 .property_card_style{
@@ -735,11 +734,13 @@ h3.property_heading a{
   color: #fff;
   line-height: 1.5;
   font-weight: 400;
+  padding: 20px;
 }
 
 .sfondo_choice_button{
   margin-left: -5px;
   margin-right: -5px;
+  padding: 20px;
 }
 
 .sfondo_choice_button a{

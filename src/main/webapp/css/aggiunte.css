@@ -1036,6 +1036,12 @@ nav{
   .wrap_content{
     width: 33.333%;
   }
+
+  @media(min-height: 300px) and (max-width: 479px){
+    .wrap_content{
+      width: 100%;
+    }
+  }
   
   @media(min-width:480px) and (max-width:768px){
     .wrap_content{
@@ -1046,7 +1052,13 @@ nav{
   .wrap_content_max{
     width: 33.333%;
   }
-  
+
+@media(min-width:300px) and (max-width:479px){
+  .wrap_content_max{
+    width: 100%;
+  }
+}
+
   @media(min-width:480px) and (max-width:768px){
     .wrap_content_max{
       width: 100%;

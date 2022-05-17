@@ -70,8 +70,11 @@ public class ServletListaAppartamenti extends HttpServlet {
         visualizzazione.setPrezzo(ordinamento.get(0).getPrezzo());
         visualizzazione.setVisualizzaPrezzo(ordinamento.get(0).getVisualizzaPrezzo());
         visualizzazione.setFoto(multimediaModelDM.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
+
         if (appArray != null) {
             if (appArray.size() < 10) {
+                request.setAttribute("pagina","listaAppartamenti");
+                request.setAttribute("ordinamento", ordina);
                 request.setAttribute("multimedia", multimediaBeans);
                 request.setAttribute("featured",visualizzazione);
                 request.setAttribute("allCittaZone", request.getSession().getAttribute("allCittàZone"));
@@ -87,6 +90,8 @@ public class ServletListaAppartamenti extends HttpServlet {
                 for (int i = (num - 1) * 10; i < appArray.size(); i++) {
                     appArray2.add(appArray.get(i));
                 }
+                request.setAttribute("pagina","listaAppartamenti");
+                request.setAttribute("ordinamento", ordina);
                 request.setAttribute("multimedia", multimediaBeans);
                 request.setAttribute("featured",visualizzazione);
                 request.setAttribute("allCittaZone", request.getSession().getAttribute("allCittàZone"));
@@ -102,6 +107,7 @@ public class ServletListaAppartamenti extends HttpServlet {
                 for (int i = (num - 1) * 10; i < (num * 10); i++) {
                     appArray2.add(appArray.get(i));
                 }
+                request.setAttribute("pagina","listaAppartamenti");
                 request.setAttribute("ordinamento", ordina);
                 request.setAttribute("multimedia", multimediaBeans);
                 request.setAttribute("featured",visualizzazione);

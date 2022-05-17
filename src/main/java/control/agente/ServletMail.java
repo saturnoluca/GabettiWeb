@@ -3,6 +3,9 @@ package control.agente;
 import UtilityClass.Mail;
 import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
+import model.appartamento.AppartamentoBean;
+import model.appartamento.AppartamentoModel;
+import model.appartamento.AppartamentoModelDM;
 import model.utente.UtenteBean;
 import model.utente.UtenteModelDM;
 
@@ -17,7 +20,7 @@ public class ServletMail extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private AgenteModelDM modelAgente = new AgenteModelDM();
     private UtenteModelDM modelUtent = new UtenteModelDM();
-
+    private AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getParameter("action").equals("agente")) {
@@ -51,7 +54,25 @@ public class ServletMail extends HttpServlet {
                 e.printStackTrace();
             }
             response.sendRedirect("contact.html");
-        } else if (request.getParameter("action").equals("valutazione")) {
+        }else if (request.getParameter("action").equals("immobile")) {
+            AgenteBean agente = new AgenteBean();
+            UtenteBean utenteBean = new UtenteBean();
+            request.setCharacterEncoding("UTF-8");
+            String nomeGuest = request.getParameter("nomeGuest");
+            String emailGuest = request.getParameter("emailGuest");
+            String telefonoGuest = request.getParameter("telefonoGuest");
+            String messaggioGuest = request.getParameter("messaggioGuest");
+            int idAppartamento = Integer.parseInt(request.getParameter("idAppartamento"));
+            AppartamentoBean appartamentoBean = appartamentoModelDM.RetrieveById(idAppartamento);
+            String contenuto = "Richiesta per l'immobile con id: " + idAppartamento + " con nome annuncio " + appartamentoBean.getNomeAppartamento() + "\nNome Mittente: " + nomeGuest + "\nEmail Mittente: " + emailGuest + "\nTelefono Mittente: " + telefonoGuest + "\n\n" + messaggioGuest;
+            agente = modelAgente.RetrieveAgenteById(Integer.parseInt(request.getParameter("agenteid")));
+            utenteBean = modelUtent.doRetrieveUtenteByKey(agente.getIdUtente());
+            try {
+                Mail.sendMail(utenteBean.getEmail(), contenuto);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if (request.getParameter("action").equals("valutazione")) {
             String nomeGuest = request.getParameter("nome");
             String cognomeGuest = request.getParameter("cognome");
             String emailGuest = request.getParameter("email");

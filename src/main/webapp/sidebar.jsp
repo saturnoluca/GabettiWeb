@@ -13,6 +13,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="css/sidebar.css">
 </head>
 <%
     ArrayList<CompositeKeyAgenteCase> agenteCase = null;
@@ -38,7 +39,7 @@
     </div>
     <ul class="nav-list">
         <li>
-            <a href="#">
+            <a href="dashboard-admin.jsp">
                 <i class='bx bx-grid-alt'></i>
                 <span class="links_name">Dashboard</span>
             </a>

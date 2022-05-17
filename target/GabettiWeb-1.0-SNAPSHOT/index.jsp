@@ -199,7 +199,7 @@
                         <div class="search_select search_option">
                             <label>Stato Immobile</label>
                             <span class="search_selectwrap">
-							<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
+							<div class="bootstrap-select picker trigger" style="width: 100%;">
 							  <button type="button" onclick="apriScegliStato()" class="btn dropdown-toggle">
 								<div class="filter-option">
 								  <div class="filter-option-inner">
@@ -572,7 +572,7 @@
                                                                         </p>
                                                                         <%}else{%>
                                                                         <p class="property_card_price">
-                                                                            Contattare l'agente per il prezzo
+                                                                            Contatta l'agente
                                                                         </p>
                                                                         <%}%>
                                                                     </div>
@@ -747,7 +747,7 @@
                                                                     </p>
                                                                     <%}else{%>
                                                                     <p class="property_card_price">
-                                                                        Contattare l'agente per il prezzo
+                                                                        Contatta l'agente
                                                                     </p>
                                                                     <%}%>
                                                                 </div>
@@ -1067,15 +1067,7 @@
                 }
             },
             {
-                breakpoint: 1600,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    infinite: true,
-                }
-            },
-            {
-                breakpoint: 1400,
+                breakpoint: 1200,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
@@ -1085,13 +1077,27 @@
             {
                 breakpoint: 600,
                 settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                }
+            },
+            {
+                breakpoint: 599,
+                settings: {
                     slidesToShow: 1,
-                    slidesToScroll: 1
+                    slidesToScroll: 1,
+                    infinite: true,
+                }
+            },
+            {
+                breakpoint: 400,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    infinite: true,
                 }
             }
-            // You can unslick at a given breakpoint now by adding:
-            // settings: "unslick"
-            // instead of a settings object
         ]
     });
 
@@ -1114,15 +1120,7 @@
                 }
             },
             {
-                breakpoint: 1600,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    infinite: true,
-                }
-            },
-            {
-                breakpoint: 1400,
+                breakpoint: 1200,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
@@ -1132,13 +1130,19 @@
             {
                 breakpoint: 600,
                 settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                }
+            },
+            {
+                breakpoint: 599,
+                settings: {
                     slidesToShow: 1,
-                    slidesToScroll: 1
+                    slidesToScroll: 1,
+                    infinite: true,
                 }
             }
-            // You can unslick at a given breakpoint now by adding:
-            // settings: "unslick"
-            // instead of a settings object
         ]
     });
 
@@ -1161,15 +1165,7 @@
                 }
             },
             {
-                breakpoint: 1600,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    infinite: true,
-                }
-            },
-            {
-                breakpoint: 1400,
+                breakpoint: 1200,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
@@ -1179,13 +1175,19 @@
             {
                 breakpoint: 600,
                 settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                }
+            },
+            {
+                breakpoint: 599,
+                settings: {
                     slidesToShow: 1,
-                    slidesToScroll: 1
+                    slidesToScroll: 1,
+                    infinite: true,
                 }
             }
-            // You can unslick at a given breakpoint now by adding:
-            // settings: "unslick"
-            // instead of a settings object
         ]
     });
 
