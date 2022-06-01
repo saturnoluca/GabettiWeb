@@ -30,7 +30,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&v=weekly"
             defer></script>
     <link rel="stylesheet" href="icomoon/style.css">
 
@@ -656,75 +656,72 @@
         });
     });
 </script>
+
 <script>
     // This example displays a marker at the center of Australia.
     // When the user clicks the marker, an info window opens.
-    function initMap() {
+    function initMap(json, i, map) {
         var geocoder = new google.maps.Geocoder();
-        var address = "Via Vecchia Striano, 71, 84087";
-        var latitude =  0;
-        var longitude = 0;
+        var address = json[i].indirizzo;
+        var lat = 0;
+        var lng = 0;
         geocoder.geocode({'address': address}, function (results, status) {
-
             if (status == google.maps.GeocoderStatus.OK) {
                 var latitude = results[0].geometry.location.lat();
                 var longitude = results[0].geometry.location.lng();
-                localStorage.setItem("endlat", latitude);
-                localStorage.setItem("endlng", longitude);
+
+                localStorage.setItem("endlat"+i+"", latitude);
+                localStorage.setItem("endlng"+i+"", longitude);
+
             }
         });
-        latitude=parseFloat(localStorage.getItem("endlat"));
-        longitude=parseFloat(localStorage.getItem("endlng"));
-        longitude=parseFloat(localStorage.getItem("endlng"));
-        console.log(latitude, longitude);
-        const uluru = {lat: latitude, lng: longitude};
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 10,
-            center: uluru,
-        });
+        lat = parseFloat(localStorage.getItem("endlat"+i+""));
+        lng = parseFloat(localStorage.getItem("endlng"+i+""));
+        const uluru = {lat: lat, lng: lng};
+        console.log(lat+"\n"+lng)
         const contentString =
-            '<div class="property_map">' +
+            '<div class="property_map" id="marker' + i + '">' +
             '<article class="featured_card featured_card_block">' +
             '<div class="featured_card_wrap">' +
             '<figure class=featured_card_figure>' +
             '<div class="featured_card_picture">' +
             '<a href="">' +
-            '<img src="images/casa.jpg">' +
+            '<img src="'+json[i].foto+'">' +
             '</a>' +
             '</div>' +
             '</figure>' +
             '<div class=featured_card_details>' +
             '<h3>' +
-            '<a>Villone</a>' +
+            '<a>'+json[i].nome+'</a>' +
             '</h3>' +
-            '<p class=featured_card_description>Bellissimo villone</p>' +
+            '<p class=featured_card_description>'+json[i].descrizione+'</p>' +
             '<div class="featured_card_features_wrap">' +
             '<div class="featured_card_feature">' +
             '<span class="features_title">Camere da letto</span>' +
             '<div>' +
             '<i class="feature_icon icon-bed"></i>' +
-            '<span class="text_feature">1</span>' +
+            '<span class="text_feature">'+json[i].letti+'</span>' +
             '</div>' +
             '</div>' +
             '<div class="featured_card_feature">' +
-            '<span class="features_title">Camere da letto</span>' +
+            '<span class="features_title">Bagni</span>' +
             '<div>' +
-            '<i class="feature_icon icon-bed"></i>' +
-            '<span class="text_feature">1</span>' +
+            '<i class="feature_icon icon-shower"></i>' +
+            '<span class="text_feature">'+json[i].bagni+'</span>' +
             '</div>' +
             '</div>' +
             '<div class="featured_card_feature">' +
-            '<span class="features_title">Camere da letto</span>' +
+            '<span class="features_title">Superficie</span>' +
             '<div>' +
-            '<i class="feature_icon icon-bed"></i>' +
-            '<span class="text_feature">1</span>' +
+            '<i class="feature_icon icon-square-o"></i>' +
+            '<span class="text_feature">'+json[i].superficie+'</span>' +
             '</div>' +
             '</div>' +
             '</div>' +
             '<div class="featured_card_priceLabel">' +
             '<div class="featured_card_price">' +
-            '<span class=status>In Vendita</span>' +
-            '<p class="price">€ 500000</p>' +
+            '<span class=status>'+json[i].tipoVendiata+'</span>' +
+            '<p class="price">€ '+json[i].prezzo+'</p>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -735,6 +732,7 @@
             content: contentString,
             maxWidth: 450,
         });
+
 
         const marker = new google.maps.Marker({
             position: uluru,
@@ -755,23 +753,34 @@
 </script>
 
 <script>
-    $(document).ready(function () {
-        var idAppartamenti=[];
+    function mappa(map) {
+        var idAppartamenti = [];
         var elements = document.getElementsByName("idAppartamento");
-        for(var i=0;i<elements.length;i++){
+        for (var i = 0; i < elements.length; i++) {
             idAppartamenti.push(parseInt(elements[i].value));
         }
-        $.ajax({
-            url:"ServletMannaggiaLaMadonna",
-            type:"POST",
-            dataType:'json',
-            data: {idAppartamenti:idAppartamenti},
-            success:function(data){
-                // codes....
-            },
-        });
-    });
+        var stringa = JSON.stringify(idAppartamenti);
+        $.post('ServletProvaJson', {idAppartamenti: stringa}, function (listJson) {
+            var json = JSON.parse(listJson);
+            for (var i = 0; i < json.length; i++) {
+                initMap(json, i, map);
+            }
+        })
+    };
 </script>
+
+<script>
+    $(document).ready(function () {
+        const uluru = {lat:40.7454000, lng:14.6454200}
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 10,
+            center: uluru,
+        });
+        mappa(map)
+    });
+
+</script>
+
 
 <script src="script/valutazione.js"></script>
 <script src="script/index.js"></script>
