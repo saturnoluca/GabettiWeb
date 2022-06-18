@@ -25,7 +25,7 @@
     }
 }
 
-@media (min-width: 480px) and (max-width: 767px) {
+@media (min-width: 320px) and (max-width: 767px) {
     .div_dashboard_page{
         padding: 30px 0px 30px 00px;
     }
@@ -44,4 +44,9 @@
     font-weight: 500;
     line-height: 1.2;
     color: #b20135;
+}
+
+input[type=button] {
+    border: none;
+    outline: none;
 }

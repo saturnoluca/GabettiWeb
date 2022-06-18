@@ -253,19 +253,19 @@
 
 @media (min-width: 1024px) {
   .div_user_page{
-    padding: 70px 50px 70px 50px;
+    padding: 50px 25px 50px 25px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .div_user_page{
-    padding: 50px 30px 50px 30px;
+    padding: 50px 25px 50px 25px;
   }
 }
 
-@media (min-width: 480px) and (max-width: 767px) {
+@media (min-width: 320px) and (max-width: 767px) {
   .div_user_page{
-    padding: 30px 0px 30px 00px;
+    padding: 50px 25px 50px 25px;
   }
 }
 
@@ -279,7 +279,7 @@
 }
 
 .user_head_title .head_title{
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 500;
   line-height: 1.2;
   color: #b20135;
@@ -299,28 +299,32 @@
 .user_col_left{
     max-width: 100%;
     width: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 @media(min-width:768px){
     .user_col_left{
         width: 33.3333%;
         flex: 0 0 auto;
+        padding: 20px;
     }
 }
 
 .user_col_right{
     max-width: 100%;
     width: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 @media(min-width:768px){
     .user_col_right{
         width: 66.6666%;
         flex: 0 0 auto;
+        padding: 20px;
     }
 }
 

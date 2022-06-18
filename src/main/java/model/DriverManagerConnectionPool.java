@@ -23,12 +23,11 @@ public class DriverManagerConnectionPool {
         Connection newConnection = null;
         String ip = "localhost";
         String port = "3306";
-        String db = "mydb";
+        String db = "gabetti";
         String username = "root";
         String password = "123456Aa/";
-        newConnection = DriverManager.getConnection("jdbc:mysql://" + ip + ":"
-                        + port + "/" + db + "?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true",
-                username, password);
+        String url = "jdbc:mysql://localhost:3306/mydb";
+        newConnection = DriverManager.getConnection(url,username,password);
         newConnection.setAutoCommit(false);
         return newConnection;
     }

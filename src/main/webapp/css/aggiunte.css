@@ -185,7 +185,7 @@ nav{
     }
   }
   
-  @media (min-width: 480px) and (max-width: 767px){
+  @media (min-width: 320px) and (max-width: 767px){
     .search_form{
       flex-wrap: wrap;
       margin-top: 0;
@@ -273,7 +273,7 @@ nav{
     }
   }
   
-  @media (min-width: 480px) and (max-width: 767px){
+  @media (min-width: 320px) and (max-width: 767px){
     .search_form .search_fields .search_option{
       width: 50%;
       padding: 0;
@@ -323,7 +323,7 @@ nav{
     }
   }
   
-  @media (min-width: 480px) and (max-width: 767px){
+  @media (min-width: 320px) and (max-width: 767px){
     .search_form .search_fields .search_select label{
       padding: 15px 15px 3px;
       margin-bottom: 0;
@@ -679,7 +679,7 @@ nav{
     margin-bottom: 20px;
   }
   
-  @media (min-width: 480px){
+  @media (min-width: 320px){
     .menu_item{
       width: 50%;
     }
@@ -1035,9 +1035,10 @@ nav{
   
   .wrap_content{
     width: 33.333%;
+    z-index: 1;
   }
 
-  @media(min-height: 300px) and (max-width: 479px){
+  @media(min-height: 320px) and (max-width: 479px){
     .wrap_content{
       width: 100%;
     }
@@ -1059,13 +1060,12 @@ nav{
   }
 }
 
-  @media(min-width:480px) and (max-width:768px){
+  @media(min-width:320px) and (max-width:768px){
     .wrap_content_max{
       width: 100%;
     }
   }
-  
-  
+
   .wrap_content_half{
     width: 25%;
   }
@@ -1075,6 +1075,28 @@ nav{
       width: 50%;
     }
   }
+
+  @media(min-width:320px) and (max-width:479px){
+    .wrap_content_half{
+      width: 100%;
+    }
+  }
+
+.wrap_content_3{
+  width: 33.333%;
+}
+
+@media(min-width:480px) and (max-width:768px){
+  .wrap_content_3{
+    width: 50%;
+  }
+}
+
+@media(min-width:320px) and (max-width:479px){
+  .wrap_content_3{
+    width: 100%;
+  }
+}
   
   
   .search_option input{
@@ -1105,8 +1127,13 @@ nav{
     }
   }
   
-  @media(min-width:480px) and (max-width:1023px){
+  @media(min-width:320px) and (max-width:1023px){
     .search_option input{
       padding: 12px 15px;
     }
   }
+
+input[type=button] {
+  border: none;
+  outline: none;
+}

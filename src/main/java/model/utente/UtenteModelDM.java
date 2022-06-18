@@ -38,7 +38,7 @@ public class UtenteModelDM implements UtenteModel {
             connection = dmcp.getConnection();
             if (utente instanceof UtenteBean) {
                 if (((UtenteBean) utente).getFoto().getSize() <= 0) {
-                    insertSql = "INSERT INTO Utente(username, password, nome, cognome, email, ruolo) VALUES(?, ?, ?, ?, ?, ?)";
+                    insertSql = "INSERT INTO utente(username, password, nome, cognome, email, ruolo) VALUES(?, ?, ?, ?, ?, ?)";
                     ps = connection.prepareStatement(insertSql);
                     ps.setString(1, ((UtenteBean) utente).getUsername());
                     ps.setString(2, ((UtenteBean) utente).getPassword());
@@ -49,7 +49,7 @@ public class UtenteModelDM implements UtenteModel {
 
                 } else {
 
-                    insertSql = "INSERT INTO Utente(username, password, nome, cognome, email, foto, ruolo) VALUES(?, ?, ?, ?, ?, ?, ?)";
+                    insertSql = "INSERT INTO utente(username, password, nome, cognome, email, foto, ruolo) VALUES(?, ?, ?, ?, ?, ?, ?)";
                     ps = connection.prepareStatement(insertSql);
                     ps.setString(1, ((UtenteBean) utente).getUsername());
                     ps.setString(2, ((UtenteBean) utente).getPassword());

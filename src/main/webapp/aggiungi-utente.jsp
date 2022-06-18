@@ -148,12 +148,12 @@
                                             <i class="fas fa-times"></i>
                                         </div>
                                     </div>
-                                    <button type="button" onclick="defaultBtnActive()" id="custom-btn">Seleziona un'immagine</button>
-                                    <input id="default-btn" type="file" hidden name="foto">
                                 </div>
                             </div>
                         </div>
                         <div class="div_button_submit">
+                            <button type="button" onclick="defaultBtnActive()" id="custom-btn">Seleziona un'immagine</button>
+                            <input id="default-btn" type="file" hidden name="foto">
                             <input type="submit" value="Aggiungi Utente">
                         </div>
                     </div>

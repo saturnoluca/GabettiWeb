@@ -40,7 +40,14 @@
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="bootstrap/js/jquery.sticky.js"></script>
     <script src="script/dettagliappartamento.js"></script>
-
+    <meta property="og:image" content="https://www.website.com/logo.jpg">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.website.com/"/>
+    <meta property="og:title" content="Website title" />
+    <meta property="og:description" content="Website description." />
     <title>Gabetti Nocera | Homepage</title>
 
 </head>
@@ -451,10 +458,10 @@
                                                     <i class="icon-facebook"></i>
                                                 </li>
                                                 <li class="choice_telegram">
-                                                    <i class="icon-telegram"></i>
+                                                    <a href="https://telegram.me/share/url?url=http://93.186.251.8/ServletDettagliAppartamento?id=7"><i class="icon-telegram"></i></a>
                                                 </li>
                                                 <li class="choice_whatsapp">
-                                                    <i class="icon-whatsapp"></i>
+                                                    <a onclick="window.open('https://web.whatsapp.com://send?text=http://93.186.251.8/ServletDettagliAppartamento?id=7')"><i class="icon-whatsapp"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -516,6 +523,10 @@
                                     <span class="value"><%=appBean.getRiscaldamento()%></span>
                                 </li>
                             </ul>
+                            <%
+                                for (MultimediaBean bean : allMulti) {
+                                    if (bean.getIdAppartamento() == appBean.getIdAppartamento()) {
+                            %>
                             <div class="property_floor_plans noPrint">
                                 <h4 class="property_heading_h4">Planimetria</h4>
                                 <div class="floor_plans_accordions">
@@ -528,22 +539,17 @@
                                         </div>
                                         <div id="floor" class="floor_plan_content" style="display: block;">
                                             <div>
-                                                <%
-                                                    for (MultimediaBean bean : allMulti) {
-                                                        if (bean.getIdAppartamento() == appBean.getIdAppartamento() && bean.getPlanimetriaString() != null) {
-                                                %>
                                                 <a href="">
-                                                    <img src=data:image/png;base64,<%=bean.getPlanimetriaString().get(0)%>">
+                                                    <img src="data:image/png;base64,<%=bean.getPlanimetriaString()%>">
                                                 </a>
-                                                <%
-                                                        }
-                                                    }
-                                                %>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <%
+                                    }
+                            %>
                             <%if (multimediaBean.getVideoString().size() != 0) {%>
                             <div class="property_video noPrint">
                                 <h4 class="property_heading_h4">Video</h4>
@@ -552,7 +558,7 @@
                                             src="data:video/mp4;base64,<%=multimediaBean.getVideoString().get(0)%>">
                                 </video>
                             </div>
-                            <%}%>
+                            <%}}%>
                             <div class="property_map">
                                 <input type="hidden" name="indirizzoAppartamento"
                                        value="<%=indirizzoBean.getCitta()+", "+indirizzoBean.getProvincia()+", "+ indirizzoBean.getNumeroCivico()%>">
@@ -617,7 +623,7 @@
                                         </p>
                                         <div class="privacy_agreement">
                                             <span class="privacy_checkboxLabel">Consenso sulla privacy</span>
-                                            <input type="checkbox">
+                                            <input type="checkbox" style="display: block;">
                                             <label>Acconsento che questo sito Web memorizzi le informazioni inviate in modo che possano rispondere alla mia richiesta.</label>
                                         </div>
                                         <div class="agent_call">

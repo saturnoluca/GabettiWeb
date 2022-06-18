@@ -116,7 +116,6 @@
                                         <a><%=bean.getNome() + " " + bean.getCognome()%>
                                         </a>
                                     </h3>
-                                    <p class="user_description">bravo agente</p>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +124,7 @@
                                 <span class="user_username"><%=bean.getUsername()%></span>
                             </div>
                             <div class="column column_email">
-                                <span class="user_email"><%=bean.getUsername()%></span>
+                                <span class="user_email"><%=bean.getEmail()%></span>
                             </div>
                             <div class="column column_role">
                                 <span class="user_role"><%=bean.getRuolo()%></span>

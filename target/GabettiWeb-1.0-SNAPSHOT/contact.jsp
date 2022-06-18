@@ -361,27 +361,27 @@
                                     <input type="hidden" name="action" id="action" value="contattaci">
                                     <p class="contact_input">
                                         <label>Nome</label>
-                                        <input type="text" placeholder="Il tuo nome" id="nome" name="nome">
+                                        <input required type="text" placeholder="Il tuo nome" id="nome" name="nome">
                                     </p>
                                     <p class="contact_input">
                                         <label>Email</label>
-                                        <input type="email" placeholder="La tua email" id="email" name="email">
+                                        <input required type="email" placeholder="La tua email" id="email" name="email">
                                     </p>
                                     <p class="contact_input">
                                         <label>Telefono</label>
-                                        <input type="text" placeholder="Il tuo numero di telefono" id="telefono" name="telefono">
+                                        <input required type="text" placeholder="Il tuo numero di telefono" id="telefono" name="telefono">
                                     </p>
                                     <p class="contact_input_textarea">
                                         <label>Messaggio</label>
-                                        <textarea cols="40" rows="6" placeholder="Scrivi il tuo messaggio" id="messaggio" name="messaggio"></textarea>
+                                        <textarea required cols="40" rows="6" placeholder="Scrivi il tuo messaggio" id="messaggio" name="messaggio"></textarea>
                                     </p>
                                     <p class="privacy_agreement">
                                         <span class="privacy_checkbox_label">Consenso sulla privacy</span>
-                                        <input type="checkbox">
+                                        <input id="privacy" type="checkbox" style="display: block;">
                                         <label>Acconsento che questo sito Web memorizzi le informazioni inviate in modo che possano rispondere alla mia richiesta.</label>
                                     </p>
                                     <p class="contact_submit">
-                                        <input type="submit" value="Invia Messaggio">
+                                        <input type="submit" onclick="validate()" value="Invia Messaggio">
                                     </p>
                                 </form>
                             </section>
@@ -393,7 +393,7 @@
                                 </div>
                                 <p>
                                     <span class="label">Telefono</span>
-                                    <a href="">3312294330</a>
+                                    <a href="tel:+390815173146">081/5173146</a>
                                 </p>
                             </div>
                             <div class="contact_item">
@@ -402,7 +402,7 @@
                                 </div>
                                 <p>
                                     <span class="label">Cellulare</span>
-                                    <a href="">3312294330</a>
+                                    <a href="tel:+393314373803">3314373803</a>
                                 </p>
                             </div>
                             <div class="contact_item">
@@ -411,7 +411,7 @@
                                 </div>
                                 <p>
                                     <span class="label">Email</span>
-                                    <a href="">nocera@gabetti.it</a>
+                                    <a href="mailto:nocera@gabetti.it">nocera@gabetti.it</a>
                                 </p>
                             </div>
                             <div class="contact_item">
@@ -420,7 +420,7 @@
                                 </div>
                                 <p>
                                     <span class="label">Indirizzo</span>
-                                    <a href="">Via Roma Nocera Inferiore (SA)</a>
+                                    <a href="https://g.page/GabettiNocerainferiore?share">Via Attilio Barbarulo, 132, 84014 Nocera inferiore SA</a>
                                 </p>
                             </div>
                         </div>
@@ -435,6 +435,14 @@
     <jsp:include page="footer.jsp"/>
 </div>
 
+<script type=text/javascript>
+    function validate(){
+        var privacy = document.getElementById("privacy");
+        if (privacy.checked != 1){
+            alert("Spunta la casella sul consenso della privacy")
+        }
+    }
+</script>
 
 <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
 <script src="bootstrap/js/popper.min.js"></script>

@@ -76,7 +76,7 @@ body {
     }
 }
 
-@media (min-width: 480px) and (max-width: 767px){
+@media (min-width: 320px) and (max-width: 767px){
     .banner_wrap{
         padding-left: 30px;
         padding-right: 30px;
@@ -125,7 +125,7 @@ body {
     }
 }
 
-@media(min-width: 480px) and (max-width: 767px){
+@media(min-width: 320px) and (max-width: 767px){
     .section_details_property{
         padding-top: 30px;
         padding-left: 30px;
@@ -160,7 +160,7 @@ body {
     }
 }
 
-@media(min-width: 480px) and (max-width: 767px) {
+@media(min-width: 320px) and (max-width: 767px) {
     .property_head{
         padding-bottom: 30px;
     }
@@ -190,7 +190,7 @@ body {
     color: #808080;
 }
 
-@media(min-width: 480px){
+@media(min-width: 320px){
     .title{
         margin-bottom: 5px;
     }
@@ -245,7 +245,7 @@ body {
     }
 }
 
-@media(min-width: 480px) and (max-width: 1023px){
+@media(min-width: 320px) and (max-width: 1023px){
     .property_wrap{
         padding-top: 30px;
     }
@@ -270,7 +270,7 @@ body {
     background: #fff
 }
 
-@media(min-width: 480px){
+@media(min-width: 320px){
     .property_content{
         margin-bottom: 30px;
         padding: 30px;
@@ -287,7 +287,7 @@ body {
     border-bottom: 1px dashed rgba(128,128,128,.2);
 }
 
-@media(min-width: 480px){
+@media(min-width: 320px){
     .property_content_head{
         padding-bottom: 30px;
         margin-bottom: 30px;
@@ -363,7 +363,7 @@ body {
 
 }
 
-@media(min-width: 480px){
+@media(min-width: 320px){
     .property{
         margin-bottom: 30px;
     }
@@ -428,7 +428,7 @@ body {
     line-height: 2;
 }
 
-@media(min-width: 480px){
+@media(min-width: 320px){
     .property_additional li{
         padding: 7px 20px;
     }
@@ -859,7 +859,7 @@ body {
     font-size: 20px;
 }
 
-@media(min-width: 480px){
+@media(min-width: 320px){
     .featured_card .featured_card_details{
         padding: 25px;
     }
@@ -941,9 +941,6 @@ h1{
     position: absolute !important;
 }
 
-.carousel-inner{
-    height: 700px;
-}
 .carousel-item img{
     width: 100%;
     height: 100%;
@@ -952,7 +949,7 @@ h1{
 
 
 
-@media(min-width: 480px){
+@media(min-width: 320px){
     .property_share{
         top: 15px;
     }
@@ -965,7 +962,7 @@ h1{
     top: 40px;
 }
 
-@media(min-width: 480px){
+@media(min-width: 320px){
     .social_list{
         margin-left: -145px;
     }
@@ -1006,6 +1003,11 @@ h1{
     padding: 12px;
 }
 
+.social_list a{
+    color: #fff;
+    text-decoration: none;
+}
+
 .social_list .choice_whatsapp{
     background: #128c7e;
     display: block;
@@ -1017,4 +1019,9 @@ h1{
 .social_list i{
     width: 100%;
     height: 50px;
+}
+
+input[type=button] {
+    border: none;
+    outline: none;
 }

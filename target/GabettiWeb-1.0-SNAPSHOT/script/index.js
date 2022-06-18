@@ -17,9 +17,7 @@ function advancedOption(){
             document.getElementById("selezionaStato").classList.remove("show");
             document.getElementById("selezionaMinCamere").classList.remove("show");
             document.getElementById("selezionaMinBagni").classList.remove("show");
-            document.getElementById("selezionaMinPrezzo").classList.remove("show");
             document.getElementById("selezionaMinAuto").classList.remove("show");
-            document.getElementById("selezionaAgente").classList.remove("show");
         }
         function apriScegliTipo() {
             document.getElementById("selezionaTipo").classList.toggle("show");
@@ -27,10 +25,7 @@ function advancedOption(){
             document.getElementById("selezionaStato").classList.remove("show");
             document.getElementById("selezionaMinCamere").classList.remove("show");
             document.getElementById("selezionaMinBagni").classList.remove("show");
-            document.getElementById("selezionaMinPrezzo").classList.remove("show");
-            document.getElementById("selezionaMaxPrezzo").classList.remove("show");
             document.getElementById("selezionaMinAuto").classList.remove("show");
-            document.getElementById("selezionaAgente").classList.remove("show");
         }
 
         function apriScegliStato() {
@@ -39,10 +34,7 @@ function advancedOption(){
             document.getElementById("selezionaTipo").classList.remove("show");
             document.getElementById("selezionaMinCamere").classList.remove("show");
             document.getElementById("selezionaMinBagni").classList.remove("show");
-            document.getElementById("selezionaMinPrezzo").classList.remove("show");
-            document.getElementById("selezionaMaxPrezzo").classList.remove("show");
             document.getElementById("selezionaMinAuto").classList.remove("show");
-            document.getElementById("selezionaAgente").classList.remove("show");
         }
 
         
@@ -52,10 +44,7 @@ function advancedOption(){
             document.getElementById("selezionaLocalita").classList.remove("show");
             document.getElementById("selezionaStato").classList.remove("show");
             document.getElementById("selezionaMinBagni").classList.remove("show");
-            document.getElementById("selezionaMinPrezzo").classList.remove("show");
-            document.getElementById("selezionaMaxPrezzo").classList.remove("show");
             document.getElementById("selezionaMinAuto").classList.remove("show");
-            document.getElementById("selezionaAgente").classList.remove("show");
         }
 
         function apriScegliMinBagni() {
@@ -64,59 +53,20 @@ function advancedOption(){
             document.getElementById("selezionaLocalita").classList.remove("show");
             document.getElementById("selezionaStato").classList.remove("show");
             document.getElementById("selezionaMinCamere").classList.remove("show");
-            document.getElementById("selezionaMinPrezzo").classList.remove("show");
-            document.getElementById("selezionaMaxPrezzo").classList.remove("show");
             document.getElementById("selezionaMinAuto").classList.remove("show");
-            document.getElementById("selezionaAgente").classList.remove("show");
-        }
-
-        function apriScegliMinPrezzo() {
-            document.getElementById("selezionaMinPrezzo").classList.toggle("show");
-            document.getElementById("selezionaTipo").classList.remove("show");
-            document.getElementById("selezionaLocalita").classList.remove("show");
-            document.getElementById("selezionaStato").classList.remove("show");
-            document.getElementById("selezionaMinBagni").classList.remove("show")
-            document.getElementById("selezionaMinCamere").classList.remove("show");
-            document.getElementById("selezionaMaxPrezzo").classList.remove("show");
-            document.getElementById("selezionaMinAuto").classList.remove("show");
-            document.getElementById("selezionaAgente").classList.remove("show");
-        }
-
-        function apriScegliMaxPrezzo() {
-            document.getElementById("selezionaMaxPrezzo").classList.toggle("show");
-            document.getElementById("selezionaTipo").classList.remove("show");
-            document.getElementById("selezionaLocalita").classList.remove("show");
-            document.getElementById("selezionaStato").classList.remove("show");
-            document.getElementById("selezionaMinBagni").classList.remove("show")
-            document.getElementById("selezionaMinCamere").classList.remove("show");
-            document.getElementById("selezionaMinPrezzo").classList.remove("show");
-            document.getElementById("selezionaMinAuto").classList.remove("show");
-            document.getElementById("selezionaAgente").classList.remove("show");
         }
 
         function apriScegliMinAuto() {
-            document.getElementById("selezionaMinAuto").classList.toggle("show");
-            document.getElementById("selezionaMaxPrezzo").classList.remove("show");
-            document.getElementById("selezionaTipo").classList.remove("show");
-            document.getElementById("selezionaLocalita").classList.remove("show");
-            document.getElementById("selezionaStato").classList.remove("show");
-            document.getElementById("selezionaMinBagni").classList.remove("show")
-            document.getElementById("selezionaMinCamere").classList.remove("show");
-            document.getElementById("selezionaMinPrezzo").classList.remove("show");
-            document.getElementById("selezionaAgente").classList.remove("show");
-        }
+        document.getElementById("selezionaMinAuto").classList.toggle("show");
+        document.getElementById("selezionaTipo").classList.remove("show");
+        document.getElementById("selezionaLocalita").classList.remove("show");
+        document.getElementById("selezionaStato").classList.remove("show");
+        document.getElementById("selezionaMinBagni").classList.remove("show")
+        document.getElementById("selezionaMinCamere").classList.remove("show");
+    }
 
-        function apriScegliAgente() {
-            document.getElementById("selezionaAgente").classList.toggle("show");
-            document.getElementById("selezionaMinAuto").classList.remove("show");
-            document.getElementById("selezionaMaxPrezzo").classList.remove("show");
-            document.getElementById("selezionaTipo").classList.remove("show");
-            document.getElementById("selezionaLocalita").classList.remove("show");
-            document.getElementById("selezionaStato").classList.remove("show");
-            document.getElementById("selezionaMinBagni").classList.remove("show")
-            document.getElementById("selezionaMinCamere").classList.remove("show");
-            document.getElementById("selezionaMinPrezzo").classList.remove("show");
-        }
+
+
 
           window.onclick = function(event) {
             if (!event.target.matches('.dropdown-toggle')) {

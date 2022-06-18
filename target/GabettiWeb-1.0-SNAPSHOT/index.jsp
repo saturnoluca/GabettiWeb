@@ -163,14 +163,14 @@
 							  <div id="selezionaLocalita" class="dropdown-content wrap_content">
 								<ul class="ul_inner">
 								  <li>
-									<a onclick="cambiaLocalita(this)" role="option" href="#">
+									<a onclick="cambiaLocalita(this)" role="option">
 									  <span class="icon-check check_mark"></span>
 									  <span class="text">Qualsiasi</span>
 									</a>
 								</li>
                                     <%for (Città c : allCittàZone) {%>
 								  <li>
-									  <a onclick="cambiaLocalita(this)" role="option" href="#">
+									  <a onclick="cambiaLocalita(this)" role="option">
 										<span class="icon-check check_mark"></span>
 										<span class="text"><%=c.getNomeCittà()%></span>
 									  </a>
@@ -179,7 +179,7 @@
 								  <li>
 									<ul class="ul_inner">
 									  <li>
-										<a onclick="cambiaLocalita(this)" role="option" href="#">
+										<a onclick="cambiaLocalita(this)" role="option">
 										  <span class="icon-check check_mark"></span>
 										  <span class="sublist text"><%=z%></span>
 										</a>
@@ -210,22 +210,22 @@
 								  </div>
 								</div>
 							  </button>
-							  <div id="selezionaStato" class="dropdown-content">
+							  <div id="selezionaStato" class="dropdown-content wrap_content">
 								<ul class="ul_inner">
 								  <li>
-									<a onclick="cambiaStato(this)" role="option" href="#">
+									<a onclick="cambiaStato(this)" role="option">
 									  <span class="icon-check check_mark"></span>
 									  <span class="text">Qualsiasi</span>
 									</a>
 								</li>
 								  <li>
-									  <a onclick="cambiaStato(this)" role="option" href="#">
+									  <a onclick="cambiaStato(this)" role="option">
 										<span class="icon-check check_mark"></span>
 										<span class="text">In Vendita</span>
 									  </a>
 								  </li>
 								  <li>
-									<a onclick="cambiaStato(this)" role="option" href="#">
+									<a onclick="cambiaStato(this)" role="option">
 									  <span class="icon-check check_mark"></span>
 									  <span class="text">in Affitto</span>
 									</a>
@@ -252,14 +252,14 @@
 							  <div id="selezionaTipo" class="dropdown-content wrap_content_max">
 								<ul class="ul_inner">
 								  <li>
-									<a onclick="cambiaTipo(this)" role="option" href="#">
+									<a onclick="cambiaTipo(this)" role="option">
 									  <span class="icon-check check_mark"></span>
 									  <span class="text">Qualsiasi</span>
 									</a>
 								  </li>
                                     <%for (String s : categorie) {%>
 								  <li>
-									  <a onclick="cambiaTipo(this)" role="option" href="#">
+									  <a onclick="cambiaTipo(this)" role="option">
 										<span class="icon-check check_mark"></span>
 										<span class="text"><%=s%></span>
 									  </a>
@@ -290,19 +290,19 @@
                                     <div id="selezionaMinCamere" class="dropdown-content wrap_content_half">
                                         <ul class="ul_inner">
                                             <li>
-                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
+                                                <a onclick="cambiaMinCamere(this)" role="option">
                                                     <span class="icon-check check_mark"></span>
                                                     <span class="text">Qualsiasi</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
+                                                <a onclick="cambiaMinCamere(this)" role="option">
                                                     <span class="icon-check check_mark"></span>
                                                     <span class="text">1</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
+                                                <a onclick="cambiaMinCamere(this)" role="option">
                                                     <span class="icon-check check_mark"></span>
                                                     <span class="text">2</span>
                                                 </a>
@@ -328,19 +328,19 @@
                                     <div id="selezionaMinBagni" class="dropdown-content wrap_content_half">
                                         <ul class="ul_inner">
                                             <li>
-                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
+                                                <a onclick="cambiaMinBagni(this)" role="option">
                                                     <span class="icon-check check_mark"></span>
                                                     <span class="text">Qualsiasi</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
+                                                <a onclick="cambiaMinBagni(this)" role="option">
                                                     <span class="icon-check check_mark"></span>
                                                     <span class="text">1</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
+                                                <a onclick="cambiaMinBagni(this)" role="option">
                                                     <span class="icon-check check_mark"></span>
                                                     <span class="text">2</span>
                                                 </a>
@@ -366,27 +366,26 @@
                                                 <div id="valore_minAuto" class="filter-option-text">
                                                     Qualsiasi
                                                 </div>
-                                                <input type="hidden" name="auto_immobile" id="auto_immobile"
-                                                       value="Qualsiasi">
+                                                <input type="hidden" name="auto_immobile" id="auto_immobile" value="Qualsiasi">
                                             </div>
                                         </div>
                                     </button>
-                                    <div id="selezionaMinAuto" class="dropdown-content wrap_content_half">
+                                    <div id="selezionaMinAuto" class="dropdown-content wrap_content_3">
                                         <ul class="ul_inner">
                                             <li>
-                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
+                                                <a onclick="cambiaMinAuto(this)" role="option">
                                                     <span class="icon-check check_mark"></span>
                                                     <span class="text">Qualsiasi</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
+                                                <a onclick="cambiaMinAuto(this)" role="option">
                                                     <span class="icon-check check_mark"></span>
                                                     <span class="text">1</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
+                                                <a onclick="cambiaMinAuto(this)" role="option">
                                                     <span class="icon-check check_mark"></span>
                                                     <span class="text">2</span>
                                                 </a>

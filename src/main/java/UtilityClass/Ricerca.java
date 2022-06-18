@@ -7,6 +7,8 @@ public class Ricerca {
     private String categoria;
     private int letti=-1;
     private String bagni;
+
+    private int postiAuto=-1;
     private float minPrezzo=-1;
     private float maxPrezzo=-1;
     private int minGarage=-1;
@@ -17,7 +19,7 @@ public class Ricerca {
     public Ricerca() {
     }
 
-    public Ricerca(String città, String vendita, String categoria, int letti, String bagni, float minPrezzo, float maxPrezzo, int minGarage, float minSuperficie, float maxSuperficie, int agente) {
+    public Ricerca(String città, String vendita, String categoria, int letti, String bagni, int postiAuto, float minPrezzo, float maxPrezzo, int minGarage, float minSuperficie, float maxSuperficie, int agente) {
         this.città = città;
         this.vendita = vendita;
         this.categoria = categoria;
@@ -26,6 +28,7 @@ public class Ricerca {
         this.minPrezzo = minPrezzo;
         this.maxPrezzo = maxPrezzo;
         this.minGarage = minGarage;
+        this.postiAuto = postiAuto;
         this.minSuperficie = minSuperficie;
         this.maxSuperficie = maxSuperficie;
         this.agente = agente;
@@ -45,6 +48,14 @@ public class Ricerca {
 
     public void setVendita(String vendita) {
         this.vendita = vendita;
+    }
+
+    public int getPostiAuto() {
+        return postiAuto;
+    }
+
+    public void setPostiAuto(int postiAuto) {
+        this.postiAuto = postiAuto;
     }
 
     public String getCategoria() {

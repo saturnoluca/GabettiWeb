@@ -24,7 +24,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
     public void doSave(IndirizzoBean indirizzo) {
         Connection connection = null;
         PreparedStatement ps = null;
-        String insertSql = "INSERT INTO Indirizzo(via, numeroCivico, cap, città, provincia, Appartamento_idAppartamento, zona) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String insertSql = "INSERT INTO indirizzo(via, numeroCivico, cap, città, provincia, Appartamento_idAppartamento, zona) VALUES(?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = dmcp.getConnection();
             if (indirizzo instanceof IndirizzoBean) {

@@ -374,95 +374,6 @@
     </div>
     <section class="section-agent section_flex wrap_padding">
         <div class="page page_agent page_main">
-            <div class="agent_profile">
-                <article class="agent_card">
-                    <div class="agent_card_wrap">
-                        <div class="agent_card_head">
-                            <figure class="agent_card_figure">
-                                <a href="">
-                                    <img width="210" height="210"
-                                         src="data:image/png;base64,<%=utenteBean.getFotoString()%>">
-                                </a>
-                            </figure>
-                            <div class="agent_card_name">
-                                <h4 class="name"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
-                                </h4>
-                                <div class="agent_card_listings">
-                                <span class="count"><%
-                                    for (CompositeKeyAgenteCase key : agenteCase) {
-                                        if (key.getBean().getIdAgente() == agenteBean.getIdAgente()) {
-                                %><%=key.getContaCase()%><%
-                                        }
-                                    }%></span>
-                                    <span class="head">Immobili posseduti</span>
-                                </div>
-                            </div>
-                            <div class="social">
-                                <%if(agenteBean.getLinkFacebook()!= null){%>
-                                    <a href=""><i class="icon_social icon-facebook"></i></a>
-                                <%}%>
-                                <%if(agenteBean.getLinkInstagram()!= null){%>
-                                    <a href=""><i class="icon_social icon-instagram"></i></a>
-                                <%}%>
-                            </div>
-                        </div>
-                        <div class="agent_profile_content">
-                            <p>
-                                <%=agenteBean.getDescrizionePersonale()%>
-                            </p>
-                        </div>
-                        <div class="agent_card_details">
-                            <div class="agent_card_contact">
-                                <div class="agent_card_contact_wrap">
-                                    <p class="contact">Cellulare: <a href=""><%=agenteBean.getTelefonoCellulare()%>
-                                    </a></p>
-                                    </a></p>
-                                    <p class="contact"><a
-                                            href="https://wa.me/39<%=agenteBean.getTelefonoCellulare()%>">Chatta su
-                                        whatsapp</a></p>
-                                    <p class="contact">Email: <a href=""><%=utenteBean.getEmail()%>
-                                    </a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="horizontal_border"></div>
-                        <div class="agent_profile_contact_form">
-                            <div class="agent_form">
-                                <form action="ServletMail" method="post">
-                                    <div class="agent_form_field agent_form_text">
-                                        <label>Nome</label>
-                                        <input type="text" placeholder="Il tuo nome" id="nomeGuest">
-                                    </div>
-                                    <div class="agent_form_field agent_form_text">
-                                        <label>Email</label>
-                                        <input type="text" placeholder="La tua email" id="emailGuest">
-                                    </div>
-                                    <div class="agent_form_field agent_form_text">
-                                        <label>Telefono</label>
-                                        <input type="text" placeholder="Il tuo numero di telefono" id="telefonoGuest">
-                                    </div>
-                                    <div class="agent_form_field agent_form_textarea">
-                                        <label>Messaggio</label>
-                                        <textarea rows="6" placeholder="Il tuo messaggio"
-                                                  id="messaggioGuest"></textarea>
-                                    </div>
-                                    <input type="hidden" id="agenteid" value="<%=agenteBean.getIdAgente()%>">
-                                    <div class="form_privacy">
-                          <span class="form_checkbox_label">
-                            Consenso sulla privacy
-                          </span>
-                                        <input type="checkbox">
-                                        <label>Acconsento che questo sito Web memorizzi le informazioni inviate in modo che possano rispondere alla mia richiesta.</label>
-                                    </div>
-                                    <div class="agent_form_submit">
-                                        <input type="submit" class="submit_button" value="Invia Messaggio">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
             <div class="div_mylistings div_agent_mylistings">
                 <h2 class="page_title">
                     <span class="sub">I miei immobili</span>
@@ -547,6 +458,95 @@
                 </article>
                 <%}%>
             </div>
+            <div class="agent_profile">
+                <article class="agent_card">
+                    <div class="agent_card_wrap">
+                        <div class="agent_card_head">
+                            <figure class="agent_card_figure">
+                                <a href="">
+                                    <img width="210" height="210"
+                                         src="data:image/png;base64,<%=utenteBean.getFotoString()%>">
+                                </a>
+                            </figure>
+                            <div class="agent_card_name">
+                                <h4 class="name"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
+                                </h4>
+                                <div class="agent_card_listings">
+                                <span class="count"><%
+                                    for (CompositeKeyAgenteCase key : agenteCase) {
+                                        if (key.getBean().getIdAgente() == agenteBean.getIdAgente()) {
+                                %><%=key.getContaCase()%><%
+                                        }
+                                    }%></span>
+                                    <span class="head">Immobili posseduti</span>
+                                </div>
+                            </div>
+                            <div class="social">
+                                <%if(agenteBean.getLinkFacebook()!= null){%>
+                                    <a href=""><i class="icon_social icon-facebook"></i></a>
+                                <%}%>
+                                <%if(agenteBean.getLinkInstagram()!= null){%>
+                                    <a href=""><i class="icon_social icon-instagram"></i></a>
+                                <%}%>
+                            </div>
+                        </div>
+                        <div class="agent_profile_content">
+                            <p>
+                                <%=agenteBean.getDescrizionePersonale()%>
+                            </p>
+                        </div>
+                        <div class="agent_card_details">
+                            <div class="agent_card_contact">
+                                <div class="agent_card_contact_wrap">
+                                    <p class="contact">Cellulare: <a href=""><%=agenteBean.getTelefonoCellulare()%>
+                                    </a></p>
+                                    </a></p>
+                                    <p class="contact"><a
+                                            href="https://wa.me/39<%=agenteBean.getTelefonoCellulare()%>">Chatta su
+                                        whatsapp</a></p>
+                                    <p class="contact">Email: <a href=""><%=utenteBean.getEmail()%>
+                                    </a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="horizontal_border"></div>
+                        <div class="agent_profile_contact_form">
+                            <div class="agent_form">
+                                <form action="ServletMail" method="post">
+                                    <div class="agent_form_field agent_form_text">
+                                        <label>Nome</label>
+                                        <input required type="text" placeholder="Il tuo nome" id="nomeGuest">
+                                    </div>
+                                    <div class="agent_form_field agent_form_text">
+                                        <label>Email</label>
+                                        <input required type="text" placeholder="La tua email" id="emailGuest">
+                                    </div>
+                                    <div class="agent_form_field agent_form_text">
+                                        <label>Telefono</label>
+                                        <input required type="text" placeholder="Il tuo numero di telefono" id="telefonoGuest">
+                                    </div>
+                                    <div class="agent_form_field agent_form_textarea">
+                                        <label>Messaggio</label>
+                                        <textarea required rows="6" placeholder="Il tuo messaggio"
+                                                  id="messaggioGuest"></textarea>
+                                    </div>
+                                    <input type="hidden" id="agenteid" value="<%=agenteBean.getIdAgente()%>">
+                                    <div class="form_privacy">
+                          <span class="form_checkbox_label">
+                            Consenso sulla privacy
+                          </span>
+                                        <input id="privacy" type="checkbox" style="display: block;">
+                                        <label>Acconsento che questo sito Web memorizzi le informazioni inviate in modo che possano rispondere alla mia richiesta.</label>
+                                    </div>
+                                    <div class="agent_form_submit">
+                                        <input type="submit" class="submit_button" value="Invia Messaggio">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
         </div>
         <div class="page_right page_sidebar">
             <aside class="featured_sidebar">
@@ -617,5 +617,12 @@
 </div>
 
 </body>
-
+<script type=text/javascript>
+    function validate(){
+        var privacy = document.getElementById("privacy");
+        if (privacy.checked != 1){
+            alert("Spunta la casella sul consenso della privacy")
+        }
+    }
+</script>
 </html>

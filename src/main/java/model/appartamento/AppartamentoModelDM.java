@@ -266,7 +266,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
         String minSuperficie = "";
         String maxSuperficie = "";
         String minGarage = "";
-        String agente = "";
+        String postiAuto = "";
         try {
             if (ricerca.getCittà() != null) {
                 IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
@@ -312,9 +312,9 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 selectSql = selectSql + maxSuperficie;
             }
 
-            if (ricerca.getAgente() != -1) {
-                agente = "AND appartamento.Agente_idAgente=" + ricerca.getAgente();
-                selectSql = selectSql + agente;
+            if (ricerca.getPostiAuto() != -1) {
+                postiAuto = "AND appartamento.postoAuto=" + ricerca.getPostiAuto();
+                selectSql = selectSql + postiAuto;
             }
             System.out.println(selectSql);
             connection = dmcp.getConnection();

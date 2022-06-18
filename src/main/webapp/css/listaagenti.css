@@ -73,7 +73,7 @@ body{
     }
 }
 
-@media (min-width: 480px) and (max-width: 767px){
+@media (min-width: 320px) and (max-width: 767px){
     .banner_wrap{
         padding-left: 30px;
         padding-right: 30px;
@@ -138,7 +138,7 @@ body{
     }
 }
 
-@media (min-width: 480px) and (max-width: 767px){
+@media (min-width: 320px) and (max-width: 767px){
     .agents_section_padding{
         padding: 30px 30px 0px;
     }
@@ -243,7 +243,7 @@ body{
     }
 }
 
-@media (min-width: 480px) and (max-width: 767px){
+@media (min-width: 320px) and (max-width: 767px){
     .agent_card_wrap .agent_card_head .agent_card_figure{
         width: 30%;
     }
@@ -254,6 +254,12 @@ body{
     height: 150px;
     object-fit: cover;
     vertical-align: bottom;
+}
+
+@media (min-width: 320px) and (max-width: 767px){
+    .agent_card_figure img{
+        width: auto;
+    }
 }
 
 .agent_card_wrap a.agent_card_head .agent_card_name{
@@ -569,7 +575,7 @@ aside{
     font-size: 20px;
 }
 
-@media(min-width: 480px){
+@media(min-width: 320px){
     .featured_card .featured_card_details{
         padding: 25px;
     }
@@ -617,7 +623,7 @@ aside{
     margin: 10px 0;
 }
 
-@media(min-width: 480px){
+@media(min-width: 320px){
     .list_pagination{
         margin: 20px 0;
     }
@@ -642,5 +648,9 @@ aside{
 .list_pagination .current{
     background: #b20135;
     color: #fff;
+}
 
+input[type=button] {
+    border: none;
+    outline: none;
 }

@@ -247,12 +247,12 @@
 .div_user_list{
   position: relative;
   width: 100%;
-    padding: 100px 20px 70px;
+    padding: 50px 20px 50px;
 }
 
 @media (min-width: 768px) {
   .div_user_list{
-    padding: 100px 25px 70px;
+    padding: 50px 20px 50px;
   }
 }
 
@@ -264,7 +264,7 @@
     font-size: 24px;
     font-weight: 500;
     line-height: 1.2;
-    color:#333333;
+    color: #b20135;
 }
 
 .dashboard_users{

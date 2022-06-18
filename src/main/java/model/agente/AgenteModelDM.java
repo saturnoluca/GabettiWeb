@@ -52,7 +52,7 @@ public class AgenteModelDM implements AgenteModel {
     public Collection<CompositeKeyAgenteCase> RetrieveAgenteCase() {
         Connection connection = null;
         PreparedStatement ps = null;
-        String selectSql = "SELECT agente.*, (Select count(*) from appartamento where appartamento.Agente_idAgente=agente.idAgente) as contaCase FROM mydb.agente order by contaCase desc";
+        String selectSql = "SELECT agente.*, (Select count(*) from appartamento where appartamento.Agente_idAgente=agente.idAgente) as contaCase FROM agente order by contaCase desc";
         ArrayList<CompositeKeyAgenteCase> array = new ArrayList<CompositeKeyAgenteCase>();
         try {
             connection = dmcp.getConnection();
@@ -87,7 +87,7 @@ public class AgenteModelDM implements AgenteModel {
     public int TotaleVisite(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
-        String selectSql = "SELECT SUM(visualizzazioni) as totvisite FROM mydb.appartamento where Agente_idAgente=?";
+        String selectSql = "SELECT SUM(visualizzazioni) as totvisite FROM appartamento where Agente_idAgente=?";
         int totvisite=0;
         try{
             connection=dmcp.getConnection();

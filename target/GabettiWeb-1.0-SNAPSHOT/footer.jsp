@@ -68,7 +68,7 @@
                         <p class="contact_icon">
                             <i class="icon-whatsapp"></i>
                         </p>
-                        <a class="contact_content" href="https://wa.me/3312294330">3312294330</a>
+                        <a class="contact_content" href="https://wa.me/3481614050">3481614050</a>
                     </div>
                     <div class="contact_widget_item">
                         <p class="contact_icon">
