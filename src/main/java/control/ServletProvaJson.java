@@ -22,10 +22,6 @@ public class ServletProvaJson extends HttpServlet {
     public static AppartamentoModelDM app = new AppartamentoModelDM();
     public static MultimediaModelDM multi = new MultimediaModelDM();
     public static IndirizzoModelDM indirizzo = new IndirizzoModelDM();
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

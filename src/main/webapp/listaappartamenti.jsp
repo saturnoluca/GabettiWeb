@@ -686,7 +686,7 @@
             '<figure class=featured_card_figure>' +
             '<div class="featured_card_picture">' +
             '<a href="">' +
-            '<img src="'+json[i].foto+'">' +
+            '<img src="data:image/png;base64,'+json[i].foto+'" style="height: 275px;object-fit: cover">' +
             '</a>' +
             '</div>' +
             '</figure>' +
@@ -720,7 +720,7 @@
             '</div>' +
             '<div class="featured_card_priceLabel">' +
             '<div class="featured_card_price">' +
-            '<span class=status>'+json[i].tipoVendiata+'</span>' +
+            '<span class=status>'+json[i].tipoVendita+'</span>' +
             '<p class="price">€ '+json[i].prezzo+'</p>' +
             '</div>' +
             '</div>' +
