@@ -9,17 +9,18 @@ import java.util.Properties;
 public class Mail {
     public static void sendMail(String destinatario, String contenuto) throws Exception {
 
-        String myEmail = "juvejuve4ever999";
-        String password = "123456AaSs";
+        String myEmail = "gabettinocera.send@hotmail.com";
+        String password = "Gabettimail2022";
 
         Properties props = System.getProperties();
-        String host = "smtp.gmail.com";
+        String host = "smtp-mail.outlook.com";
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.user", myEmail);
         props.put("mail.smtp.password", password);
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
+        props.put("mail.debug", "true");
 
 
         Session session = Session.getInstance(props, new Authenticator() {

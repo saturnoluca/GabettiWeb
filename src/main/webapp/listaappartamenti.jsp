@@ -30,7 +30,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&v=weekly"
+            defer></script>
     <link rel="stylesheet" href="icomoon/style.css">
 
     <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
@@ -65,7 +66,7 @@
     int sizeArray = Integer.parseInt(sizeArrayString);
 %>
 <body>
-<%@ include file="loader.html"%>
+<%@ include file="loader.html" %>
 <nav id="navbar">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">
@@ -101,7 +102,8 @@
 								<div class="filter-option">
 								  <div class="filter-option-inner">
 									<div id="valore_localita" class="filter-option-text">Qualsiasi</div>
-                                    <input type="hidden" name="localita_immobile" id="localita_immobile" value="Qualsiasi">
+                                    <input type="hidden" name="localita_immobile" id="localita_immobile"
+                                           value="Qualsiasi">
 								  </div>
 								</div>
 							  </button>
@@ -382,14 +384,15 @@
                     <div class="sort_controls">
                         <button id="ordinamento_button" class="ordinamento_button">Ordina per</button>
                         <div id="ordinamento" class="ordinamento" style="display: none">
-                            <%if(pagina.equals("listaAppartamenti")){%>
-                                <a href="ServletListaAppartamenti?ordina=default&numero=1">Visualizzazioni</a>
-                                <a href="ServletListaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
-                                <a href="ServletListaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo Decrescente</a>
-                            <%}else if(pagina.equals("ricercaAppartamenti")){%>
-                                <a href="ServletRicercaAppartamenti?ordina=default&numero=1">Visualizzazioni</a>
-                                <a href="ServletRicercaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
-                                <a href="ServletRicercaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo Decrescente</a>
+                            <%if (pagina.equals("listaAppartamenti")) {%>
+                            <a href="ServletListaAppartamenti?ordina=default&numero=1">Visualizzazioni</a>
+                            <a href="ServletListaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
+                            <a href="ServletListaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo Decrescente</a>
+                            <%} else if (pagina.equals("ricercaAppartamenti")) {%>
+                            <a href="ServletRicercaAppartamenti?ordina=default&numero=1">Visualizzazioni</a>
+                            <a href="ServletRicercaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
+                            <a href="ServletRicercaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo
+                                Decrescente</a>
                             <%}%>
                         </div>
                     </div>
@@ -397,18 +400,20 @@
             </div>
             <div class="page_listing">
                 <%for (AppartamentoBean appartamentoBean : appArray) {%>
+                <input type="hidden" name="idAppartamento" value="<%=appartamentoBean.getIdAppartamento()%>">
                 <div class="list_card">
                     <div class="list_card_wrap">
                         <figure class="list_card_picture">
                             <div class="figure_property">
                                 <%
-                                    boolean p=false;
+                                    boolean p = false;
                                     for (MultimediaBean multi : multimediaBeans) {
-                                        if (multi.getIdAppartamento() == appartamentoBean.getIdAppartamento() && multi.getFotoString()!=null && !p) {
+                                        if (multi.getIdAppartamento() == appartamentoBean.getIdAppartamento() && multi.getFotoString() != null && !p) {
                                 %>
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
-                                        <img src="data:image/png;base64,<%=multi.getFotoString().get(0)%>" style="width:100%">
-                                    </a>
+                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
+                                    <img src="data:image/png;base64,<%=multi.getFotoString().get(0)%>"
+                                         style="width:100%">
+                                </a>
                                 <%
                                             p = true;
                                             break;
@@ -458,9 +463,10 @@
                             <div class="list_card_priceLabel">
                                 <div class="list_card_price">
                                     <span class="status"><%=appartamentoBean.getTipoVendita()%></span>
-                                    <%if(appartamentoBean.getVisualizzaPrezzo() == 1){%>
-                                        <p class="price">€<%=appartamentoBean.getPrezzo()%></p>
-                                    <%}else{%>
+                                    <%if (appartamentoBean.getVisualizzaPrezzo() == 1) {%>
+                                    <p class="price">€<%=appartamentoBean.getPrezzo()%>
+                                    </p>
+                                    <%} else {%>
                                     <p class="price" style="font-size: 17px">Contatta l'agente</p>
                                     <%}%>
                                     </p>
@@ -473,10 +479,10 @@
                                                 for (UtenteBean utenteBean : utenteArray) {
                                                     if (utenteBean.getIdUtente() == bean.getIdUtente()) {%>
                                                         <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></a><%
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        }%></span>
+                                            }%></span>
                                 </p>
                             </div>
                         </div>
@@ -485,13 +491,21 @@
                 <%}%>
             </div>
             <div class="pagination">
-                <%for (int i = 1; i <= sizeArray; i++) {
-                    if(pagina.equals("listaAppartamenti")){
+                <%
+                    for (int i = 1; i <= sizeArray; i++) {
+                        if (pagina.equals("listaAppartamenti")) {
                 %>
-                        <a href="${pageContext.request.contextPath}/ServletListaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>" class="pagination_btn"><%=i%></a>
-                <%}else if(pagina.equals("ricercaAppartamenti")){%>
-                    <a href="${pageContext.request.contextPath}/ServletRicercaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>" class="pagination_btn"><%=i%></a>
-                <%}}%>
+                <a href="${pageContext.request.contextPath}/ServletListaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>"
+                   class="pagination_btn"><%=i%>
+                </a>
+                <%} else if (pagina.equals("ricercaAppartamenti")) {%>
+                <a href="${pageContext.request.contextPath}/ServletRicercaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>"
+                   class="pagination_btn"><%=i%>
+                </a>
+                <%
+                        }
+                    }
+                %>
             </div>
         </div>
         <div class="page_sidebar">
@@ -506,14 +520,16 @@
                         %>
                         <article class="agent_list_item clearfix">
                             <figure class="agent_picture">
-                                <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><img src="data:image/png;base64,<%=utenteBean.getFotoString()%>"></a>
+                                <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><img
+                                        src="data:image/png;base64,<%=utenteBean.getFotoString()%>"></a>
                             </figure>
                             <div class="agent_widget_content">
                                 <h4 class="agent_name">
                                     <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
                                     </a>
                                 </h4>
-                                <a href="mailto:<%=utenteBean.getEmail()%>" class="agent_email"><%=utenteBean.getEmail()%>
+                                <a href="mailto:<%=utenteBean.getEmail()%>"
+                                   class="agent_email"><%=utenteBean.getEmail()%>
                                 </a>
                                 <div class="agent_number">
                                     <a href="tel:+39<%=arrayComp.get(k).getBean().getTelefonoCellulare()%>"><%=arrayComp.get(k).getBean().getTelefonoCellulare()%>
@@ -572,10 +588,11 @@
                                 <div class="featured_card_priceLabel">
                                     <div class="featured_card_price">
                                         <span class="status"><%=visualizzazioneImmobile.getTipoVendita()%></span>
-                                        <%if(visualizzazioneImmobile.getVisualizzaPrezzo() == 1){%>
-                                            <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%></p>
-                                        <%}else{%>
-                                            <p class="price" style="font-size: 17px">Contatta l'agente</p>
+                                        <%if (visualizzazioneImmobile.getVisualizzaPrezzo() == 1) {%>
+                                        <p class="price">€<%=visualizzazioneImmobile.getPrezzo()%>
+                                        </p>
+                                        <%} else {%>
+                                        <p class="price" style="font-size: 17px">Contatta l'agente</p>
                                         <%}%>
                                     </div>
                                 </div>
@@ -629,87 +646,96 @@
     }
 </script>
 <script>
-    $(document).ready(function(){
-        $("#ordinamento_button").click(function(){
-            if(document.getElementById("ordinamento").style.display == "none"){
+    $(document).ready(function () {
+        $("#ordinamento_button").click(function () {
+            if (document.getElementById("ordinamento").style.display == "none") {
                 $("#ordinamento").slideDown();
-            }
-            else{
+            } else {
                 $("#ordinamento").slideUp();
             }
         });
     });
 </script>
+
 <script>
     // This example displays a marker at the center of Australia.
     // When the user clicks the marker, an info window opens.
-    function initMap() {
-        const uluru = { lat: 40.7472133, lng: 14.6433202};
-        const sium = { lat: 40.8085412, lng: 14.5810059};
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 10,
-            center: uluru,
+    function initMap(json, i, map) {
+        var geocoder = new google.maps.Geocoder();
+        var address = json[i].indirizzo;
+        var lat = 0;
+        var lng = 0;
+        geocoder.geocode({'address': address}, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                var latitude = results[0].geometry.location.lat();
+                var longitude = results[0].geometry.location.lng();
+
+                localStorage.setItem("endlat"+i+"", latitude);
+                localStorage.setItem("endlng"+i+"", longitude);
+
+            }
         });
+        lat = parseFloat(localStorage.getItem("endlat"+i+""));
+        lng = parseFloat(localStorage.getItem("endlng"+i+""));
+        const uluru = {lat: lat, lng: lng};
+        console.log(lat+"\n"+lng)
         const contentString =
-            '<div class="property_map">' +
+            '<div class="property_map" id="marker' + i + '">' +
             '<article class="featured_card featured_card_block">' +
-                '<div class="featured_card_wrap">' +
-                    '<figure class=featured_card_figure>' +
-                        '<div class="featured_card_picture">' +
-                            '<a href="">' +
-                                '<img src="images/casa.jpg">' +
-                                    '</a>' +
-                            '</div>' +
-                        '</figure>' +
-                    '<div class=featured_card_details>' +
-                        '<h3>' +
-                            '<a>Villone</a>' +
-                            '</h3>' +
-                        '<p class=featured_card_description>Bellissimo villone</p>' +
-                        '<div class="featured_card_features_wrap">' +
-                            '<div class="featured_card_feature">' +
-                                '<span class="features_title">Camere da letto</span>' +
-                                '<div>' +
-                                    '<i class="feature_icon icon-bed"></i>' +
-                                    '<span class="text_feature">1</span>' +
-                                    '</div>' +
-                                '</div>' +
-                            '<div class="featured_card_feature">' +
-                                '<span class="features_title">Camere da letto</span>' +
-                                '<div>' +
-                                    '<i class="feature_icon icon-bed"></i>' +
-                                    '<span class="text_feature">1</span>' +
-                                    '</div>' +
-                                '</div>' +
-                            '<div class="featured_card_feature">' +
-                                '<span class="features_title">Camere da letto</span>' +
-                                '<div>' +
-                                    '<i class="feature_icon icon-bed"></i>' +
-                                    '<span class="text_feature">1</span>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                        '<div class="featured_card_priceLabel">' +
-                            '<div class="featured_card_price">' +
-                                '<span class=status>In Vendita</span>' +
-                                '<p class="price">€ 500000</p>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</article>' +
+            '<div class="featured_card_wrap">' +
+            '<figure class=featured_card_figure>' +
+            '<div class="featured_card_picture">' +
+            '<a href="">' +
+            '<img src="data:image/png;base64,'+json[i].foto+'" style="height: 275px;object-fit: cover">' +
+            '</a>' +
+            '</div>' +
+            '</figure>' +
+            '<div class=featured_card_details>' +
+            '<h3>' +
+            '<a>'+json[i].nome+'</a>' +
+            '</h3>' +
+            '<p class=featured_card_description>'+json[i].descrizione+'</p>' +
+            '<div class="featured_card_features_wrap">' +
+            '<div class="featured_card_feature">' +
+            '<span class="features_title">Camere da letto</span>' +
+            '<div>' +
+            '<i class="feature_icon icon-bed"></i>' +
+            '<span class="text_feature">'+json[i].letti+'</span>' +
+            '</div>' +
+            '</div>' +
+            '<div class="featured_card_feature">' +
+            '<span class="features_title">Bagni</span>' +
+            '<div>' +
+            '<i class="feature_icon icon-shower"></i>' +
+            '<span class="text_feature">'+json[i].bagni+'</span>' +
+            '</div>' +
+            '</div>' +
+            '<div class="featured_card_feature">' +
+            '<span class="features_title">Superficie</span>' +
+            '<div>' +
+            '<i class="feature_icon icon-square-o"></i>' +
+            '<span class="text_feature">'+json[i].superficie+'</span>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="featured_card_priceLabel">' +
+            '<div class="featured_card_price">' +
+            '<span class=status>'+json[i].tipoVendita+'</span>' +
+            '<p class="price">€ '+json[i].prezzo+'</p>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</article>' +
             '</div>';
 
-       const infowindow = new google.maps.InfoWindow({
+        const infowindow = new google.maps.InfoWindow({
             content: contentString,
             maxWidth: 450,
         });
 
+
         const marker = new google.maps.Marker({
             position: uluru,
-            map,
-        });
-        const marker2 = new google.maps.Marker({
-            position: sium,
             map,
         });
 
@@ -721,16 +747,38 @@
             });
         });
 
-        marker2.addListener("click", () => {
-            infowindow.open({
-                anchor: marker2,
-                map,
-                shouldFocus: false,
-            });
-        });
     }
 
     window.initMap = initMap;
+</script>
+
+<script>
+    function mappa(map) {
+        var idAppartamenti = [];
+        var elements = document.getElementsByName("idAppartamento");
+        for (var i = 0; i < elements.length; i++) {
+            idAppartamenti.push(parseInt(elements[i].value));
+        }
+        var stringa = JSON.stringify(idAppartamenti);
+        $.post('ServletProvaJson', {idAppartamenti: stringa}, function (listJson) {
+            var json = JSON.parse(listJson);
+            for (var i = 0; i < json.length; i++) {
+                initMap(json, i, map);
+            }
+        })
+    };
+</script>
+
+<script>
+    $(document).ready(function () {
+        const uluru = {lat:40.7454000, lng:14.6454200}
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 10,
+            center: uluru,
+        });
+        mappa(map)
+    });
+
 </script>
 
 
