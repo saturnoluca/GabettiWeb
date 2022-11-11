@@ -32,7 +32,7 @@ public class ScegliProvincia extends HttpServlet {
             int i = 0;
             listaProvince = new ArrayList<String>();
             String currentPath = new java.io.File(".").getCanonicalPath();
-            File myObj = new File(currentPath +"/webapps/GabettiNocera/ITALIA.txt");
+            File myObj = new File("D:/download/apache-tomcat-9.0.62/apache-tomcat-9.0.62/webapps/GabettiWeb_war/ITALIA.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
