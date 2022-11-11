@@ -11,13 +11,14 @@
 <!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
 <html lang="it" dir="ltr">
 <head>
+
     <meta charset="UTF-8">
     <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
     <link rel="stylesheet" href="css/lista-utenti.css">
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
@@ -45,20 +46,19 @@
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
-    if (admin.getRuolo().equals("Admin") && session.getAttribute("entrato")==null) {
-        response.sendRedirect(response.encodeRedirectURL("ServletListaUtente"));
+    if ((admin.getRuolo().equals("Admin") || admin.getRuolo().equals("Segretario")) && session.getAttribute("entrato")==null) {
+        response.sendRedirect(response.encodeRedirectURL("ListaUtente"));
         return;
     }
     session.removeAttribute("entrato");
-    utenti = (ArrayList<UtenteBean>) session.getAttribute("lista-utenti");
-    if(!admin.getRuolo().equals("Admin")){
-        request.getSession(false);
-        response.sendRedirect(response.encodeRedirectURL("login.jsp"));
-        return;
-    }
+    utenti = (ArrayList<UtenteBean>) request.getAttribute("lista-utenti");
+
+    String inviata = (String) request.getSession().getAttribute("inviata");
+    request.getSession().setAttribute("inviata","no");
 %>
 <body>
 <jsp:include page="sidebar.jsp" />
+<input type="hidden" value="<%=inviata%>" id="inviata">
 <section class="home-section">
     <div class="div_user_list">
         <div class="user_list_page_head">
@@ -132,16 +132,16 @@
                             <div class="column column_actions">
                                 <div class="user_actions">
                                     <%if(bean.getRuolo().equals("Agente") || bean.getRuolo().equals("Collaboratore")){%>
-                                    <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=bean.getIdUtente()%>">
+                                    <a href="${pageContext.request.contextPath}/AgentePage?id=<%=bean.getIdUtente()%>">
                                         <i class="icon-eye"></i>
                                         Visualizza
                                     </a>
                                     <%}%>
-                                    <a href="${pageContext.request.contextPath}/ServletControlloModificaUtente?idUtente=<%=bean.getIdUtente()%>">
+                                    <a href="${pageContext.request.contextPath}/ControlloModificaUtente?idUtente=<%=bean.getIdUtente()%>">
                                         <i class="icon-mode_edit"></i>
                                         Modifica
                                     </a>
-                                    <a href="${pageContext.request.contextPath}/ServletEliminaUtente?idUtente=<%=bean.getIdUtente()%>">
+                                    <a href="${pageContext.request.contextPath}/EliminaUtente?idUtente=<%=bean.getIdUtente()%>">
                                         <i class="icon-delete"></i>
                                         Elimina
                                     </a>
@@ -187,6 +187,18 @@
 <script src="bootstrap/js/popper.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="bootstrap/js/jquery.sticky.js"></script>
+<script>
+    const inviata = document.getElementById("inviata");
+    if(inviata.value.trim() == "mod"){
+        swal("Successo!", "Utente modificato con successo!", "success");
+    }
+    else if(inviata.value.trim() == "add"){
+        swal("Successo!", "Utente aggiunto con successo!", "success");
+    }
+    else if(inviata.value.trim() == "ok"){
+        swal("Successo!", "Utente rimosso con successo!", "success");
+    }
 
+</script>
 </body>
 </html>

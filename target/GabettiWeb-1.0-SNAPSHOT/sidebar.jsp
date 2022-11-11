@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/sidebar.css">
 </head>
 <%
-    ArrayList<CompositeKeyAgenteCase> agenteCase = null;
+    CompositeKeyAgenteCase agenteCase = null;
     AgenteBean agente = null;
     UtenteBean admin = (UtenteBean) session.getAttribute("utente");
     if (admin == null) {
@@ -27,7 +27,7 @@
         ArrayList<UtenteBean> utenti = (ArrayList<UtenteBean>) session.getAttribute("array");
     } else if (admin.getRuolo().equals("Agente")) {
         agente = (AgenteBean) session.getAttribute("agente");
-        agenteCase = (ArrayList<CompositeKeyAgenteCase>) session.getAttribute("appartamenti");
+        agenteCase = (CompositeKeyAgenteCase) session.getAttribute("appartamenti");
     }
 
 %>
@@ -39,11 +39,11 @@
     </div>
     <ul class="nav-list">
         <li>
-            <a href="dashboard-admin.jsp">
+            <a href="index.jsp">
                 <i class='bx bx-grid-alt'></i>
-                <span class="links_name">Dashboard</span>
+                <span class="links_name">Pagina Home</span>
             </a>
-            <span class="tooltip">Dashboard</span>
+            <span class="tooltip">Pagina Home</span>
         </li>
         <li>
             <a href="myprofile.jsp">
@@ -60,7 +60,7 @@
             <span class="tooltip">Lista immobili</span>
         </li>
         <li>
-            <a href="aggiungi-immobile-admin.jsp">
+            <a href="RedirectAggiungiAppartamento">
                 <i class='bx bx-home-smile'></i>
                 <span class="links_name">Aggiungi immobile</span>
             </a>
@@ -77,7 +77,7 @@
         <%}%>
         <%if(admin.getRuolo().equals("Admin") || admin.getRuolo().equals("Segretario")){%>
         <li>
-            <a href="aggiungi-utente.jsp">
+            <a href="RedirectAggiungiUtente">
                 <i class='bx bx-user-plus'></i>
                 <span class="links_name">Aggiungi utente</span>
             </a>
@@ -92,7 +92,7 @@
                     <div class="job"><%=admin.getRuolo()%></div>
                 </div>
             </div>
-            <a href="ServletLogout">
+            <a href="Logout">
                 <i class='bx bx-log-out' id="log_out"></i>
             </a>
         </li>

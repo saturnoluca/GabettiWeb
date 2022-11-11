@@ -16,7 +16,11 @@ public class MultimediaBean implements Serializable {
     private ArrayList<String> planimetriaString;
     private int idAppartamento;
 
-    public MultimediaBean(int idMultimedia, ArrayList<Part> foto, ArrayList<Part> video, ArrayList<Part> planimetria, ArrayList<String> fotoString, ArrayList<String> videoString, ArrayList<String> planimetriaString, int idAppartamento) {
+    private int copertina;
+
+    public MultimediaBean(){}
+
+    public MultimediaBean(int idMultimedia, ArrayList<Part> foto, ArrayList<Part> video, ArrayList<Part> planimetria, ArrayList<String> fotoString, ArrayList<String> videoString, ArrayList<String> planimetriaString, int idAppartamento, int copertina) {
         this.idMultimedia = idMultimedia;
         this.foto = foto;
         this.video = video;
@@ -25,19 +29,7 @@ public class MultimediaBean implements Serializable {
         this.videoString = videoString;
         this.planimetriaString = planimetriaString;
         this.idAppartamento = idAppartamento;
-    }
-
-    @Override
-    public String toString() {
-        return "MultimediaBean{" +
-                "idMultimedia=" + idMultimedia +
-                ", fotoString=" + fotoString +
-                ", videoString=" + videoString +
-                ", idAppartamento=" + idAppartamento +
-                '}';
-    }
-
-    public MultimediaBean() {
+        this.copertina = copertina;
     }
 
     public int getIdMultimedia() {
@@ -102,5 +94,28 @@ public class MultimediaBean implements Serializable {
 
     public void setIdAppartamento(int idAppartamento) {
         this.idAppartamento = idAppartamento;
+    }
+
+    public int getCopertina() {
+        return copertina;
+    }
+
+    public void setCopertina(int copertina) {
+        this.copertina = copertina;
+    }
+
+    @Override
+    public String toString() {
+        return "MultimediaBean{" +
+                "idMultimedia=" + idMultimedia +
+                ", foto=" + foto +
+                ", video=" + video +
+                ", planimetria=" + planimetria +
+                ", fotoString=" + fotoString +
+                ", videoString=" + videoString +
+                ", planimetriaString=" + planimetriaString +
+                ", idAppartamento=" + idAppartamento +
+                ", copertina=" + copertina +
+                '}';
     }
 }

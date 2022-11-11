@@ -295,7 +295,7 @@ body{
 }
 
 .agent_card_wrap .agent_card_head .agent_card_name .name{
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 500;
     line-height: 1.5;
     margin: 0 0 8px;
@@ -572,7 +572,6 @@ aside{
 
 .featured_card .featured_card_details a{
     color: #b20135;
-    font-size: 20px;
 }
 
 @media(min-width: 320px){
@@ -586,6 +585,7 @@ aside{
     line-height: 1.5;
     margin-bottom: 20px;
     color: #808080;
+    word-break: break-all;
 }
 
 .featured_card .featured_card_details .featured_card_features_wrap{
@@ -653,4 +653,21 @@ aside{
 input[type=button] {
     border: none;
     outline: none;
+}
+
+.property_address{
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.property_address a{
+    display: inline-block;
+    color: #b20135;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+.property_address .address{
+    display: inline-block;
+    vertical-align: text-top;
 }

@@ -6,6 +6,7 @@ import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.galleria.GalleriaModelDM;
 import model.indirizzo.IndirizzoBean;
 import model.indirizzo.IndirizzoModelDM;
 import model.multimedia.MultimediaBean;
@@ -18,13 +19,13 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 
-@WebServlet(name = "ServletModificaAppartamento", value = "/ServletModificaAppartamento")
+@WebServlet(name = "ServletModificaAppartamento", value = "/ModificaAppartamento")
 public class ServletModificaAppartamento extends HttpServlet {
 
     private static AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
     private static IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
 
-    private static MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
+    private static GalleriaModelDM galleriaModelDM = new GalleriaModelDM();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,8 +36,9 @@ public class ServletModificaAppartamento extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int idAppartamento = Integer.parseInt(request.getParameter("idAppartamento"));
         String titoloImmobile = request.getParameter("titoloImmobile");
-        String citta = request.getParameter("citta");
-        String provincia = request.getParameter("provincia");
+        String regione = request.getParameter("hidden_regione");
+        String citta = request.getParameter("hidden_citta");
+        String provincia = request.getParameter("hidden_provincia");
         String indirizzo = request.getParameter("indirizzo");
         String numeroCivico = request.getParameter("numeroCivico");
         String cap = request.getParameter("cap");
@@ -83,6 +85,7 @@ public class ServletModificaAppartamento extends HttpServlet {
         appartamentoModelDM.doUpdate(bean);
 
         IndirizzoBean indirizzoBean = new IndirizzoBean();
+        indirizzoBean.setRegione(regione);
         indirizzoBean.setProvincia(provincia);
         indirizzoBean.setCitta(citta);
         indirizzoBean.setVia(indirizzo);
@@ -96,7 +99,7 @@ public class ServletModificaAppartamento extends HttpServlet {
         ArrayList<VisualizzazioneMultimedia> listaFoto = new ArrayList<VisualizzazioneMultimedia>();
         ArrayList<VisualizzazioneMultimedia> multimedia = new ArrayList<VisualizzazioneMultimedia>();
         try {
-            listaFoto = multimediaModelDM.doRetrieveVisualizzazioneMultimedia(bean.getIdAppartamento());
+            listaFoto = galleriaModelDM.doRetrieveVisualizzazioneMultimedia(bean.getIdAppartamento());
             for(int i=0; i<listaFoto.size(); i++){
                 if(listaFoto.get(i).fotoString != null){
                     multimedia.add(listaFoto.get(0));

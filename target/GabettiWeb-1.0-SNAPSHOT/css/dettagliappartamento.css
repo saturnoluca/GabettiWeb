@@ -411,6 +411,7 @@ body {
     text-align: left;
     margin-bottom: 10px;
     color: #808080;
+    word-break: break-all;
 }
 
 .property_additional{
@@ -610,7 +611,7 @@ body {
 
 .contact{
     margin-bottom: 10px;
-    line-height: 1,5;
+    line-height: 1.5;
 }
 
 .contact span{
@@ -659,6 +660,7 @@ body {
     padding: 20px;
     line-height: 2;
     font-size: 15px;
+    position: relative;
 }
 
 .contact_form_row label{
@@ -690,13 +692,70 @@ body {
     border: none;
 }
 
+.contact_form_row input:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.contact_form_row textarea:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.contact_form_row.success input {
+    border-color: #2ecc71;
+}
+
+.contact_form_row.error input {
+    border-color: #e74c3c;
+}
+
+
+.contact_form_row.success textarea {
+    border-color: #2ecc71;
+}
+
+.contact_form_row.error textarea {
+    border-color: #e74c3c;
+}
+
+.contact_form_row i {
+    visibility: hidden;
+    position: absolute;
+    top: 53px;
+    right: 20px;
+}
+
+.contact_form_row.success i.icon-check-circle {
+    color: #2ecc71;
+    visibility: visible;
+}
+
+.contact_form_row.error i.icon-exclamation-circle {
+    color: #e74c3c;
+    visibility: visible;
+}
+
+.contact_form_row small {
+    color: #e74c3c;
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    visibility: hidden;
+}
+
+.contact_form_row.error small {
+    visibility: visible;
+}
+
 .privacy_agreement{
     display: block  ;
-    margin-bottom: 0;
-    border: none;
+    margin-bottom: 15px;
+    border: 0;
     width: 100%;
     padding: 20px;
     font-size: 15px;
+    position: relative;
 }
 
 .privacy_checkboxLabel{
@@ -722,6 +781,49 @@ body {
     margin-left: 8px;
     color: #808080;
 }
+
+.privacy_agreement input:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.privacy_agreement.success {
+    border-color: #2ecc71;
+}
+
+.privacy_agreement.error {
+    border-color: #e74c3c;
+}
+
+.privacy_agreement i {
+    visibility: hidden;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.privacy_agreement.success i.icon-check-circle {
+    color: #2ecc71;
+    visibility: visible;
+}
+
+.privacy_agreement.error i.icon-exclamation-circle {
+    color: #e74c3c;
+    visibility: visible;
+}
+
+.privacy_agreement small {
+    color: #e74c3c;
+    position: absolute;
+    bottom: 0px;
+    left: 20px;
+    visibility: hidden;
+}
+
+.privacy_agreement.error small {
+    visibility: visible;
+}
+
 
 .agent_call{
     display: flex;
@@ -870,6 +972,7 @@ body {
     line-height: 1.5;
     margin-bottom: 20px;
     color: #808080;
+    word-break: break-all;
 }
 
 .featured_card .featured_card_details .featured_card_features_wrap{
@@ -1024,4 +1127,21 @@ h1{
 input[type=button] {
     border: none;
     outline: none;
+}
+
+.property_address{
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.property_address a{
+    display: inline-block;
+    color: #b20135;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+.property_address .address{
+    display: inline-block;
+    vertical-align: text-top;
 }

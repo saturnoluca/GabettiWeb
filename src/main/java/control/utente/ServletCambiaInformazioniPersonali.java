@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet(name = "ServletCambiaInformazioniPersonali", value = "/ServletCambiaInformazioniPersonali")
+@WebServlet(name = "ServletCambiaInformazioniPersonali", value = "/CambiaInformazioniPersonali")
 public class ServletCambiaInformazioniPersonali extends HttpServlet {
 
     UtenteModelDM utente = new UtenteModelDM();
@@ -25,6 +25,7 @@ public class ServletCambiaInformazioniPersonali extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UtenteBean utenteBean = new UtenteBean();
         ArrayList<UtenteBean> listaUtenti = new ArrayList<UtenteBean>();
+        String inviata="no";
         int idUtente = Integer.parseInt(request.getParameter(("idUtente")));
         utenteBean = utente.doRetrieveUtenteByKey(idUtente);
         if (request.getParameter("usernameUtente").length() == 0) {
@@ -53,8 +54,11 @@ public class ServletCambiaInformazioniPersonali extends HttpServlet {
             utenteBean.setPassword(request.getParameter("passwordUtente"));
         }
         utente.doUpdateInformazioniUtente(utenteBean);
+        if(utente != null){
+            inviata = "ok";
+        }
         listaUtenti = (ArrayList<UtenteBean>) utente.doRetrieveAll();
-
+        request.getSession().setAttribute("inviata",inviata);
         request.getSession().removeAttribute("lista-utenti");
         request.getSession().setAttribute("lista-utenti", listaUtenti);
         request.getSession().removeAttribute("utente");

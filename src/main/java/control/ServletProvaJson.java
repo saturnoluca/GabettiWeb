@@ -2,25 +2,25 @@ package control;
 
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.galleria.GalleriaModelDM;
 import model.indirizzo.IndirizzoBean;
 import model.indirizzo.IndirizzoModelDM;
 import model.multimedia.MultimediaBean;
 import model.multimedia.MultimediaModelDM;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.json.Json;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet(name = "ServletProvaJson", value = "/ServletProvaJson")
+@WebServlet(name = "ServletProvaJson", value = "/ProvaJson")
 public class ServletProvaJson extends HttpServlet {
     public static AppartamentoModelDM app = new AppartamentoModelDM();
-    public static MultimediaModelDM multi = new MultimediaModelDM();
+    public static GalleriaModelDM multi = new GalleriaModelDM();
     public static IndirizzoModelDM indirizzo = new IndirizzoModelDM();
 
     @Override
@@ -34,7 +34,6 @@ public class ServletProvaJson extends HttpServlet {
         ArrayList<Integer> idApps = new ArrayList<Integer>();
         for (int i = 0; i < idAppartamenti.length(); i++) {
             carattere = ""+idAppartamenti.charAt(i);
-            System.out.println(carattere);
             if (!carattere.equals(",") || i==idAppartamenti.length()-1) {
                 sb.append(idAppartamenti.charAt(i));
             } else {
@@ -47,7 +46,7 @@ public class ServletProvaJson extends HttpServlet {
         }
         System.out.println(idApps);
         ArrayList<AppartamentoBean> appartamenti = new ArrayList<AppartamentoBean>();
-        for(int i =0;i< idApps.size();i++){
+        for(int i=0;i< idApps.size();i++){
             appartamenti.add(app.RetrieveById(idApps.get(i)));
         }
 
@@ -80,7 +79,12 @@ public class ServletProvaJson extends HttpServlet {
         myJson=myJson+"\"tipoVendita\":\""+appartamento.getTipoVendita()+"\",\n";
         myJson=myJson+"\"foto\":\""+multimedia.get(0).getFotoString().get(0)+"\",";
         myJson=myJson+"\"indirizzo\":\""+indirizzo.getVia()+", "+indirizzo.getNumeroCivico()+", "+indirizzo.getCap()+"\"\n},";
-        JSONObject obj = new JSONObject(myJson);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(myJson);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         return obj;
     }
 }

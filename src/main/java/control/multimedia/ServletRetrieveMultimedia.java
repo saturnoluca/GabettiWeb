@@ -9,7 +9,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ServletRetrieveMultimedia", value = "/ServletRetrieveMultimedia")
+@WebServlet(name = "ServletRetrieveMultimedia", value = "/RetrieveMultimedia")
 @MultipartConfig
 public class ServletRetrieveMultimedia extends HttpServlet {
     @Override

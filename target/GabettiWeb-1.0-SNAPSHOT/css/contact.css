@@ -2,7 +2,6 @@
 body {
     min-height: 100%;
     margin: 0;
-    font-size: 1.5rem;
     font-weight: 400;
     line-height: 1.2;
     background: #f7f7f7;
@@ -202,6 +201,8 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
+    position: relative;
+    margin-bottom: 15px;
 }
 
 .contact_input label{
@@ -225,20 +226,20 @@ body {
     transition: .2s all linear;
 }
 
-.contact_form .contact_input_textarea{
+.contact_form .contact_input{
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.contact_input_textarea label{
+.contact_input label{
     margin-bottom: 10px;
     font-size: 15px;
     line-height: 1.5;
     color: #a5a5a5;
 }
 
-.contact_input_textarea textarea{
+.contact_input textarea{
     display: block;
     width: 100%;
     color: gray;
@@ -252,10 +253,134 @@ body {
     transition: .2s all linear;
 }
 
+.contact_input input{
+    display: block;
+    font-size: 14px;
+    padding: 17.5px 10px;
+    margin-bottom: 15px;
+    transition: .2s all linear;
+    border: 1px solid rgba(128, 128, 128, .2);
+    color: gray;
+}
+
+.contact_input input:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.contact_input textarea:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.contact_input select:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+
+.contact_input.success input {
+    border-color: #2ecc71;
+}
+
+.contact_input.error input {
+    border-color: #e74c3c;
+}
+
+.contact_input.success select {
+    border-color: #2ecc71;
+}
+
+.contact_input.error select {
+    border-color: #e74c3c;
+}
+
+.contact_input.success textarea {
+    border-color: #2ecc71;
+}
+
+.contact_input.error textarea {
+    border-color: #e74c3c;
+}
+
+.contact_input i {
+    visibility: hidden;
+    position: absolute;
+    top: 53px;
+    right: 20px;
+}
+
+.contact_input.success i.icon-check-circle {
+    color: #2ecc71;
+    visibility: visible;
+}
+
+.contact_input.error i.icon-exclamation-circle {
+    color: #e74c3c;
+    visibility: visible;
+}
+
+.contact_input small {
+    color: #e74c3c;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    visibility: hidden;
+}
+
+.contact_input.error small {
+    visibility: visible;
+}
+
 .privacy_agreement{
     width: 100%;
     display: block;
     margin-bottom: 15px;
+    transition: .2s all linear;
+    color: gray;
+    position: relative;
+}
+
+.privacy_agreement input:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.privacy_agreement.success {
+    border-color: #2ecc71;
+}
+
+.privacy_agreement.error {
+    border-color: #e74c3c;
+}
+
+.privacy_agreement i {
+    visibility: hidden;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.privacy_agreement.success i.icon-check-circle {
+    color: #2ecc71;
+    visibility: visible;
+}
+
+.privacy_agreement.error i.icon-exclamation-circle {
+    color: #e74c3c;
+    visibility: visible;
+}
+
+.privacy_agreement small {
+    color: #e74c3c;
+    position: absolute;
+    top: 75px;
+    left: -2px;
+    visibility: hidden;
+}
+
+.privacy_agreement.error small {
+    visibility: visible;
 }
 
 .privacy_checkbox_label{

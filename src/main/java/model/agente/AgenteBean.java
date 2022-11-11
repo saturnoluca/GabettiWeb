@@ -13,10 +13,12 @@ public class AgenteBean implements Serializable {
     private String descrizionePersonale;
     private int idUtente;
 
+    private int collaboratore;
+
     public AgenteBean() {
     }
 
-    public AgenteBean(int idAgente, String linkFacebook, String linkInstagram, String linkTwitter, String linkInternet, String telefonoFisso, String telefonoCellulare, String descrizionePersonale, int idUtente) {
+    public AgenteBean(int idAgente, String linkFacebook, String linkInstagram, String linkTwitter, String linkInternet, String telefonoFisso, String telefonoCellulare, String descrizionePersonale, int idUtente, int collaboratore) {
         this.idAgente = idAgente;
         this.linkFacebook = linkFacebook;
         this.linkInstagram = linkInstagram;
@@ -26,6 +28,7 @@ public class AgenteBean implements Serializable {
         this.telefonoCellulare = telefonoCellulare;
         this.descrizionePersonale = descrizionePersonale;
         this.idUtente = idUtente;
+        this.collaboratore = collaboratore;
     }
 
     public int getIdAgente() {
@@ -100,14 +103,27 @@ public class AgenteBean implements Serializable {
         this.idUtente = idUtente;
     }
 
+    public int getCollaboratore() {
+        return collaboratore;
+    }
+
+    public void setCollaboratore(int collaboratore) {
+        this.collaboratore = collaboratore;
+    }
+
     @Override
     public String toString() {
         return "AgenteBean{" +
                 "idAgente=" + idAgente +
                 ", linkFacebook='" + linkFacebook + '\'' +
                 ", linkInstagram='" + linkInstagram + '\'' +
+                ", linkTwitter='" + linkTwitter + '\'' +
+                ", linkInternet='" + linkInternet + '\'' +
+                ", telefonoFisso='" + telefonoFisso + '\'' +
+                ", telefonoCellulare='" + telefonoCellulare + '\'' +
                 ", descrizionePersonale='" + descrizionePersonale + '\'' +
                 ", idUtente=" + idUtente +
+                ", collaboratore=" + collaboratore +
                 '}';
     }
 }

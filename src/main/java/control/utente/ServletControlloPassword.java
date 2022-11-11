@@ -10,17 +10,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-@WebServlet(name = "ServletControlloPassword", value = "/ServletControlloPassword")
+@WebServlet(name = "ServletControlloPassword", value = "/ControlloPassword")
 public class ServletControlloPassword extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         UtenteModelDM model = new UtenteModelDM();
-        String email = request.getParameter("email");
+        String username = request.getParameter("username");
         String password = request.getParameter("Password");
         UtenteBean utente = null;
-            utente = model.RetrieveByEmail(email);
+            utente = model.RetrieveByUsername(username);
             if(utente.getIdUtente() == 0){
                 out.print("false");
             }

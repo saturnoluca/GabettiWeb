@@ -4,7 +4,6 @@ import UtilityClass.Mail;
 import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
-import model.appartamento.AppartamentoModel;
 import model.appartamento.AppartamentoModelDM;
 import model.utente.UtenteBean;
 import model.utente.UtenteModelDM;
@@ -13,17 +12,17 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
 
-@WebServlet(name = "ServletMail", value = "/ServletMail")
+@WebServlet(name = "ServletMail", value = "/SendEmail")
 public class ServletMail extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private AgenteModelDM modelAgente = new AgenteModelDM();
     private UtenteModelDM modelUtent = new UtenteModelDM();
     private AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        if (request.getParameter("action").equals("agente")) {
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String inviata = "no";
+        if (request.getParameter("action").equals("agente") || request.getParameter("action").equals("collaboratore")) {
             AgenteBean agente = new AgenteBean();
             UtenteBean utenteBean = new UtenteBean();
             request.setCharacterEncoding("UTF-8");
@@ -31,18 +30,20 @@ public class ServletMail extends HttpServlet {
             String emailGuest = request.getParameter("emailGuest");
             String telefonoGuest = request.getParameter("telefonoGuest");
             String messaggioGuest = request.getParameter("messaggioGuest");
-            String contenuto = "Nome Mittente: " + nomeGuest + "\nEmail Mittente: " + emailGuest + "\nTelefono Mittente: " + telefonoGuest + "\n\n" + messaggioGuest;
+            String contenuto = "Nome Mittente: " + nomeGuest + "\nEmail Mittente: " + emailGuest + "\nTelefono Mittente: " + telefonoGuest + "\n\n" +"Messaggio: "+ messaggioGuest;
             agente = modelAgente.RetrieveAgenteById(Integer.parseInt(request.getParameter("agenteid")));
             utenteBean = modelUtent.doRetrieveUtenteByKey(agente.getIdUtente());
             try {
+                inviata = "ok";
                 Mail.sendMail(utenteBean.getEmail(), contenuto);
                 Mail.sendMail("Kasaresrl@gmail.com", contenuto);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            response.sendRedirect("agente.jsp?id=");
-        } else if (request.getParameter("action").equals("contattaci")) {
+            request.getSession().setAttribute("inviata",inviata);
+            response.sendRedirect("AgentePage?id="+agente.getIdUtente());
+        }
+        else if (request.getParameter("action").equals("contattaci")) {
             request.setCharacterEncoding("UTF-8");
             String nomeGuest = request.getParameter("nome");
             String emailGuest = request.getParameter("email");
@@ -50,11 +51,13 @@ public class ServletMail extends HttpServlet {
             String messaggioGuest = request.getParameter("messaggio");
             String contenuto = "Nome Mittente: " + nomeGuest + "\nEmail Mittente: " + emailGuest + "\nTelefono Mittente: " + telefonoGuest + "\n\n" + messaggioGuest;
             try {
+                inviata = "ok";
                 Mail.sendMail("nocera@gabetti.it", contenuto);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            response.sendRedirect("contact.html");
+            request.getSession().setAttribute("inviata",inviata);
+            response.sendRedirect("contact.jsp");
         }else if (request.getParameter("action").equals("immobile")) {
             AgenteBean agente = new AgenteBean();
             UtenteBean utenteBean = new UtenteBean();
@@ -69,10 +72,13 @@ public class ServletMail extends HttpServlet {
             agente = modelAgente.RetrieveAgenteById(Integer.parseInt(request.getParameter("agenteid")));
             utenteBean = modelUtent.doRetrieveUtenteByKey(agente.getIdUtente());
             try {
+                inviata = "ok";
                 Mail.sendMail(utenteBean.getEmail(), contenuto);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            request.getSession().setAttribute("inviata",inviata);
+            response.sendRedirect("DettagliAppartamento?id="+idAppartamento);
         }else if (request.getParameter("action").equals("valutazione")) {
             String nomeGuest = request.getParameter("nome");
             String cognomeGuest = request.getParameter("cognome");
@@ -98,10 +104,6 @@ public class ServletMail extends HttpServlet {
             if (request.getParameter("piano") != null) {
                 piano = request.getParameter("piano");
             }
-            String ultimoPiano = null;
-            if (request.getParameter("ultimoPiano") != null) {
-                ultimoPiano = request.getParameter("ultimoPiano");
-            }
             String locali = null;
             if (request.getParameter("locali") != null) {
                 locali = request.getParameter("locali");
@@ -125,14 +127,16 @@ public class ServletMail extends HttpServlet {
 
             String messaggio=nomeGuest+" "+cognomeGuest+"\n"+emailGuest+"\n"+telefonoGuest+"\n"+"Indirizzo Immobile: "+indirizzo+
                     "\nComune Immobile: "+comune+"\nTipo Immobile: "+tipoImmobile+"\nSuperficie: "+superficie+"\nPiano: "+piano+
-                    "\nUltimpo Piano? "+ultimoPiano+"\nLocali: "+locali+"\nBagni: "+bagni+"\nStato dell'appartamento: "+statoAppartamento+
+                    "\nLocali: "+locali+"\nBagni: "+bagni+"\nStato dell'appartamento: "+statoAppartamento+
                     "\nRiscaldamento: "+riscaldamento+"\nAnno di costruzione: "+annoDiCostruzione;
 
             try {
+                inviata = "ok";
                 Mail.sendMail("u.ambrosio@gmail.com", messaggio);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            request.getSession().setAttribute("inviata",inviata);
             response.sendRedirect("valutazione.jsp");
         }
     }

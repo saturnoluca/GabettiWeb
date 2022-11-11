@@ -15,7 +15,7 @@ public interface UtenteModel<T> {
 
     public Collection<T> doRetrieveAll() throws SQLException;
 
-    public Collection<T> doRetrieveByRole(String ruolo) throws SQLException;
+    public Collection<T> doRetrieveByRole() throws SQLException;
 
     public UtenteBean doRetrieveUtenteByKey(int idUtente) throws SQLException;
 

@@ -41,4 +41,13 @@ public class CompositeKeyAgenteCase implements Serializable {
     public void setTotvisite(int totvisite) {
         this.totvisite = totvisite;
     }
+
+    @Override
+    public String toString() {
+        return "CompositeKeyAgenteCase{" +
+                "bean=" + bean +
+                ", contaCase=" + contaCase +
+                ", totvisite=" + totvisite +
+                '}';
+    }
 }

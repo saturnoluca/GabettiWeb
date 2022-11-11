@@ -11,7 +11,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "ServletCambiaInformazioniAgente", value = "/ServletCambiaInformazioniAgente")
+@WebServlet(name = "ServletCambiaInformazioniAgente", value = "/CambiaInformazioniAgente")
 public class ServletCambiaInformazioniAgente extends HttpServlet {
 
     AgenteModelDM agenteModelDM = new AgenteModelDM();
@@ -26,6 +26,7 @@ public class ServletCambiaInformazioniAgente extends HttpServlet {
         AgenteBean agenteBean = new AgenteBean();
         int idAgente = Integer.parseInt(request.getParameter(("idAgente")));
         agenteBean = agenteModelDM.RetrieveAgenteById(idAgente);
+        String inviata = "no";
 
         if (request.getParameter("descrizioneAgente").length() == 0) {
             agenteBean.setDescrizionePersonale(agenteBean.getDescrizionePersonale());
@@ -48,6 +49,8 @@ public class ServletCambiaInformazioniAgente extends HttpServlet {
             agenteBean.setTelefonoCellulare(request.getParameter("numeroCellulare"));
         }
         agenteModelDM.doUpdate(agenteBean);
+        inviata = "ok";
+        request.getSession().setAttribute("inviata",inviata);
         request.getSession().removeAttribute("agente");
         request.getSession().setAttribute("agente",agenteBean);
         RequestDispatcher rd = request.getRequestDispatcher("/myprofile.jsp");

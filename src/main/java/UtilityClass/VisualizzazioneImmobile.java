@@ -1,5 +1,7 @@
 package UtilityClass;
 
+import model.indirizzo.IndirizzoBean;
+
 import javax.servlet.http.Part;
 import java.util.Date;
 
@@ -16,6 +18,12 @@ public class VisualizzazioneImmobile {
     private String foto;
     private String tipoVendita;
 
+    private IndirizzoBean indirizzoBean;
+
+    private int idUtente;
+    private String nomeAgente;
+
+    private String cognomeAgente;
     private int visualizzaPrezzo;
     public VisualizzazioneImmobile(){
         super();
@@ -117,6 +125,38 @@ public class VisualizzazioneImmobile {
         this.foto = foto;
     }
 
+    public IndirizzoBean getIndirizzoBean() {
+        return indirizzoBean;
+    }
+
+    public void setIndirizzoBean(IndirizzoBean indirizzoBean) {
+        this.indirizzoBean = indirizzoBean;
+    }
+
+    public String getNomeAgente() {
+        return nomeAgente;
+    }
+
+    public void setNomeAgente(String nomeAgente) {
+        this.nomeAgente = nomeAgente;
+    }
+
+    public String getCognomeAgente() {
+        return cognomeAgente;
+    }
+
+    public void setCognomeAgente(String cognomeAgente) {
+        this.cognomeAgente = cognomeAgente;
+    }
+
+    public int getIdUtente() {
+        return idUtente;
+    }
+
+    public void setIdUtente(int idUtente) {
+        this.idUtente = idUtente;
+    }
+
     @Override
     public String toString() {
         return "VisualizzazioneImmobile{" +
@@ -131,7 +171,11 @@ public class VisualizzazioneImmobile {
                 ", prezzo=" + prezzo +
                 ", foto='" + foto + '\'' +
                 ", tipoVendita='" + tipoVendita + '\'' +
-                ", visualizzazionePrezzo=" + visualizzaPrezzo +
+                ", indirizzoBean=" + indirizzoBean +
+                ", idUtente=" + idUtente +
+                ", nomeAgente='" + nomeAgente + '\'' +
+                ", cognomeAgente='" + cognomeAgente + '\'' +
+                ", visualizzaPrezzo=" + visualizzaPrezzo +
                 '}';
     }
 }

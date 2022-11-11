@@ -3,17 +3,13 @@ package model.utente;
 import UtilityClass.UtilityBlob;
 import model.DriverManagerConnectionPool;
 import model.agente.AgenteBean;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.servlet.http.Part;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.*;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -61,7 +57,6 @@ public class UtenteModelDM implements UtenteModel {
                     ps.setBlob(6, in);
                     ps.setString(7, ((UtenteBean) utente).getRuolo());
                 }
-                System.out.println("doSave:" + ps.toString());
                 ps.executeUpdate();
                 connection.commit();
             }
@@ -106,8 +101,37 @@ public class UtenteModelDM implements UtenteModel {
     }
 
     @Override
-    public Collection<UtenteBean> doRetrieveByRole(String ruolo) throws SQLException {
-        return null;
+    public Collection<UtenteBean> doRetrieveByRole() {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ArrayList<UtenteBean> array = new ArrayList<UtenteBean>();
+        String selectSql = "SELECT * FROM utente WHERE ruolo=? OR ruolo=?";
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setString(1, "Agente");
+            ps.setString(2,"Collaboratore");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                UtenteBean bean = new UtenteBean();
+                bean.setIdUtente(rs.getInt("idUtente"));
+                bean.setUsername(rs.getString("username"));
+                bean.setPassword(rs.getString("password"));
+                bean.setNome(rs.getString("nome"));
+                bean.setEmail(rs.getString("email"));
+                bean.setCognome(rs.getString("cognome"));
+                if (rs.getBlob("foto") != null) {
+                    String fotoPart = null;
+                    fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
+                    bean.setFotoString(fotoPart);
+                }
+                bean.setRuolo(rs.getString("ruolo"));
+                array.add(bean);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return array;
     }
 
     @Override
@@ -133,6 +157,7 @@ public class UtenteModelDM implements UtenteModel {
                     fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
                     bean.setFotoString(fotoPart);
                 }
+
                 bean.setRuolo(rs.getString("ruolo"));
             }
         } catch (SQLException e) {
@@ -251,6 +276,36 @@ public class UtenteModelDM implements UtenteModel {
         return bean;
     }
 
+    public UtenteBean RetrieveByUsername(String username) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT * FROM utente where username=?";
+        UtenteBean bean = new UtenteBean();
+        try {
+            conn = dmcp.getConnection();
+            ps = conn.prepareStatement(selectSql);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bean.setIdUtente(rs.getInt("idUtente"));
+                bean.setUsername(rs.getString("username"));
+                bean.setPassword(rs.getString("password"));
+                bean.setNome(rs.getString("nome"));
+                bean.setEmail(rs.getString("email"));
+                bean.setCognome(rs.getString("cognome"));
+                if (rs.getBlob("foto") != null) {
+                    String fotoPart = null;
+                    fotoPart = (UtilityBlob.base64ImageString(UtilityBlob.blobToBytes(rs.getBlob("foto"))));
+                    bean.setFotoString(fotoPart);
+                }
+                bean.setRuolo(rs.getString("ruolo"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return bean;
+    }
+
     @Override
     public UtenteBean RetrieveNomeCognome(String nome, String cognome) {
         return null;
@@ -270,8 +325,16 @@ public class UtenteModelDM implements UtenteModel {
             ps.setString(3, utenteBean.getNome());
             ps.setString(4, utenteBean.getCognome());
             ps.setString(5, utenteBean.getEmail());
-            in = ((UtenteBean) utenteBean).getFoto().getInputStream();
-            if (in != null) {
+            if(utenteBean.getFoto() == null){
+                String fotoString = utenteBean.getFotoString();
+                Base64 base64 = new Base64();
+                byte[] bytesToDecode = fotoString.getBytes();
+                byte[] decodedBytes = base64.decode(bytesToDecode);
+                InputStream targetStream = new ByteArrayInputStream(decodedBytes);
+                ps.setBlob(6,targetStream);
+            }
+            else {
+                in = ((UtenteBean) utenteBean).getFoto().getInputStream();
                 ps.setBlob(6, in);
             }
             ps.setString(7, utenteBean.getRuolo());
@@ -313,7 +376,7 @@ public class UtenteModelDM implements UtenteModel {
         try{
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(updateSql);
-            ps.setString(1, utenteBean.getCognome());
+            ps.setString(1, utenteBean.getUsername());
             ps.setString(2, utenteBean.getPassword());
             ps.setString(3, utenteBean.getNome());
             ps.setString(4, utenteBean.getCognome());

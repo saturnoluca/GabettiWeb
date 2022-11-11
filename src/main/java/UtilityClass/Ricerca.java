@@ -2,7 +2,12 @@ package UtilityClass;
 
 public class Ricerca {
 
+    private String regione;
+
+    private String provincia;
     private String città;
+
+    private String zona;
     private String vendita;
     private String categoria;
     private int letti=-1;
@@ -19,19 +24,47 @@ public class Ricerca {
     public Ricerca() {
     }
 
-    public Ricerca(String città, String vendita, String categoria, int letti, String bagni, int postiAuto, float minPrezzo, float maxPrezzo, int minGarage, float minSuperficie, float maxSuperficie, int agente) {
+    public Ricerca(String regione, String provincia, String città, String zona, String vendita, String categoria, int letti, String bagni, int postiAuto, float minPrezzo, float maxPrezzo, int minGarage, float minSuperficie, float maxSuperficie, int agente) {
+        this.regione = regione;
+        this.provincia = provincia;
         this.città = città;
+        this.zona = zona;
         this.vendita = vendita;
         this.categoria = categoria;
         this.letti = letti;
         this.bagni = bagni;
+        this.postiAuto = postiAuto;
         this.minPrezzo = minPrezzo;
         this.maxPrezzo = maxPrezzo;
         this.minGarage = minGarage;
-        this.postiAuto = postiAuto;
         this.minSuperficie = minSuperficie;
         this.maxSuperficie = maxSuperficie;
         this.agente = agente;
+    }
+
+
+    public String getRegione() {
+        return regione;
+    }
+
+    public void setRegione(String regione) {
+        this.regione = regione;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getZona() {
+        return zona;
+    }
+
+    public void setZona(String zona) {
+        this.zona = zona;
     }
 
     public String getCittà() {

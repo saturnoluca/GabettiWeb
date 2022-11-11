@@ -19,7 +19,7 @@
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
-
+    <script src="script/aggiungi-utente.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
@@ -42,7 +42,7 @@
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
-    ArrayList<UtenteBean> array = (ArrayList<UtenteBean>) session.getAttribute("array");
+    ArrayList<UtenteBean> utentiRuolo = (ArrayList<UtenteBean>) request.getAttribute("utentiRuolo");
 %>
 <body>
 <jsp:include page="sidebar.jsp" />
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="addUser_page_content">
-            <form method="post" action="ServletAggiungiUtente" class="form_addUser" enctype="multipart/form-data">
+            <form method="post" action="AggiungiUtente" class="form_addUser" id="form_aggiungi_utente" enctype="multipart/form-data">
                 <div class="addUser_tab">
                     <h3 class="tab_title">Informazioni generali</h3>
                 </div>
@@ -64,40 +64,61 @@
                             <div class="user_general">
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Nome*</label>
-                                    <input type="text" required placeholder="Inserisci il nome" name="nome">
+                                    <input type="text" placeholder="Inserisci il nome" name="nome" id="nome">
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Cognome*</label>
-                                    <input type="text" required placeholder="Inserisci il cognome" name="cognome">
+                                    <input type="text" placeholder="Inserisci il cognome" name="cognome" id="cognome">
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Email*</label>
-                                    <input type="text" required placeholder="Inserisci l'email" name="email">
+                                    <input type="text" placeholder="Inserisci l'email" name="email" id="email">
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Username</label>
-                                    <input type="text" placeholder="Inserisci un username" name="username">
+                                    <input type="text" placeholder="Inserisci un username" name="username" id="username">
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                                 <div class="content_fields_column half_size">
-                                    <label class="label_user_title">Password</label>
-                                    <input type="password" required placeholder="Inserisci la password" name="password">
+                                    <div class="password_div">
+                                        <label class="label_user_title">Password</label>
+                                        <input id="mostra_password" type="button" value="Mostra Password" onclick="MostraPassword()">
+                                    </div>
+                                    <input type="password" placeholder="Inserisci la password" name="password" id="password">
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Ruolo</label>
-                                    <select required id="Selector" name="ruolo">
+                                    <select id="Selector" name="ruolo">
                                         <option value="" selected disabled>Seleziona ruolo utente</option>
                                         <option value="Admin">Admin</option>
                                         <option value="Segretario">Segretario</option>
                                         <option value="Agente">Agente</option>
                                         <option value="Collaboratore">Collaboratore</option>
                                     </select>
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                                 <div class="content_fields_column half_size" id="div_agente" style="display: none;">
                                     <label class="label_user_title">Collaborazione agente</label>
-                                    <select name="agente">
+                                    <select name="agente" id="agente">
                                         <option value="" selected disabled>Seleziona collaborazione agente</option>
                                         <%
-                                            for (UtenteBean bean : array) {
+                                            for (UtenteBean bean : utentiRuolo) {
                                                 if (bean.getRuolo().equals("Agente")) {
                                         %>
                                         <option value="<%=bean.getIdUtente()%>"><%=bean.getNome()+" "+bean.getCognome()%></option>
@@ -106,26 +127,40 @@
                                                }
                                         %>
                                     </select>
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                             </div>
                             <div class="user_otherInfo" id="info_agente" style="display: none;">
                                 <h3 class="tab_title" style="margin-bottom:50px;">Informazioni Agente</h3>
                                 <div class="content_fields_column full_size">
                                     <label class="label_property_title">Descrizione*</label>
-                                    <textarea rows="10" placeholder="Scrivi una descrizione"
-                                              name="descrizione"></textarea>
+                                    <textarea rows="10" placeholder="Scrivi una descrizione" name="descrizione" id="descrizione"></textarea>
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Telefono</label>
-                                    <input type="text" placeholder="Inserisci il numero di telefono" name="telefono">
+                                    <input type="text" placeholder="Inserisci il numero di telefono" name="telefono" id="telefono">
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Link Facebook</label>
-                                    <input type="text" placeholder="Inserisci link profilo facebook" name="facebook">
+                                    <input id="facebook" type="text" placeholder="Inserisci link profilo facebook" name="facebook" id="facebook">
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                                 <div class="content_fields_column half_size">
                                     <label class="label_user_title">Link Instagram</label>
-                                    <input type="text" placeholder="Inserisci link profilo instagram" name="instagram">
+                                    <input id="instagram" type="text" placeholder="Inserisci link profilo instagram" name="instagram" id="instagram">
+                                    <i class="icon-check-circle"></i>
+                                    <i class="icon-exclamation-circle"></i>
+                                    <small>Error message</small>
                                 </div>
                             </div>
 
@@ -154,7 +189,7 @@
                         <div class="div_button_submit">
                             <button type="button" onclick="defaultBtnActive()" id="custom-btn">Seleziona un'immagine</button>
                             <input id="default-btn" type="file" hidden name="foto">
-                            <input type="submit" value="Aggiungi Utente">
+                            <input type="submit" value="Aggiungi Utente" onclick="return checkInputs();">
                         </div>
                     </div>
                 </div>
@@ -178,7 +213,6 @@
     defaultBtn.addEventListener("change", function(){
         const file = this.files[0];
         if(file) {
-            console.log("SIUM");
             const reader = new FileReader();
             reader.onload = function () {
                 const result = reader.result;
@@ -220,7 +254,6 @@
     }
 
 </script>
-
 
 <script src="script/index.js"></script>
 <script src="bootstrap/js/jquery-3.3.1.min.js"></script>

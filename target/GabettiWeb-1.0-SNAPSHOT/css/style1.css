@@ -1,0 +1,128 @@
+/* Import Google Font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+::selection{
+    color: #fff;
+    background: #4285f4;
+}
+
+.select-btn, li{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.select-btn{
+    height: 53px;
+    padding: 16px 10px;
+    font-size: 14px;
+    color: gray;
+    background: #fff;
+    transition: .2s all linear;
+    border: 1px solid rgba(128, 128, 128, .2);
+    color: gray;
+    margin-bottom: 15px;
+}
+.select-btn i{
+    font-size: 31px;
+    transition: transform 0.3s linear;
+}
+.wrapper.active .select-btn i{
+    transform: rotate(-180deg);
+}
+.content{
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    display: none;
+    padding: 20px;
+    margin-top: 15px;
+    background: #fff;
+    transition: .2s all linear;
+    border: 1px solid rgba(128, 128, 128, .2);
+    color: gray;
+}
+.wrapper.active .content{
+    display: block;
+}
+.content .search{
+    position: relative;
+}
+.search i{
+    top: 50%;
+    left: 15px;
+    color: #999;
+    font-size: 20px;
+    pointer-events: none;
+    transform: translateY(-50%);
+    position: absolute;
+}
+.search input{
+    height: 50px;
+    width: 100%;
+    outline: none;
+    font-size: 14px;
+    padding: 0 20px 0 43px;
+    transition: .2s all linear;
+    border: 1px solid rgba(128, 128, 128, .2);
+    color: gray;
+}
+.search input:focus{
+    padding-left: 42px;
+    border: 2px solid #4285f4;
+}
+.search input::placeholder{
+    color: #bfbfbf;
+}
+.content .options{
+    margin-top: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 7px;
+}
+.options::-webkit-scrollbar{
+    width: 7px;
+}
+.options::-webkit-scrollbar-track{
+    background: #f1f1f1;
+    border-radius: 25px;
+}
+.options::-webkit-scrollbar-thumb{
+    background: #ccc;
+    border-radius: 25px;
+}
+.options::-webkit-scrollbar-thumb:hover{
+    background: #b3b3b3;
+}
+.options li{
+    height: 50px;
+    padding: 0 13px;
+    font-size: 14px;
+    color: gray;
+}
+.options li:hover, li.selected{
+    background: #f2f2f2;
+}
+
+.text_select{
+    width: 100%;
+}
+
+
+
+.content_fields_column .select-btn:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.content_fields_column.success .select-btn {
+    border-color: #2ecc71;
+}
+
+.content_fields_column.error .select-btn {
+    border-color: #e74c3c;
+}

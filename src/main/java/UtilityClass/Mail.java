@@ -35,9 +35,7 @@ public class Mail {
         System.out.println("message sent");
     }
 
-    private static Message prepareMessage(Session session,
-                                          String myEmail, String destinatario, String contenuto)
-            throws AddressException, MessagingException {
+    private static Message prepareMessage(Session session, String myEmail, String destinatario, String contenuto) throws AddressException, MessagingException {
 
         Message msg = new MimeMessage(session);
         try {

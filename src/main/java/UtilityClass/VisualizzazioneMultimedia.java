@@ -3,7 +3,7 @@ package UtilityClass;
 public class VisualizzazioneMultimedia {
     public int idMultimedia;
     public String fotoString;
-
+    public int copertina;
     public int getIdMultimedia() {
         return idMultimedia;
     }
@@ -20,11 +20,20 @@ public class VisualizzazioneMultimedia {
         this.fotoString = fotoString;
     }
 
+    public int getCopertina() {
+        return copertina;
+    }
+
+    public void setCopertina(int copertina) {
+        this.copertina = copertina;
+    }
+
     @Override
     public String toString() {
         return "VisualizzazioneMultimedia{" +
                 "idMultimedia=" + idMultimedia +
                 ", fotoString='" + fotoString + '\'' +
+                ", copertina=" + copertina +
                 '}';
     }
 }

@@ -5,10 +5,13 @@ import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.galleria.GalleriaModelDM;
 import model.indirizzo.IndirizzoBean;
 import model.indirizzo.IndirizzoModelDM;
 import model.multimedia.MultimediaBean;
 import model.multimedia.MultimediaModelDM;
+import model.planimetria.PlanimetriaBean;
+import model.planimetria.PlanimetriaModelDM;
 import model.utente.UtenteBean;
 import model.utente.UtenteModelDM;
 
@@ -19,7 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-@WebServlet(name = "ServletDettagliAppartamento", value = "/ServletDettagliAppartamento")
+@WebServlet(name = "ServletDettagliAppartamento", value = "/DettagliAppartamento")
 @MultipartConfig
 public class ServletDettagliAppartamento extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -27,8 +30,11 @@ public class ServletDettagliAppartamento extends HttpServlet {
     private static AgenteModelDM modelAgenti = new AgenteModelDM();
     private static UtenteModelDM modelUtente = new UtenteModelDM();
     private static IndirizzoModelDM modelIndirizzo = new IndirizzoModelDM();
-    private static MultimediaModelDM modelMultimedia = new MultimediaModelDM();
+    private static GalleriaModelDM galleriaModelDM = new GalleriaModelDM();
 
+    private static PlanimetriaModelDM planimetriaModelDM = new PlanimetriaModelDM();
+
+    private static MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,24 +45,24 @@ public class ServletDettagliAppartamento extends HttpServlet {
         IndirizzoBean indirizzoBean = new IndirizzoBean();
         MultimediaBean multimediaBean = new MultimediaBean();
         ArrayList<AppartamentoBean> array = new ArrayList<AppartamentoBean>();
-        ArrayList<MultimediaBean> allMulti = new ArrayList<MultimediaBean>();
         try {
             if (request.getSession().getAttribute("NoDbConnection") != null) {
                 modelApp = null;
                 modelAgenti = null;
                 modelUtente = null;
                 modelIndirizzo = null;
-                modelMultimedia = null;
+                galleriaModelDM = null;
             }
             appBean = modelApp.RetrieveById(id);
             agenteBean = modelAgenti.RetrieveAgenteById(appBean.getIdAgente());
             utenteBean = modelUtente.doRetrieveUtenteByKeyAgente(agenteBean.getIdUtente());
             indirizzoBean = modelIndirizzo.RetrieveIndirizzoByAppId(appBean.getIdAppartamento());
-            multimediaBean.setFotoString(modelMultimedia.doRetrieveFoto(appBean.getIdAppartamento()));
-            multimediaBean.setVideoString(modelMultimedia.doRetrieveVideo(appBean.getIdAppartamento()));
-            multimediaBean.setPlanimetriaString(modelMultimedia.doRetrievePlanimetria(appBean.getIdAppartamento()));
+            multimediaBean.setFotoString(galleriaModelDM.doRetrieveFotoDesc(appBean.getIdAppartamento()));
+            //multimediaBean.setVideoString(videoModelDM.doRetrieveVideo(appBean.getIdAppartamento()));
+            multimediaBean.setPlanimetriaString(planimetriaModelDM.doRetrievePlanimetria(appBean.getIdAppartamento()));
             array =(ArrayList<AppartamentoBean>) modelApp.OrderByVisite();
-            allMulti=modelMultimedia.RetrieveAllMultimedia();
+            ArrayList<PlanimetriaBean> listaPlanimetrie = new ArrayList<>();
+            listaPlanimetrie = planimetriaModelDM.doRetrievePlanimetriaCompleta(appBean.getIdAppartamento());
             VisualizzazioneImmobile visualizzazione = new VisualizzazioneImmobile();
             ArrayList<AppartamentoBean> ordinamento = (ArrayList<AppartamentoBean>) modelApp.OrderByVisite();
             visualizzazione.setIdAppartamento(ordinamento.get(0).getIdAppartamento());
@@ -69,7 +75,7 @@ public class ServletDettagliAppartamento extends HttpServlet {
             visualizzazione.setData(ordinamento.get(0).getData());
             visualizzazione.setPrezzo(ordinamento.get(0).getPrezzo());
             visualizzazione.setVisualizzaPrezzo(ordinamento.get(0).getVisualizzaPrezzo());
-            visualizzazione.setFoto(modelMultimedia.doRetrieveFoto(ordinamento.get(0).getIdAppartamento()).get(0));
+            visualizzazione.setFoto(galleriaModelDM.doRetrieveFoto(ordinamento.get(0).getIdAppartamento(),1));
             modelApp.AggiungiVisualizzazione(id);
             request.setAttribute("appartamento", appBean);
             request.setAttribute("agente", agenteBean);
@@ -77,7 +83,7 @@ public class ServletDettagliAppartamento extends HttpServlet {
             request.setAttribute("indirizzo", indirizzoBean);
             request.setAttribute("multimedia", multimediaBean);
             request.setAttribute("visite", array);
-            request.setAttribute("allMulti", allMulti);
+            request.setAttribute("listaPlanimetrie", listaPlanimetrie);
             request.setAttribute("featured",visualizzazione);
             RequestDispatcher rd = request.getRequestDispatcher("/dettagliappartamento.jsp");
             rd.forward(request, response);

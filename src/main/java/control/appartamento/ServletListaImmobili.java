@@ -4,6 +4,7 @@ import model.agente.AgenteBean;
 import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.galleria.GalleriaModelDM;
 import model.multimedia.MultimediaBean;
 import model.multimedia.MultimediaModelDM;
 import model.utente.UtenteBean;
@@ -15,13 +16,13 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "ServletListaImmobili", value = "/ServletListaImmobili")
+@WebServlet(name = "ServletListaImmobili", value = "/ListaImmobili")
 @MultipartConfig
 public class ServletListaImmobili extends HttpServlet {
     private static AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
     private static UtenteModelDM utenteModelDM = new UtenteModelDM();
     private static AgenteModelDM agenteModelDM = new AgenteModelDM();
-    private static MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
+    private static GalleriaModelDM galleriaModelDM = new GalleriaModelDM();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,11 +34,10 @@ public class ServletListaImmobili extends HttpServlet {
             appartamenti = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllAppartamento();
             utenti = (ArrayList<UtenteBean>) utenteModelDM.doRetrieveAll();
             agenti = (ArrayList<AgenteBean>) agenteModelDM.RetrieveAgente();
-            multimedia = multimediaModelDM.RetrieveAll(appartamenti);
+            multimedia = galleriaModelDM.RetrieveAll(appartamenti);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(multimedia.get(1).getFotoString().get(0));
         request.getSession().setAttribute("lista-immobili", appartamenti);
         request.getSession().setAttribute("lista-utenti-immobili", utenti);
         request.getSession().setAttribute("agenti-immobili", agenti);

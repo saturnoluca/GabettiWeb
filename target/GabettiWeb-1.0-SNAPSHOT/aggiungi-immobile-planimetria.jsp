@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="it" dir="ltr">
 <head>
+    <title>Gabetti Nocera | Planimetria Immobile</title>
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
     <meta charset="UTF-8">
     <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
     <link rel="stylesheet" href="css/amministratoreagente.css">
@@ -16,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 
     <link rel="stylesheet" href="icomoon/style.css">
@@ -41,7 +43,7 @@
             </div>
         </div>
         <div class="addProperty_page_content">
-            <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post" enctype="multipart/form-data">
+            <form class="form_addProperty" action="MultimediaAggiunta" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="idAppartamento" value="<%=idAppartamento%>">
                 <input type="hidden" name="azione" value="<%="planimetria"%>">
                 <div class="addProperty_content">
@@ -49,19 +51,15 @@
                         <div class="content_fields_row">
                             <div class="property_multimedia">
                                 <h3 class="tab_title">Multimedia</h3>
-                                <div class="gallery_image_container" id="planimetria_image_container"></div>
                                 <div class="content_gallery_images full_size">
                                     <label class="label_property_title">Planimetria</label>
-                                    <div class="drag_drop_container">
-                                        <i class="icon-cloud-upload"></i>
-                                        <strong>Seleziona delle immagini</strong>
-                                        <div class="button_browse">Sfoglia Immagine
-                                            <div class="input_file">
-                                                <input type="file" id="upload-planimetria" name="planimetria">
-                                            </div>
+                                    <div id="galleria" class="row_galleria">
+                                        <div class="col-sm-2 imgUp">
+                                            <div class="ImagePreview"></div>
+                                            <label class="btn-upload">Aggiungi Planimetria<input type="file" class="uploadFile img" name="planimetria-1" style="width: 0px; height: 0px; overflow: hidden;"></label>
+                                            <input id="valore" type="hidden" name="valore" value="1">
                                         </div>
-                                        <div id="reset-planimetria" class="button_browse">Reset
-                                        </div>
+                                        <i class="fa fa-plus imgAdd"></i>
                                     </div>
                                 </div>
                             </div>
@@ -103,151 +101,40 @@
 </script>
 
 <script>
-    function previewImages() {
-
-        var preview = document.querySelector('#gallery_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-photo').addEventListener("change", previewImages);
-
-    $('#reset-image').click(function(){
-        $("#upload-photo").val('');
-        $("#gallery_image_container").empty();
+    $(".imgAdd").click(function(){
+        var valore = document.getElementById("valore").value;
+        var sium = parseInt(valore) + 1;
+        console.log("valore " + sium)
+        $(this).closest(".row_galleria").find('.imgAdd').before('<div class="col-sm-2 imgUp"><div class="imagePreview"></div><label class="btn-upload">Aggiungi Planimetria<input type="file" class="uploadFile img" name="planimetria-'+sium+'" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>');
+        document.getElementById("valore").value = sium;
     });
-</script>
-
-<script>
-    function previewImages() {
-
-        var preview = document.querySelector('#planimetria_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-planimetria').addEventListener("change", previewImages);
-
-    $('#reset-planimetria').click(function(){
-        $("#upload-planimetria").val('');
-        $("#planimetria_image_container").empty();
+    $(document).on("click", "i.del" , function() {
+        document.getElementById("valore").value = document.getElementById("valore").value - 1;
+        $(this).parent().remove();
+        console.log(document.getElementById("valore").value);
     });
-</script>
+    $(function() {
+        $(document).on("change",".uploadFile", function()
+        {
+            var uploadFile = $(this);
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+            var nome = files[0].name;
+            console.log(nome.substring(nome.lastIndexOf('.') + 1));
+            var ext = nome.substring(nome.lastIndexOf('.') + 1);
+            if (
+                ext == "pdf"){ // only image file
+                var reader = new FileReader(); // instance of the FileReader
+                reader.readAsDataURL(files[0]); // read the local file
 
-<script>
-    function previewImages() {
+                reader.onloadend = function(){ // set image data as background of div
+                    //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                    uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url(images/pdf.png)");
+                }
+            }
 
-        var preview = document.querySelector('#video_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-video').addEventListener("change", previewImages);
-
-    $('#reset-video').click(function(){
-        $("#upload-video").val('');
+        });
     });
-</script>
-
-<script>
-    function readFile(e) {
-        var files;
-        console.log("SIUM");
-        if (e.target.files) {
-            files=e.target.files
-        } else {
-            files=e.dataTransfer.files
-        }
-        if (files.length==0) {
-            alert('What you dropped is not a file.');
-            return;
-        }
-        var file=files[0];
-        document.getElementById('fileDragName').value = file.name
-        document.getElementById('fileDragSize').value = file.size
-        document.getElementById('fileDragType').value = file.type
-        reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('fileDragData').value = e.target.result;
-        }
-        reader.readAsDataURL(file);
-    }
-    function getTheFile(e) {
-        e.target.style.borderColor='#ccc';
-        readFile(e);
-    }
 </script>
 
 

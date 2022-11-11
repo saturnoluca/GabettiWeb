@@ -435,9 +435,9 @@
 }
 
 .user_field{
+    position: relative;
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
 }
 
 .half_size{
@@ -454,43 +454,113 @@
     width: 100%;
 }
 
-.user_field label{
+.password_div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.password_div label{
     font-size: 16px;
-    color: #808080;
+
+
+}
+
+.password_div input{
+    font-size: 16px !important;
+    border: none !important;
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.password_div input:hover{
+    color: #808080 !important;
 }
 
 .user_field input{
     display: block;
-    width: 100%;
-    height: auto;
-    margin-bottom: 0;
-    padding: 11px 15px;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.2;
-    border: 1px solid transparent;
-    transition: border .3s ease-in-out;
-    background-color: #fff;
-    color: #333333;
-    box-shadow: 0 0 20px #dddddd;
-    border-radius: 4px;
+    font-size: 14px;
+    padding: 17.5px 10px;
+    margin-bottom: 15px;
+    transition: .2s all linear;
+    border: 1px solid rgba(128, 128, 128, .2);
 }
 
 .user_field textarea{
     display: block;
-    width: 100%;
-    height: auto;
-    margin-bottom: 0;
-    padding: 11px 15px;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.2;
-    border: 1px solid transparent;
-    transition: border .3s ease-in-out;
-    background-color: #fff;
-    color: #333333;
-    box-shadow: 0 0 20px #dddddd;
-    border-radius: 4px;
+    font-size: 14px;
+    padding: 15px 10px;
+    margin-bottom: 15px;
+    transition: .2s all linear;
+    border: 1px solid rgba(128, 128, 128, .2);
+}
+
+.user_field input:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.user_field textarea:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.user_field select:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+
+.user_field.success input {
+    border-color: #2ecc71;
+}
+
+.user_field.error input {
+    border-color: #e74c3c;
+}
+
+.user_field.success select {
+    border-color: #2ecc71;
+}
+
+.user_field.error select {
+    border-color: #e74c3c;
+}
+
+.user_field.success textarea {
+    border-color: #2ecc71;
+}
+
+.user_field.error textarea {
+    border-color: #e74c3c;
+}
+
+.user_field i {
+    visibility: hidden;
+    position: absolute;
+    top: 53px;
+    right: 20px;
+}
+
+.user_field.success i.icon-check-circle {
+    color: #2ecc71;
+    visibility: visible;
+}
+
+.user_field.error i.icon-exclamation-circle {
+    color: #e74c3c;
+    visibility: visible;
+}
+
+.user_field small {
+    color: #e74c3c;
+    bottom: 0;
+    left: 0;
+    visibility: hidden;
+}
+
+.user_field.error small {
+    visibility: visible;
 }
 
 .change_user_inf{
@@ -560,4 +630,16 @@
 .num_properties_icon i{
   color: #dddfeb;
   font-size: 40px;
+}
+
+.btn-show-pass{
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    padding-right: 5px;
+    cursor: pointer;
+    transition: all 0.4s;
 }

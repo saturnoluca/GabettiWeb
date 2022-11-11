@@ -10,17 +10,31 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    CompositeKeyAgenteCase agenteCase = null;
+    AgenteBean agente = null;
+    UtenteBean admin = (UtenteBean) session.getAttribute("utente");
+    if (admin == null) {
+        response.sendRedirect(response.encodeRedirectURL("login.jsp"));
+        return;
+    }
+    if (admin.getRuolo().equals("Agente") || admin.getRuolo().equals("Collaboratore")) {
+        agente = (AgenteBean) session.getAttribute("agente");
+        agenteCase = (CompositeKeyAgenteCase) session.getAttribute("appartamenti");
+    }
+
+    String inviata = (String) request.getSession().getAttribute("inviata");
+    request.getSession().setAttribute("inviata","no");
+%>
 <!DOCTYPE html>
-<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
 <html lang="it" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
     <link rel="stylesheet" href="css/myprofile.css">
-    <!-- Boxicons CDN Link -->
+
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
@@ -33,24 +47,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
-    <title>Gabetti Nocera | Profilo</title>
+    <title>Gabetti Nocera | <%=admin.getNome() + " " + admin.getCognome()%>></title>
 </head>
-<%
-    ArrayList<CompositeKeyAgenteCase> agenteCase = null;
-    AgenteBean agente = null;
-    UtenteBean admin = (UtenteBean) session.getAttribute("utente");
-    if (admin == null) {
-        response.sendRedirect(response.encodeRedirectURL("login.jsp"));
-        return;
-    }
-    if (admin.getRuolo().equals("Agente")) {
-        agente = (AgenteBean) session.getAttribute("agente");
-        agenteCase = (ArrayList<CompositeKeyAgenteCase>) session.getAttribute("appartamenti");
-    }
 
-
-%>
 <body>
+<input type="hidden" value="<%=inviata%>" id="inviata">
 <jsp:include page="sidebar.jsp"/>
 <section class="home-section">
     <input type="hidden" id="ruolo" value="<%=admin.getRuolo()%>">
@@ -78,7 +79,7 @@
                                         Cambia Foto
                                     </a>
                                 </p>
-                                <form action="ServletCambiaFotoProfilo" enctype="multipart/form-data" method="post">
+                                <form action="CambiaFotoProfilo" enctype="multipart/form-data" method="post">
                                     <div class="collapse" id="collapseExample">
                                         <div class="card card-body">
                                             <input name="foto" type="file" id="file-ip-1" accept="images/*"
@@ -106,15 +107,10 @@
                                     </div>
                                     <div class="text_value">
                                         <%
-                                            if (admin.getRuolo().equals("Agente")) {
-                                                for (CompositeKeyAgenteCase keyAgenteCase : agenteCase) {
-                                                    if (keyAgenteCase.getBean().getIdAgente() == agente.getIdUtente()) {
+                                            if (admin.getRuolo().equals("Agente") || admin.getRuolo().equals("Collaboratore")) {
+
                                         %>
-                                        <span><%=keyAgenteCase.getContaCase()%></span>
-                                        <%
-                                                }
-                                            }
-                                        %>
+                                        <span><%=agenteCase.getContaCase()%></span>
                                         <%} else {%>
                                         <span>Non è un agente</span>
                                         <%}%>
@@ -133,15 +129,9 @@
                                     </div>
                                     <div class="text_value">
                                         <%
-                                            if (admin.getRuolo().equals("Agente")) {
-                                                for (CompositeKeyAgenteCase keyAgenteCase : agenteCase) {
-                                                    if (keyAgenteCase.getBean().getIdAgente() == agente.getIdUtente()) {
+                                            if (admin.getRuolo().equals("Agente")  || admin.getRuolo().equals("Collaboratore")) {
                                         %>
-                                        <span><%=keyAgenteCase.getTotvisite()%></span>
-                                        <%
-                                                }
-                                            }
-                                        %>
+                                        <span><%=agenteCase.getTotvisite()%></span>
                                         <%} else {%>
                                         <span>Non è un agente</span>
                                         <%}%>
@@ -161,32 +151,50 @@
                             <p>Informazioni utente</p>
                         </div>
                         <div class="user_settings_body">
-                            <form class="form_user_settings" action="ServletCambiaInformazioniPersonali" method="post">
+                            <form class="form_user_settings" action="CambiaInformazioniPersonali" method="post" id="form_informazioni_personali">
                                 <div class="user_settings_fields">
                                     <div class="user_field half_size">
-                                        <input type="hidden" name="idUtente" value="<%=admin.getIdUtente()%>">
+                                        <input id="idUtente" type="hidden" name="idUtente" value="<%=admin.getIdUtente()%>">
                                         <label>Username</label>
-                                        <input type="text" placeholder="<%=admin.getUsername()%>" name="usernameUtente">
+                                        <input type="text" placeholder="<%=admin.getUsername()%>" value="<%=admin.getUsername()%>" name="usernameUtente" id="username">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Email</label>
-                                        <input type="email" placeholder="<%=admin.getEmail()%>" name="emailUtente">
+                                        <input type="email" placeholder="<%=admin.getEmail()%>" value="<%=admin.getEmail()%>" name="emailUtente" id="email">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Nome</label>
-                                        <input type="text" placeholder="<%=admin.getNome()%>" name="nomeUtente">
+                                        <input type="text" placeholder="<%=admin.getNome()%>" value="<%=admin.getNome()%>" name="nomeUtente" id="nome">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Cognome</label>
-                                        <input type="text" placeholder="<%=admin.getCognome()%>" name="cognomeUtente">
+                                        <input type="text" placeholder="<%=admin.getCognome()%>" value="<%=admin.getCognome()%>" name="cognomeUtente" id="cognome">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="user_field half_size">
-                                        <label>Password</label>
-                                        <input type="password" placeholder="********" name="passwordUtente">
+                                        <div class="password_div">
+                                            <label>Password</label>
+                                            <input id="mostra_password" type="button" value="Mostra Password" onclick="MostraPassword()">
+                                        </div>
+                                        <input type="password" placeholder="********" value="<%=admin.getPassword()%>" name="passwordUtente" id="passwordUtente">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="submit" class="change_user_inf">Cambia informazioni personali</button>
+                                    <button type="submit" class="change_user_inf" onclick="return checkInputs();">Cambia informazioni personali</button>
                                 </div>
                             </form>
                         </div>
@@ -196,57 +204,68 @@
                             <p>Informazioni agente</p>
                         </div>
                         <div class="user_settings_body">
-                            <form class="form_user_settings" action="ServletCambiaInformazioniAgente" method="post">
-                                <%if (admin.getRuolo().equals("Agente")) {%>
+                            <form class="form_user_settings" action="CambiaInformazioniAgente" method="post" id="form_dati_agente">
+                                <%if (admin.getRuolo().equals("Agente") || admin.getRuolo().equals("Collaboratore")) {%>
                                 <input type="hidden" name="idAgente" value="<%=agente.getIdAgente()%>">
                                 <%}%>
                                 <div class="user_settings_fields">
                                     <div class="user_field full_size">
                                         <label>Descrizione</label>
                                         <%
-                                            if (admin.getRuolo().equals("Agente")) {
+                                            if (admin.getRuolo().equals("Agente") || admin.getRuolo().equals("Collaboratore")) {
                                         %>
-                                        <textarea rows="10"
-                                                  placeholder="<%=agente.getDescrizionePersonale()%>"
-                                                  name="descrizioneAgente"></textarea>
+                                        <textarea rows="10" name="descrizioneAgente" value="<%=agente.getDescrizionePersonale()%>" id="descrizione"><%=agente.getDescrizionePersonale()%></textarea>
                                         <%}%>
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Link Facebook</label>
                                         <%
-                                            if (admin.getRuolo().equals("Agente")) {
-                                                if(agente.getTelefonoCellulare() != null || agente.getTelefonoCellulare().equals("")){
+                                            if (admin.getRuolo().equals("Agente") || admin.getRuolo().equals("Collaboratore")) {
+                                                if(agente.getLinkFacebook() == null || agente.getLinkFacebook().equals("")){
                                         %>
-                                                    <input type="text" placeholder="<%=agente.getLinkFacebook()%>" name="linkFacebook">
+                                                    <input type="text" placeholder="Inserisci link Facebook" name="linkFacebook" id="facebook">
+
                                                 <%} else {%>
-                                                    <input type="text" placeholder="Inserisci link Facebook" name="linkFacebook">
+                                                    <input type="text" placeholder="<%=agente.getLinkFacebook()%>" value="<%=agente.getLinkFacebook()%>" name="linkFacebook" id="facebook">
                                         <%}}%>
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Link Instagram</label>
                                         <%
-                                            if (admin.getRuolo().equals("Agente")) {
-                                                if(agente.getTelefonoCellulare() != null || agente.getTelefonoCellulare().equals("")){
+                                            if (admin.getRuolo().equals("Agente") || admin.getRuolo().equals("Collaboratore")) {
+                                                if(agente.getLinkInstagram() == null || agente.getLinkInstagram().equals("")){
                                         %>
-                                                    <input type="text" placeholder="<%=agente.getLinkInstagram()%>" name="linkInstagram">
+                                                    <input type="text" placeholder="Inserisci link Instagram" name="linkInstagram" id="instagram">
                                                 <%} else {%>
-                                                    <input type="text" placeholder="Inserisci link Instagram" name="linkInstagram">
+                                                    <input type="text" placeholder="<%=agente.getLinkInstagram()%>" value="<%=agente.getLinkInstagram()%>" name="linkInstagram" id="instagram">
                                         <%}}%>
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="user_field half_size">
                                         <label>Numero Cellulare</label>
                                         <%
-                                            if (admin.getRuolo().equals("Agente")) {
+                                            if (admin.getRuolo().equals("Agente") || admin.getRuolo().equals("Collaboratore")) {
                                                 if(agente.getTelefonoCellulare() != null || agente.getTelefonoCellulare().equals("")){
                                         %>
-                                                    <input type="text" placeholder="<%=agente.getTelefonoCellulare()%>" name="numeroCellulare">
+                                                    <input type="text" placeholder="<%=agente.getTelefonoCellulare()%>" value="<%=agente.getTelefonoCellulare()%>" name="numeroCellulare" id="telefono">
                                                 <%} else {%>
-                                                    <input type="text" placeholder="Inserisci numero di cellulare" name="numeroCellulare">
+                                                    <input type="text" placeholder="Inserisci numero di cellulare" name="numeroCellulare" id="telefono">
                                         <%}}%>
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="submit" class="change_user_inf">Cambia informazioni agente</button>
+                                    <button type="submit" class="change_user_inf" onclick="return checkInputsAgente();">Cambia informazioni agente</button>
                                 </div>
                             </form>
                         </div>
@@ -259,47 +278,15 @@
 </section>
 
 <script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector(".bx-search");
-
-    closeBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("open");
-        menuBtnChange();//calling the function(optional)
-    });
-
-    searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
-        sidebar.classList.toggle("open");
-        menuBtnChange(); //calling the function(optional)
-    });
-
-    // following are the code to change sidebar button(optional)
-    function menuBtnChange() {
-        if (sidebar.classList.contains("open")) {
-            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-        } else {
-            closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
-        }
-    }
-</script>
-
-<script>
     document.getElementById("Selector").onchange = changeListener;
 
     function changeListener() {
         var value = this.value
-        console.log(value);
 
         if ((value == "Agente") || (value == "Collaboratore")) {
             $('#info_agente').slideDown();
         } else {
             $('#info_agente').slideUp();
-        }
-
-        if (value == "Collaboratore") {
-            $('#div_agente').slideDown();
-        } else {
-            $('#div_agente').slideUp();
         }
     }
 </script>
@@ -314,7 +301,7 @@
     }
 </script>
 
-
+<script src="script/myuser.js"></script>
 <script src="script/index.js"></script>
 <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
 <script src="bootstrap/js/popper.min.js"></script>
@@ -323,11 +310,17 @@
 <script>
     $(document).ready(function () {
         var ruolo = $('#ruolo').val();
-        if (ruolo != "Agente") {
+        if ((ruolo != "Agente") && (ruolo != "Collaboratore")) {
             $('#divruolo').hide();
             $('#divInformazioniAgente').hide();
         }
     });
+</script>
+<script>
+    const inviata = document.getElementById("inviata");
+    if(inviata.value.trim() == "ok"){
+        swal("Successo!", "I tuoi dati sono stati modificati con successo!", "success");
+    }
 </script>
 
 </body>

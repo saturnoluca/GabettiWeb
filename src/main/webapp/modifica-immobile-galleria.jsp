@@ -16,15 +16,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="it" dir="ltr">
 <head>
+    <title>Gabetti Nocera | Modifica Galleria</title>
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
     <meta charset="UTF-8">
     <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
     <link rel="stylesheet" href="css/amministratoreagente.css">
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 
     <link rel="stylesheet" href="icomoon/style.css">
@@ -37,7 +39,7 @@
 </head>
 <%
     UtenteBean admin = (UtenteBean) session.getAttribute("utente");
-    if (admin == null || !admin.getRuolo().equals("Admin")) {
+    if (admin == null) {
         response.sendRedirect(response.encodeRedirectURL("login.jsp"));
         return;
     }
@@ -47,10 +49,13 @@
         response.sendRedirect(response.encodeRedirectURL("gestione-lista-immobili.jsp"));
         return;
     }
+    String inviata = (String) request.getSession().getAttribute("inviata");
+    request.getSession().setAttribute("inviata","no");
 
 %>
 <body>
 <jsp:include page="sidebar.jsp" />
+<input type="hidden" value="<%=inviata%>" id="inviata">
 <section class="home-section">
     <div class="div_addProperty_page">
         <div class="addProperty_page_head">
@@ -64,55 +69,64 @@
                     <div class="form_content_fields">
                         <div class="content_fields_row">
                             <div class="property_multimedia">
-                                <h3 class="tab_title">Lista immagini</h3>
+                                <h3 class="tab_title">Galleria Immagini</h3>
 
                                 <div class="content_gallery_images full_size">
-                                    <label class="label_property_title">Rimuovi immagini</label>
+                                    <label class="label_property_title">Modifica galleria</label>
                                     <form action="javascript:EliminaImmagini()">
                                         <div class="container-rimuovi">
                                             <input id="idAppartamento" type="hidden" name="idAppartamento" value="<%=idAppartamento%>">
                                             <%for(int i=0; i < listaFoto.size(); i++){
                                             %>
-                                                <div id="<%=listaFoto.get(i).getIdMultimedia()%>" class="image">
+                                            <div id="<%=listaFoto.get(i).getIdMultimedia()%>" style="display: block">
+                                                <div class="image">
                                                     <img src="data:image/png;base64,<%=listaFoto.get(i).getFotoString()%>" alt="image">
                                                     <span onclick="delImage(<%=listaFoto.get(i).getIdMultimedia()%>)">&times;</span>
                                                 </div>
+                                                <%if(listaFoto.get(i).getCopertina() == 1){%>
+                                                    <input type="radio" name="copertina" id="id-<%=listaFoto.get(i).getIdMultimedia()%>" value="<%=listaFoto.get(i).getIdMultimedia()%>" checked>
+                                                    <label for="id-<%=listaFoto.get(i).getIdMultimedia()%>">Imposta come copertina</label>
+                                                <%}else{%>
+                                                    <input type="radio" name="copertina" id="id-<%=listaFoto.get(i).getIdMultimedia()%>" value="<%=listaFoto.get(i).getIdMultimedia()%>">
+                                                    <label for="id-<%=listaFoto.get(i).getIdMultimedia()%>">Imposta come copertina</label>
+                                                <%}%>
+                                            </div>
                                             <%}%>
                                             <div class="div_button_submit">
-                                                <input type="submit" value="Conferma">
+                                                <input type="submit" value="Modifica galleria">
                                             </div>
                                         </div>
                                     </form>
                             </div>
                             <div class="property_multimedia">
-                                <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post" enctype="multipart/form-data">
+                                <form class="form_addProperty" action="MultimediaAggiunta" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="idAppartamento" value="<%=idAppartamento%>">
-                                    <input type="hidden" name="modifica-Img" value="<%="modifica-Img"%>">
+                                    <input type="hidden" name="modifica-Img" value="modifica-Img">
                                     <input type="hidden" name="azione" value="<%="foto"%>">
-                                    <h3 class="tab_title">Aggiungi Nuove Immagini</h3>
-                                        <div class="gallery_image_container" id="gallery_image_container"></div>
+                                    <h3 class="tab_title">Aggiungi Nuove foto</h3>
                                         <div class="content_gallery_images full_size">
-                                            <label class="label_property_title">Preview</label>
-                                            <div class="drag_drop_container">
-                                                <i class="icon-cloud-upload"></i>
-                                                <strong>Seleziona delle immagini</strong>
-                                                <div class="button_browse">Sfoglia Immagine
-                                                    <div class="input_file">
-                                                    <input type="file" multiple id="upload-photo" onchange="readFile(event)" name="immagine">
+                                            <div id="galleria" class="row_galleria">
+                                                <div class="col-sm-2 imgUp">
+                                                    <div class="ImagePreview"></div>
+                                                    <label class="btn-upload">Aggiungi Foto<input type="file" class="uploadFile img" name="foto-1" style="width: 0px; height: 0px; overflow: hidden;"></label>
+                                                    <input id="valore" type="hidden" name="valore" value="1">
                                                 </div>
-                                            </div>
-                                            <div id="reset-image" class="button_browse">Reset</div>
+                                                <i class="fa fa-plus imgAdd"></i>
                                             </div>
                                         </div>
                                 <div class="div_button_submit">
-                                    <input type="submit" value="Avanti">
+                                    <input type="submit" value="Conferma">
                                 </div>
                             </form>
                             </div>
+                                <div class="div_button_submit" style="margin-top:100px;">
+                                    <a class="send" href="RedirectModificaPlanimetria?idAppartamento=<%=idAppartamento%>">Avanti</a>
+                                </div>
                         </div>
                     </div>
                 </div>
         </div>
+    </div>
     </div>
 </section>
 
@@ -140,123 +154,36 @@
         }
     }
 </script>
-
 <script>
-    function previewImages() {
-
-        var preview = document.querySelector('#gallery_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-photo').addEventListener("change", previewImages);
-
-    $('#reset-image').click(function(){
-        $("#upload-photo").val('');
-        $("#gallery_image_container").empty();
+    $(".imgAdd").click(function(){
+        var valore = document.getElementById("valore").value;;
+        var sium = parseInt(valore) + 1;
+        $(this).closest(".row_galleria").find('.imgAdd').before('<div class="col-sm-2 imgUp"><div class="imagePreview"></div><label class="btn-upload">Aggiungi Foto<input type="file" class="uploadFile img" name="foto-'+sium+'" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>');
+        document.getElementById("valore").value = sium;
     });
-</script>
-
-<script>
-    function previewImages() {
-
-        var preview = document.querySelector('#planimetria_image_container');
-
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-planimetria').addEventListener("change", previewImages);
-
-    $('#reset-planimetria').click(function(){
-        $("#upload-planimetria").val('');
-        $("#planimetria_image_container").empty();
+    $(document).on("click", "i.del" , function() {
+        document.getElementById("valore").value = document.getElementById("valore").value - 1;
+        $(this).parent().remove();
+        console.log(document.getElementById("valore").value);
     });
-</script>
+    $(function() {
+        $(document).on("change",".uploadFile", function()
+        {
+            var uploadFile = $(this);
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
 
-<script>
-    function previewImages() {
+            if (/^image/.test( files[0].type)){ // only image file
+                var reader = new FileReader(); // instance of the FileReader
+                reader.readAsDataURL(files[0]); // read the local file
 
-        var preview = document.querySelector('#video_image_container');
+                reader.onloadend = function(){ // set image data as background of div
+                    //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                    uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url("+this.result+")");
+                }
+            }
 
-        if (this.files) {
-            [].forEach.call(this.files, readAndPreview);
-        }
-
-        function readAndPreview(file) {
-
-// Make sure `file.name` matches our extensions criteria
-            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                return alert(file.name + " is not an image");
-            } // else...
-
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                var image = new Image();
-                image.height = 100;
-                image.title  = file.name;
-                image.src    = this.result;
-                preview.appendChild(image);
-            });
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-
-    document.querySelector('#upload-video').addEventListener("change", previewImages);
-
-    $('#reset-video').click(function(){
-        $("#upload-video").val('');
+        });
     });
 </script>
 
@@ -272,6 +199,8 @@
     function EliminaImmagini() {
         var idAppartamento = document.getElementById("idAppartamento").value;
         var array = document.getElementsByClassName('eliminata');
+        var copertina = document.querySelector('input[name="copertina"]:checked').value;
+        console.log("copertina "+ copertina);
         var eliminati = "";
         for(i=0; i < array.length; i++){
             if(eliminati == ""){
@@ -284,20 +213,26 @@
         console.log("idAppartamento " + idAppartamento);
         console.log("selezionati " + eliminati);
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET","ServletRimuoviImmagini?idAppartamento="+idAppartamento +"&eliminati=" +eliminati,true);
+        xhttp.open("GET","RimuoviImmagini?idAppartamento="+idAppartamento +"&eliminati=" +eliminati +"&copertina="+copertina,true);
 
         xhttp.onreadystatechange = function (){
             if(xhttp.readyState == 4 && xhttp.status == 200){
                 if(xhttp.responseText === "true"){
-                    alert("Foto eliminate correttamente");
+                    swal("Successo!", "Le modifiche alla galleria immagine sono state applicate con successo!", "success");
                 }
                 else{
-                    alert("Nessuna foto eliminata");
+                    swal("Successo!", "Le modifiche alla galleria immagine sono state applicate con successo!", "success");
                 }
             }
         }
         xhttp.send();
         return false;
+    }
+</script>
+<script>
+    const inviata = document.getElementById("inviata");
+    if(inviata.value.trim() == "ok"){
+        swal("Inviata!", "Le modifiche alla galleria immagine sono state applicate con successo!", "success");
     }
 </script>
 

@@ -1,23 +1,25 @@
 package control.appartamento;
 
 import UtilityClass.VisualizzazioneImmobile;
+import model.agente.AgenteBean;
+import model.agente.AgenteModelDM;
 import model.appartamento.AppartamentoBean;
 import model.appartamento.AppartamentoModelDM;
+import model.galleria.GalleriaModelDM;
 import model.multimedia.MultimediaBean;
-import model.multimedia.MultimediaModelDM;
 import model.utente.UtenteBean;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet(name = "ServletAppartamentiAdmin", value = "/ServletAppartamentiAdmin")
+@WebServlet(name = "ServletAppartamentiAdmin", value = "/AppartamentiAdmin")
 public class ServletAppartamentiAdmin extends HttpServlet {
     AppartamentoModelDM appartamentoModelDM = new AppartamentoModelDM();
-    MultimediaModelDM multimediaModelDM = new MultimediaModelDM();
+    GalleriaModelDM galleriaModelDM = new GalleriaModelDM();
+    AgenteModelDM agenteModelDM = new AgenteModelDM();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,14 +33,18 @@ public class ServletAppartamentiAdmin extends HttpServlet {
         if (utente.getRuolo().equals("Admin") || utente.getRuolo().equals("Segretario")) {
             appartamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.OrderByData();
         } else if (utente.getRuolo().equals("Agente") || utente.getRuolo().equals("Collaboratore")) {
-            appartamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllByAgente(utente.getIdUtente());
+            AgenteBean agenteBean = new AgenteBean();
+            agenteBean = agenteModelDM.RetrieveAgenteByIdUtente(utente.getIdUtente());
+            appartamento = (ArrayList<AppartamentoBean>) appartamentoModelDM.RetrieveAllByAgente(agenteBean.getIdAgente());
         }
         for (int i = 0; i < appartamento.size(); i++) {
             int id = appartamento.get(i).getIdAppartamento();
-            if (multimediaModelDM.doRetrieveFoto(id).size() == 0)
+            if (galleriaModelDM.doRetrieveFoto(id).size() == 0)
                 foto = null;
-            else
-                foto = multimediaModelDM.doRetrieveFoto(id).get(0);
+            else{
+                foto = galleriaModelDM.doRetrieveFoto(id,1);
+            }
+
             VisualizzazioneImmobile visualizzazioneImmobile = new VisualizzazioneImmobile();
             visualizzazioneImmobile.setIdAppartamento(appartamento.get(i).getIdAppartamento());
             visualizzazioneImmobile.setFoto(foto);
@@ -57,10 +63,5 @@ public class ServletAppartamentiAdmin extends HttpServlet {
         request.getSession().setAttribute("visualizzazione-immobile", immobili);
         request.getSession().setAttribute("entrato-immobili", "si");
         request.getRequestDispatcher("gestione-lista-immobili.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

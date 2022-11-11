@@ -13,7 +13,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
     <script src="bootstrap/js/popper.min.js"></script>
@@ -31,20 +31,15 @@
     <link rel="stylesheet" href="css/aggiunte.css">
     <title>Gabetti Nocera | Valutazione Immobile</title>
     <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
-
+    <script src="script/valutazione.js"></script>
 </head>
-
 <%
-    ArrayList<Città> allCittàZone = (ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
-    if (allCittàZone == null) {
-        session.setAttribute("nomepagina", "valutazione.jsp");
-        response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
-        return;
-    }
-    ArrayList<String> categorie = (ArrayList<String>) request.getSession().getAttribute("categorie");
+    String inviata = (String) request.getSession().getAttribute("inviata");
+    request.getSession().setAttribute("inviata","no");
 %>
 <body>
 <%@ include file="loader.html"%>
+<input type="hidden" value="<%=inviata%>" id="inviata">
 <nav id="navbar">
     <a href="index.jsp" class="logo">
         <img src="images/logo.png">
@@ -54,11 +49,12 @@
         <i class="icon-bars"></i>
     </label>
     <ul>
-        <li><a href="index.jsp">Home</a></li>
+        <li><a href="index.jsp" class="active">Home</a></li>
         <li><a href="listaappartamenti.jsp">Lista Immobili</a></li>
-        <li><a class="active" href="valutazione.jsp">Valutazione Immobile</a></li>
+        <li><a href="valutazione.jsp">Valutazione Immobile</a></li>
         <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
         <li><a href="contact.jsp">Contattaci</a></li>
+        <li><a href="login.jsp">Area Personale</a></li>
     </ul>
 </nav>
 <div class="content">
@@ -84,20 +80,25 @@
                         </div>
                             <div class="div_valutazione_form">
                             <section class="section_valutazione_form">
-                                <form action="ServletMail" class="valutazione_form">
+                                <form action="SendEmail"  method="post" class="valutazione_form validate-form" id="form_valutazione">
                                     <input type="hidden" name="action" value="valutazione">
                                     <div class="valutazione_form_field half_size">
                                         <label>Indirizzo</label>
-                                        <input type="text"
-                                               placeholder="Indirizzo del tuo immobile compreso di numero civico" name="indirizzo">
+                                        <input type="text" placeholder="Indirizzo del tuo immobile compreso di numero civico" name="indirizzo" id="indirizzo">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Comune</label>
-                                        <input type="text" placeholder="Inserisci il comune" name="comune">
+                                        <input type="text" placeholder="Inserisci il comune" name="comune" id="comune">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Tipo immobile</label>
-                                        <select name="tipoImmobile">
+                                        <select name="tipoImmobile" id="tipoImmobile">
                                             <option value="" selected disabled>Seleziona tipo immobile</option>
                                             <option value="Appartamento">Appartamento</option>
                                             <option value="Abitazione economica">Abitazione economica</option>
@@ -109,14 +110,20 @@
                                             <option value="Villetta a schiera">Villetta a schiera</option>
                                             <option value="Appartamento di lusso">Appartamento di lusso</option>
                                         </select>
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Superficie in mq</label>
-                                        <input type="text" placeholder="Inserisci la superficie" name="superficie">
+                                        <input type="text" placeholder="Inserisci la superficie" name="superficie" id="superficie">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Piano</label>
-                                        <select name="piano">
+                                        <select name="piano" id="piano">
                                             <option value="" selected disabled>Seleziona piano immobile</option>
                                             <option value="Interrato Seminterrato">Interrato / Seminterrato</option>
                                             <option value="Piano terra">Piano terra</option>
@@ -126,50 +133,61 @@
                                             <option value="3 piano">3° Piano</option>
                                             <option value="4 piano">4° Piano</option>
                                             <option value="5 piano e oltre">5° Piano e oltre</option>
+                                            <option value="Attico">Attico</option>
+                                            <option value="Basso">Basso</option>
+                                            <option value="Medio">Medio</option>
+                                            <option value="Alto">Alto</option>
                                         </select>
-                                    </div>
-                                    <div class="form_piano half_size">
-                                        <label>Ultimo piano?</label>
-                                        <div>
-                                            <input type="radio" name="ultimoPiano" value="Si">
-                                            <label>Si.</label>
-                                        </div>
-                                        <div>
-                                            <input type="radio" name="ultimoPiano" value="No">
-                                            <label>No.</label>
-                                        </div>
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Locali</label>
-                                        <input type="text" placeholder="Inserisci il numero dei locali" name="locali">
+                                        <input type="text" placeholder="Inserisci il numero dei locali" name="locali" id="locali">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Bagni</label>
-                                        <input type="text" placeholder="Inserisci il numero dei bagni"name="bagni">
+                                        <input type="text" placeholder="Inserisci il numero dei bagni" name="bagni" id="bagni">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Stato dell'appartamento</label>
-                                        <select name="statoAppartamento">
+                                        <select name="statoAppartamento" id="statoAppartamento">
                                             <option value="" selected disabled>Seleziona stato appartamento</option>
                                             <option value="Da ristrutturare">Da ristrutturare</option>
                                             <option value="Abitabile">Abitabile</option>
                                             <option value="Ristrutturato">Ristrutturato</option>
                                             <option value="Nuova costruzione">Nuova costruzione</option>
                                         </select>
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Riscaldamento</label>
-                                        <select name="riscaldamento">
+                                        <select name="riscaldamento" id="riscaldamento">
                                             <option value="" selected disabled>Seleziona tipo riscaldamento</option>
                                             <option value="Non presente">Non presente</option>
                                             <option value="Autonomo">Autonomo</option>
                                             <option value="Condominiale">Condominiale</option>
                                             <option value="Pompe di calore">Pompe di calore</option>
                                         </select>
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Anno costruzione immobile</label>
-                                        <input type="text" placeholder="Inserisci l'anno costruzione immobile" name="annoDiCostruzione">
+                                        <input type="text" placeholder="Inserisci l'anno costruzione immobile" name="annoDiCostruzione" id="annoDiCostruzione">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="form_features full_size">
                                         <label>L'immobile dispone di</label>
@@ -208,22 +226,34 @@
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Nome</label>
-                                        <input type="text" placeholder="Inserisci il tuo nome" name="nome" required>
+                                        <input type="text" placeholder="Inserisci il tuo nome" name="nome" id="nome">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Cognome</label>
-                                        <input type="text" placeholder="Inserisci il tuo cognome" name="cognome" required>
+                                        <input type="text" placeholder="Inserisci il tuo cognome" name="cognome" id="cognome">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
-                                        <label>Telefono</label>
-                                        <input type="text" placeholder="Inserisci il tuo numero di telefono" name="telefono" required>
+                                        <label>Cellulare</label>
+                                        <input type="text" placeholder="Inserisci il tuo numero di cellulare" name="telefono" id="telefono">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_field half_size">
                                         <label>Email</label>
-                                        <input type="text" placeholder="Inserisci la tua email" name="email" required>
+                                        <input type="text" placeholder="Inserisci la tua email" name="email" id="email">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="valutazione_form_submit">
-                                        <input type="submit" class="submit_button" value="Invia Richiesta Valutazione">
+                                        <button type="submit" onclick="return checkInputs();" class="submit_button">Invia Richiesta Valutazione</button>
                                     </div>
                                 </form>
                             </section>
@@ -236,8 +266,13 @@
     <jsp:include page="footer.jsp"/>
 </div>
 
+<script>
+    const inviata = document.getElementById("inviata");
+    if(inviata.value.trim() == "ok"){
+        swal("Inviata!", "La tua richiesta di valutazione è stata inviata con successo e verrà preso presto in visione!", "success");
+    }
+</script>
 
-<script src="script/valutazione.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="script/index.js"></script>
 <script src="bootstrap/js/jquery-3.3.1.min.js"></script>

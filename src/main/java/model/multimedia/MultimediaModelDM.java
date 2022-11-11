@@ -4,6 +4,8 @@ import UtilityClass.VisualizzazioneMultimedia;
 import model.DriverManagerConnectionPool;
 import UtilityClass.UtilityBlob;
 import model.appartamento.AppartamentoBean;
+import model.galleria.GalleriaModelDM;
+import model.planimetria.PlanimetriaModelDM;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +42,6 @@ public class MultimediaModelDM implements MultimediaModel {
                             in = multi.getFoto().get(k).getInputStream();
                             ps.setBlob(1, in);
                             ps.setInt(2, multi.getIdAppartamento());
-                            System.out.println("doSaveFoto:" + ps.toString());
                             ps.executeUpdate();
                             connection.commit();
                         }
@@ -60,7 +61,6 @@ public class MultimediaModelDM implements MultimediaModel {
         PreparedStatement ps = null;
         String deleteSql = "DELETE FROM multimedia WHERE idMultimedia=?";
         try {
-            System.out.println("voglio eliminare la foto con id" + idMultimedia);
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(deleteSql);
             ps.setInt(1, Integer.parseInt(idMultimedia));
@@ -89,7 +89,6 @@ public class MultimediaModelDM implements MultimediaModel {
                             in = multi.getVideo().get(k).getInputStream();
                             ps.setBlob(1, in);
                             ps.setInt(2, multi.getIdAppartamento());
-                            System.out.println("doSaveVideo:" + ps.toString());
                             ps.executeUpdate();
                             connection.commit();
                         }
@@ -122,7 +121,6 @@ public class MultimediaModelDM implements MultimediaModel {
                         in = multi.getPlanimetria().get(k).getInputStream();
                         ps.setBlob(1, in);
                         ps.setInt(2, multi.getIdAppartamento());
-                        System.out.println("doSavePlanimetria:" + ps.toString());
                         ps.executeUpdate();
                         connection.commit();
                     }
@@ -264,18 +262,24 @@ public class MultimediaModelDM implements MultimediaModel {
     public ArrayList<MultimediaBean> RetrieveAll(ArrayList arrayAppartamento) throws IOException {
         ArrayList<AppartamentoBean> arrayList = (ArrayList<AppartamentoBean>) arrayAppartamento;
         ArrayList<MultimediaBean> arrayMultimedia = new ArrayList<MultimediaBean>();
-        MultimediaModel model = new MultimediaModelDM();
+        GalleriaModelDM galleria = new GalleriaModelDM();
+        PlanimetriaModelDM planimetria = new PlanimetriaModelDM();
         MultimediaBean multimediaBean = new MultimediaBean();
-        try {
-            for (AppartamentoBean appartamentoBean : arrayList) {
-                multimediaBean.setFotoString(model.doRetrieveFoto(appartamentoBean.getIdAppartamento()));
-                multimediaBean.setVideo(model.doRetrieveVideo(appartamentoBean.getIdAppartamento()));
-                multimediaBean.setPlanimetria(model.doRetrievePlanimetria(appartamentoBean.getIdAppartamento()));
-                arrayMultimedia.add(multimediaBean);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for (AppartamentoBean appartamentoBean : arrayList) {
+            multimediaBean.setFotoString(galleria.doRetrieveFoto(appartamentoBean.getIdAppartamento()));
+            multimediaBean.setPlanimetriaString(planimetria.doRetrievePlanimetria(appartamentoBean.getIdAppartamento()));
+            arrayMultimedia.add(multimediaBean);
         }
+        return arrayMultimedia;
+    }
+
+    public ArrayList<MultimediaBean> RetrieveAll(int idAppartamento) throws IOException {
+        ArrayList<MultimediaBean> arrayMultimedia = new ArrayList<MultimediaBean>();
+        GalleriaModelDM galleria = new GalleriaModelDM();
+        PlanimetriaModelDM planimetria = new PlanimetriaModelDM();
+        MultimediaBean multimediaBean = new MultimediaBean();
+        multimediaBean.setFotoString(galleria.doRetrieveFoto(idAppartamento));
+        multimediaBean.setPlanimetriaString(planimetria.doRetrievePlanimetria(idAppartamento));
         return arrayMultimedia;
     }
 

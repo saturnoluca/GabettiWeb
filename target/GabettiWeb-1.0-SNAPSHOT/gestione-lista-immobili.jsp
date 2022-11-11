@@ -15,6 +15,8 @@
 <!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
 <html lang="it" dir="ltr">
 <head>
+    <title>Gabetti Nocera | Gestione Immobili</title>
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
     <meta charset="UTF-8">
     <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
     <link rel="stylesheet" href="css/amministratore-lista-immobili.css">
@@ -23,7 +25,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 
     <link rel="stylesheet" href="icomoon/style.css">
@@ -33,7 +35,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <title>Gabetti Nocera | Lista Immobili</title>
 </head>
 
 <%
@@ -45,16 +46,18 @@
         return;
     }
     if (session.getAttribute("entrato-immobili") == null) {
-        response.sendRedirect(response.encodeRedirectURL("ServletAppartamentiAdmin"));
+        response.sendRedirect(response.encodeRedirectURL("AppartamentiAdmin"));
         return;
     }
     session.removeAttribute("entrato-immobili");
     visualizzazioneImmobili= (ArrayList<VisualizzazioneImmobile>) session.getAttribute("visualizzazione-immobile");
+    String inviata = (String) request.getSession().getAttribute("inviata");
+    request.getSession().setAttribute("inviata","no");
 %>
 <body>
 
 <jsp:include page="sidebar.jsp"/>
-
+<input type="hidden" value="<%=inviata%>" id="inviata">
 <section class="home-section">
     <div class="div_property_list">
         <div class="property_list_page_head">
@@ -92,7 +95,7 @@
                         <div class="large_column_wrap">
                             <div class="column column_picture">
                                 <figure>
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=immobili.getIdAppartamento()%>">
+                                    <a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=immobili.getIdAppartamento()%>">
                                         <img src="data:image/png;base64,<%=immobili.getFoto()%>">
                                     </a>
                                 </figure>
@@ -100,7 +103,7 @@
                             <div class="column column-info">
                                 <div class="property_info_wrap">
                                     <h3 class="property_title">
-                                        <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=immobili.getIdAppartamento()%>"></a>
+                                        <a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=immobili.getIdAppartamento()%>"></a>
                                     </h3>
                                     <p class="property-description"><%=immobili.getNomeAppartamento()%></p>
                                     <ul class="property_meta">
@@ -142,15 +145,15 @@
                             </div>
                             <div class="column column_price">
                                 <div class="property_actions">
-                                    <a href="ServletDettagliAppartamento?id=<%=immobili.getIdAppartamento()%>">
+                                    <a href="DettagliAppartamento?id=<%=immobili.getIdAppartamento()%>">
                                         <i class="icon-eye"></i>
                                         Visualizza
                                     </a>
-                                    <a href="ServletPaginaModificaAppartamento?idImmobile=<%=immobili.getIdAppartamento()%>">
+                                    <a href="PaginaModificaAppartamento?idImmobile=<%=immobili.getIdAppartamento()%>">
                                         <i class="icon-mode_edit"></i>
                                         Modifica
                                     </a>
-                                    <a href="ServletEliminaImmobile?idImmobile=<%=immobili.getIdAppartamento()%>">
+                                    <a href="EliminaImmobile?idImmobile=<%=immobili.getIdAppartamento()%>">
                                         <i class="icon-delete"></i>
                                         Elimina
                                     </a>
@@ -194,6 +197,18 @@
 <script src="bootstrap/js/popper.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="bootstrap/js/jquery.sticky.js"></script>
+<script>
+    const inviata = document.getElementById("inviata");
+    if(inviata.value.trim() == "mod"){
+        swal("Successo!", "Immobile modificato con successo!", "success");
+    }
+    else if(inviata.value.trim() == "add"){
+        swal("Successo!", "Immobile aggiunto con successo!", "success");
+    }
+    else if(inviata.value.trim() == "eliminato"){
+        swal("Successo!", "Immobile eliminato con successo!", "success");
+    }
 
+</script>
 </body>
 </html>

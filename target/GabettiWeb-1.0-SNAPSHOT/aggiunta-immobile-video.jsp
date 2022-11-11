@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="addProperty_page_content">
-            <form class="form_addProperty" action="ServletMultimediaAggiunta" method="post" enctype="multipart/form-data">
+            <form class="form_addProperty" action="MultimediaAggiunta" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="idAppartamento" value="<%=idAppartamento%>">
                 <input type="hidden" name="azione" value="<%="video"%>">
                 <div class="addProperty_content">

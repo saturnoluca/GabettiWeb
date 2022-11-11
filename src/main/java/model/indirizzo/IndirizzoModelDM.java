@@ -24,7 +24,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
     public void doSave(IndirizzoBean indirizzo) {
         Connection connection = null;
         PreparedStatement ps = null;
-        String insertSql = "INSERT INTO indirizzo(via, numeroCivico, cap, città, provincia, Appartamento_idAppartamento, zona) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String insertSql = "INSERT INTO indirizzo(via, numeroCivico, cap, città, provincia, Appartamento_idAppartamento, zona, regione) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = dmcp.getConnection();
             if (indirizzo instanceof IndirizzoBean) {
@@ -36,6 +36,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 ps.setString(5, indirizzo.getProvincia());
                 ps.setInt(6, indirizzo.getIdAppartamento());
                 ps.setString(7, indirizzo.getZona());
+                ps.setString(8, indirizzo.getRegione());
                 ps.executeUpdate();
                 connection.commit();
                 System.out.println("doSave: " + indirizzo);
@@ -50,7 +51,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
         PreparedStatement ps = null;
         String updateSql = "UPDATE appartamento SET nomeAppartamento=? , descrizioneAppartamento=? , superficie=? , locali=? , bagni=? , piano=? , riscaldamento=? , classeEnergetica=? , tipoVendita=? , prezzo=? , data=? , Agente_idAgente=? , categoria=? , camereLetto=? , postoAuto=? WHERE idAgente=?";
 
-        String insertSql = "UPDATE indirizzo SET via=? , numeroCivico=? , cap=? , città=? , provincia=? , zona=? WHERE Appartamento_idAppartamento=?;";
+        String insertSql = "UPDATE indirizzo SET via=? , numeroCivico=? , cap=? , città=? , provincia=? , zona=?, regione=? WHERE Appartamento_idAppartamento=?;";
         try {
             connection = dmcp.getConnection();
             if (indirizzo instanceof IndirizzoBean) {
@@ -61,7 +62,8 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 ps.setString(4, indirizzo.getCitta());
                 ps.setString(5, indirizzo.getProvincia());
                 ps.setString(6, indirizzo.getZona());
-                ps.setInt(7,indirizzo.getIdAppartamento());
+                ps.setString(7, indirizzo.getRegione());
+                ps.setInt(8,indirizzo.getIdAppartamento());
                 ps.executeUpdate();
                 connection.commit();
             }
@@ -90,6 +92,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
             bean.setProvincia(rs.getString("provincia"));
             bean.setIdAppartamento(rs.getInt("Appartamento_idAppartamento"));
             bean.setZona(rs.getString("zona"));
+            bean.setRegione(rs.getString("regione"));
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -116,6 +119,7 @@ public class IndirizzoModelDM implements IndirizzoModel {
                 bean.setProvincia(rs.getString("provincia"));
                 bean.setIdAppartamento(rs.getInt("Appartamento_idAppartamento"));
                 bean.setZona(rs.getString("zona"));
+                bean.setRegione(rs.getString("regione"));
                 array.add(bean);
             }
         }catch(SQLException e){
@@ -143,6 +147,144 @@ public class IndirizzoModelDM implements IndirizzoModel {
         return città;
     }
 
+    public ArrayList<String> RetrieveAllRegioni() {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT DISTINCT regione FROM indirizzo";
+        ArrayList<String> regioni = new ArrayList<String>();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String regione = rs.getString("regione");
+                regioni.add(regione);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return regioni;
+    }
+
+    public ArrayList<String> RetrieveAllProvince() {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT DISTINCT provincia FROM indirizzo";
+        ArrayList<String> province = new ArrayList<String>();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String provincia = rs.getString("provincia");
+                province.add(provincia);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return province;
+    }
+
+    public ArrayList<String> RetrieveProvinciaByRegione(String regione) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT DISTINCT provincia FROM indirizzo WHERE regione=?";
+        ArrayList<String> province = new ArrayList<String>();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setString(1,regione);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String provincia = rs.getString("provincia");
+                province.add(provincia);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return province;
+    }
+
+    public ArrayList<String> RetrieveCittaByRegione(String regione) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT DISTINCT città FROM indirizzo WHERE regione=?";
+        ArrayList<String> listaCitta = new ArrayList<String>();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setString(1,regione);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String citta = rs.getString("città");
+                listaCitta.add(citta);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return listaCitta;
+    }
+
+    public ArrayList<String> RetrieveCittaByProvincia(String provincia) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT DISTINCT città FROM indirizzo WHERE provincia=?";
+        ArrayList<String> listaCitta = new ArrayList<String>();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setString(1,provincia);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String citta = rs.getString("città");
+                listaCitta.add(citta);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return listaCitta;
+    }
+
+    public ArrayList<String> RetrieveCittaByProvinciaAndCitta(String regione, String provincia) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT DISTINCT città FROM indirizzo WHERE regione=? AND provincia=?";
+        ArrayList<String> listaCitta = new ArrayList<String>();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setString(1,regione);
+            ps.setString(2,provincia);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String citta = rs.getString("città");
+                listaCitta.add(citta);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return listaCitta;
+    }
+
+    public ArrayList<String> RetrieveZonaByCitta(String citta) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSql = "SELECT DISTINCT zona FROM indirizzo WHERE città=?";
+        ArrayList<String> zone = new ArrayList<String>();
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSql);
+            ps.setString(1,citta);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String zona = rs.getString("zona");
+                zone.add(zona);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return zone;
+    }
     @Override
     public ArrayList<Città> RetrieveAllCittàZone(ArrayList città) {
         Connection connection = null;

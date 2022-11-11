@@ -1,38 +1,27 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.appartamento.AppartamentoBean" %>
 <%@ page import="model.agente.AgenteBean" %>
 <%@ page import="model.utente.UtenteBean" %>
 <%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
 <%@ page import="UtilityClass.Città" %>
-<%@ page import="model.multimedia.MultimediaBean" %>
 <%@ page import="UtilityClass.VisualizzazioneImmobile" %>
-<%@ page import="java.util.Collections" %>
-<%@ page import="UtilityClass.PrezzoCrescenteImmobileComparator" %><%--
-  Created by IntelliJ IDEA.
-  User: Luca
-  Date: 17/03/2022
-  Time: 08:32
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<!-- Created By CodingLab - www.codinglabweb.com -->
 <html lang="it" dir="ltr">
 <head>
+    <title>Gabetti Nocera | Lista Immobili</title>
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
     <meta charset="utf-8">
-    <!--------- <title>Responsive Navigation Menu</title>------>
     <link rel="stylesheet" href="css/aggiunte.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/listaappartamenti.css">
-
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"/>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="icomoon/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&v=weekly"
-            defer></script>
-    <link rel="stylesheet" href="icomoon/style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNvsKhyzYjIrmKtBJRIkaxz1-GZFIwROs&callback=initMap&v=weekly" defer></script>
 
     <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
     <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
@@ -41,23 +30,26 @@
     <script src="bootstrap/js/jquery.sticky.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="script/index.js"></script>
+    <script src="script/ricerca-regione.js"></script>
+    <script src="script/ricerca-provincia.js"></script>
+    <script src="script/ricerca-citta.js"></script>
+    <script src="script/ricerca-zona.js"></script>
+    <script src="script/ricerca-stato.js"></script>
+    <script src="script/ricerca-tipo.js"></script>
+    <script src="script/ricerca-camere.js"></script>
+    <script src="script/ricerca-bagni.js"></script>
+    <script src="script/ricerca-auto.js"></script>
 </head>
 <%
-    ArrayList<Città> allCittàZone = (ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
-    if (allCittàZone == null) {
-        request.getSession().setAttribute("nomepagina", "listaappartamenti.jsp");
-        response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
-        return;
-    }
     ArrayList<String> categorie = (ArrayList<String>) request.getSession().getAttribute("categorie");
-    ArrayList<AppartamentoBean> appArray = (ArrayList<AppartamentoBean>) request.getAttribute("array");
+    ArrayList<VisualizzazioneImmobile> appArray = (ArrayList<VisualizzazioneImmobile>) request.getAttribute("array");
     if (appArray == null) {
-        response.sendRedirect(response.encodeRedirectURL("ServletListaAppartamenti?ordina=default&numero=1"));
+        response.sendRedirect(response.encodeRedirectURL("ListaAppartamenti?ordina=default&numero=1"));
         return;
     }
     String ordinamento = (String) request.getAttribute("ordinamento");
     String pagina = (String) request.getAttribute("pagina");
-    ArrayList<MultimediaBean> multimediaBeans = (ArrayList<MultimediaBean>) request.getAttribute("multimedia");
     VisualizzazioneImmobile visualizzazioneImmobile = (VisualizzazioneImmobile) request.getAttribute("featured");
     ArrayList<AgenteBean> agenteArray = (ArrayList<AgenteBean>) request.getAttribute("arrayAgente");
     ArrayList<UtenteBean> utenteArray = (ArrayList<UtenteBean>) request.getAttribute("arrayUtente");
@@ -76,11 +68,12 @@
         <i class="icon-bars"></i>
     </label>
     <ul>
-        <li><a href="index.jsp">Home</a></li>
-        <li><a class="active" href="listaappartamenti.jsp">Lista Immobili</a></li>
+        <li><a href="index.jsp" class="active">Home</a></li>
+        <li><a href="listaappartamenti.jsp">Lista Immobili</a></li>
         <li><a href="valutazione.jsp">Valutazione Immobile</a></li>
         <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
         <li><a href="contact.jsp">Contattaci</a></li>
+        <li><a href="login.jsp">Area Personale</a></li>
     </ul>
 </nav>
 <div class="content">
@@ -90,265 +83,187 @@
         </div>
     </section>
     <div class="div_search div_search_init">
-        <form class="search_form search_form_header advance_search_form" action="ServletRicerca" method="post">
+        <form class="search_form search_form_header advance_search_form" action="Ricerca" method="post">
             <div class="search_fields">
                 <div class="search_wrap search_data">
                     <div class="top_fields">
                         <div class="search_select search_option">
-                            <label>Località</label>
+                            <label>Regione</label>
                             <span class="search_selectwrap">
-							<div class="bootstrap-select picker trigger" style="width: 100%;">
-							  <button type="button" onclick="apriScegliLocalita()" class="btn dropdown-toggle">
-								<div class="filter-option">
-								  <div class="filter-option-inner">
-									<div id="valore_localita" class="filter-option-text">Qualsiasi</div>
-                                    <input type="hidden" name="localita_immobile" id="localita_immobile"
-                                           value="Qualsiasi">
-								  </div>
-								</div>
-							  </button>
-							  <div id="selezionaLocalita" class="dropdown-content wrap_content">
-								<ul class="ul_inner">
-								  <li>
-									<a onclick="cambiaLocalita(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">Qualsiasi</span>
-									</a>
-								</li>
-                                    <%for (Città c : allCittàZone) {%>
-								  <li>
-									  <a onclick="cambiaLocalita(this)" role="option" href="#">
-										<span class="icon-check check_mark"></span>
-										<span class="text"><%=c.getNomeCittà()%></span>
-									  </a>
-								  </li>
-                                    <%for (String z : c.getZone()) {%>
-								  <li>
-									<ul class="ul_inner">
-									  <li>
-										<a onclick="cambiaLocalita(this)" role="option" href="#">
-										  <span class="icon-check check_mark"></span>
-										  <span class="sublist text"><%=z%></span>
-										</a>
-									  </li>
-
-                                        <%
-                                                }
-                                            }
-                                        %>
-									</ul>
-								  </li>
-								</ul>
-							  </div>
-							</div>
+                            <div class="wrapper" id="wrapper-regione">
+                                <input type="hidden" id="hidden-regione" name="hidden-regione" value="Qualsiasi">
+                                <div class="select-btn" id="select-btn-regione" onclick="apriRegione()">
+                                  <span class="text_select">Qualsiasi</span>
+                                    <i class="uil uil-angle-down"></i>
+                                </div>
+                                <div class="content-search main-2">
+                                  <div class="search">
+                                    <i class="uil uil-search"></i>
+                                    <input id="input-regione" spellcheck="false" type="text" placeholder="Cerca">
+                                  </div>
+                                  <ul class="options" id="options-regione"></ul>
+                                </div>
+                            </div>
 						  </span>
                         </div>
                         <div class="search_select search_option">
-                            <label>Stato Immobile</label>
+                            <label>Provincia</label>
                             <span class="search_selectwrap">
-							<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-							  <button type="button" onclick="apriScegliStato()" class="btn dropdown-toggle">
-								<div class="filter-option">
-								  <div class="filter-option-inner">
-									<div id="valore_stato" class="filter-option-text">
-									  Qualsiasi
-									</div>
-									<input type="hidden" name="stato_immobile" id="stato_immobile" value="Qualsiasi">
-								  </div>
-								</div>
-							  </button>
-							  <div id="selezionaStato" class="dropdown-content">
-								<ul class="ul_inner">
-								  <li>
-									<a onclick="cambiaStato(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">Qualsiasi</span>
-									</a>
-								</li>
-								  <li>
-									  <a onclick="cambiaStato(this)" role="option" href="#">
-										<span class="icon-check check_mark"></span>
-										<span class="text">In Vendita</span>
-									  </a>
-								  </li>
-								  <li>
-									<a onclick="cambiaStato(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">in Affitto</span>
-									</a>
-								</li>
-								</ul>
-							  </div>
-							</div>
+                            <div class="wrapper" id="wrapper-provincia">
+                                <input type="hidden" id="hidden-provincia" name="hidden-provincia" value="Qualsiasi">
+                                <div class="select-btn" id="select-btn-provincia" onclick="apriProvincia()">
+                                  <span class="text_select">Qualsiasi</span>
+                                    <i class="uil uil-angle-down"></i>
+                                </div>
+                                <div class="content-search main-2">
+                                  <div class="search">
+                                    <i class="uil uil-search"></i>
+                                    <input id="input-provincia" spellcheck="false" type="text" placeholder="Cerca">
+                                  </div>
+                                  <ul class="options" id="options-provincia"></ul>
+                                </div>
+                            </div>
 						  </span>
                         </div>
                         <div class="search_select search_option">
-                            <label>Tipo Immobile</label>
+                            <label>Città</label>
                             <span class="search_selectwrap">
-							<div class="bootstrap-select picker trigger" style="width: 100%;">
-							  <button type="button" onclick="apriScegliTipo()" class="btn dropdown-toggle">
-								<div class="filter-option">
-								  <div class="filter-option-inner">
-									<div id="valore_tipo" class="filter-option-text">
-									  Qualsiasi
-									</div>
-									<input type="hidden" name="tipo_immobile" id="tipo_immobile" value="Qualsiasi">
-								  </div>
-								</div>
-							  </button>
-							  <div id="selezionaTipo" class="dropdown-content wrap_content_max">
-								<ul class="ul_inner">
-								  <li>
-									<a onclick="cambiaTipo(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">Qualsiasi</span>
-									</a>
-								  </li>
-                                    <%for (String s : categorie) {%>
-								  <li>
-									  <a onclick="cambiaTipo(this)" role="option" href="#">
-										<span class="icon-check check_mark"></span>
-										<span class="text"><%=s%></span>
-									  </a>
-								  </li>
-                                    <%}%>
-								</ul>
-							  </div>
-							</div>
+							<div class="wrapper" id="wrapper-citta">
+                                <input type="hidden" id="hidden-citta" name="hidden-citta" value="Qualsiasi">
+                                <div class="select-btn" id="select-btn-citta" onclick="apriCitta()">
+                                  <span class="text_select">Qualsiasi</span>
+                                    <i class="uil uil-angle-down"></i>
+                                </div>
+                                <div class="content-search main-1">
+                                  <div class="search">
+                                    <i class="uil uil-search"></i>
+                                    <input id="input-citta" spellcheck="false" type="text" placeholder="Cerca">
+                                  </div>
+                                  <ul class="options" id="options-citta"></ul>
+                                </div>
+                            </div>
 						  </span>
                         </div>
                     </div>
                     <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
                         <div class="collapsed_field_container search_advanced_fields">
                             <div class="search_option search_select search_beds">
-                                <label>Min camere da letto</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliMinCamere()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_minCamere" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="camere_immobile" id="camere_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
+                                <label>Zona</label>
+                                <div class="wrapper" id="wrapper-zona">
+                                    <input type="hidden" id="hidden-zona" name="hidden-zona" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-zona" onclick="apriZona()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-zona" spellcheck="false" type="text" placeholder="Cerca">
                                         </div>
-                                    </button>
-                                    <div id="selezionaMinCamere" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <ul class="options" id="options-zona"></ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="search_option search_select search_beds">
-                                <label>Min bagni</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliMinBagni()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_minBagni" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="bagni_immobile" id="bagni_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
+                                <label>Stato Immobile</label>
+                                <div class="wrapper" id="wrapper-stato">
+                                    <input type="hidden" id="hidden-stato" name="hidden-stato" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-stato" onclick="apriStato()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-stato" spellcheck="false" type="text" placeholder="Cerca">
                                         </div>
-                                    </button>
-                                    <div id="selezionaMinBagni" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <ul class="options" id="options-stato"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Tipo Immobile</label>
+                                <div class="wrapper" id="wrapper-tipo">
+                                    <input type="hidden" id="hidden-tipo" name="hidden-tipo" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-tipo" onclick="apriTipo()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-tipo" spellcheck="false" type="text" placeholder="Cerca">
+                                        </div>
+                                        <ul class="options" id="options-tipo"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Min Camere Letto</label>
+                                <div class="wrapper" id="wrapper-minCamere">
+                                    <input type="hidden" id="hidden-minCamere" name="hidden-minCamere" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-minCamere" onclick="apriMinCamere()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-minCamere" spellcheck="false" type="text" placeholder="Cerca">
+                                        </div>
+                                        <ul class="options" id="options-minCamere"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Min Bagni</label>
+                                <div class="wrapper" id="wrapper-minBagni">
+                                    <input type="hidden" id="hidden-minBagni" name="hidden-minBagni" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-minBagni" onclick="apriMinBagni()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-minBagni" spellcheck="false" type="text" placeholder="Cerca">
+                                        </div>
+                                        <ul class="options" id="options-minBagni"></ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Prezzo minimo</label>
-                                <input name="minPrezzo_immobile" type="text" placeholder="Qualsiasi">
+                                <input name="minPrezzo_immobile" type="number" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Prezzo massimo</label>
-                                <input name="maxPrezzo_immobile" type="text" placeholder="Qualsiasi">
+                                <input name="maxPrezzo_immobile" type="number" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Min Posti Auto</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliMinAuto()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_minAuto" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="auto_immobile" id="auto_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
+                                <div class="wrapper" id="wrapper-minAuto">
+                                    <input type="hidden" id="hidden-minAuto" name="hidden-minAuto" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-minAuto" onclick="apriAuto()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-minAuto" spellcheck="false" type="text" placeholder="Cerca">
                                         </div>
-                                    </button>
-                                    <div id="selezionaMinAuto" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <ul class="options" id="options-minAuto"></ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Superificie minima (mq)</label>
-                                <input name="minSuperficie_immobile" type="text" placeholder="Qualsiasi">
+                                <input name="minSuperficie_immobile" type="number" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Superficie massima (mq)</label>
-                                <input name="maxSuperficie_immobile" type="text" placeholder="Qualsiasi">
+                                <input name="maxSuperficie_immobile" type="number" placeholder="Qualsiasi">
                             </div>
                         </div>
                     </div>
@@ -385,13 +300,13 @@
                         <button id="ordinamento_button" class="ordinamento_button">Ordina per</button>
                         <div id="ordinamento" class="ordinamento" style="display: none">
                             <%if (pagina.equals("listaAppartamenti")) {%>
-                            <a href="ServletListaAppartamenti?ordina=default&numero=1">Visualizzazioni</a>
-                            <a href="ServletListaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
-                            <a href="ServletListaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo Decrescente</a>
+                            <a href="ListaAppartamenti?ordina=default&numero=1">Visualizzazioni</a>
+                            <a href="ListaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
+                            <a href="ListaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo Decrescente</a>
                             <%} else if (pagina.equals("ricercaAppartamenti")) {%>
-                            <a href="ServletRicercaAppartamenti?ordina=default&numero=1">Visualizzazioni</a>
-                            <a href="ServletRicercaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
-                            <a href="ServletRicercaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo
+                            <a href="RicercaAppartamenti?ordina=default&numero=1">Visualizzazioni</a>
+                            <a href="RicercaAppartamenti?ordina=prezzoCrescente&numero=1">Prezzo Crescente</a>
+                            <a href="RicercaAppartamenti?ordina=prezzoDecrescente&numero=1">Prezzo
                                 Decrescente</a>
                             <%}%>
                         </div>
@@ -399,37 +314,44 @@
                 </div>
             </div>
             <div class="page_listing">
-                <%for (AppartamentoBean appartamentoBean : appArray) {%>
+                <%for (VisualizzazioneImmobile appartamentoBean : appArray) {%>
                 <input type="hidden" name="idAppartamento" value="<%=appartamentoBean.getIdAppartamento()%>">
                 <div class="list_card">
                     <div class="list_card_wrap">
                         <figure class="list_card_picture">
                             <div class="figure_property">
-                                <%
-                                    boolean p = false;
-                                    for (MultimediaBean multi : multimediaBeans) {
-                                        if (multi.getIdAppartamento() == appartamentoBean.getIdAppartamento() && multi.getFotoString() != null && !p) {
-                                %>
-                                <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
-                                    <img src="data:image/png;base64,<%=multi.getFotoString().get(0)%>"
+
+                                <a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>">
+                                    <img src="data:image/png;base64,<%=appartamentoBean.getFoto()%>"
                                          style="width:100%">
                                 </a>
-                                <%
-                                            p = true;
-                                            break;
-                                        }
-                                    }%>
+
                             </div>
                         </figure>
                         <div class="list_card_details_wrap">
                             <div class="list_card_details">
                                 <h3>
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>"><%=appartamentoBean.getNomeAppartamento()%>
+                                    <a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=appartamentoBean.getIdAppartamento()%>"><%=appartamentoBean.getNomeAppartamento()%>
                                     </a>
                                 </h3>
+                                <div class="property_address">
+                                    <a href="https://www.google.it/maps/place/<%=appartamentoBean.getIndirizzoBean().getVia() +"+"+ appartamentoBean.getIndirizzoBean().getNumeroCivico() +"+"+ appartamentoBean.getIndirizzoBean().getCap() +"+"+ appartamentoBean.getIndirizzoBean().getCitta() +"+"+ appartamentoBean.getIndirizzoBean().getProvincia()%>">
+                                    <span class="address">
+                                        <i class="icon-map-marker"></i>
+                                    </span>
+                                    <%
+                                        String indirizzo = appartamentoBean.getIndirizzoBean().getVia() + " " + appartamentoBean.getIndirizzoBean().getNumeroCivico() + ", " + appartamentoBean.getIndirizzoBean().getCitta() + ", " + appartamentoBean.getIndirizzoBean().getProvincia() + ", " + appartamentoBean.getIndirizzoBean().getRegione();
+                                        if (indirizzo.length() > 42) {%>
+                                            <%=indirizzo.substring(0, 42) + "..."%><%
+                                        } else { %>
+                                            <%=indirizzo%><%
+                                            }
+                                    %>
+                                    </a>
+                                </div>
                                 <p class="list_card_description"><%
-                                    if (appartamentoBean.getDescrizioneAppartamento().length() > 30) {
-                                %><%=appartamentoBean.getDescrizioneAppartamento().substring(0, 30) + ".."%><%
+                                    if (appartamentoBean.getDescrizioneAppartamento().length() > 50) {
+                                %><%=appartamentoBean.getDescrizioneAppartamento().substring(0, 50) + ".."%><%
                                 } else {
                                 %><%=appartamentoBean.getDescrizioneAppartamento()%><%
                                     }%></p>
@@ -473,16 +395,8 @@
                                 </div>
                                 <p class="list_card_agent">
                                     Di&nbsp;
-                                    <span class="agent"><%
-                                        for (AgenteBean bean : agenteArray) {
-                                            if (bean.getIdAgente() == appartamentoBean.getIdAgente()) {
-                                                for (UtenteBean utenteBean : utenteArray) {
-                                                    if (utenteBean.getIdUtente() == bean.getIdUtente()) {%>
-                                                        <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%></a><%
-                                                        }
-                                                    }
-                                                }
-                                            }%></span>
+                                    <span class="agent">
+                                        <a href="${pageContext.request.contextPath}/AgentePage?id=<%=appartamentoBean.getIdUtente()%>"><%=appartamentoBean.getNomeAgente() + " " + appartamentoBean.getCognomeAgente()%></a></span>
                                 </p>
                             </div>
                         </div>
@@ -495,11 +409,11 @@
                     for (int i = 1; i <= sizeArray; i++) {
                         if (pagina.equals("listaAppartamenti")) {
                 %>
-                <a href="${pageContext.request.contextPath}/ServletListaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>"
+                <a href="${pageContext.request.contextPath}/ListaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>"
                    class="pagination_btn"><%=i%>
                 </a>
                 <%} else if (pagina.equals("ricercaAppartamenti")) {%>
-                <a href="${pageContext.request.contextPath}/ServletRicercaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>"
+                <a href="${pageContext.request.contextPath}/RicercaAppartamenti?ordina=<%=ordinamento%>&numero=<%=i%>"
                    class="pagination_btn"><%=i%>
                 </a>
                 <%
@@ -514,18 +428,21 @@
                     <h3 class="title">Agenti</h3>
                     <div class="agents_list_widget">
                         <%
-                            for (int k = 0; k < 2; k++) {
+                            int count = 2;
+                            if(arrayComp.size() == 1)
+                                count = 1;
+                            for (int k = 0; k < count; k++) {
                                 for (UtenteBean utenteBean : utenteArray) {
                                     if (utenteBean.getIdUtente() == arrayComp.get(k).getBean().getIdUtente()) {
                         %>
                         <article class="agent_list_item clearfix">
                             <figure class="agent_picture">
-                                <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><img
+                                <a href="${pageContext.request.contextPath}/AgentePage?id=<%=utenteBean.getIdUtente()%>"><img
                                         src="data:image/png;base64,<%=utenteBean.getFotoString()%>"></a>
                             </figure>
                             <div class="agent_widget_content">
                                 <h4 class="agent_name">
-                                    <a href="${pageContext.request.contextPath}/ServletAgentePage?id=<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
+                                    <a href="${pageContext.request.contextPath}/AgentePage?id=<%=utenteBean.getIdUtente()%>"><%=utenteBean.getNome() + " " + utenteBean.getCognome()%>
                                     </a>
                                 </h4>
                                 <a href="mailto:<%=utenteBean.getEmail()%>"
@@ -548,7 +465,7 @@
                         <div class="featured_card_wrap">
                             <figure class="featured_card_figure">
                                 <div class="featured_card_picture">
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>">
+                                    <a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>">
                                         <img width="680" height="510"
                                              src="data:image/png;base64,<%=visualizzazioneImmobile.getFoto()%>">
                                     </a>
@@ -556,11 +473,30 @@
                             </figure>
                             <div class="featured_card_details">
                                 <h3>
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>"><%=visualizzazioneImmobile.getNomeAppartamento()%>
+                                    <a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>"><%=visualizzazioneImmobile.getNomeAppartamento()%>
                                     </a>
                                 </h3>
-                                <p class="featured_card_description"><%=visualizzazioneImmobile.getDescrizioneAppartamento()%>
-                                </p>
+                                <div class="property_address">
+                                    <a href="https://www.google.it/maps/place/<%=visualizzazioneImmobile.getIndirizzoBean().getVia() +"+"+ visualizzazioneImmobile.getIndirizzoBean().getNumeroCivico() +"+"+ visualizzazioneImmobile.getIndirizzoBean().getCap() +"+"+ visualizzazioneImmobile.getIndirizzoBean().getCitta() +"+"+ visualizzazioneImmobile.getIndirizzoBean().getProvincia()%>">
+                                    <span class="address">
+                                        <i class="icon-map-marker"></i>
+                                    </span>
+                                        <%
+                                            String indirizzo = visualizzazioneImmobile.getIndirizzoBean().getVia() + " " + visualizzazioneImmobile.getIndirizzoBean().getNumeroCivico() + ", " + visualizzazioneImmobile.getIndirizzoBean().getCitta() + ", " + visualizzazioneImmobile.getIndirizzoBean().getProvincia() + ", " + visualizzazioneImmobile.getIndirizzoBean().getRegione();
+                                            if (indirizzo.length() > 42) {%>
+                                        <%=indirizzo.substring(0, 42) + "..."%><%
+                                    } else { %>
+                                        <%=indirizzo%><%
+                                        }
+                                    %>
+                                    </a>
+                                </div>
+                                <p class="featured_card_description"><%
+                                    if (visualizzazioneImmobile.getDescrizioneAppartamento().length() > 60) {
+                                %><%=visualizzazioneImmobile.getDescrizioneAppartamento().substring(0, 60) + ".."%><%
+                                } else {
+                                %><%=visualizzazioneImmobile.getDescrizioneAppartamento()%><%
+                                    }%></p>
                                 <div class="featured_card_features_wrap">
                                     <div class="featured_card_feature">
                                         <span class="features_title">Camere da letto</span>
@@ -620,24 +556,17 @@
         if (elem.classList.contains("li_selected")) {
             elem.classList.remove("li_selected")
             var oldWord = div.innerHTML;
-            console.log(oldWord);
-            console.log(text.innerHTML);
-            console.log("risultato: " + oldWord.replace(text.innerHTML, ""));
             var newWord = oldWord.replace(text.innerHTML, "");
-            console.log("sss" + newWord);
             div.innerHTML = newWord;
-            console.log("a" + newWord + "a");
             if (newWord.includes(" ") && newWord.length < 3) {
                 div.innerHTML = "Tutte le località";
             }
         } else {
             elem.classList.add("li_selected");
             if (div.textContent.includes("Tutte le località")) {
-                console.log("Sium");
                 div.innerHTML = text.innerHTML;
             }
             if (div.textContent.includes(text.innerHTML)) {
-                console.log("Sium");
                 div.innerHTML = text.innerHTML;
             } else {
                 div.innerHTML = div.innerHTML + " " + text.innerHTML;
@@ -657,102 +586,9 @@
     });
 </script>
 
-<script>
-    // This example displays a marker at the center of Australia.
-    // When the user clicks the marker, an info window opens.
-    function initMap(json, i, map) {
-        var geocoder = new google.maps.Geocoder();
-        var address = json[i].indirizzo;
-        var lat = 0;
-        var lng = 0;
-        geocoder.geocode({'address': address}, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                var latitude = results[0].geometry.location.lat();
-                var longitude = results[0].geometry.location.lng();
-
-                localStorage.setItem("endlat"+i+"", latitude);
-                localStorage.setItem("endlng"+i+"", longitude);
-
-            }
-        });
-        lat = parseFloat(localStorage.getItem("endlat"+i+""));
-        lng = parseFloat(localStorage.getItem("endlng"+i+""));
-        const uluru = {lat: lat, lng: lng};
-        console.log(lat+"\n"+lng)
-        const contentString =
-            '<div class="property_map" id="marker' + i + '">' +
-            '<article class="featured_card featured_card_block">' +
-            '<div class="featured_card_wrap">' +
-            '<figure class=featured_card_figure>' +
-            '<div class="featured_card_picture">' +
-            '<a href="">' +
-            '<img src="data:image/png;base64,'+json[i].foto+'" style="height: 275px;object-fit: cover">' +
-            '</a>' +
-            '</div>' +
-            '</figure>' +
-            '<div class=featured_card_details>' +
-            '<h3>' +
-            '<a>'+json[i].nome+'</a>' +
-            '</h3>' +
-            '<p class=featured_card_description>'+json[i].descrizione+'</p>' +
-            '<div class="featured_card_features_wrap">' +
-            '<div class="featured_card_feature">' +
-            '<span class="features_title">Camere da letto</span>' +
-            '<div>' +
-            '<i class="feature_icon icon-bed"></i>' +
-            '<span class="text_feature">'+json[i].letti+'</span>' +
-            '</div>' +
-            '</div>' +
-            '<div class="featured_card_feature">' +
-            '<span class="features_title">Bagni</span>' +
-            '<div>' +
-            '<i class="feature_icon icon-shower"></i>' +
-            '<span class="text_feature">'+json[i].bagni+'</span>' +
-            '</div>' +
-            '</div>' +
-            '<div class="featured_card_feature">' +
-            '<span class="features_title">Superficie</span>' +
-            '<div>' +
-            '<i class="feature_icon icon-square-o"></i>' +
-            '<span class="text_feature">'+json[i].superficie+'</span>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '<div class="featured_card_priceLabel">' +
-            '<div class="featured_card_price">' +
-            '<span class=status>'+json[i].tipoVendita+'</span>' +
-            '<p class="price">€ '+json[i].prezzo+'</p>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</article>' +
-            '</div>';
-
-        const infowindow = new google.maps.InfoWindow({
-            content: contentString,
-            maxWidth: 450,
-        });
-
-
-        const marker = new google.maps.Marker({
-            position: uluru,
-            map,
-        });
-
-        marker.addListener("click", () => {
-            infowindow.open({
-                anchor: marker,
-                map,
-                shouldFocus: false,
-            });
-        });
-
-    }
-
-    window.initMap = initMap;
-</script>
 
 <script>
+    var uluru;
     function mappa(map) {
         var idAppartamenti = [];
         var elements = document.getElementsByName("idAppartamento");
@@ -760,27 +596,106 @@
             idAppartamenti.push(parseInt(elements[i].value));
         }
         var stringa = JSON.stringify(idAppartamenti);
-        $.post('ServletProvaJson', {idAppartamenti: stringa}, function (listJson) {
+        $.post('ProvaJson', {idAppartamenti: stringa}, function (listJson) {
             var json = JSON.parse(listJson);
+            var infowindow = new google.maps.InfoWindow();
             for (var i = 0; i < json.length; i++) {
-                initMap(json, i, map);
+                var geocoder = new google.maps.Geocoder();
+                var address = json[i].indirizzo;
+                var lat = 0;
+                var lng = 0;
+                converti(json[i]);
+                function converti(json){
+                    geocoder.geocode({'address': json.indirizzo}, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            var latitude = results[0].geometry.location.lat();
+                            var longitude = results[0].geometry.location.lng();
+                            lat = parseFloat(latitude);
+                            lng = parseFloat(longitude);
+                            uluru = {lat: lat, lng: lng};
+                            const contentString =
+                                '<div class="property_map" id="marker' + i + '">' +
+                                '<article class="featured_card featured_card_block">' +
+                                '<div class="featured_card_wrap">' +
+                                '<figure class=featured_card_figure>' +
+                                '<div class="featured_card_picture">' +
+                                '<a href="${pageContext.request.contextPath}/DettagliAppartamento?id='+json.idAppartamento +'">' +
+                                '<img src="data:image/png;base64,'+json.foto+'" style="height: 275px;object-fit: cover">' +
+                                '</a>' +
+                                '</div>' +
+                                '</figure>' +
+                                '<div class=featured_card_details>' +
+                                '<h3>' +
+                                '<a href="${pageContext.request.contextPath}/DettagliAppartamento?id='+json.idAppartamento +'">'+json.nome+'</a>' +
+                                '</h3>' +
+                                '<div class="featured_card_features_wrap">' +
+                                '<div class="featured_card_feature">' +
+                                '<span class="features_title">Camere da letto</span>' +
+                                '<div>' +
+                                '<i class="feature_icon icon-bed"></i>' +
+                                '<span class="text_feature">'+json.letti+'</span>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="featured_card_feature">' +
+                                '<span class="features_title">Bagni</span>' +
+                                '<div>' +
+                                '<i class="feature_icon icon-shower"></i>' +
+                                '<span class="text_feature">'+json.bagni+'</span>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="featured_card_feature">' +
+                                '<span class="features_title">Superficie</span>' +
+                                '<div>' +
+                                '<i class="feature_icon icon-square-o"></i>' +
+                                '<span class="text_feature">'+json.superficie+'</span>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="featured_card_priceLabel">' +
+                                '<div class="featured_card_price">' +
+                                '<span class=status>'+json.tipoVendita+'</span>' +
+                                '<p class="price">€ '+json.prezzo+'</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</article>' +
+                                '</div>';
+
+
+                            var marker = new google.maps.Marker({
+                                position: window.uluru,
+                                map,
+                                title: json.nome,
+                            });
+
+                            google.maps.event.addListener(marker, 'click', (function(marker){
+                                return function (){
+                                    infowindow.setContent(contentString);
+                                    infowindow.open(map,marker);
+                                }
+                            })(marker));
+                        }
+                    });
+                }
+
             }
-        })
-    };
+            window.initMap = initMap;
+        })};
 </script>
 
 <script>
-    $(document).ready(function () {
+    function initMap() {
         const uluru = {lat:40.7454000, lng:14.6454200}
         const map = new google.maps.Map(document.getElementById("map"), {
             zoom: 10,
             center: uluru,
         });
         mappa(map)
-    });
+    }
+
+    window.initMap = initMap;
 
 </script>
-
 
 <script src="script/valutazione.js"></script>
 <script src="script/index.js"></script>

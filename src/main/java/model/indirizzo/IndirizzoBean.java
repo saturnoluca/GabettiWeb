@@ -10,12 +10,13 @@ public class IndirizzoBean implements Serializable {
     private String citta;
     private String provincia;
     private String zona;
+    private String regione;
     private int idAppartamento;
 
     public IndirizzoBean() {
     }
 
-    public IndirizzoBean(int idIndirizzo, String via, String numeroCivico, String cap, String citta, String provincia, String zona, int idAppartamento) {
+    public IndirizzoBean(int idIndirizzo, String via, String numeroCivico, String cap, String citta, String provincia, String zona,String regione, int idAppartamento) {
         this.idIndirizzo = idIndirizzo;
         this.via = via;
         this.numeroCivico = numeroCivico;
@@ -23,12 +24,8 @@ public class IndirizzoBean implements Serializable {
         this.citta = citta;
         this.provincia = provincia;
         this.zona = zona;
+        this.regione = regione;
         this.idAppartamento = idAppartamento;
-    }
-
-    @Override
-    public String toString() {
-        return via + " " + numeroCivico + ", " + citta + ", " + cap + ", (" + provincia+")";
     }
 
     public int getIdIndirizzo() {
@@ -93,5 +90,28 @@ public class IndirizzoBean implements Serializable {
 
     public void setIdAppartamento(int idAppartamento) {
         this.idAppartamento = idAppartamento;
+    }
+
+    public String getRegione() {
+        return regione;
+    }
+
+    public void setRegione(String regione) {
+        this.regione = regione;
+    }
+
+    @Override
+    public String toString() {
+        return "IndirizzoBean{" +
+                "idIndirizzo=" + idIndirizzo +
+                ", via='" + via + '\'' +
+                ", numeroCivico='" + numeroCivico + '\'' +
+                ", cap='" + cap + '\'' +
+                ", citta='" + citta + '\'' +
+                ", provincia='" + provincia + '\'' +
+                ", zona='" + zona + '\'' +
+                ", regione='" + regione + '\'' +
+                ", idAppartamento=" + idAppartamento +
+                '}';
     }
 }

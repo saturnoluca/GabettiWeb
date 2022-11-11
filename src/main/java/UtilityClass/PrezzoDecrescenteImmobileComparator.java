@@ -4,9 +4,9 @@ import model.appartamento.AppartamentoBean;
 
 import java.util.Comparator;
 
-public class PrezzoDecrescenteImmobileComparator implements Comparator<AppartamentoBean> {
+public class PrezzoDecrescenteImmobileComparator implements Comparator<VisualizzazioneImmobile> {
     @Override
-    public int compare(AppartamentoBean o1, AppartamentoBean o2) {
+    public int compare(VisualizzazioneImmobile o1, VisualizzazioneImmobile o2) {
         if(o1.getPrezzo() == o2.getPrezzo())
             return 0;
         else if(o1.getPrezzo() < o2.getPrezzo())

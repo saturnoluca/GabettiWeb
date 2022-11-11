@@ -6,7 +6,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="UtilityClass.CompositeKeyAgenteCase" %>
 <%@ page import="UtilityClass.Città" %>
-<%@ page import="UtilityClass.VisualizzazioneImmobile" %><%--
+<%@ page import="UtilityClass.VisualizzazioneImmobile" %>
+<%@ page import="javax.swing.text.AttributeSet" %><%--
   Created by IntelliJ IDEA.
   User: Luca
   Date: 25/02/2022
@@ -16,29 +17,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="it">
 <%
-    ArrayList<Città> allCittàZone = (ArrayList<Città>) request.getSession().getAttribute("allCittaZone");
-    if (allCittàZone == null) {
-        request.getSession().setAttribute("nomepagina", "agente.jsp");
-        response.sendRedirect(response.encodeRedirectURL("ServletValutazioneCampiRicerca"));
-        return;
-    }
+
     ArrayList<String> categorie = (ArrayList<String>) request.getSession().getAttribute("categorie");
     if (request.getAttribute("utente") == null) {
-        response.sendRedirect(response.encodeRedirectURL("IndexServlet"));
+        response.sendRedirect(response.encodeRedirectURL("Index"));
         return;
     }
-    VisualizzazioneImmobile visualizzazioneImmobile = (VisualizzazioneImmobile) request.getAttribute("featured");
-    AgenteBean agenteBean = (AgenteBean) request.getAttribute("agente");
+
     UtenteBean utenteBean = (UtenteBean) request.getAttribute("utente");
-    ArrayList<AppartamentoBean> arrayAppartamento = (ArrayList<AppartamentoBean>) request.getAttribute("arrayAppartamento");
+    AgenteBean agenteBean = (AgenteBean) request.getAttribute("agente");
+
+
+    VisualizzazioneImmobile visualizzazioneImmobile = (VisualizzazioneImmobile) request.getAttribute("featured");
+    ArrayList<VisualizzazioneImmobile> arrayAppartamento = (ArrayList<VisualizzazioneImmobile>) request.getAttribute("arrayAppartamento");
     ArrayList<IndirizzoBean> arrayIndirizzo = (ArrayList<IndirizzoBean>) request.getAttribute("arrayIndirizzo");
     ArrayList<MultimediaBean> arrayMultimedia = (ArrayList<MultimediaBean>) request.getAttribute("arrayMultimedia");
     ArrayList<CompositeKeyAgenteCase> agenteCase = (ArrayList<CompositeKeyAgenteCase>) request.getAttribute("agenteCase");
     ArrayList<AppartamentoBean> inEvidenza = (ArrayList<AppartamentoBean>) request.getAttribute("inEvidenza");
+
+    String inviata = (String) request.getSession().getAttribute("inviata");
+    request.getSession().setAttribute("inviata","no");
 %>
 
 <head>
-    <title>Gabetti - Agente</title>
+    <title>Gabetti Nocera | <%=utenteBean.getNome() + " " + utenteBean.getCognome()%></title>
     <link rel="shortcut icon" type="image/jpg" href="images/favicon-256x256.png"/>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -49,19 +51,31 @@
     <link rel="stylesheet" href="css/aggiunte.css">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="fonts/icomoon/style.css">
-
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="bootstrapcss/owl.carousel.min.css">
     <script src="bootstrap/js/jquery-3.3.1.min.js"></script>
     <script src="bootstrap/js/popper.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="bootstrap/js/jquery.sticky.js"></script>
+    <script src="script/index.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="script/index.js"></script>
+    <script src="script/ricerca-regione.js"></script>
+    <script src="script/ricerca-provincia.js"></script>
+    <script src="script/ricerca-citta.js"></script>
+    <script src="script/ricerca-zona.js"></script>
+    <script src="script/ricerca-stato.js"></script>
+    <script src="script/ricerca-tipo.js"></script>
+    <script src="script/ricerca-camere.js"></script>
+    <script src="script/ricerca-bagni.js"></script>
+    <script src="script/ricerca-auto.js"></script>
 </head>
 
 <body>
+<input type="hidden" value="<%=inviata%>" id="inviata">
 <%@ include file="loader.html"%>
 <nav id="navbar">
     <a href="index.jsp" class="logo">
@@ -72,11 +86,12 @@
         <i class="icon-bars"></i>
     </label>
     <ul>
-        <li><a href="index.jsp">Home</a></li>
+        <li><a href="index.jsp" class="active">Home</a></li>
         <li><a href="listaappartamenti.jsp">Lista Immobili</a></li>
         <li><a href="valutazione.jsp">Valutazione Immobile</a></li>
         <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
         <li><a href="contact.jsp">Contattaci</a></li>
+        <li><a href="login.jsp">Area Personale</a></li>
     </ul>
 </nav>
 <div class="content">
@@ -88,267 +103,187 @@
         </div>
     </section>
     <div class="div_search div_search_init">
-        <form class="search_form search_form_header advance_search_form" action="ServletRicerca" method="post">
+        <form class="search_form search_form_header advance_search_form" action="Ricerca" method="post">
             <div class="search_fields">
                 <div class="search_wrap search_data">
                     <div class="top_fields">
                         <div class="search_select search_option">
-                            <label>Località</label>
+                            <label>Regione</label>
                             <span class="search_selectwrap">
-							<div class="bootstrap-select picker trigger" style="width: 100%;">
-							  <button type="button" onclick="apriScegliLocalita()" class="btn dropdown-toggle">
-								<div class="filter-option">
-								  <div class="filter-option-inner">
-									<div id="valore_localita" class="filter-option-text">
-									  Qualsiasi
-									</div>
-									  <input type="hidden" name="localita_immobile" id="localita_immobile"
-                                             value="Qualsiasi">
-								  </div>
-								</div>
-							  </button>
-							  <div id="selezionaLocalita" class="dropdown-content wrap_content">
-								<ul class="ul_inner">
-								  <li>
-									<a onclick="cambiaLocalita(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">Qualsiasi</span>
-									</a>
-								</li>
-                                    <%for (Città c : allCittàZone) {%>
-								  <li>
-									  <a onclick="cambiaLocalita(this)" role="option" href="#">
-										<span class="icon-check check_mark"></span>
-										<span class="text"><%=c.getNomeCittà()%></span>
-									  </a>
-								  </li>
-                                    <%for (String z : c.getZone()) {%>
-								  <li>
-									<ul class="ul_inner">
-									  <li>
-										<a onclick="cambiaLocalita(this)" role="option" href="#">
-										  <span class="icon-check check_mark"></span>
-										  <span class="sublist text"><%=z%></span>
-										</a>
-									  </li>
-
-                                        <%
-                                                }
-                                            }
-                                        %>
-									</ul>
-								  </li>
-								</ul>
-							  </div>
-							</div>
+                            <div class="wrapper" id="wrapper-regione">
+                                <input type="hidden" id="hidden-regione" name="hidden-regione" value="Qualsiasi">
+                                <div class="select-btn" id="select-btn-regione" onclick="apriRegione()">
+                                  <span class="text_select">Qualsiasi</span>
+                                    <i class="uil uil-angle-down"></i>
+                                </div>
+                                <div class="content-search main-2">
+                                  <div class="search">
+                                    <i class="uil uil-search"></i>
+                                    <input id="input-regione" spellcheck="false" type="text" placeholder="Cerca">
+                                  </div>
+                                  <ul class="options" id="options-regione"></ul>
+                                </div>
+                            </div>
 						  </span>
                         </div>
                         <div class="search_select search_option">
-                            <label>Stato Immobile</label>
+                            <label>Provincia</label>
                             <span class="search_selectwrap">
-							<div class="dropdown bootstrap-select picker trigger" style="width: 100%;">
-							  <button type="button" onclick="apriScegliStato()" class="btn dropdown-toggle">
-								<div class="filter-option">
-								  <div class="filter-option-inner">
-									<div id="valore_stato" class="filter-option-text">
-									  Qualsiasi
-									</div>
-									<input type="hidden" name="stato_immobile" id="stato_immobile" value="Qualsiasi">
-								  </div>
-								</div>
-							  </button>
-							  <div id="selezionaStato" class="dropdown-content">
-								<ul class="ul_inner">
-								  <li>
-									<a onclick="cambiaStato(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">Qualsiasi</span>
-									</a>
-								</li>
-								  <li>
-									  <a onclick="cambiaStato(this)" role="option" href="#">
-										<span class="icon-check check_mark"></span>
-										<span class="text">In Vendita</span>
-									  </a>
-								  </li>
-								  <li>
-									<a onclick="cambiaStato(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">in Affitto</span>
-									</a>
-								</li>
-								</ul>
-							  </div>
-							</div>
+                            <div class="wrapper" id="wrapper-provincia">
+                                <input type="hidden" id="hidden-provincia" name="hidden-provincia" value="Qualsiasi">
+                                <div class="select-btn" id="select-btn-provincia" onclick="apriProvincia()">
+                                  <span class="text_select">Qualsiasi</span>
+                                    <i class="uil uil-angle-down"></i>
+                                </div>
+                                <div class="content-search main-2">
+                                  <div class="search">
+                                    <i class="uil uil-search"></i>
+                                    <input id="input-provincia" spellcheck="false" type="text" placeholder="Cerca">
+                                  </div>
+                                  <ul class="options" id="options-provincia"></ul>
+                                </div>
+                            </div>
 						  </span>
                         </div>
                         <div class="search_select search_option">
-                            <label>Tipo Immobile</label>
+                            <label>Città</label>
                             <span class="search_selectwrap">
-							<div class="bootstrap-select picker trigger" style="width: 100%;">
-							  <button type="button" onclick="apriScegliTipo()" class="btn dropdown-toggle">
-								<div class="filter-option">
-								  <div class="filter-option-inner">
-									<div id="valore_tipo" class="filter-option-text">
-									  Qualsiasi
-									</div>
-									<input type="hidden" name="tipo_immobile" id="tipo_immobile" value="Qualsiasi">
-								  </div>
-								</div>
-							  </button>
-							  <div id="selezionaTipo" class="dropdown-content wrap_content_max">
-								<ul class="ul_inner">
-								  <li>
-									<a onclick="cambiaTipo(this)" role="option" href="#">
-									  <span class="icon-check check_mark"></span>
-									  <span class="text">Qualsiasi</span>
-									</a>
-								  </li>
-                                    <%for (String s : categorie) {%>
-								  <li>
-									  <a onclick="cambiaTipo(this)" role="option" href="#">
-										<span class="icon-check check_mark"></span>
-										<span class="text"><%=s%></span>
-									  </a>
-								  </li>
-                                    <%}%>
-								</ul>
-							  </div>
-							</div>
+							<div class="wrapper" id="wrapper-citta">
+                                <input type="hidden" id="hidden-citta" name="hidden-citta" value="Qualsiasi">
+                                <div class="select-btn" id="select-btn-citta" onclick="apriCitta()">
+                                  <span class="text_select">Qualsiasi</span>
+                                    <i class="uil uil-angle-down"></i>
+                                </div>
+                                <div class="content-search main-1">
+                                  <div class="search">
+                                    <i class="uil uil-search"></i>
+                                    <input id="input-citta" spellcheck="false" type="text" placeholder="Cerca">
+                                  </div>
+                                  <ul class="options" id="options-citta"></ul>
+                                </div>
+                            </div>
 						  </span>
                         </div>
                     </div>
                     <div id="advanced_option_div" class="form_collapsed_field_wrapper" style="display: none;">
                         <div class="collapsed_field_container search_advanced_fields">
                             <div class="search_option search_select search_beds">
-                                <label>Min camere da letto</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliMinCamere()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_minCamere" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="camere_immobile" id="camere_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
+                                <label>Zona</label>
+                                <div class="wrapper" id="wrapper-zona">
+                                    <input type="hidden" id="hidden-zona" name="hidden-zona" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-zona" onclick="apriZona()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-zona" spellcheck="false" type="text" placeholder="Cerca">
                                         </div>
-                                    </button>
-                                    <div id="selezionaMinCamere" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinCamere(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <ul class="options" id="options-zona"></ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="search_option search_select search_beds">
-                                <label>Min bagni</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliMinBagni()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_minBagni" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="bagni_immobile" id="bagni_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
+                                <label>Stato Immobile</label>
+                                <div class="wrapper" id="wrapper-stato">
+                                    <input type="hidden" id="hidden-stato" name="hidden-stato" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-stato" onclick="apriStato()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-stato" spellcheck="false" type="text" placeholder="Cerca">
                                         </div>
-                                    </button>
-                                    <div id="selezionaMinBagni" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinBagni(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <ul class="options" id="options-stato"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Tipo Immobile</label>
+                                <div class="wrapper" id="wrapper-tipo">
+                                    <input type="hidden" id="hidden-tipo" name="hidden-tipo" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-tipo" onclick="apriTipo()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-tipo" spellcheck="false" type="text" placeholder="Cerca">
+                                        </div>
+                                        <ul class="options" id="options-tipo"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Min Camere Letto</label>
+                                <div class="wrapper" id="wrapper-minCamere">
+                                    <input type="hidden" id="hidden-minCamere" name="hidden-minCamere" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-minCamere" onclick="apriMinCamere()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-minCamere" spellcheck="false" type="text" placeholder="Cerca">
+                                        </div>
+                                        <ul class="options" id="options-minCamere"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search_option search_select search_beds">
+                                <label>Min Bagni</label>
+                                <div class="wrapper" id="wrapper-minBagni">
+                                    <input type="hidden" id="hidden-minBagni" name="hidden-minBagni" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-minBagni" onclick="apriMinBagni()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-minBagni" spellcheck="false" type="text" placeholder="Cerca">
+                                        </div>
+                                        <ul class="options" id="options-minBagni"></ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Prezzo minimo</label>
-                                <input name="minPrezzo_immobile" type="text" placeholder="Qualsiasi">
+                                <input name="minPrezzo_immobile" type="number" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Prezzo massimo</label>
-                                <input name="maxPrezzo_immobile" type="text" placeholder="Qualsiasi">
+                                <input name="maxPrezzo_immobile" type="number" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Min Posti Auto</label>
-                                <div class="bootstrap-select picker trigger" style="width: 100%;">
-                                    <button type="button" onclick="apriScegliMinAuto()" class="btn dropdown-toggle">
-                                        <div class="filter-option">
-                                            <div class="filter-option-inner">
-                                                <div id="valore_minAuto" class="filter-option-text">
-                                                    Qualsiasi
-                                                </div>
-                                                <input type="hidden" name="auto_immobile" id="auto_immobile"
-                                                       value="Qualsiasi">
-                                            </div>
+                                <div class="wrapper" id="wrapper-minAuto">
+                                    <input type="hidden" id="hidden-minAuto" name="hidden-minAuto" value="Qualsiasi">
+                                    <div class="select-btn" id="select-btn-minAuto" onclick="apriAuto()">
+                                        <span class="text_select">Qualsiasi</span>
+                                        <i class="uil uil-angle-down"></i>
+                                    </div>
+                                    <div class="content-search supply">
+                                        <div class="search">
+                                            <i class="uil uil-search"></i>
+                                            <input id="input-minAuto" spellcheck="false" type="text" placeholder="Cerca">
                                         </div>
-                                    </button>
-                                    <div id="selezionaMinAuto" class="dropdown-content wrap_content_half">
-                                        <ul class="ul_inner">
-                                            <li>
-                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">Qualsiasi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a onclick="cambiaMinAuto(this)" role="option" href="#">
-                                                    <span class="icon-check check_mark"></span>
-                                                    <span class="text">2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <ul class="options" id="options-minAuto"></ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Superificie minima (mq)</label>
-                                <input name="minSuperficie_immobile" type="text" placeholder="Qualsiasi">
+                                <input name="minSuperficie_immobile" type="number" placeholder="Qualsiasi">
                             </div>
                             <div class="search_option search_select search_beds">
                                 <label>Superficie massima (mq)</label>
-                                <input name="maxSuperficie_immobile" type="text" placeholder="Qualsiasi">
+                                <input name="maxSuperficie_immobile" type="number" placeholder="Qualsiasi">
                             </div>
                         </div>
                     </div>
@@ -389,30 +324,47 @@
                                     boolean p = false;
                                     for (MultimediaBean multi : arrayMultimedia) {
                                         if (multi.getIdAppartamento() == arrayAppartamento.get(i).getIdAppartamento() && multi.getFotoString() != null && !p) {
-                                %><a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=arrayAppartamento.get(i).getIdAppartamento()%>">
-                                <img class="post_property" src="data:image/png;base64,<%=multi.getFotoString().get(0)%>"
-                                     style="background-size: cover;">
+                                            if(multi.getCopertina() == 1){
+                                %><a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=arrayAppartamento.get(i).getIdAppartamento()%>">
+                                <img class="post_property" src="data:image/png;base64,<%=multi.getFotoString().get(0)%>" style="object-fit: cover;">
 
                             </a><%
                                         p = true;
                                         break;
+                                        }
                                     }
                                 }
                             %>
                                 <div class="overlay_property"></div>
                                 <div class="overlay_contents overlay_fadeIn_bottom">
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=arrayAppartamento.get(i).getIdAppartamento()%>">Visualizza Immobili</a>
+                                    <a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=arrayAppartamento.get(i).getIdAppartamento()%>">Visualizza Immobili</a>
                                 </div>
                             </div>
                         </figure>
                         <div class="list_card_details_wrap">
                             <div class="list_card_details">
                                 <h3>
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=arrayAppartamento.get(i).getIdAppartamento()%>"><%=arrayAppartamento.get(i).getNomeAppartamento()%>
-                                    </a></h3>
+                                    <a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=arrayAppartamento.get(i).getIdAppartamento()%>"><%=arrayAppartamento.get(i).getNomeAppartamento()%>
+                                    </a>
+                                </h3>
+                                <div class="property_address">
+                                    <a href="https://www.google.it/maps/place/<%=arrayAppartamento.get(i).getIndirizzoBean().getVia() +"+"+ arrayAppartamento.get(i).getIndirizzoBean().getNumeroCivico() +"+"+ arrayAppartamento.get(i).getIndirizzoBean().getCap() +"+"+ arrayAppartamento.get(i).getIndirizzoBean().getCitta() +"+"+ arrayAppartamento.get(i).getIndirizzoBean().getProvincia()%>">
+                                    <span class="address">
+                                        <i class="icon-map-marker"></i>
+                                    </span>
+                                        <%
+                                            String indirizzo = arrayAppartamento.get(i).getIndirizzoBean().getVia() + " " + arrayAppartamento.get(i).getIndirizzoBean().getNumeroCivico() + ", " + arrayAppartamento.get(i).getIndirizzoBean().getCitta() + ", " + arrayAppartamento.get(i).getIndirizzoBean().getProvincia() + ", " + arrayAppartamento.get(i).getIndirizzoBean().getRegione();
+                                            if (indirizzo.length() > 42) {%>
+                                        <%=indirizzo.substring(0, 42) + "..."%><%
+                                    } else { %>
+                                        <%=indirizzo%><%
+                                        }
+                                    %>
+                                    </a>
+                                </div>
                                 <p class="list_card_description"><%
-                                    if (arrayAppartamento.get(i).getDescrizioneAppartamento().length() > 30) {
-                                %><%=arrayAppartamento.get(i).getDescrizioneAppartamento().substring(0, 30) + ".."%><%
+                                    if (arrayAppartamento.get(i).getDescrizioneAppartamento().length() > 50) {
+                                %><%=arrayAppartamento.get(i).getDescrizioneAppartamento().substring(0, 50) + ".."%><%
                                 } else {
                                 %><%=arrayAppartamento.get(i).getDescrizioneAppartamento()%><%
                                     }%></p>
@@ -446,7 +398,12 @@
                             <div class="list_card_priceLabel">
                                 <div class="list_card_price">
                                     <span class="status"><%=arrayAppartamento.get(i).getTipoVendita()%></span>
+                                    <%if (arrayAppartamento.get(i).getVisualizzaPrezzo() == 1) {%>
                                     <p class="price">€<%=arrayAppartamento.get(i).getPrezzo()%>
+                                    </p>
+                                    <%} else {%>
+                                    <p class="price" style="font-size: 17px">Contatta l'agente</p>
+                                    <%}%>
                                     </p>
                                 </div>
                                 <p class="list_card_author">Di
@@ -474,72 +431,97 @@
                                 <div class="agent_card_listings">
                                 <span class="count"><%
                                     for (CompositeKeyAgenteCase key : agenteCase) {
-                                        if (key.getBean().getIdAgente() == agenteBean.getIdAgente()) {
-                                %><%=key.getContaCase()%><%
+                                        if(utenteBean.getRuolo().equals("Agente")){
+                                            if (key.getBean().getIdAgente() == agenteBean.getIdAgente()) {
+                                                %><%=key.getContaCase()%>
+                                            <%}
                                         }
-                                    }%></span>
+                                    }%>
+                                </span>
                                     <span class="head">Immobili posseduti</span>
                                 </div>
                             </div>
-                            <div class="social">
-                                <%if(agenteBean.getLinkFacebook()!= null){%>
-                                    <a href=""><i class="icon_social icon-facebook"></i></a>
-                                <%}%>
-                                <%if(agenteBean.getLinkInstagram()!= null){%>
-                                    <a href=""><i class="icon_social icon-instagram"></i></a>
-                                <%}%>
-                            </div>
+                            <%if(utenteBean.getRuolo().equals("Agente")){%>
+                                <div class="social">
+                                    <%if(agenteBean.getLinkFacebook() == null){%>
+                                    <%}else{%>
+                                    <a href="<%=agenteBean.getLinkFacebook()%>"><i class="icon_social icon-facebook"></i></a>
+                                    <%}if(agenteBean.getLinkInstagram() == null){%>
+                                    <%}else{%>
+                                    <a href="<%=agenteBean.getLinkInstagram()%>"><i class="icon_social icon-instagram"></i></a>
+                                    <%}%>
+                                </div>
+                            <%}%>
                         </div>
                         <div class="agent_profile_content">
-                            <p>
-                                <%=agenteBean.getDescrizionePersonale()%>
-                            </p>
+                            <%if(utenteBean.getRuolo().equals("Agente")){%>
+                                <p>
+                                    <%=agenteBean.getDescrizionePersonale()%>
+                                </p>
+                            <%}%>
                         </div>
                         <div class="agent_card_details">
                             <div class="agent_card_contact">
                                 <div class="agent_card_contact_wrap">
-                                    <p class="contact">Cellulare: <a href=""><%=agenteBean.getTelefonoCellulare()%>
-                                    </a></p>
-                                    </a></p>
-                                    <p class="contact"><a
-                                            href="https://wa.me/39<%=agenteBean.getTelefonoCellulare()%>">Chatta su
-                                        whatsapp</a></p>
-                                    <p class="contact">Email: <a href=""><%=utenteBean.getEmail()%>
-                                    </a></p>
+                                    <%if(utenteBean.getRuolo().equals("Agente")){%>
+                                        <p class="contact">Cellulare: <a href="tel:+39<%=agenteBean.getTelefonoCellulare()%>"><%=agenteBean.getTelefonoCellulare()%></a></p>
+                                        <p class="contact"><a href="https://wa.me/+39<%=agenteBean.getTelefonoCellulare()%>">Chatta su whatsapp</a></p>
+                                        <p class="contact">Email: <a href="mailto:<%=utenteBean.getEmail()%>"><%=utenteBean.getEmail()%></a></p>
+                                    <%}%>
                                 </div>
                             </div>
                         </div>
                         <div class="horizontal_border"></div>
                         <div class="agent_profile_contact_form">
                             <div class="agent_form">
-                                <form action="ServletMail" method="post">
+                                <form action="SendEmail" method="post" id="form_agente">
+                                    <%if(utenteBean.getRuolo().equals("Agente")){%>
+                                    <input type="hidden" name="action" id="action" value="agente">
+                                    <%}else if(utenteBean.getRuolo().equals("Collaboratore")){%>
+                                    <input type="hidden" name="action" id="action" value="collaboratore">
+                                    <%}%>
                                     <div class="agent_form_field agent_form_text">
                                         <label>Nome</label>
-                                        <input required type="text" placeholder="Il tuo nome" id="nomeGuest">
+                                        <input type="text" placeholder="Il tuo nome" name="nomeGuest" id="nome">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="agent_form_field agent_form_text">
                                         <label>Email</label>
-                                        <input required type="text" placeholder="La tua email" id="emailGuest">
+                                        <input type="text" placeholder="La tua email" name="emailGuest" id="email">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="agent_form_field agent_form_text">
                                         <label>Telefono</label>
-                                        <input required type="text" placeholder="Il tuo numero di telefono" id="telefonoGuest">
+                                        <input type="text" placeholder="Il tuo numero di telefono" name="telefonoGuest" id="telefono">
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="agent_form_field agent_form_textarea">
                                         <label>Messaggio</label>
-                                        <textarea required rows="6" placeholder="Il tuo messaggio"
-                                                  id="messaggioGuest"></textarea>
+                                        <textarea rows="6" placeholder="Il tuo messaggio" name="messaggioGuest" id="messaggio"></textarea>
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
-                                    <input type="hidden" id="agenteid" value="<%=agenteBean.getIdAgente()%>">
+                                    <%if(utenteBean.getRuolo().equals("Agente")){%>
+                                    <input type="hidden" name="agenteid" value="<%=agenteBean.getIdAgente()%>">
+                                    <%}%>
+
                                     <div class="form_privacy">
-                          <span class="form_checkbox_label">
-                            Consenso sulla privacy
-                          </span>
+                                        <span class="form_checkbox_label">Consenso sulla privacy</span>
                                         <input id="privacy" type="checkbox" style="display: block;">
                                         <label>Acconsento che questo sito Web memorizzi le informazioni inviate in modo che possano rispondere alla mia richiesta.</label>
+                                        <i class="icon-check-circle"></i>
+                                        <i class="icon-exclamation-circle"></i>
+                                        <small>Error message</small>
                                     </div>
                                     <div class="agent_form_submit">
-                                        <input type="submit" class="submit_button" value="Invia Messaggio">
+                                        <input type="submit" class="submit_button" value="Invia Messaggio" onclick="return checkInputs();">
                                     </div>
                                 </form>
                             </div>
@@ -556,19 +538,34 @@
                         <div class="featured_card_wrap">
                             <figure class="featured_card_figure">
                                 <div class="featured_card_picture">
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>">
+                                    <a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>">
                                         <img width="680" height="510" src="data:image/png;base64,<%=visualizzazioneImmobile.getFoto()%>">
                                     </a>
                                 </div>
                             </figure>
                             <div class="featured_card_details">
                                 <h3>
-                                    <a href="${pageContext.request.contextPath}/ServletDettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>"><%=visualizzazioneImmobile.getNomeAppartamento()%>
+                                    <a href="${pageContext.request.contextPath}/DettagliAppartamento?id=<%=visualizzazioneImmobile.getIdAppartamento()%>"><%=visualizzazioneImmobile.getNomeAppartamento()%>
                                     </a>
                                 </h3>
+                                <div class="property_address">
+                                    <a href="https://www.google.it/maps/place/<%=visualizzazioneImmobile.getIndirizzoBean().getVia() +"+"+ visualizzazioneImmobile.getIndirizzoBean().getNumeroCivico() +"+"+ visualizzazioneImmobile.getIndirizzoBean().getCap() +"+"+ visualizzazioneImmobile.getIndirizzoBean().getCitta() +"+"+ visualizzazioneImmobile.getIndirizzoBean().getProvincia()%>">
+                                    <span class="address">
+                                        <i class="icon-map-marker"></i>
+                                    </span>
+                                        <%
+                                            String indirizzo = visualizzazioneImmobile.getIndirizzoBean().getVia() + " " + visualizzazioneImmobile.getIndirizzoBean().getNumeroCivico() + ", " + visualizzazioneImmobile.getIndirizzoBean().getCitta() + ", " + visualizzazioneImmobile.getIndirizzoBean().getProvincia() + ", " + visualizzazioneImmobile.getIndirizzoBean().getRegione();
+                                            if (indirizzo.length() > 42) {%>
+                                        <%=indirizzo.substring(0, 42) + "..."%><%
+                                    } else { %>
+                                        <%=indirizzo%><%
+                                        }
+                                    %>
+                                    </a>
+                                </div>
                                 <p class="featured_card_description"><%
-                                    if (visualizzazioneImmobile.getDescrizioneAppartamento().length() > 30) {
-                                %><%=visualizzazioneImmobile.getDescrizioneAppartamento().substring(0, 30) + ".."%><%
+                                    if (visualizzazioneImmobile.getDescrizioneAppartamento().length() > 60) {
+                                %><%=visualizzazioneImmobile.getDescrizioneAppartamento().substring(0, 60) + ".."%><%
                                 } else {
                                 %><%=visualizzazioneImmobile.getDescrizioneAppartamento()%><%
                                     }%></p>
@@ -617,12 +614,11 @@
 </div>
 
 </body>
-<script type=text/javascript>
-    function validate(){
-        var privacy = document.getElementById("privacy");
-        if (privacy.checked != 1){
-            alert("Spunta la casella sul consenso della privacy")
-        }
+<script>
+    const inviata = document.getElementById("inviata");
+    if(inviata.value.trim() == "ok"){
+        swal("Inviata!", "Il tuo messaggio è stato inviato con successo e verrà preso presto in visione!", "success");
     }
 </script>
+<script src="script/agente.js"></script>
 </html>

@@ -26,7 +26,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<AppartamentoBean> appartamento = new ArrayList<AppartamentoBean>();
-        String selectSql = "SELECT * FROM appartamento ORDER BY appartamento.data"; //ordina dalla data meno recente alla più recente
+        String selectSql = "SELECT * FROM appartamento ORDER BY appartamento.data DESC"; //ordina dalla data meno recente alla più recente
         try {
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(selectSql);
@@ -171,6 +171,7 @@ public class AppartamentoModelDM implements AppartamentoModel {
         return appartamento;
     }
 
+
     public Collection<AppartamentoBean> OrderByVisiteByAgente(int id) {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -211,7 +212,6 @@ public class AppartamentoModelDM implements AppartamentoModel {
     public int doSave(AppartamentoBean app) {
         Connection connection = null;
         PreparedStatement ps = null;
-        System.out.println("appartamento da salvare: " + app);
         int key = 0;
         String insertSql = "INSERT into appartamento(nomeAppartamento, descrizioneAppartamento, superficie, locali, bagni, piano, riscaldamento, classeEnergetica, tipoVendita, prezzo, data, Agente_idAgente, categoria, camereLetto, postoAuto, visualizzaPrezzo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -240,7 +240,6 @@ public class AppartamentoModelDM implements AppartamentoModel {
                     key = rs.getInt(1);
                 }
                 connection.commit();
-                System.out.println("doSave: " + app);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -253,9 +252,10 @@ public class AppartamentoModelDM implements AppartamentoModel {
         Connection connection = null;
         PreparedStatement ps = null;
         ArrayList<AppartamentoBean> array = new ArrayList<AppartamentoBean>();
-        String selectSql = "select appartamento.idAppartamento, appartamento.categoria, appartamento.nomeAppartamento, appartamento.descrizioneAppartamento, appartamento.superficie," +
-                "appartamento.locali, appartamento.bagni, appartamento.piano, appartamento.riscaldamento, appartamento.classeEnergetica, appartamento.tipoVendita, appartamento.prezzo, " +
-                "appartamento.data, appartamento.Agente_idAgente, appartamento.visualizzazioni, appartamento.camereLetto, appartamento.postoAuto, appartamento.visualizzaPrezzo from appartamento inner join indirizzo on appartamento.idAppartamento=indirizzo.Appartamento_idAppartamento";
+        String selectSql = "select * from appartamento inner join indirizzo on appartamento.idAppartamento=indirizzo.appartamento_idAppartamento";
+        String regione = "";
+        String provincia = "";
+        String citta = "";
         String zona = "";
         String vendita = "";
         String categoria = "";
@@ -268,23 +268,28 @@ public class AppartamentoModelDM implements AppartamentoModel {
         String minGarage = "";
         String postiAuto = "";
         try {
+            if (ricerca.getRegione() != null) {
+                regione = " AND indirizzo.regione=" + "'" + ricerca.getRegione() + "'";
+                selectSql = selectSql + regione;
+            }
+            if (ricerca.getProvincia() != null) {
+                provincia = " AND indirizzo.provincia=" + "'" + ricerca.getProvincia() + "'";
+                selectSql = selectSql + provincia;
+            }
             if (ricerca.getCittà() != null) {
-                IndirizzoModelDM indirizzoModelDM = new IndirizzoModelDM();
-                if (indirizzoModelDM.isCittà(ricerca.getCittà())) {
-                    zona = " AND indirizzo.città=" + "'" + ricerca.getCittà() + "'";
-                    selectSql = selectSql + zona;
-                } else {
-                    zona = " AND indirizzo.zona=" + "'" + ricerca.getCittà() + "'";
-                    selectSql = selectSql + zona;
-
-                }
+                citta = " AND indirizzo.città=" + "'" + ricerca.getCittà() + "'";
+                selectSql = selectSql + citta;
+            }
+            if (ricerca.getZona() != null) {
+                zona = " AND indirizzo.zona =" + "'" + ricerca.getZona() + "'";
+                selectSql = selectSql + zona;
             }
             if (ricerca.getVendita() != null) {
                 vendita = " AND appartamento.tipoVendita=" + "'" + ricerca.getVendita() + "'";
                 selectSql = selectSql + vendita;
             }
             if (ricerca.getCategoria() != null) {
-                categoria = " AND appartamento.categoria=" + ricerca.getCategoria();
+                categoria = " AND appartamento.categoria=" + "'" + ricerca.getCategoria() + "'";
                 selectSql = selectSql + categoria;
             }
             if (ricerca.getLetti() != -1) {
@@ -316,7 +321,6 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 postiAuto = "AND appartamento.postoAuto=" + ricerca.getPostiAuto();
                 selectSql = selectSql + postiAuto;
             }
-            System.out.println(selectSql);
             connection = dmcp.getConnection();
             ps = connection.prepareStatement(selectSql);
             ResultSet rs = ps.executeQuery();
@@ -341,7 +345,6 @@ public class AppartamentoModelDM implements AppartamentoModel {
                 bean.setVisualizzaPrezzo(rs.getInt("visualizzaPrezzo"));
                 array.add(bean);
             }
-            System.out.println(array);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -517,6 +520,24 @@ public class AppartamentoModelDM implements AppartamentoModel {
         return allCategorie;
     }
 
+    public ArrayList<String> RetrieveAllStati() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String selectSQL = "SELECT DISTINCT tipoVendita FROM appartamento";
+        ArrayList<String> allCategorie = new ArrayList<String>();
+        try {
+            conn = dmcp.getConnection();
+            ps = conn.prepareStatement(selectSQL);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                allCategorie.add(rs.getString("tipoVendita"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allCategorie;
+    }
+
     @Override
     public void doDelete(int idAppartamento) {
         Connection connection = null;
@@ -597,4 +618,61 @@ public class AppartamentoModelDM implements AppartamentoModel {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<String> RetrieveNumeroCamereLetto() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String selectSQL = "SELECT DISTINCT camereLetto FROM appartamento order by camereLetto asc";
+        ArrayList<String> camereLetto = new ArrayList<String>();
+        try {
+            conn = dmcp.getConnection();
+            ps = conn.prepareStatement(selectSQL);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                camereLetto.add(rs.getString("camereLetto"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return camereLetto;
+    }
+
+    public ArrayList<String> RetrieveNumeroBagni() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String selectSQL = "SELECT DISTINCT bagni FROM appartamento order by bagni asc";
+        ArrayList<String> bagni = new ArrayList<String>();
+        try {
+            conn = dmcp.getConnection();
+            ps = conn.prepareStatement(selectSQL);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bagni.add(rs.getString("bagni"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bagni;
+    }
+
+    public ArrayList<String> RetrieveNumeroPostoAuto() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String selectSQL = "SELECT DISTINCT postoAuto FROM appartamento order by postoAuto asc";
+        ArrayList<String> postoAuto = new ArrayList<String>();
+        try {
+            conn = dmcp.getConnection();
+            ps = conn.prepareStatement(selectSQL);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                postoAuto.add(rs.getString("postoAuto"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return postoAuto;
+    }
+
+
+
 }
