@@ -68,8 +68,8 @@
         <i class="icon-bars"></i>
     </label>
     <ul>
-        <li><a href="index.jsp" class="active">Home</a></li>
-        <li><a href="listaappartamenti.jsp">Lista Immobili</a></li>
+        <li><a href="index.jsp" >Home</a></li>
+        <li><a href="listaappartamenti.jsp" class="active">Lista Immobili</a></li>
         <li><a href="valutazione.jsp">Valutazione Immobile</a></li>
         <li><a href="listaagenti.jsp">I Nostri Agenti</a></li>
         <li><a href="contact.jsp">Contattaci</a></li>
